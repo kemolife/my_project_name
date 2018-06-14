@@ -1,0 +1,13 @@
+sing_app:
+    resource: "@SingAppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+reviews_services:
+    resource: "@ReviewsServicesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

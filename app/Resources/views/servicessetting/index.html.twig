@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Servicessettings list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Facebooks</th>
+                <th>Googles</th>
+                <th>Ratemyagents</th>
+                <th>Tripadvisors</th>
+                <th>Whitecoats</th>
+                <th>Yahoos</th>
+                <th>Yelps</th>
+                <th>Zomatos</th>
+                <th>User_id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for servicesSetting in servicesSettings %}
+            <tr>
+                <td><a href="{{ path('services-setting_show', { 'id': servicesSetting.id }) }}">{{ servicesSetting.id }}</a></td>
+                <td>{{ servicesSetting.facebookS }}</td>
+                <td>{{ servicesSetting.googleS }}</td>
+                <td>{{ servicesSetting.ratemyagentS }}</td>
+                <td>{{ servicesSetting.tripadvisorS }}</td>
+                <td>{{ servicesSetting.whitecoatS }}</td>
+                <td>{{ servicesSetting.yahooS }}</td>
+                <td>{{ servicesSetting.yelpS }}</td>
+                <td>{{ servicesSetting.zomatoS }}</td>
+                <td>{{ servicesSetting.userid }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('services-setting_show', { 'id': servicesSetting.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('services-setting_edit', { 'id': servicesSetting.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('services-setting_new') }}">Create a new servicesSetting</a>
+        </li>
+    </ul>
+{% endblock %}

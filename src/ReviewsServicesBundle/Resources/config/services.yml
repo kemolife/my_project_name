@@ -1,0 +1,50 @@
+services:
+    reviews_services.facebook:
+        class: ReviewsServicesBundle\Services\FacebookService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.google:
+        class: ReviewsServicesBundle\Services\GoogleService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.yelp:
+        class: ReviewsServicesBundle\Services\YelpService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.tripadvisor:
+        class: ReviewsServicesBundle\Services\TripAdvisorService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.zomato:
+        class: ReviewsServicesBundle\Services\ZomatoService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.whitecoat:
+        class: ReviewsServicesBundle\Services\WhitecoatService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.ratemyagent:
+        class: ReviewsServicesBundle\Services\RatemyagentService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    reviews_services.yahoo:
+        class: ReviewsServicesBundle\Services\YahooService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+    services_setting:
+        class: ReviewsServicesBundle\Services\SettingServices
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+
+    reviews_services.parser:
+        class: ReviewsServicesBundle\Services\ParsesServices
+        arguments:
+           -
+#             - "@reviews_services.facebook"
+             - "@reviews_services.google"
+#             - "@reviews_services.yelp"
+#             - "@reviews_services.tripadvisor"
+#             - "@reviews_services.zomato"
+#             - "@reviews_services.whitecoat"
+#             - "@reviews_services.ratemyagent"
+#             - "@reviews_services.yahoo"

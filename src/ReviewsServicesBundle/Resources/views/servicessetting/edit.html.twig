@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Servicessetting edit</h1>
+
+    {{ form_start(edit_form) }}
+        <div class="facebook">
+            <span>Add facebook settings</span>
+            {{ form_row(edit_form.facebook_app_id) }}
+            {{ form_row(edit_form.app_secret) }}
+            {{ form_row(edit_form.page_id) }}
+            {{ form_row(edit_form.facebook_app_id) }}
+            {{ form_row(edit_form.token) }}
+        </div>
+        <div class="google">
+            <span>Add google settings</span>
+            {{ form_row(edit_form.place_id) }}
+            {{ form_row(edit_form.app_key) }}
+        </div>
+        <div class="ratemyagent">
+            <span>Add ratemyagent settings</span>
+            {{ form_row(edit_form.agent_key) }}
+        </div>
+        <div class="tripadvisor">
+            <span>Add tripadvisor settings</span>
+            {{ form_row(edit_form.tripadvisor_location_id) }}
+            {{ form_row(edit_form.tripadvisor_access_token) }}
+        </div>
+        <div class="whitecoat">
+            <span>Add whitecoat settings</span>
+            {{ form_row(edit_form.whitecoat_id) }}
+        </div>
+        <div class="yelp">
+            <span>Add yelp settings</span>
+            {{ form_row(edit_form.yelp_business_id) }}
+            {{ form_row(edit_form.yelp_access_token) }}
+        </div>
+        <div class="zomato">
+            <span>Add zomato settings</span>
+            {{ form_row(edit_form.zomato_business_id) }}
+            {{ form_row(edit_form.zomato_access_token) }}
+        </div>
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit"/>
+    {{ form_end(edit_form) }}
+
+{% endblock %}

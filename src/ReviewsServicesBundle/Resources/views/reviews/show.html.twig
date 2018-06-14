@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Review</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ review.id }}</td>
+            </tr>
+            <tr>
+                <th>Site</th>
+                <td>{{ review.site }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if review.created %}{{ review.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Update</th>
+                <td>{% if review.update %}{{ review.update|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Attribution</th>
+                <td>{{ review.attribution }}</td>
+            </tr>
+            <tr>
+                <th>Reting</th>
+                <td>{{ review.reting }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ review.body }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ review.status }}</td>
+            </tr>
+            <tr>
+                <th>Tag</th>
+                <td>{{ review.tag }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reviews_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('reviews_edit', { 'id': review.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

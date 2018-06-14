@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Servicessetting</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ servicesSetting.id }}</td>
+            </tr>
+            <tr>
+                <th>Facebooks</th>
+                <td>{{ servicesSetting.facebookS }}</td>
+            </tr>
+            <tr>
+                <th>Googles</th>
+                <td>{{ servicesSetting.googleS }}</td>
+            </tr>
+            <tr>
+                <th>Ratemyagents</th>
+                <td>{{ servicesSetting.ratemyagentS }}</td>
+            </tr>
+            <tr>
+                <th>Tripadvisors</th>
+                <td>{{ servicesSetting.tripadvisorS }}</td>
+            </tr>
+            <tr>
+                <th>Whitecoats</th>
+                <td>{{ servicesSetting.whitecoatS }}</td>
+            </tr>
+            <tr>
+                <th>Yahoos</th>
+                <td>{{ servicesSetting.yahooS }}</td>
+            </tr>
+            <tr>
+                <th>Yelps</th>
+                <td>{{ servicesSetting.yelpS }}</td>
+            </tr>
+            <tr>
+                <th>Zomatos</th>
+                <td>{{ servicesSetting.zomatoS }}</td>
+            </tr>
+            <tr>
+                <th>User_id</th>
+                <td>{{ servicesSetting.userid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('services-setting_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('services-setting_edit', { 'id': servicesSetting.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
