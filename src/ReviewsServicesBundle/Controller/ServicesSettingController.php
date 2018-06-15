@@ -6,7 +6,8 @@ use ReviewsServicesBundle\Entity\ServicesSetting;
 use ReviewsServicesBundle\Entity\SettingData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,25 +25,23 @@ class ServicesSettingController extends Controller
      */
     public function newAction(Request $request)
     {
-        if($entityManager->getRepository(ServicesSetting::class)->findByUserId(2)) {
-            $settingData = new SettingData();
-            $form = $this->createForm('ReviewsServicesBundle\Form\ServicesSettingType', $settingData);
-            $form->handleRequest($request);
+        $settingData = new SettingData();
+        $form = $this->createForm('ReviewsServicesBundle\Form\ServicesSettingType', $settingData);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                try {
-                    $this->container->get('services_setting')->create($settingData);
-                } catch (\Exception $e) {
-                    return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-                }
-                return $this->redirectToRoute('services-setting_edit');
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->container->get('services_setting')->create($settingData);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-
-            return $this->render('@ReviewsServices/servicessetting/new.html.twig', array(
-                'servicesSetting' => $settingData,
-                'form' => $form->createView(),
-            ));
+            return $this->redirectToRoute('services-setting_edit');
         }
+
+        return $this->render('@ReviewsServices/servicessetting/new.html.twig', array(
+            'servicesSetting' => $settingData,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -60,7 +59,7 @@ class ServicesSettingController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
                 $this->container->get('services_setting')->update($settingData, $servicesSetting);
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
             return $this->redirectToRoute('services-setting_edit');

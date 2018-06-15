@@ -3,6 +3,7 @@
 namespace SingAppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -180,19 +181,21 @@ class BusinessInfo
      *
      * @return BusinessInfo
      */
-    public function setAdditionalCategory($additionalCategories = null)
+    public function setAdditionalCategories($additionalCategories = null)
     {
-        $this->additionalCategories = $additionalCategories;
+        var_dump($additionalCategories);
+        die();
+        if (!$this->additionalCategories->contains($additionalCategories)) {
+            $this->additionalCategories->add($additionalCategories);
+        }
 
         return $this;
     }
 
     /**
-     * Get additionalCategories.
-     *
-     * @return string|null
+     * @return Collection|AdditionalCategoriesBusinessInfo[]
      */
-    public function getAdditionalCategory()
+    public function getAdditionalCategories() : Collection
     {
         return $this->additionalCategories;
     }
@@ -404,11 +407,9 @@ class BusinessInfo
     }
 
     /**
-     * Get photos.
-     *
-     * @return int|null
+     * @return Collection|PhotosBusinessInfo[]
      */
-    public function getPhotos()
+    public function getPhotos() : Collection
     {
         return $this->photos;
     }

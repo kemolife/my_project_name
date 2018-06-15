@@ -36,6 +36,11 @@ services:
         arguments:
             $entityManager : '@doctrine.orm.entity_manager'
 
+    services_setting:
+        class: SingAppBundle\Services\BusinessInfoService
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+
     reviews_services.parser:
         class: ReviewsServicesBundle\Services\ParsesServices
         arguments:
