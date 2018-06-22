@@ -36,7 +36,7 @@ services:
         arguments:
             $entityManager : '@doctrine.orm.entity_manager'
 
-    services_setting:
+    business_info:
         class: SingAppBundle\Services\BusinessInfoService
         arguments:
             $entityManager : '@doctrine.orm.entity_manager'

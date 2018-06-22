@@ -9,7 +9,7 @@
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>newuser</user-name>
-      <introspection-schemas>*:information_schema,new</introspection-schemas>
+      <introspection-schemas>*:boom_reviews,information_schema,new</introspection-schemas>
     </data-source>
   </component>
 </project>

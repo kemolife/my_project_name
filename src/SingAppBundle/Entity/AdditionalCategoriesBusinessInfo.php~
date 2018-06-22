@@ -30,16 +30,10 @@ class AdditionalCategoriesBusinessInfo
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="BusinessInfo", inversedBy="additionalCategories", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="BusinessInfo", inversedBy="photos")
      * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      **/
     private $business;
-
-    /**
-     * @var string|null
-     */
-
-    private $nameCollection;
 
 
     /**

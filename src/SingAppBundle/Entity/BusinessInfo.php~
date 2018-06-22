@@ -4,7 +4,6 @@ namespace SingAppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -13,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\File;
  *
  * @ORM\Table(name="business_info")
  * @ORM\Entity(repositoryClass="SingAppBundle\Repository\BusinessInfoRepository")
- * @ORM\EntityListeners({"SingAppBundle\EntityListener\BusinessInfoEntityListener"})
  */
 class BusinessInfo
 {
@@ -107,7 +105,7 @@ class BusinessInfo
     /**
      * @var File|null
      *
-     * @ORM\OneToMany(targetEntity="BusinessImage", mappedBy="businessInfo", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PhotosBusinessInfo", mappedBy="business", cascade={"persist"})
      *
      */
     private $photos;
@@ -119,11 +117,7 @@ class BusinessInfo
      */
     private $user;
 
-    /**
-     * @var string|null
-     */
 
-    private $nameCollection;
 
     /**
      * Get id.
@@ -350,7 +344,6 @@ class BusinessInfo
     {
         return $this->video;
     }
-
     /**
      * Constructor
      */
@@ -358,54 +351,6 @@ class BusinessInfo
     {
         $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set phoneNumber.
-     *
-     * @param string $phoneNumber
-     *
-     * @return BusinessInfo
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get phoneNumber.
-     *
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param int $user
-     *
-     * @return BusinessInfo
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return int
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
@@ -447,11 +392,11 @@ class BusinessInfo
     /**
      * Add photo.
      *
-     * @param \SingAppBundle\Entity\BusinessImage $photo
+     * @param \SingAppBundle\Entity\PhotosBusinessInfo $photo
      *
      * @return BusinessInfo
      */
-    public function addPhoto(\SingAppBundle\Entity\BusinessImage $photo)
+    public function addPhoto(\SingAppBundle\Entity\PhotosBusinessInfo $photo)
     {
         $this->photos[] = $photo;
 
@@ -461,11 +406,11 @@ class BusinessInfo
     /**
      * Remove photo.
      *
-     * @param \SingAppBundle\Entity\BusinessImage $photo
+     * @param \SingAppBundle\Entity\PhotosBusinessInfo $photo
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePhoto(\SingAppBundle\Entity\BusinessImage $photo)
+    public function removePhoto(\SingAppBundle\Entity\PhotosBusinessInfo $photo)
     {
         return $this->photos->removeElement($photo);
     }
@@ -478,5 +423,29 @@ class BusinessInfo
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param int $user
+     *
+     * @return BusinessInfo
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return int
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

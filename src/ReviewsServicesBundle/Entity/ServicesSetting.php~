@@ -1,0 +1,319 @@
+<?php
+
+namespace ReviewsServicesBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ServicesSetting
+ *
+ * @ORM\Table(name="services_setting")
+ * @ORM\Entity(repositoryClass="ReviewsServicesBundle\Repository\ServicesSettingRepository")
+ */
+class ServicesSetting
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="facebook_s", type="string", length=255, nullable=true)
+     */
+    private $facebookS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="google_s", type="string", length=255, nullable=true)
+     */
+    private $googleS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="ratemyagent_s", type="string", length=255, nullable=true)
+     */
+    private $ratemyagentS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="tripadvisor_s", type="string", length=255, nullable=true)
+     */
+    private $tripadvisorS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="whitecoat_s", type="string", length=255, nullable=true)
+     */
+    private $whitecoatS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="yahoo_s", type="string", length=255, nullable=true)
+     */
+    private $yahooS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="yelp_s", type="string", length=255, nullable=true)
+     */
+    private $yelpS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="zomato_s", type="string", length=255, nullable=true)
+     */
+    private $zomatoS;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="user_id", type="integer", length=11, nullable=false)
+     */
+    private $user_id;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="facebook_app_id", type="integer", length=11, nullable=false)
+     */
+    private $facebook_app_id;
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set facebookS.
+     *
+     * @param string|null $facebookS
+     *
+     * @return ServicesSetting
+     */
+    public function setFacebookS($facebookS = null)
+    {
+        $this->facebookS = $facebookS;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookS.
+     *
+     * @return string|null
+     */
+    public function getFacebookS()
+    {
+        return $this->facebookS;
+    }
+
+    /**
+     * Set googleS.
+     *
+     * @param string|null $googleS
+     *
+     * @return ServicesSetting
+     */
+    public function setGoogleS($googleS = null)
+    {
+        $this->googleS = $googleS;
+
+        return $this;
+    }
+
+    /**
+     * Get googleS.
+     *
+     * @return string|null
+     */
+    public function getGoogleS()
+    {
+        return $this->googleS;
+    }
+
+    /**
+     * Set ratemyagentS.
+     *
+     * @param string|null $ratemyagentS
+     *
+     * @return ServicesSetting
+     */
+    public function setRatemyagentS($ratemyagentS = null)
+    {
+        $this->ratemyagentS = $ratemyagentS;
+
+        return $this;
+    }
+
+    /**
+     * Get ratemyagentS.
+     *
+     * @return string|null
+     */
+    public function getRatemyagentS()
+    {
+        return $this->ratemyagentS;
+    }
+
+    /**
+     * Set tripadvisorS.
+     *
+     * @param string|null $tripadvisorS
+     *
+     * @return ServicesSetting
+     */
+    public function setTripadvisorS($tripadvisorS = null)
+    {
+        $this->tripadvisorS = $tripadvisorS;
+
+        return $this;
+    }
+
+    /**
+     * Get tripadvisorS.
+     *
+     * @return string|null
+     */
+    public function getTripadvisorS()
+    {
+        return $this->tripadvisorS;
+    }
+
+    /**
+     * Set whitecoatS.
+     *
+     * @param string|null $whitecoatS
+     *
+     * @return ServicesSetting
+     */
+    public function setWhitecoatS($whitecoatS = null)
+    {
+        $this->whitecoatS = $whitecoatS;
+
+        return $this;
+    }
+
+    /**
+     * Get whitecoatS.
+     *
+     * @return string|null
+     */
+    public function getWhitecoatS()
+    {
+        return $this->whitecoatS;
+    }
+
+    /**
+     * Set yahooS.
+     *
+     * @param string|null $yahooS
+     *
+     * @return ServicesSetting
+     */
+    public function setYahooS($yahooS = null)
+    {
+        $this->yahooS = $yahooS;
+
+        return $this;
+    }
+
+    /**
+     * Get yahooS.
+     *
+     * @return string|null
+     */
+    public function getYahooS()
+    {
+        return $this->yahooS;
+    }
+
+    /**
+     * Set yelpS.
+     *
+     * @param string|null $yelpS
+     *
+     * @return ServicesSetting
+     */
+    public function setYelpS($yelpS = null)
+    {
+        $this->yelpS = $yelpS;
+
+        return $this;
+    }
+
+    /**
+     * Get yelpS.
+     *
+     * @return string|null
+     */
+    public function getYelpS()
+    {
+        return $this->yelpS;
+    }
+
+    /**
+     * Set zomatoS.
+     *
+     * @param string|null $zomatoS
+     *
+     * @return ServicesSetting
+     */
+    public function setZomatoS($zomatoS = null)
+    {
+        $this->zomatoS = $zomatoS;
+
+        return $this;
+    }
+
+    /**
+     * Get zomatoS.
+     *
+     * @return string|null
+     */
+    public function getZomatoS()
+    {
+        return $this->zomatoS;
+    }
+
+    /**
+     * Set userId.
+     *
+     * @param int $userId
+     *
+     * @return ServicesSetting
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId.
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+}

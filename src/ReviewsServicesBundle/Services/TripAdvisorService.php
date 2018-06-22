@@ -20,24 +20,9 @@ class TripAdvisorService
 
     public function execute()
     {
-        $locationId = '155507'; //need location token
-        $accessToken = 'wp-tripadvisor-review-slider'; //need access token
-        $url = 'http://api.tripadvisor.com/api/partner/2.0/location/' . $locationId . '?key=' . $accessToken;
         try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $results = curl_exec($ch);
-            curl_close($ch);
-
-            $data = json_decode($results);
-            $count = 0;
-            ?>
-            <pre>
-                <?php print_r($data) ?>
-            </pre>
-            <?php
-            foreach ($data->reviews as $item) {
+            $reviews = new exussum12\TripAdvisor\Reviews('your key', 'your secret');
+            foreach ($reviews->get() as $item) {
                 $dateObj = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($item->time_created)));
                 if ($this->entityManager->getRepository('ReviewsServicesBundle:Reviews')->findUserReview($dateObj, $item->user->name) === null) {
                     $reviews = new Reviews();
@@ -50,7 +35,6 @@ class TripAdvisorService
 
                     $this->entityManager->persist($reviews);
                     $this->entityManager->flush();
-                    $count++;
                 }
             }
         } catch (ErrorException $e) {

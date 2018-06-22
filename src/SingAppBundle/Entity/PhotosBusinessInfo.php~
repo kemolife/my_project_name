@@ -10,7 +10,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * PhotosBusinessInfo
  *
  * @ORM\Table(name="photos_business_info")
- * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="SingAppBundle\Repository\PhotosBusinessInfoRepository")
  */
 class PhotosBusinessInfo
@@ -40,7 +39,7 @@ class PhotosBusinessInfo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
+     * @ORM\Column(name="dateCreation", type="datetime")
      */
     private $dateCreation;
 
@@ -52,11 +51,6 @@ class PhotosBusinessInfo
      * @var File
      */
     private $imageFile;
-
-    public function __construct()
-    {
-        $this->dateCreation = new \DateTimeImmutable();
-    }
 
 
     /**
@@ -147,29 +141,5 @@ class PhotosBusinessInfo
         }
 
         return $this;
-    }
-
-    /**
-     * Set dateCreation.
-     *
-     * @param \DateTime $dateCreation
-     *
-     * @return PhotosBusinessInfo
-     */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateCreation.
-     *
-     * @return \DateTime
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
     }
 }

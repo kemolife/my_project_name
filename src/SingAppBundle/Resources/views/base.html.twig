@@ -11,5 +11,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         {% block javascripts %}
         {% endblock %}
+        {% javascripts
+            async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()" %}
+        {% endjavascripts %}
+
     </body>
 </html>

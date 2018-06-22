@@ -1,0 +1,84 @@
+<?php
+
+namespace ReviewsServicesBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ServicesSetting
+ *
+ * @ORM\Table(name="setting")
+ * @ORM\Entity(repositoryClass="ReviewsServicesBundle\Repository\ServicesSettingRepository")
+ */
+class SettingData
+{
+    /**
+     * @var string|null
+     * @ORM\Column(name="facebook_app_id", type="string", length=11, nullable=true)
+     */
+    private $facebook_app_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="app_secret", type="string", length=11, nullable=true)
+     */
+    private $app_secret;
+    /**
+     * @var string|null
+     * @ORM\Column(name="page_id", type="string", length=11, nullable=true)
+     */
+    private $page_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="token", type="string", length=11, nullable=true)
+     */
+    private $token;
+    /**
+     * @var string|null
+     * @ORM\Column(name="place_id", type="string", length=11, nullable=true)
+     */
+    private $place_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="app_key", type="string", length=11, nullable=true)
+     */
+    private $app_key;
+    /**
+     * @var string|null
+     * @ORM\Column(name="agent_key", type="string", length=11, nullable=true)
+     */
+    private $agent_key;
+    /**
+     * @var string|null
+     * @ORM\Column(name="tripadvisor_location_id", type="string", length=11, nullable=true)
+     */
+    private $tripadvisor_location_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="tripadvisor_access_token", type="string", length=11, nullable=true)
+     */
+    private $tripadvisor_access_token;
+    /**
+     * @var string|null
+     * @ORM\Column(name="whitecoat_id", type="string", length=11, nullable=true)
+     */
+    private $whitecoat_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="yelp_business_id", type="string", length=11, nullable=true)
+     */
+    private $yelp_business_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="yelp_access_token", type="string", length=11, nullable=true)
+     */
+    private $yelp_access_token;
+    /**
+     * @var string|null
+     * @ORM\Column(name="zomato_business_id", type="string", length=11, nullable=true)
+     */
+    private $zomato_business_id;
+    /**
+     * @var string|null
+     * @ORM\Column(name="zomato_access_token", type="string", length=11, nullable=true)
+     */
+    private $zomato_access_token;
+}

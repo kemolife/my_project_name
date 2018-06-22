@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '222245405057959',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.0'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    var accessToken = response.authResponse.accessToken;
+                    var userId = response.authResponse.userID;
+                    var settingsSring = 'token=' +  accessToken + '&userId=' + userId;
+                    sendToken('facebook', settingsSring)
+                }
+                console.log(response);
+
+            });
+        }
+
+        function sendToken(service, settingsSring) {
+            var url = 'save-token';
+            var params = "service=" + service + "&" + settingsSring;
+            var req = new XMLHttpRequest();
+            req.open('GET', url + '?' + params, true);
+            req.send();
+        }
+    </script>
+
+    <script>
+        var GoogleAuth;
+        var SCOPE = 'https://www.googleapis.com/auth/plus.business.manage';
+
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
+        function initClient() {
+
+            gapi.client.init({
+                'apiKey': 'AIzaSyA2ii4Jk-1gfp6btAenEw7guUV1n_iCPOI',
+                'clientId': '662189537461-cqoa48iru0oulsg6uajl276efm0l9gc4.apps.googleusercontent.com',
+                'scope': SCOPE
+            }).then(function () {
+                changeSigninStatus();
+            });
+        }
+
+        function changeSigninStatus() {
+            var GoogleAuth = gapi.auth2.getAuthInstance();
+            var user = GoogleAuth.currentUser.get();
+            var oauthToken = user.getAuthResponse().access_token;
+            var settingsSring = 'token=' +  oauthToken;
+            sendToken('google', settingsSring);
+            if (GoogleAuth.isSignedIn.get()) {
+                document.getElementById('google-connect').style.display = "none";
+                document.getElementById('google-connected').style.display = "block";
+            }
+        }
+    </script>
+    <div>
+        <span>Google</span>
+        <button id="google-connect">
+            Connect
+        </button>
+        <button id="google-connected" style="display: none">
+            Connected
+        </button>
+        <hr>
+    </div>
+    <div>
+        <span>Facebook</span>
+        <fb:login-button
+                scope="public_profile, email"
+                onlogin="checkLoginState();">
+        </fb:login-button>
+        <button id="facebook-connected"
+                style="display: none">Connected
+        </button>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -8,6 +8,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app.path.product_images: /uploads/images
     locale: en
 
 framework:
@@ -67,3 +68,10 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        photos:
+            uri_prefix:         '%app.path.product_images%'
+            upload_destination: '%kernel.root_dir%/../web%app.path.product_images%'

@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new ReviewsServicesBundle\ReviewsServicesBundle(),
             new SingAppBundle\SingAppBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

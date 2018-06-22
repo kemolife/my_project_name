@@ -2,6 +2,7 @@
 
 namespace SingAppBundle\Controller;
 
+use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class BusinessInfoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $businessInfo->setUser(1);
             $em->persist($businessInfo);
             $em->flush();
 

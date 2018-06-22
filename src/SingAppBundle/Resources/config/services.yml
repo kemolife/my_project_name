@@ -1,4 +1,15 @@
 services:
-#    sing_app.example:
-#        class: SingAppBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    google_provider:
+        class: SingAppBundle\Providers\GoogleCompanies
+        arguments:
+            $session : '@session'
+
+    facebook_provider:
+        class: SingAppBundle\Providers\FacebookCompanies
+        arguments:
+            $session : '@session'
+
+    instagram_provider:
+        class: SingAppBundle\Providers\InstagramBusiness
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
