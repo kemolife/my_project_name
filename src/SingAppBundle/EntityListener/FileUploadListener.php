@@ -7,22 +7,33 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use SingAppBundle\Entity\Images;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class FileUploadListener
 {
-
-    private $fileUploadService;
-
-
     /**
-     * Upload file
+     * Upload photo.
      *
      * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     *
+     * @param LifecycleEventArgs $args
      */
-    public function uploadFile(Images $entity, LifecycleEventArgs $args)
+    public function upload(Images $entity, LifecycleEventArgs $args)
     {
-       // $this->fileUploadService->uploadFile($entity);
+        $file = $entity->getImage();
+        if (!$file instanceof UploadedFile) {
+            return;
+        }
+
+        $fullPath = 'photos';
+
+        $format = $file->getClientOriginalExtension();
+        $fileName = uniqid().'.'.$format;
+        $file->move($fullPath, $fileName);
+        $filePath = 'photos'.'/'.$fileName;
+
+
+        $entity->setImage($filePath);
     }
 }

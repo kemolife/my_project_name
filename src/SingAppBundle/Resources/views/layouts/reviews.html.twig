@@ -1,0 +1,113 @@
+<div class="main-merge row tab-pane fade in active" id="reviews">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header row">
+                <div class="col-md-2">
+                    <span class="card-header-title">Your latest reviews:</span>
+                </div>
+            </div>
+            <hr class="hr-big-line">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Date</th>
+                            <th class="text-center">Attribution</th>
+                            <th class="text-center">Rating</th>
+                            <th>Review</th>
+                            <th class="text-center">Status</th>
+                            <th>Stream</th>
+                            <th>Tags</th>
+                        </tr>
+                        </thead>
+                        <tbody class="reviews-loader" data-page="1">
+                        {% for review in reviews.items %}
+                            <tr>
+                                <td>{{ review.icon|raw }}</td>
+                                <td>{{ review.date }}</td>
+                                <td class="text-center">
+                                    <img class="round" width="40" height="40"
+                                         avatar="{{ review.author }}">
+                                    <br>
+                                    <span>{{ review.author }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="read-rating" data-rating="{{ review.rating }}"></div>
+                                </td>
+                                <td id="review-content-{{ loop.index }}">
+                                    {{ review.content|raw }}
+                                </td>
+                                <td align="center">
+                                    {{ review.status|raw }}
+                                </td>
+                                <td class="stream" data-review="{{ loop.index }}">
+                                    {{ review.stream|raw }}
+                                </td>
+                                <td class="tags">
+                                    {{ review.tags|raw }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if reviews.items|length >= 9 %}
+                        <button class="btn btn-primary loader" data-toggle="reviews-loader"
+                                data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading..."
+                                data-url="/api/reviews">
+                            Load more
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-merge row tab-pane fade" id="funnel">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ funnelTabContent['control-panel']|raw }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ funnelTabContent['view-panel']|raw }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-merge row tab-pane fade" id="links">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header row">
+                <div class="col-md-2">
+                    <span class="card-header-title">Links:</span>
+                </div>
+            </div>
+            <hr class="hr-big-line">
+            <div class="card-body">
+                {{ linksTabContent|raw }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-merge row tab-pane fade" id="widgets">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header row">
+                <div class="col-md-2">
+                </div>
+            </div>
+            <hr class="hr-big-line">
+            <div class="card-body">
+                {{ widgetsTabContent|raw }}
+            </div>
+        </div>
+    </div>
+</div>

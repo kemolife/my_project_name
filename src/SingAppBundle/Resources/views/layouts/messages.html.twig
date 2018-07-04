@@ -1,0 +1,104 @@
+<div class="main-merge row tab-pane fade" id="sms-email">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header row">
+                <div class="col-md-2">
+                    <span class="card-header-title">Your messages:</span>
+                    <div {% if  getAvailableSmsCount(app.user) <= 50 %} class="panel panel-success" {% else %} class="panel panel-danger" {% endif %}>
+                        <div class="panel-heading"><h3 class="panel-title">Available sms</h3></div>
+                        <div class="panel-body">You can send {{ getAvailableSmsCount(app.user) }} of 50
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-10">
+                    {% if getAvailableSmsCount(app.user) <= 50 %}
+                        <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#createMessage">
+                            <i class="fas fa-comment-alt"></i> Send sms
+                        </button>
+                    {% endif %}
+                    <button class="btn btn-primary" data-toggle="modal"
+                            data-target="#createEmailMessage">
+                        <i class="fas fa-envelope"></i> Send e-mail
+                    </button>
+                </div>
+            </div>
+            <hr class="hr-big-line">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Receiver</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Creation date</th>
+                        </tr>
+                        </thead>
+                        <tbody class="messages-loader" data-page="1">
+                        {% for message in messages %}
+                            <tr>
+                                <td>
+                                    {{ message.receiver }}
+                                    <a href="#" class="btn-delete" data-toggle="modal"
+                                       data-target="#deleteConfirmation"
+                                       data-confirm-body="Do you really want to delete this message?" ,
+                                       data-delete-url="/message-delete/{{ message.id }}"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                </td>
+                                <td>{{ message.text }}</td>
+                                <td>{{ message.status }}</td>
+                                <td>{{ message.creationDate|date('Y-m-d H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="createMessage" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create message</h4>
+                </div>
+                {{ form_start(smsForm) }}
+                <div class="modal-body">
+                    {{ form_widget(smsForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                {{ form_end(smsForm) }}
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="createEmailMessage" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create message</h4>
+                </div>
+                {{ form_start(emailMessageForm) }}
+                <div class="modal-body">
+                    {{ form_widget(emailMessageForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                {{ form_end(emailMessageForm) }}
+            </div>
+        </div>
+    </div>
+</div>

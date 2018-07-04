@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BusinessImage extends Images
 {
     /**
-     * @ORM\ManyToOne(targetEntity="BusinessInfo", inversedBy="photo")
+     * @ORM\ManyToOne(targetEntity="BusinessInfo", inversedBy="photos")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
      */

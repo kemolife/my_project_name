@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * BusinessInfo
@@ -29,7 +30,7 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
@@ -98,9 +99,16 @@ class BusinessInfo
 
     /**
      * @var string|null
-     *
-     * @ORM\OneToMany(targetEntity="AdditionalCategoriesBusinessInfo", mappedBy="business", cascade={"persist"})
-     *
+     * @ORM\ManyToMany(targetEntity="AdditionalCategoriesBusinessInfo", inversedBy="business", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="addition_category_business",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="bus_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     *  }
+     * )
      */
     private $additionalCategories;
 
@@ -113,17 +121,25 @@ class BusinessInfo
     private $photos;
 
     /**
+     * @var ArrayCollection
+     */
+    protected $uploadedFiles;
+
+    /**
      * @var string|null
      *
-     * @ORM\Column(name="user_id", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="user_id", type="integer", length=11, nullable=true)
      */
     private $user;
 
     /**
-     * @var string|null
+     * Constructor
      */
-
-    private $nameCollection;
+    public function __construct()
+    {
+        $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -205,6 +221,30 @@ class BusinessInfo
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set phoneNumber.
+     *
+     * @param string $phoneNumber
+     *
+     * @return BusinessInfo
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber.
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 
     /**
@@ -352,39 +392,6 @@ class BusinessInfo
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set phoneNumber.
-     *
-     * @param string $phoneNumber
-     *
-     * @return BusinessInfo
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get phoneNumber.
-     *
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
      * Set user.
      *
      * @param int $user
@@ -478,5 +485,17 @@ class BusinessInfo
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    public function setUploadedFiles($uploadedFiles)
+    {
+        $this->uploadedFiles = $uploadedFiles;
+
+        return $this;
+    }
+
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles;
     }
 }

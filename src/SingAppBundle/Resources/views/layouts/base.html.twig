@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Business Listening</title>
+
+    <link rel="stylesheet" href="{{ asset('css/blue/style.css') }}">
+
+    <!-- Bootsrap css -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- End Fontawesome -->
+
+
+    <!-- Jquery -->
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <!-- End Jquery -->
+
+    <!-- Jquery UI -->
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
+    <!-- End Jquery UI -->
+
+    {% if app.request.attributes.get('_route') != 'funnel' %}
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    {% endif %}
+
+    <!-- Bootstrap select -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+    <!-- End Bootstrap select -->
+
+    {% if app.request.attributes.get('_route') == 'invites' %}
+        <link rel="stylesheet" href="{{ asset('css/intlTelInput.min.css') }}">
+        <script src="{{ asset('js/intlTelInput.min.js') }}"></script>
+    {% endif %}
+
+    <link rel="stylesheet" href="https://static.reviewmgr.com/stylesheets/icons.css?v=1523047303367">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body data-gr-c-s-loaded="true">
+<div class="wrap-container">
+    <div>
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{% include '@SingApp/layouts/modals.html.twig' %}
+{% block modal %}{% endblock %}
+</body>
+
+<!-- Bootstrap notify -->
+<script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+<!-- End Bootstrap notify -->
+
+<!-- Star rating -->
+<link rel="stylesheet" href="{{ asset('css/star-rating-svg.css') }}">
+<script src="{{ asset('js/jquery.star-rating-svg.min.js') }}"></script>
+<!-- End Star rating -->
+
+<script src="{{ asset('js/letterAvatar.js') }}"></script>
+
+<script src="{{ asset('js/selectBusiness.js') }}"></script>
+
+<!-- Tags input -->
+<link rel="stylesheet" href="{{ asset('css/tags-input.css') }}">
+<script src="{{ asset('js/tags-input.js') }}"></script>
+<!-- End Tags input -->
+
+<script src="{{ asset('js/common.js') }}"></script>
+
+{% block javascripts %}
+{% endblock %}
+</html>

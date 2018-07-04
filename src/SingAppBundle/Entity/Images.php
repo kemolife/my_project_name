@@ -15,7 +15,9 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "business"="BusinessImage"
+ *     "business"="BusinessImage",
+ *     "instagram" = "InstagramPhoto",
+ *     "google" = "GooglePhoto"
  * })
  * @ORM\Entity()
  */
@@ -35,7 +37,7 @@ abstract class Images
      * @Assert\File(
      *     mimeTypes = {"image/png", "image/jpeg", "image/gif"}
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"create"})
      */
     protected $image;
 

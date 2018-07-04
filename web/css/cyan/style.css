@@ -1,0 +1,3722 @@
+@font-face {
+    font-family: 'SegoeUI';
+    src: url('../../fonts/SegoeUI.eot?#iefix') format('embedded-opentype'), url('../../fonts/SegoeUI.woff') format('woff'), url('../../fonts/SegoeUI.ttf') format('truetype'), url('../../fonts/SegoeUI.svg#SegoeUI') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SegoeUIReqular';
+    src: url("../../fonts/SegoeUIReqular.woff") format("woff");
+}
+
+body {
+    font-family: 'SegoeUIReqular' !important;
+    overflow-x: hidden;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+}
+
+.wrap-container > div {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+.wrap-container > div > div {
+    flex: 1 0 auto;
+    display: flex;
+}
+
+.wrap-container {
+    width: 100vw;
+    margin: auto;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container > div {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+.main-container > div > div {
+    flex: 1 0 auto;
+}
+
+.main-container {
+    width: 100vw;
+    margin: auto;
+}
+
+.header {
+    font-family: SegoeUISemiBold;
+    z-index: 999;
+    width: 100%;
+    height: 80px;
+    background-color: #20A7A2;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    padding: 23px 24px;
+}
+
+.title {
+    display: inline-block;
+    width: 163px;
+    height: 32px;
+    font-family: SegoeUIReqular;
+    font-size: 24px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+}
+
+.link-container > .link, .link-container > .dropdown > .link {
+    width: 75px;
+    height: 36px;
+    font-family: SegoeUIReqular;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    text-align: center;
+    margin: 0 5px;
+    padding: 10px 5px;
+}
+
+.active > .active-link {
+    border-radius: 18px;
+    width: 86px;
+    height: 36px;
+    font-family: SegoeUIReqular;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+
+.link-container-line {
+    margin: 0 8px;
+    height: 36px;
+    border-right: 1px solid black;
+    opacity: 0.12;
+    border: solid 1px #000000;
+}
+
+footer {
+    margin-top: 20px;
+    height: 28px;
+    width: 100%;
+}
+
+footer > span {
+    height: 16px;
+    font-family: SegoeUIReqular;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #737373;
+}
+
+.login-form {
+    font-family: SegoeUIReqular;
+    margin: auto;
+    margin-top: calc((100vh - 348px) / 2 - 80px);
+    height: 300px;
+    width: 240px;
+}
+
+.form-signin-heading {
+    font-family: SegoeUIReqular;
+    font-size: 36px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 36px;
+}
+
+.form-signin-heading > span {
+    width: 86px;
+    height: 48px;
+    display: inline-block;
+}
+
+.control {
+    width: 240px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #eeeeee;
+    margin: 12px 0;
+}
+
+.form-button {
+    margin-top: 32px;
+    width: 240px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #20A7A2;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+    font-family: SegoeUIReqular;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+
+.form-placeholder {
+    position: absolute;
+    margin-left: -125px;
+    margin-top: 12px;
+    width: 104px;
+    height: 19px;
+    font-family: SegoeUIReqular;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: right;
+    color: #707070;
+}
+
+.form-products-heading {
+    font-family: SegoeUIReqular;
+    font-size: 36px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 36px;
+}
+
+.logo {
+    height: 50px;
+    width: 131px;
+    object-fit: contain;
+}
+
+.selector-control {
+    display: inline-block;
+    align-items: center;
+    float: right;
+}
+
+.selector-control > .form-group {
+    width: 260px;
+    height: 40px;
+    margin: 0 27px;
+}
+
+.selector-control > .form-group > select {
+    background-color: #eeeeee;
+    color: #707070;
+}
+
+.menu {
+    background-color: #272727e3;
+    width: 320px;
+    padding-top: 22px;
+}
+
+.products {
+    display: flex;
+}
+
+.messages {
+    flex: 1;
+}
+
+.card {
+    width: calc(100% - 54px);
+    height: calc(100% - 54px);
+    background: #ffffff;
+    margin: 27px;
+    padding: 24px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+}
+
+.menu-link {
+    display: block;
+    height: 40px;
+    width: 288px;
+    margin: 5px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu-link.selected {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.menu-list > li > .menu-link {
+    display: inline-block;
+}
+
+.menu-link:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.menu-link > .link {
+    font-size: 16px;
+    color: #9d9d9d;
+    font-weight: 500;
+    font-family: SegoeUISemiBold;
+    display: inline;
+    position: relative;
+    top: -2px;
+}
+
+.menu-link > .link {
+    display: inline-flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.menu-icon {
+    height: 16px;
+    margin-right: 17px;
+}
+
+.icon-container {
+    display: inline-flex;
+    width: 39px;
+    align-items: center;
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+.last-column-table {
+    width: 10%;
+    min-width: 150px;
+    text-align: right;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.card-title > .count {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.card-title > .count > .add-more {
+    color: #20A7A2;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 29px;
+}
+
+.card-button {
+    width: 138px;
+    height: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    background-color: #20A7A2;
+    border: none;
+    margin: 0 0 0 12px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-button span {
+    width: 78px;
+    height: 32px;
+    color: #ffffff;
+    font-family: SegoeUISemiBold;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 32px;
+    text-transform: uppercase;
+    flex: 1;
+}
+
+.button-icon {
+    display: inline-block;
+    width: 20px;
+    height: 22px;;
+}
+
+.button-icon > img {
+    width: 20px;
+}
+
+.card-header-title {
+    display: flex;
+    align-items: flex-end;
+    font-family: SegoeUISemiBold;
+}
+
+/* project-merge */
+
+.main-merge {
+    width: calc(100vw - 16px);
+}
+
+.list-item {
+    margin-bottom: 5px;
+    margin-right: 24px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    height: 127px;
+    min-width: 180px;
+}
+
+table.status-table, table.status-table tr, table.status-table td {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.button {
+    background-image: linear-gradient(to bottom, #20A7A2 0, #20A7A2 100%);
+    background-repeat: repeat-x;
+    border: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    color: #fff;
+    background-color: #20A7A2;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 4px;
+    text-transform: none;
+}
+
+.button:hover {
+    background-color: #20A7A2;
+    background-position: 0 -15px;
+    color: #fff;
+    border-color: #204d74;
+    text-decoration: none;
+}
+
+.status-table > tbody > tr > td > a {
+    margin-right: 5px;
+}
+
+.share-status, .response-status {
+    font-size: 9px;
+    text-transform: uppercase;
+    line-height: 100%;
+    margin: 8px auto;
+}
+
+.stream, .tags {
+    width: 15px;
+}
+
+[class^="halficon-"], [class*=" halficon-"] {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: text-top;
+    background-image: url(../../images/stylesheet-no-repeat.png);
+}
+
+.halficon-hide, .halficon-check {
+    background-position: -32px -260px;
+}
+
+.halficon-edit {
+    background-position: 0 -240px;
+}
+
+.stream .action-delete, .stream .delete-review {
+    display: none;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover .halficon-edit {
+    background-position: 0 -260px;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+#view-panel {
+    box-sizing: content-box;
+    padding: 30px 10px 0 0;
+    min-width: 800px;
+    height: 3025px;
+    overflow: visible;
+}
+
+#view-panel #site-preview {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-bottom: none;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#view-panel #link-preview {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 11px;
+    pointer-events: none;
+}
+
+#view-panel #link-preview a {
+    pointer-events: auto;
+    display: block;
+    position: relative;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+}
+
+#control-panel {
+    height: 100%;
+    width: 400px;
+}
+
+#control-panel .tab-content {
+    height: 100%;
+}
+
+#control-panel .tab-content .tab-pane {
+    padding: 25px 10px 20px 10px;
+    background: #f6f6f6;
+    border: 1px solid #aaa;
+    -webkit-border-radius: 5px 0 0 0;
+    -khtml-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+    -o-border-radius: 5px 0 0 0;
+    border-radius: 5px 0 0 0;
+}
+
+#control-panel fieldset {
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #d5d5d5;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#control-panel p, #control-panel .file-preview {
+    font-size: 13px;
+    line-height: 17px;
+}
+
+span.best_in_place {
+    border-bottom: 1px dotted #aaaaaa;
+    position: relative;
+    line-height: 1.0;
+    overflow: visible;
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
+#control-panel .timezone {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+#control-panel .latlon {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+#control-panel .controls {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#control-panel #location .button:hover, #control-panel #widgets .button:hover, #control-panel #emails .button:hover, #control-panel #index_page .button:hover, #control-panel #design .button:hover, #control-panel #notification .button:hover, #control-panel #location button:hover, #control-panel #widgets button:hover, #control-panel #emails button:hover, #control-panel #index_page button:hover, #control-panel #design button:hover, #control-panel #notification button:hover, #control-panel #location input[type="submit"]:hover, #control-panel #widgets input[type="submit"]:hover, #control-panel #emails input[type="submit"]:hover, #control-panel #index_page input[type="submit"]:hover, #control-panel #design input[type="submit"]:hover, #control-panel #notification input[type="submit"]:hover, #control-panel #location .button.hover, #control-panel #widgets .button.hover, #control-panel #emails .button.hover, #control-panel #index_page .button.hover, #control-panel #design .button.hover, #control-panel #notification .button.hover, #control-panel #location button.hover, #control-panel #widgets button.hover, #control-panel #emails button.hover, #control-panel #index_page button.hover, #control-panel #design button.hover, #control-panel #notification button.hover, #control-panel #location input[type="submit"].hover, #control-panel #widgets input[type="submit"].hover, #control-panel #emails input[type="submit"].hover, #control-panel #index_page input[type="submit"].hover, #control-panel #design input[type="submit"].hover, #control-panel #notification input[type="submit"].hover, #control-panel #location .button.cancel, #control-panel #widgets .button.cancel, #control-panel #emails .button.cancel, #control-panel #index_page .button.cancel, #control-panel #design .button.cancel, #control-panel #notification .button.cancel, #control-panel #location button.cancel, #control-panel #widgets button.cancel, #control-panel #emails button.cancel, #control-panel #index_page button.cancel, #control-panel #design button.cancel, #control-panel #notification button.cancel, #control-panel #location input[type="submit"].cancel, #control-panel #widgets input[type="submit"].cancel, #control-panel #emails input[type="submit"].cancel, #control-panel #index_page input[type="submit"].cancel, #control-panel #design input[type="submit"].cancel, #control-panel #notification input[type="submit"].cancel, #control-panel #location .button.alternate, #control-panel #widgets .button.alternate, #control-panel #emails .button.alternate, #control-panel #index_page .button.alternate, #control-panel #design .button.alternate, #control-panel #notification .button.alternate, #control-panel #location button.alternate, #control-panel #widgets button.alternate, #control-panel #emails button.alternate, #control-panel #index_page button.alternate, #control-panel #design button.alternate, #control-panel #notification button.alternate, #control-panel #location input[type="submit"].alternate, #control-panel #widgets input[type="submit"].alternate, #control-panel #emails input[type="submit"].alternate, #control-panel #index_page input[type="submit"].alternate, #control-panel #design input[type="submit"].alternate, #control-panel #notification input[type="submit"].alternate {
+    border-width: 1px 1px 1px 1px !important;
+}
+
+#control-panel #location .button.alternate, #control-panel #widgets .button.alternate, #control-panel #emails .button.alternate, #control-panel #index_page .button.alternate, #control-panel #design .button.alternate, #control-panel #notification .button.alternate, #control-panel #location button.alternate, #control-panel #widgets button.alternate, #control-panel #emails button.alternate, #control-panel #index_page button.alternate, #control-panel #design button.alternate, #control-panel #notification button.alternate, #control-panel #location input[type="submit"].alternate, #control-panel #widgets input[type="submit"].alternate, #control-panel #emails input[type="submit"].alternate, #control-panel #index_page input[type="submit"].alternate, #control-panel #design input[type="submit"].alternate, #control-panel #notification input[type="submit"].alternate {
+    color: rgba(255, 255, 255, 0.8);
+    -webkit-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -moz-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -o-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    background: #e95643;
+    border: 1px solid #e6412c;
+    border-top: 1px solid #ec6b5a;
+    border-bottom: 1px solid #c82c17;
+    border-width: 1px 1px 3px 1px;
+}
+
+#control-panel #location .button, #control-panel #widgets .button, #control-panel #emails .button, #control-panel #index_page .button, #control-panel #design .button, #control-panel #notification .button, #control-panel #location button, #control-panel #widgets button, #control-panel #emails button, #control-panel #index_page button, #control-panel #design button, #control-panel #notification button, #control-panel #location input[type="submit"], #control-panel #widgets input[type="submit"], #control-panel #emails input[type="submit"], #control-panel #index_page input[type="submit"], #control-panel #design input[type="submit"], #control-panel #notification input[type="submit"] {
+    display: inline-block;
+    padding: 8px 25px;
+    margin: 0 2px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    -webkit-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -moz-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -o-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    background: #20A7A2;
+    border: 1px solid #20A7A2;
+    border-top: 1px solid #20A7A2;
+    border-bottom: 1px solid #20A7A2;
+    border-width: 1px 1px 3px 1px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border-width: 1px 1px 1px 1px;
+    padding: 2px 18px;
+    margin: 2px;
+    font-size: 12px;
+}
+
+#control-panel #location .button.alternate:hover, #control-panel #widgets .button.alternate:hover, #control-panel #emails .button.alternate:hover, #control-panel #index_page .button.alternate:hover, #control-panel #design .button.alternate:hover, #control-panel #notification .button.alternate:hover, #control-panel #location button.alternate:hover, #control-panel #widgets button.alternate:hover, #control-panel #emails button.alternate:hover, #control-panel #index_page button.alternate:hover, #control-panel #design button.alternate:hover, #control-panel #notification button.alternate:hover, #control-panel #location input[type="submit"].alternate:hover, #control-panel #widgets input[type="submit"].alternate:hover, #control-panel #emails input[type="submit"].alternate:hover, #control-panel #index_page input[type="submit"].alternate:hover, #control-panel #design input[type="submit"].alternate:hover, #control-panel #notification input[type="submit"].alternate:hover, #control-panel #location .button.alternate.hover, #control-panel #widgets .button.alternate.hover, #control-panel #emails .button.alternate.hover, #control-panel #index_page .button.alternate.hover, #control-panel #design .button.alternate.hover, #control-panel #notification .button.alternate.hover, #control-panel #location button.alternate.hover, #control-panel #widgets button.alternate.hover, #control-panel #emails button.alternate.hover, #control-panel #index_page button.alternate.hover, #control-panel #design button.alternate.hover, #control-panel #notification button.alternate.hover, #control-panel #location input[type="submit"].alternate.hover, #control-panel #widgets input[type="submit"].alternate.hover, #control-panel #emails input[type="submit"].alternate.hover, #control-panel #index_page input[type="submit"].alternate.hover, #control-panel #design input[type="submit"].alternate.hover, #control-panel #notification input[type="submit"].alternate.hover {
+    color: #fff;
+    background: #b43c3e;
+    border: 1px solid #a13637;
+    border-top: 1px solid #c2484a;
+    border-bottom: 1px solid #7b292a;
+    border-width: 1px 1px 3px 1px;
+}
+
+#control-panel #location .button:hover, #control-panel #widgets .button:hover, #control-panel #emails .button:hover, #control-panel #index_page .button:hover, #control-panel #design .button:hover, #control-panel #notification .button:hover, #control-panel #location button:hover, #control-panel #widgets button:hover, #control-panel #emails button:hover, #control-panel #index_page button:hover, #control-panel #design button:hover, #control-panel #notification button:hover, #control-panel #location input[type="submit"]:hover, #control-panel #widgets input[type="submit"]:hover, #control-panel #emails input[type="submit"]:hover, #control-panel #index_page input[type="submit"]:hover, #control-panel #design input[type="submit"]:hover, #control-panel #notification input[type="submit"]:hover, #control-panel #location .button.hover, #control-panel #widgets .button.hover, #control-panel #emails .button.hover, #control-panel #index_page .button.hover, #control-panel #design .button.hover, #control-panel #notification .button.hover, #control-panel #location button.hover, #control-panel #widgets button.hover, #control-panel #emails button.hover, #control-panel #index_page button.hover, #control-panel #design button.hover, #control-panel #notification button.hover, #control-panel #location input[type="submit"].hover, #control-panel #widgets input[type="submit"].hover, #control-panel #emails input[type="submit"].hover, #control-panel #index_page input[type="submit"].hover, #control-panel #design input[type="submit"].hover, #control-panel #notification input[type="submit"].hover {
+    color: #fff;
+    background: #20A7A2;
+    border: 1px solid #20A7A2;
+    border-top: 1px solid #20A7A2;
+    border-bottom: 1px solid #20A7A2;
+    border-width: 1px 1px 3px 1px;
+    text-decoration: none;
+}
+
+#control-panel #location .help-section {
+    margin-top: 10px;
+}
+
+#control-panel #location .help-section .button {
+    line-height: 35px;
+}
+
+#control-panel #location .button:hover, #control-panel #widgets .button:hover, #control-panel #emails .button:hover, #control-panel #index_page .button:hover, #control-panel #design .button:hover, #control-panel #notification .button:hover, #control-panel #location button:hover, #control-panel #widgets button:hover, #control-panel #emails button:hover, #control-panel #index_page button:hover, #control-panel #design button:hover, #control-panel #notification button:hover, #control-panel #location input[type="submit"]:hover, #control-panel #widgets input[type="submit"]:hover, #control-panel #emails input[type="submit"]:hover, #control-panel #index_page input[type="submit"]:hover, #control-panel #design input[type="submit"]:hover, #control-panel #notification input[type="submit"]:hover, #control-panel #location .button.hover, #control-panel #widgets .button.hover, #control-panel #emails .button.hover, #control-panel #index_page .button.hover, #control-panel #design .button.hover, #control-panel #notification .button.hover, #control-panel #location button.hover, #control-panel #widgets button.hover, #control-panel #emails button.hover, #control-panel #index_page button.hover, #control-panel #design button.hover, #control-panel #notification button.hover, #control-panel #location input[type="submit"].hover, #control-panel #widgets input[type="submit"].hover, #control-panel #emails input[type="submit"].hover, #control-panel #index_page input[type="submit"].hover, #control-panel #design input[type="submit"].hover, #control-panel #notification input[type="submit"].hover, #control-panel #location .button.cancel, #control-panel #widgets .button.cancel, #control-panel #emails .button.cancel, #control-panel #index_page .button.cancel, #control-panel #design .button.cancel, #control-panel #notification .button.cancel, #control-panel #location button.cancel, #control-panel #widgets button.cancel, #control-panel #emails button.cancel, #control-panel #index_page button.cancel, #control-panel #design button.cancel, #control-panel #notification button.cancel, #control-panel #location input[type="submit"].cancel, #control-panel #widgets input[type="submit"].cancel, #control-panel #emails input[type="submit"].cancel, #control-panel #index_page input[type="submit"].cancel, #control-panel #design input[type="submit"].cancel, #control-panel #notification input[type="submit"].cancel, #control-panel #location .button.alternate, #control-panel #widgets .button.alternate, #control-panel #emails .button.alternate, #control-panel #index_page .button.alternate, #control-panel #design .button.alternate, #control-panel #notification .button.alternate, #control-panel #location button.alternate, #control-panel #widgets button.alternate, #control-panel #emails button.alternate, #control-panel #index_page button.alternate, #control-panel #design button.alternate, #control-panel #notification button.alternate, #control-panel #location input[type="submit"].alternate, #control-panel #widgets input[type="submit"].alternate, #control-panel #emails input[type="submit"].alternate, #control-panel #index_page input[type="submit"].alternate, #control-panel #design input[type="submit"].alternate, #control-panel #notification input[type="submit"].alternate {
+    border-width: 1px 1px 1px 1px !important;
+}
+
+#control-panel #location .button.cancel, #control-panel #widgets .button.cancel, #control-panel #emails .button.cancel, #control-panel #index_page .button.cancel, #control-panel #design .button.cancel, #control-panel #notification .button.cancel, #control-panel #location button.cancel, #control-panel #widgets button.cancel, #control-panel #emails button.cancel, #control-panel #index_page button.cancel, #control-panel #design button.cancel, #control-panel #notification button.cancel, #control-panel #location input[type="submit"].cancel, #control-panel #widgets input[type="submit"].cancel, #control-panel #emails input[type="submit"].cancel, #control-panel #index_page input[type="submit"].cancel, #control-panel #design input[type="submit"].cancel, #control-panel #notification input[type="submit"].cancel {
+    color: #ababab;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    background: #f6f6f6;
+    border: 1px solid #e9e9e9;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #d0d0d0;
+    border-width: 1px 1px 3px 1px;
+}
+
+#control-panel #location .help-section .help-section-collapse {
+    background: #f6f6f6;
+    padding: 10px 0;
+}
+
+#control-panel #location .button.cancel:hover, #control-panel #widgets .button.cancel:hover, #control-panel #emails .button.cancel:hover, #control-panel #index_page .button.cancel:hover, #control-panel #design .button.cancel:hover, #control-panel #notification .button.cancel:hover, #control-panel #location button.cancel:hover, #control-panel #widgets button.cancel:hover, #control-panel #emails button.cancel:hover, #control-panel #index_page button.cancel:hover, #control-panel #design button.cancel:hover, #control-panel #notification button.cancel:hover, #control-panel #location input[type="submit"].cancel:hover, #control-panel #widgets input[type="submit"].cancel:hover, #control-panel #emails input[type="submit"].cancel:hover, #control-panel #index_page input[type="submit"].cancel:hover, #control-panel #design input[type="submit"].cancel:hover, #control-panel #notification input[type="submit"].cancel:hover, #control-panel #location .button.cancel.hover, #control-panel #widgets .button.cancel.hover, #control-panel #emails .button.cancel.hover, #control-panel #index_page .button.cancel.hover, #control-panel #design .button.cancel.hover, #control-panel #notification .button.cancel.hover, #control-panel #location button.cancel.hover, #control-panel #widgets button.cancel.hover, #control-panel #emails button.cancel.hover, #control-panel #index_page button.cancel.hover, #control-panel #design button.cancel.hover, #control-panel #notification button.cancel.hover, #control-panel #location input[type="submit"].cancel.hover, #control-panel #widgets input[type="submit"].cancel.hover, #control-panel #emails input[type="submit"].cancel.hover, #control-panel #index_page input[type="submit"].cancel.hover, #control-panel #design input[type="submit"].cancel.hover, #control-panel #notification input[type="submit"].cancel.hover {
+    color: #212121;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    background: #eee;
+}
+
+#control-panel #location .help-section .button [class^="icon-glyph-"], #control-panel #location .help-section .button [class*=" icon-glyph-"] {
+    margin-top: -3px;
+}
+
+.icon-glyph-google {
+    background-position: -75px -410px;
+}
+
+[class^="icon-glyph-"], [class*=" icon-glyph-"] {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: text-top;
+    background-image: url(../../images/stylesheet-no-repeat.png);
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+#control-panel .google-review-links i {
+    margin-top: -5px;
+}
+
+.icon-glyph-star {
+    background-position: 0 -410px;
+}
+
+.icon-glyph-ios {
+    background-position: -175px -410px;
+}
+
+.icon-glyph-android {
+    background-position: -150px -410px;
+}
+
+.tree {
+    display: block;
+    margin: 0;
+    padding: 0 0 10px;
+    counter-reset: link;
+}
+
+.dropzone {
+    position: relative;
+    min-height: 40px;
+    padding: 10px;
+    margin: 0 0 10px;
+    background-color: #c7d4de;
+    border: 3px dashed #91a9bd;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.tree li {
+    display: block;
+    margin: 0 0 3px 32px;
+    color: #203642;
+    text-decoration: none;
+}
+
+.dropzone:before {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-top: -10px;
+    font-size: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    content: 'Drag one here to highlight it';
+    color: #20A7A2;
+}
+
+.tree li.tree-item .tree-item-inner {
+    clear: both;
+}
+
+.tree li .tree-item-inner {
+    position: relative;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 13px;
+    background-image: -moz-linear-gradient(top, #fff 0, #e6e6e6 100%);
+    background-image: -ms-linear-gradient(top, #fff 0, #e6e6e6 100%);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #fff 0, #e6e6e6 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #e6e6e6 100%);
+    background-image: linear-gradient(top, #fff 0, #e6e6e6 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+    zoom: 1;
+    border: 1px solid #d5d5d5;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.tree li.tree-item .actions {
+    z-index: 9999;
+    float: right;
+    margin: 2px;
+}
+
+.tree li .tree-item-inner:before {
+    content: counter(link);
+    counter-increment: link;
+    position: absolute;
+    left: -2.5em;
+    top: 50%;
+    margin-top: -1em;
+    background: #20A7A2;
+    color: #fff;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tree li.tree-item .actions a {
+    display: inline-block;
+    cursor: pointer;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    -webkit-transition: all .2s ease 0;
+    -moz-transition: all .2s ease 0;
+    -o-transition: all .2s ease 0;
+    transition: all .2s ease 0;
+}
+
+.halficon-delete, .halficon-close {
+    background-position: -16px -240px;
+}
+
+.tree li.tree-item .title {
+    display: inline;
+    cursor: pointer;
+}
+
+#control-panel .controls .button, #control-panel .controls button, #control-panel .controls input[type="submit"] {
+    display: inline-block;
+    padding: 8px 25px;
+    margin: 0 2px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    -webkit-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -moz-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -o-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    background: #20A7A2;
+    border: 1px solid #20A7A2;
+    border-top: 1px solid #20A7A2;
+    border-bottom: 1px solid #20A7A2;
+    border-width: 1px 1px 3px 1px;
+}
+
+.black-card {
+    -webkit-backdrop-filter: blur(30px);
+    margin-right: 24px;
+    backdrop-filter: blur(30px);
+    background-color: #f7f7f7;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    padding: 16px;
+}
+
+.listing-reports {
+    margin-bottom: 24px;
+    padding: 12px;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+}
+
+.listing-report-title {
+    font-size: 20px;
+}
+
+.inaccurate-sites-count {
+    font-size: 32px;
+    color: #ff0000c4;
+}
+
+.accurate-sites-count {
+    font-size: 32px;
+    color: rgba(103, 216, 83, 0.77);
+}
+
+.list-item {
+    margin-bottom: 24px;
+    padding: 12px;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+}
+
+.list-item {
+    margin-bottom: 5px;
+    margin-right: 24px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    height: 127px;
+    min-width: 180px;
+}
+
+.service-icon {
+    margin-bottom: -8px;
+    vertical-align: baseline;
+}
+
+.list-item-title {
+    max-width: calc(100% - 50px);
+    margin-right: 10px;
+    height: 19px;
+    font-family: 'SegoeUI';
+    font-size: 14px;
+    font-weight: 450;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.36;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.hr-line {
+    margin: 12px 0;
+    opacity: 0.12;
+    border: solid 1px #000000;
+}
+
+.buttons > .synced {
+    text-align: right;
+    font-family: 'SegoeUI';
+    width: 100%;
+}
+
+.buttons > div {
+    width: 48%;
+    display: inline-block;
+}
+
+.synce-done {
+    color: #67d853;
+}
+
+.sync-in-progress {
+    color: #ffc56d;
+}
+
+.listing-missed {
+    color: red;
+}
+
+.popover-content form > textarea {
+    width: 100%;
+}
+
+.modal .aside {
+    width: 265px;
+    height: 100%;
+    float: right;
+}
+
+.aside {
+    position: relative;
+    background-color: #f6f6f6;
+    padding: 10px;
+}
+
+.aside input[type="text"] {
+    -webkit-border-radius: 0 0 0 0;
+    -khtml-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    margin-top: 5px;
+    width: 90%;
+    height: 20px;
+}
+
+.share_template textarea {
+    width: 90%;
+    height: 120px;
+    box-sizing: content-box;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.account-account_info #account .field, .registrations-edit #account .field, #page-content .field {
+    height: 40px;
+    clear: both;
+}
+
+.modal .field {
+    margin: 0 10px 10px 0;
+}
+
+#modal-schedule select {
+    line-height: 28px;
+    display: inline;
+    position: relative;
+    float: none;
+    width: auto;
+    padding: 5px 25px 5px 5px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: #555;
+    background: #fff url(/images/sort_both.png) no-repeat center right;
+}
+
+.account-account_info #account .field label, .registrations-edit #account .field label, #page-content .field label {
+    line-height: 40px;
+    display: inline;
+}
+
+.modal .modal-footer {
+    text-align: center;
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.button.cancel:active, input[type="button"].cancel:active, button[type="submit"].cancel:active, input[type="submit"].cancel:active, .button.cancel:link, input[type="button"].cancel:link, button[type="submit"].cancel:link, input[type="submit"].cancel:link {
+    color: #ababab;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-decoration: none;
+}
+
+.button.cancel, input[type="button"].cancel, button[type="submit"].cancel, input[type="submit"].cancel {
+    color: #ababab;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    background: #f6f6f6;
+    border: 1px solid #e9e9e9;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #d0d0d0;
+    border-width: 1px 1px 3px 1px;
+}
+
+.account-account_info #account .field input[type="text"], .registrations-edit #account .field input[type="text"], #page-content .field input[type="text"], .account-account_info #account .field input[type="password"], .registrations-edit #account .field input[type="password"], #page-content .field input[type="password"] {
+    width: 50%;
+    float: right;
+}
+
+#modal-schedule form input[type="text"], #modal-schedule form input[type="email"], #modal-schedule form input[type="password"] {
+    height: 32px;
+}
+
+#modal-schedule form input, #modal-schedule form textarea {
+    box-sizing: content-box;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+#modal-schedule .button, #modal-schedule input[type="button"], #modal-schedule button[type="submit"], #modal-schedule input[type="submit"] {
+    display: inline-block;
+    padding: 8px 25px;
+    margin: 0 2px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    -webkit-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -moz-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    -o-text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(255, 255, 255, 0.15);
+    background: #20A7A2;
+    border: 1px solid #20A7A2;
+    border-top: 1px solid #20A7A2;
+    border-bottom: 1px solid #20A7A2;
+    border-width: 1px 1px 3px 1px;
+}
+
+.link-body label, .modal label {
+    line-height: 100% !important;
+}
+
+.link-body .field, .modal .field {
+    height: auto !important;
+}
+
+#field-snippet textarea {
+    height: 120px;
+    box-sizing: content-box;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin: 0;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+.button.cancel:active, input[type="button"].cancel:active, button[type="submit"].cancel:active, input[type="submit"].cancel:active, .button.cancel:link, input[type="button"].cancel:link, button[type="submit"].cancel:link, input[type="submit"].cancel:link {
+    color: #ababab;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-decoration: none;
+}
+
+.button.cancel, input[type="button"].cancel, button[type="submit"].cancel, input[type="submit"].cancel {
+    color: #ababab;
+    -webkit-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -moz-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    -o-text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    text-shadow: -1px -1px 0 transparent, 1px 1px 0 rgba(255, 255, 255, 0);
+    background: #f6f6f6;
+    border: 1px solid #e9e9e9;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #d0d0d0;
+    border-width: 1px 1px 3px 1px;
+}
+
+textarea.embed-code {
+    width: 90%;
+    height: 120px;
+}
+
+#widget-preview-iframe {
+    padding-right: 30px;
+    border-right: 5px solid #eee;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.nav-stacked {
+    position: relative;
+    overflow: hidden;
+    padding-right: 4px;
+    padding-bottom: 450px;
+}
+
+.nav-stacked:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-right: 2px solid #eee;
+}
+
+.nav-stacked li.active {
+    background-color: #fff !important;
+    border-color: #eee;
+    width: 110%;
+}
+
+.nav-stacked > li {
+    float: none;
+}
+
+ul.nav-stacked li.active a:hover, .nav-stacked li.active a:focus, .nav-stacked li.active a:active, .nav-stacked li.active a:link, .nav-stacked li.active a:visited {
+    color: #20A7A2;
+    background-color: #fff;
+}
+
+.nav-stacked > li + li {
+    margin-top: 2px;
+    margin-left: 0;
+}
+
+.link-header {
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {
+    display: block !important;
+    width: 90% !important;
+    float: none !important;
+}
+
+.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {
+    display: block !important;
+    width: 90% !important;
+    float: none !important;
+    height: 32px;
+    box-sizing: content-box;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+form .field.check_box, form .field.radio_button {
+    display: inline-block;
+    margin-top: 4px;
+    padding-right: 6px;
+}
+
+#listing-details-header {
+    position: relative;
+}
+
+.link-body .field, .modal .field {
+    height: auto !important;
+}
+
+form .field {
+    margin-bottom: 10px;
+}
+
+#modal-link .link_modal.facebook a, #modal-link .link.facebook a, .link-logo.facebook a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/facebook/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal, #modal-link .link {
+    background-image: -moz-linear-gradient(top, #fff 0, #ededed 100%);
+    background-image: -ms-linear-gradient(top, #fff 0, #ededed 100%);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ededed));
+    background-image: -webkit-linear-gradient(top, #fff 0, #ededed 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #ededed 100%);
+    background-image: linear-gradient(top, #fff 0, #ededed 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+    zoom: 1;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 9px;
+    -khtml-border-radius: 9px;
+    -moz-border-radius: 9px;
+    -o-border-radius: 9px;
+    border-radius: 9px;
+    float: left;
+    margin: 0 1px 5px 0;
+    text-align: center;
+    position: relative;
+}
+
+#modal-link .link_modal.google a, #modal-link .link.google a, .link-logo.google a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/google/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yelp a, #modal-link .link.yelp a, .link-logo.yelp a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yelp/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.angieslist a, #modal-link .link.angieslist a, .link-logo.angieslist a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/angieslist/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.bbb a, #modal-link .link.bbb a, .link-logo.bbb a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/bbb/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.citysearch a, #modal-link .link.citysearch a, .link-logo.citysearch a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/citysearch/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.dexknows a, #modal-link .link.dexknows a, .link-logo.dexknows a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/dexknows/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.experiencepros a, #modal-link .link.experiencepros a, .link-logo.experiencepros a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/experiencepros/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.insiderpages a, #modal-link .link.insiderpages a, .link-logo.insiderpages a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/insiderpages/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.manta a, #modal-link .link.manta a, .link-logo.manta a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/manta/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.manta a, #modal-link .link.manta a, .link-logo.manta a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/manta/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.superpages a, #modal-link .link.superpages a, .link-logo.superpages a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/superpages/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.surecritic a, #modal-link .link.surecritic a, .link-logo.surecritic a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/surecritic/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yahoo a, #modal-link .link.yahoo a, .link-logo.yahoo a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yahoo/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yellowbook a, #modal-link .link.yellowbook a, .link-logo.yellowbook a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yellowbook/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yp a, #modal-link .link.yp a, .link-logo.yp a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yp/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.foursquare a, #modal-link .link.foursquare a, .link-logo.foursquare a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/foursquare/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.linkedin a, #modal-link .link.linkedin a, .link-logo.linkedin a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/linkedin/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.nextdoor a, #modal-link .link.nextdoor a, .link-logo.nextdoor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/nextdoor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.twitter a, #modal-link .link.twitter a, .link-logo.twitter a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/twitter/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.diamondcertified a, #modal-link .link.diamondcertified a, .link-logo.diamondcertified a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/diamondcertified/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.ezlocal a, #modal-link .link.ezlocal a, .link-logo.ezlocal a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/ezlocal/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.judysbook a, #modal-link .link.judysbook a, .link-logo.judysbook a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/judysbook/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.rateabiz a, #modal-link .link.rateabiz a, .link-logo.rateabiz a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/rateabiz/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.tupalo a, #modal-link .link.tupalo a, .link-logo.tupalo a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/tupalo/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yellowbot a, #modal-link .link.yellowbot a, .link-logo.yellowbot a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yellowbot/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.cargurus a, #modal-link .link.cargurus a, .link-logo.cargurus a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/cargurus/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.cars a, #modal-link .link.cars a, .link-logo.cars a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/cars/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.dealerrater a, #modal-link .link.dealerrater a, .link-logo.dealerrater a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/dealerrater/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.edmunds a, #modal-link .link.edmunds a, .link-logo.edmunds a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/edmunds/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.automd a, #modal-link .link.automd a, .link-logo.automd a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/automd/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.repairpal a, #modal-link .link.repairpal a, .link-logo.repairpal a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/repairpal/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.consumeraffairs a, #modal-link .link.consumeraffairs a, .link-logo.consumeraffairs a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/consumeraffairs/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.measuredup a, #modal-link .link.measuredup a, .link-logo.measuredup a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/measuredup/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.pissedconsumer a, #modal-link .link.pissedconsumer a, .link-logo.pissedconsumer a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/pissedconsumer/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.resellerratings a, #modal-link .link.resellerratings a, .link-logo.resellerratings a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/resellerratings/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.dentalinsider a, #modal-link .link.dentalinsider a, .link-logo.dentalinsider a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/dentalinsider/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.doctoroogle a, #modal-link .link.doctoroogle a, .link-logo.doctoroogle a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/doctoroogle/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.rateadentist a, #modal-link .link.rateadentist a, .link-logo.rateadentist a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/rateadentist/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.solutionreach a, #modal-link .link.solutionreach a, .link-logo.solutionreach a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/solutionreach/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.beeradvocate a, #modal-link .link.beeradvocate a, .link-logo.beeradvocate a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/beeradvocate/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.fodors a, #modal-link .link.fodors a, .link-logo.fodors a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/fodors/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.menupages a, #modal-link .link.menupages a, .link-logo.menupages a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/menupages/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.opentable a, #modal-link .link.opentable a, .link-logo.opentable a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/opentable/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.restaurant a, #modal-link .link.restaurant a, .link-logo.restaurant a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/restaurant/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.zagat a, #modal-link .link.zagat a, .link-logo.zagat a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/zagat/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.zomato a, #modal-link .link.zomato a, .link-logo.zomato a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/zomato/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.greatschools a, #modal-link .link.greatschools a, .link-logo.greatschools a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/greatschools/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.niche a, #modal-link .link.niche a, .link-logo.niche a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/niche/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.niche a, #modal-link .link.niche a, .link-logo.niche a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/niche/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.agingcare a, #modal-link .link.agingcare a, .link-logo.agingcare a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/agingcare/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.aplaceformom a, #modal-link .link.aplaceformom a, .link-logo.aplaceformom a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/aplaceformom/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.caring a, #modal-link .link.caring a, .link-logo.caring a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/caring/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.goldenreviews a, #modal-link .link.goldenreviews a, .link-logo.goldenreviews a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/goldenreviews/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.ourparents a, #modal-link .link.ourparents a, .link-logo.ourparents a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/ourparents/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.senioradvisor a, #modal-link .link.senioradvisor a, .link-logo.senioradvisor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/senioradvisor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.creditkarma a, #modal-link .link.creditkarma a, .link-logo.creditkarma a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/creditkarma/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.lendingtree a, #modal-link .link.lendingtree a, .link-logo.lendingtree a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/lendingtree/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.fertilityiq a, #modal-link .link.fertilityiq a, .link-logo.fertilityiq a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/fertilityiq/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.healthgrades a, #modal-link .link.healthgrades a, .link-logo.healthgrades a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/healthgrades/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.healthyhearing a, #modal-link .link.healthyhearing a, .link-logo.healthyhearing a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/healthyhearing/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.patientfusion a, #modal-link .link.patientfusion a, .link-logo.patientfusion a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/patientfusion/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.ratemds a, #modal-link .link.ratemds a, .link-logo.ratemds a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/ratemds/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.realpatientratings a, #modal-link .link.realpatientratings a, .link-logo.realpatientratings a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/realpatientratings/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.realself a, #modal-link .link.realself a, .link-logo.realself a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/realself/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.solutionreach a, #modal-link .link.solutionreach a, .link-logo.solutionreach a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/solutionreach/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.ucomparehealthcare a, #modal-link .link.ucomparehealthcare a, .link-logo.ucomparehealthcare a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/ucomparehealthcare/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.vitals a, #modal-link .link.vitals a, .link-logo.vitals a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/vitals/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.webmd a, #modal-link .link.webmd a, .link-logo.webmd a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/webmd/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.wellness a, #modal-link .link.wellness a, .link-logo.wellness a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/wellness/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.whatclinic a, #modal-link .link.whatclinic a, .link-logo.whatclinic a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/whatclinic/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.zocdoc a, #modal-link .link.zocdoc a, .link-logo.zocdoc a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/zocdoc/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.buildzoom a, #modal-link .link.buildzoom a, .link-logo.buildzoom a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/buildzoom/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.guildquality a, #modal-link .link.guildquality a, .link-logo.guildquality a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/guildquality/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.homeadvisor a, #modal-link .link.homeadvisor a, .link-logo.homeadvisor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/homeadvisor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.houzz a, #modal-link .link.houzz a, .link-logo.houzz a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/houzz/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.kudzu a, #modal-link .link.kudzu a, .link-logo.kudzu a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/kudzu/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.porch a, #modal-link .link.porch a, .link-logo.porch a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/porch/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.gosmith a, #modal-link .link.gosmith a, .link-logo.gosmith a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/gosmith/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.thumbtack a, #modal-link .link.thumbtack a, .link-logo.thumbtack a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/thumbtack/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.glassdoor a, #modal-link .link.glassdoor a, .link-logo.glassdoor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/glassdoor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.indeed a, #modal-link .link.indeed a, .link-logo.indeed a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/indeed/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.avvo a, #modal-link .link.avvo a, .link-logo.avvo a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/avvo/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.lawyerratingz a, #modal-link .link.lawyerratingz a, .link-logo.lawyerratingz a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/lawyerratingz/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.lawyers a, #modal-link .link.lawyers a, .link-logo.lawyers a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/lawyers/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.martindale a, #modal-link .link.martindale a, .link-logo.martindale a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/martindale/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.movers a, #modal-link .link.movers a, .link-logo.movers a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/movers/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.movingcompanyreviews a, #modal-link .link.movingcompanyreviews a, .link-logo.movingcompanyreviews a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/movingcompanyreviews/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.mymovingreviews a, #modal-link .link.mymovingreviews a, .link-logo.mymovingreviews a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/mymovingreviews/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.uship a, #modal-link .link.uship a, .link-logo.uship a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/uship/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.bringfido a, #modal-link .link.bringfido a, .link-logo.bringfido a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/bringfido/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.airbnb a, #modal-link .link.airbnb a, .link-logo.airbnb a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/airbnb/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.apartments a, #modal-link .link.apartments a, .link-logo.apartments a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/apartments/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.flipkey a, #modal-link .link.flipkey a, .link-logo.flipkey a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/flipkey/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.homeaway a, #modal-link .link.homeaway a, .link-logo.homeaway a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/homeaway/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.vrbo a, #modal-link .link.vrbo a, .link-logo.vrbo a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/vrbo/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.apartments a, #modal-link .link.apartments a, .link-logo.apartments a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/apartments/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.homes a, #modal-link .link.homes a, .link-logo.homes a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/homes/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.movoto a, #modal-link .link.movoto a, .link-logo.movoto a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/movoto/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.realtor a, #modal-link .link.realtor a, .link-logo.realtor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/realtor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.trulia a, #modal-link .link.trulia a, .link-logo.trulia a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/trulia/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.zillow a, #modal-link .link.zillow a, .link-logo.zillow a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/zillow/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.golfadvisor a, #modal-link .link.golfadvisor a, .link-logo.golfadvisor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/golfadvisor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.spafinder a, #modal-link .link.spafinder a, .link-logo.spafinder a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/spafinder/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.capterra a, #modal-link .link.capterra a, .link-logo.capterra a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/capterra/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.clutchco a, #modal-link .link.clutchco a, .link-logo.clutchco a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/clutchco/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.g2crowd a, #modal-link .link.g2crowd a, .link-logo.g2crowd a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/g2crowd/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.getapp a, #modal-link .link.getapp a, .link-logo.getapp a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/getapp/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.softwareadvice a, #modal-link .link.softwareadvice a, .link-logo.softwareadvice a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/softwareadvice/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.bedandbreakfast a, #modal-link .link.bedandbreakfast a, .link-logo.bedandbreakfast a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/bedandbreakfast/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.booking a, #modal-link .link.booking a, .link-logo.booking a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/booking/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.freetobook a, #modal-link .link.freetobook a, .link-logo.freetobook a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/freetobook/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.getyourguide a, #modal-link .link.getyourguide a, .link-logo.getyourguide a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/getyourguide/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.hostelbookers a, #modal-link .link.hostelbookers a, .link-logo.hostelbookers a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/hostelbookers/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.hostels a, #modal-link .link.hostels a, .link-logo.hostels a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/hostels/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.hostelworld a, #modal-link .link.hostelworld a, .link-logo.hostelworld a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/hostelworld/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.hostelz a, #modal-link .link.hostelz a, .link-logo.hostelz a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/hostelz/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.laterooms a, #modal-link .link.laterooms a, .link-logo.laterooms a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/laterooms/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.tourradar a, #modal-link .link.tourradar a, .link-logo.tourradar a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/tourradar/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.tripadvisor a, #modal-link .link.tripadvisor a, .link-logo.tripadvisor a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/tripadvisor/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.viator a, #modal-link .link.viator a, .link-logo.viator a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/viator/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.theknot a, #modal-link .link.theknot a, .link-logo.theknot a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/theknot/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.weddingwire a, #modal-link .link.weddingwire a, .link-logo.weddingwire a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/weddingwire/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.amazon a, #modal-link .link.amazon a, .link-logo.amazon a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/amazon/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.etsy a, #modal-link .link.etsy a, .link-logo.etsy a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/etsy/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.www411ca a, #modal-link .link.www411ca a, .link-logo.www411ca a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/www411ca/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.homestars a, #modal-link .link.homestars a, .link-logo.homestars a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/homestars/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.n49ca a, #modal-link .link.n49ca a, .link-logo.n49ca a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/n49ca/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.trustedprosca a, #modal-link .link.trustedprosca a, .link-logo.trustedprosca a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/trustedprosca/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.weblocalca a, #modal-link .link.weblocalca a, .link-logo.weblocalca a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/weblocalca/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yellowpagesca a, #modal-link .link.yellowpagesca a, .link-logo.yellowpagesca a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yellowpagesca/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.site192 a, #modal-link .link.site192 a, .link-logo.site192 a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/site192/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.checkatrade a, #modal-link .link.checkatrade a, .link-logo.checkatrade a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/checkatrade/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.freeindex a, #modal-link .link.freeindex a, .link-logo.freeindex a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/freeindex/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.guidesforbrides a, #modal-link .link.guidesforbrides a, .link-logo.guidesforbrides a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/guidesforbrides/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.nhsuk a, #modal-link .link.nhsuk a, .link-logo.nhsuk a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/nhsuk/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.thebestofuk a, #modal-link .link.thebestofuk a, .link-logo.thebestofuk a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/thebestofuk/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.vouchedforuk a, #modal-link .link.vouchedforuk a, .link-logo.vouchedforuk a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/vouchedforuk/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yell a, #modal-link .link.yell a, .link-logo.yell a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yell/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.localsearchau a, #modal-link .link.localsearchau a, .link-logo.localsearchau a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/localsearchau/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.productreviewau a, #modal-link .link.productreviewau a, .link-logo.productreviewau a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/productreviewau/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.truelocalau a, #modal-link .link.truelocalau a, .link-logo.truelocalau a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/truelocalau/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.womoau a, #modal-link .link.womoau a, .link-logo.womoau a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/womoau/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.yellowpagesau a, #modal-link .link.yellowpagesau a, .link-logo.yellowpagesau a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/yellowpagesau/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.customerlobby a, #modal-link .link.customerlobby a, .link-logo.customerlobby a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/customerlobby/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.demandforce a, #modal-link .link.demandforce a, .link-logo.demandforce a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/demandforce/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.googleplay a, #modal-link .link.googleplay a, .link-logo.googleplay a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/googleplay/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.itunes a, #modal-link .link.itunes a, .link-logo.itunes a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/itunes/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.stitcher a, #modal-link .link.stitcher a, .link-logo.stitcher a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/stitcher/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal.trustpilot a, #modal-link .link.trustpilot a, .link-logo.trustpilot a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    margin: 0;
+    background-image: url(https://static.reviewmgr.com/images/trustpilot/logos/sm.png?v=2018-06-05);
+    text-indent: -3000px;
+    overflow: hidden;
+}
+
+#modal-link .link_modal a, #modal-link .link a {
+    display: block;
+    width: 125px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.upgrade {
+    clear: both;
+    padding: 8px 10px 10px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 17px;
+    color: #fff;
+    background-color: #e95643;
+    border: 1px solid #b43c3e;
+    border-width: 1px 1px 3px 1px;
+}
+
+.dropdown > a {
+    display: block;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: -100%;
+    margin-top: -1px;
+}
+
+.list-item {
+    margin-bottom: 24px;
+    padding: 12px;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+}
+
+.list-item-title {
+    max-width: calc(100% - 50px);
+    margin-right: 10px;
+    height: 19px;
+    font-family: SegoeUISemiBold;
+    font-size: 14px;
+    font-weight: 450;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.36;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.list-item-view {
+    width: 74px;
+    height: 19px;
+    font-family: SegoeUIReqular;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.36;
+    letter-spacing: normal;
+    text-align: left;
+    color: #337ab7;
+    margin-bottom: 12px;
+}
+
+.hr-line {
+    margin: 12px 0;
+    opacity: 0.12;
+    border: solid 1px #000000;
+}
+
+.hr-big-line {
+    margin: 24px 0;
+    opacity: 0.12;
+    border: solid 1px #000000;
+}
+
+.buttons > div {
+    width: 48%;
+    display: inline-block;
+}
+
+.buttons > .disconnect {
+    text-align: right;
+    font-family: SegoeUIReqular;
+}
+
+.buttons > .synced {
+    text-align: right;
+    font-family: SegoeUIReqular;
+    width: 100%;
+}
+
+.disconnect > a {
+    padding: 0;
+    color: red;
+}
+
+.status-icon {
+    margin-bottom: 4px;
+    margin-right: 5px;
+}
+
+.card-body > .panel-group > .panel {
+    border: none;
+}
+
+.card-body > .panel-group > .panel > .panel-heading {
+    height: 48px;
+}
+
+.panel-title {
+    padding: 6px 0px;
+}
+
+.panel-title > a {
+    text-decoration: none !important;
+    display: inline-block;
+    width: 95%;
+    height: 21px;
+    font-family: SegoeUISemiBold;
+    font-size: 16px;
+    font-weight: 450;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.31;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+}
+
+.badge {
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+.tab-number {
+    width: 16px;
+    height: 19px;
+    font-family: SegoeUISemiBold;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.36;
+    letter-spacing: normal;
+    text-align: left;
+    color: #20A7A2;
+    display: inline-block;
+    text-align: center;
+}
+
+.service-icon {
+    margin-bottom: -8px;
+    vertical-align: baseline;
+}
+
+.nav.nav-stacked:before {
+    border-right: none;
+}
+
+.btn-primary {
+    color: #fff;
+    background: #20A7A2 !important;
+    border-color: #20A7A2 !important;
+}
+
+.product {
+    width: 100%;
+}
+
+.sf-toolbar {
+    position: fixed;
+}
+
+.dropdown > a:focus, .dropdown > a:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.dropdown > a {
+    border-radius: 4px;
+}
+
+.disabled {
+    background: #145a55 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus, .btn-primary:hover {
+    background: #1f918c !important;
+    color: #FFFFFF !important;
+    text-decoration: none;
+}
+
+.message-template {
+    border: 5px solid #f6f6f6;
+}
+
+.message-template form .form-group {
+    padding: 10px 20px;
+    margin-bottom: 0px;
+}
+
+.message-template form input {
+    margin-left: 10px;
+    display: inline-block !important;
+    width: auto;
+}
+
+.dashed {
+    border-bottom: 1px dashed #AAA;
+}
+
+.schedule-settings, .mail-template-tools {
+    padding: 15px;
+    background: #f6f6f6;
+}
+
+.myemails p, .myemails .field, .myemails .field-label {
+    display: block;
+    clear: both;
+}
+
+.mail-template-tools input[type="text"] {
+    margin-top: 10px;
+    width: 90%;
+}
+
+input[readonly], textarea[readonly] {
+    cursor: pointer !important;
+}
+
+.explainer-text {
+    margin-top: 2px;
+    font-size: 11px;
+    font-style: italic;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mail-field {
+    background: #ffffff;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.free-email-description {
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.btn.focus, .btn:focus, .btn:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.tabs-left, .tabs-right {
+    border-bottom: none;
+    padding-top: 2px;
+}
+
+.tabs-left {
+    border-right: 1px solid #ddd;
+}
+
+.tabs-right {
+    border-left: 1px solid #ddd;
+}
+
+.tabs-left > li, .tabs-right > li {
+    float: none;
+    margin-bottom: 2px;
+}
+
+.tabs-left > li {
+    margin-right: -1px;
+}
+
+.tabs-right > li {
+    margin-left: -1px;
+}
+
+.tabs-left > li.active > a,
+.tabs-left > li.active > a:hover,
+.tabs-left > li.active > a:focus {
+    border-bottom-color: #ddd;
+    border-right-color: transparent;
+}
+
+.tabs-right > li.active > a,
+.tabs-right > li.active > a:hover,
+.tabs-right > li.active > a:focus {
+    border-bottom: 1px solid #ddd;
+    border-left-color: transparent;
+}
+
+.tabs-left > li > a {
+    border-radius: 4px 0 0 4px;
+    margin-right: 0;
+    display: block;
+}
+
+.tabs-right > li > a {
+    border-radius: 0 4px 4px 0;
+    margin-right: 0;
+}
+
+.vertical-text {
+    margin-top: 50px;
+    border: none;
+    position: relative;
+}
+
+.vertical-text > li {
+    height: 20px;
+    width: 120px;
+    margin-bottom: 100px;
+}
+
+.vertical-text > li > a {
+    border-bottom: 1px solid #ddd;
+    border-right-color: transparent;
+    text-align: center;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.vertical-text > li.active > a,
+.vertical-text > li.active > a:hover,
+.vertical-text > li.active > a:focus {
+    border-bottom-color: transparent;
+    border-right-color: #ddd;
+    border-left-color: #ddd;
+}
+
+.vertical-text.tabs-left {
+    left: -50px;
+}
+
+.vertical-text.tabs-right {
+    right: -50px;
+}
+
+.vertical-text.tabs-right > li {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.vertical-text.tabs-left > li {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.preview-images-zone {
+    width: 93%;
+    border: 1px solid #ddd;
+    min-height: 180px;
+    /* display: flex; */
+    padding: 5px 5px 0px 5px;
+    position: relative;
+    overflow: auto;
+}
+
+.preview-images-zone > .preview-image:first-child {
+    height: 185px;
+    width: 185px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.preview-images-zone > .preview-image {
+    height: 90px;
+    width: 90px;
+    position: relative;
+    margin-right: 5px;
+    float: left;
+    margin-bottom: 5px;
+}
+
+.preview-images-zone > .preview-image > .image-zone {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-images-zone > .preview-image > .image-zone > img {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-images-zone > .preview-image > .tools-edit-image {
+    position: absolute;
+    z-index: 100;
+    color: #fff;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.preview-images-zone > .preview-image > .image-cancel {
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    margin-right: 10px;
+    cursor: pointer;
+    display: none;
+    z-index: 100;
+}
+
+.preview-image:hover > .image-zone {
+    cursor: move;
+    opacity: .5;
+}
+
+.preview-image:hover > .tools-edit-image,
+.preview-image:hover > .image-cancel {
+    display: block;
+}
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder {
+    color: #fff !important;
+}
+
+.bootstrap-select {
+    margin-top: 15px;
+}
+
+.ranking-chart {
+    display: flex;
+}
+
+.card-button label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.card-button label:hover {
+    cursor: pointer;
+}
+
+/* edit business modal */
+#location_edit_modal .split-two {
+    width: 50%;
+}
+
+#location_edit_modal .no-split {
+    width: 100%;
+}
+
+#location_edit_modal .control-group {
+    margin-top: 20px;
+}
+
+#location_edit_modal .control-group-row {
+    display: flex;
+}
+
+#location_edit_modal .label-danger,
+#location_edit_modal .remove_fields,
+#location_edit_modal .add_field_button {
+    display: none;
+}
+
+#location_edit_modal .modal-dialog {
+    min-width: 767px;
+    max-width: 1000px;
+    width: 60%;
+}
+
+#location_edit_modal ul.pager, #location_edit_modal .control-group, #location_edit_modal .checkbox-wrapper {
+    padding-left: 12.5px;
+    padding-right: 12.5px;
+}
+
+#location_edit_modal .checkbox:last-child {
+    margin-right: 0;
+}
+
+#location_edit_modal .checkbox, #location_edit_modal .checkbox + .checkbox {
+    margin: 25px 25px 0 0;
+}
+
+#location_edit_modal .alert-danger, #location_edit_modal .fa-exclamation-circle, #location_edit_modal #multiple_items_list {
+    display: none;
+}
+
+#location_edit_modal .checkbox label, #location_edit_modal .radio label {
+    font-weight: 700;
+}
+
+#location_edit_modal .checkbox label {
+    padding-left: 20px;
+}
+
+#location_edit_modal .checkbox-flex input[type="checkbox"] {
+    margin-top: 10px;
+    -webkit-appearance: checkbox;
+}
+
+#location_edit_modal .checkbox input[type="checkbox"] {
+    margin-left: 0px;
+}
+
+#location_edit_modal .controls textarea {
+    height: auto;
+}
+
+#location_edit_modal .image-row {
+    margin-left: -1px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+#location_edit_modal .row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+#location_edit_modal .upload input {
+    border: 0;
+    padding: 0;
+    height: auto;
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 75%;
+}
+
+#location_edit_modal .day.Monday {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-left: 1px solid #ccc;
+}
+
+#location_edit_modal .day {
+    display: table-cell;
+    width: 13%;
+    padding: 10px 8px;
+    background: #f8f8f8;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-size: small;
+}
+
+#location_edit_modal .split-60 {
+    width: 60%;
+}
+
+#location_edit_modal .image-box {
+    margin-left: -9px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#location_edit_modal .split-60 input {
+    max-width: 355px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#location_edit_modal .split-60 a {
+    color: #979797;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 21px;
+}
+
+#location_edit_modal .remove_fields {
+    margin-left: -7px;
+    font-weight: 100 !important;
+    font-size: 12px !important;
+}
+
+#location_edit_modal select {
+    height: 39px;
+}
+
+#location_edit_modal .select2-selection__rendered {
+    padding: 0px;
+    height: 30px;
+}
+
+#location_edit_modal #category-cont {
+    padding: 0px;
+}
+
+#location_edit_modal #location_biz_url {
+    width: 97% !important;
+}
+
+#location_edit_modal #location_street {
+    width: 99% !important;
+}
+
+#location_edit_modal .split-four {
+    width: 25% !important;
+}
+
+#location_edit_modal .label-text-padding #location_franchise, #location_edit_modal .label-text-padding #location_skip_address {
+    margin: 0 !important;
+}
+
+#location_edit_modal .label-text-padding .checkbox-text {
+    margin-left: 25px;
+}
+
+#location_edit_modal .modal-footer {
+    text-align: right !important;
+}
+
+#location_edit_modal .biz-image-cont {
+    padding-left: 29px
+}
+
+#location_edit_modal .input_fields_wrap > div {
+    display: flex;
+}
+
+.tree-item-inner .title {
+    font-size: 13px !important;
+}
+
+#control-panel #message label, #control-panel #content label, #control-panel #page_category label, #control-panel #remove label {
+    display: none;
+}
+
+#control-panel input[type="text"], #control-panel textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    height: 32px;
+    padding: 3px 6px;
+}
+
+form .file-inputs {
+    position: relative;
+    clear: both;
+    text-align: right;
+    height: 32px;
+    width: 235px !important;
+}
+
+form .file-inputs .dummy-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 140px !important;
+    padding: 0 !important;
+}
+
+form .file-inputs input[type="file"] {
+    height: 32px !important;
+    width: 235px !important;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+
+#palette-selector {
+    z-index: 998;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#palette-selector .selection {
+    display: block;
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #adadad;
+}
+
+#palette-selector .palette {
+    height: 24px;
+    clear: both;
+    margin: 4px;
+    border: 1px solid #f6f6f6;
+    display: inline-block;
+}
+
+#palette-selector .color {
+    width: 24px;
+    height: 24px;
+    float: left;
+}
+
+#palette-selector .selection:after {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    display: block;
+    font-size: 21px;
+    line-height: 21px;
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    right: 6px;
+    left: auto;
+    margin: 0;
+    margin-top: -12px;
+    color: black;
+    content: "\25be";
+    cursor: pointer;
+}
+
+#palette-selector .select {
+    position: absolute;
+    top: 33px;
+    left: 0;
+    right: 0;
+    display: none;
+    background: #ececec;
+    border: 1px solid #adadad;
+}
+
+#palette-selector ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#palette-selector ul li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+#field-palette_id {
+    display: none !important;
+}
+
+#control-panel #field-theme_template {
+    display: none;
+}
+
+#modal-theme .theme-select {
+    float: left;
+}
+
+#modal-theme .theme-select a {
+    display: block;
+    opacity: 0.5;
+    border: 3px solid transparent;
+}
+
+#modal-theme .theme-select a img {
+    width: 250px !important;
+    height: 165px !important;
+}
+
+#modal-theme .modal-footer {
+    display: none;
+}
+
+.menu-link .selected {
+    color: #3c3c3c !important;
+}
+
+/* business details */
+.brand-section .edit-business {
+    display: none;
+}
+
+.brand-section figure {
+    max-width: 125px;
+    width: 100%;
+    display: inline-block;
+    float: left;
+}
+
+.brand-section .brand-details {
+    padding: 0 0 0 30px;
+    font-size: 13px;
+}
+
+.brand-section .brand-details .brand-contact-details {
+    padding-left: 0;
+}
+
+.brand-section .brand-details .brand-contact-details .brand-address {
+    padding-left: 0;
+}
+
+.brand-section .brand-details h2 {
+    font-size: 19px;
+    padding: 0;
+    margin: 0 0 9px 0;
+}
+
+.brand-section .brand-details h3 {
+    display: none;
+}
+
+.circleChart {
+    top: 76px;
+}
+
+.halficon-show {
+    background-position: -32px -240px;
+}
+
+.invite-title {
+    margin-top: 20px;
+}
+
+.checkbox label {
+    padding-right: 20px;
+    padding-left: 0 !important;
+}
+
+.checkbox label:after,
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    opacity: 0;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}

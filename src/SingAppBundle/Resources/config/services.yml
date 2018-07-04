@@ -13,3 +13,9 @@ services:
         class: SingAppBundle\Providers\InstagramBusiness
         arguments:
             $entityManager : '@doctrine.orm.entity_manager'
+
+    app.google.service:
+        class: SingAppBundle\Service\GoogleService
+
+    app.facebook.service:
+        class: SingAppBundle\Service\FacebookService

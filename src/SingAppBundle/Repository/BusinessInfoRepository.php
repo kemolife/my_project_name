@@ -1,6 +1,7 @@
 <?php
 
 namespace SingAppBundle\Repository;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * BusinessInfoRepository
@@ -10,4 +11,20 @@ namespace SingAppBundle\Repository;
  */
 class BusinessInfoRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCurrentBusiness(Request $request)
+    {
+        $qb = $this->createQueryBuilder('entity');
+
+        if ($request->get('business')) {
+            $result = $qb
+                ->andWhere($qb->expr()->eq('entity.id', $qb->expr()->literal($request->get('business'))))
+                ->getQuery()->setMaxResults(1)->getOneOrNullResult();
+        }
+        else {
+            $result = $qb
+                ->getQuery()->setMaxResults(1)->getOneOrNullResult();
+        }
+
+        return $result;
+    }
 }

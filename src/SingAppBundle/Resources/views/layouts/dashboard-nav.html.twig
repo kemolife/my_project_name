@@ -1,0 +1,7 @@
+<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+        <li {% if app.request.attributes.get('_route') in ['instagram-posts'] %} class="active" {% endif %}><a href="/dashboard/posts">Instagram Posts<span class="sr-only">(current)</span></a></li>
+        <li {% if app.request.attributes.get('_route') in ['instagram-accounts', 'instagram-account-add', 'instagram-post-add'] %} class="active" {% endif %}><a href="/dashboard/accounts">Instagram Accounts <span class="sr-only">(current)</span></a></li>
+
+    </ul>
+</div>

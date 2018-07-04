@@ -1,0 +1,89 @@
+
+
+<div class="menu">
+    <div>
+        <ul class="nav nav-pills nav-stacked menu-list">
+            {% if app.user.listings %}
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['listings'] %}selected{% endif %}" href="{{ url('listings', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-comment menu-icon"></i>
+                        </div>
+                        <span class="link">Listings</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if app.user.reviews %}
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['reviews'] %}selected{% endif %}" href="{{ url('reviews', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-eye menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">Reviews</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['funnel'] %}selected{% endif %}" href="{{ url('funnel', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-filter menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">Funnel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['links'] %}selected{% endif %}" href="{{ url('links', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-link menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">Links</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['widgets'] %}selected{% endif %}" href="{{ url('widgets', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-cogs menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">Widgets</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['invites'] %}selected{% endif %}" href="{{ url('invites', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-envelope menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">Invites</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if app.user.seoRank %}
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['ranking'] %}selected{% endif %}" href="{{ url('ranking', app.request.query.all) }}">
+                    <span class="icon-container">
+                        <i class="far fa-chart-bar menu-icon" style="color: {{ color }};"></i>
+                    </span>
+                        <span class="link">Rankings</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if app.user.messages %}
+                <li>
+                    <a class="menu-link {% if app.request.attributes.get('_route') in ['messages'] %}selected{% endif %}" href="{{ url('messages', app.request.query.all) }}">
+                        <div class="icon-container">
+                            <i class="fas fa-bell menu-icon" style="color: {{ color }};"></i>
+                        </div>
+                        <span class="link">SMS/Email</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a class="menu-link {% if app.request.attributes.get('_route') in ['social-network-posts'] %}selected{% endif %}" href="{{ url('social-network-posts', app.request.query.all) }}">
+                    <div class="icon-container">
+                        <i class="fas fa-file-alt menu-icon" style="color: {{ color }};"></i>
+                    </div>
+                    <span class="link">Social posts</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

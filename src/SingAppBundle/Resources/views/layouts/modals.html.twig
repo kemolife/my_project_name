@@ -1,0 +1,52 @@
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirm your deleting
+                </h4>
+            </div>
+            <div class="modal-body">
+                Do you really want to delete this message?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary confirm-deleting">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if app.request.attributes.get('_route') == 'reviews' %}
+    {{ reviews.modal|raw }}
+    <div  class="modal fade" id="modal-snippet" tabindex="-1" role="dialog" aria-labelledby="label-modal-snippet">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal" aria-hidden="true"><i class="halficon-close"></i></a>
+                    <h3 id="label-modal-snippet">
+                        Edit Published Snippet
+                    </h3>
+                </div>
+
+                <form accept-charset="UTF-8" method="GET">
+                    <div class="modal-body">
+                        <div class="snippet field text_area" id="field-snippet">
+                            <label>Review Snippet:</label>
+                            <textarea name="snippet" style="width:90%"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

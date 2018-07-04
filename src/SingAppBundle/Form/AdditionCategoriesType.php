@@ -17,7 +17,7 @@ class AdditionCategoriesType extends AbstractType
     {
         $builder->add('nameCollection', ChoiceType::class,[
             'label' => false,
-            'multiple' => true,
+
             'choices'  => array(
                 'Baby' => 'Baby',
                 'Beauty and fragrances' => 'Beauty and fragrances',

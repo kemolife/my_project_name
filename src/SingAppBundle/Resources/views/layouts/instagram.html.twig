@@ -1,0 +1,165 @@
+<div class="tab-pane fade" id="instagram">
+    <div class="main-merge row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header row">
+                    <div class="col-md-2">
+                        <span class="card-header-title">Your instagram accounts:</span>
+                    </div>
+                    <div class="col-md-offset-10">
+                        <a href="#" class="btn btn-primary" data-toggle="modal"
+                           data-target="#createInstagramAccount">
+                            <i class="fas fa-plus"></i> Add
+                        </a>
+                    </div>
+                </div>
+                <hr class="hr-big-line">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Login</th>
+                                <th>Password</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for instagramAccount in instagramAccounts %}
+                                <tr>
+                                    <td>{{ instagramAccount.name }}</td>
+                                    <td>{{ instagramAccount.login }}</td>
+                                    <td>{{ instagramAccount.password }}</td>
+                                    <td>
+                                        <a href="{{ url('instagram-account-edit', {'instagramAccount': instagramAccount.id }) }}"
+                                           class="btn btn-default btn-sm">
+                                            <i class="far fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ url('instagram-account-delete', {'instagramAccount': instagramAccount.id }) }}"
+                                           class="btn btn-default btn-sm">
+                                            <i class="far fa-trash-alt"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-merge row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header row">
+                    <div class="col-md-2">
+                        <span class="card-header-title">Your instagram posts:</span>
+                    </div>
+                    <div class="col-md-offset-10">
+                        <a href="#" class="btn btn-primary" data-toggle="modal"
+                           data-target="#createInstagramPost">
+                            <i class="fas fa-plus"></i> Add
+                        </a>
+                    </div>
+                </div>
+                <hr class="hr-big-line">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Caption</th>
+                                <th>Account</th>
+                                <th>Post date</th>
+                                <th>Post status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for post in posts %}
+                                <tr>
+                                    <td>{{ post.name }}</td>
+                                    <td>{{ post.caption }}</td>
+                                    <td>
+                                        {% if post.account %}
+                                            {{ post.account.name }}
+                                        {% else %}
+                                            Not selected
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                    <td>{{ post.status }}</td>
+                                    <td>
+                                        <a href="{{ url('instagram-post-edit', {'instagramPost': post.id }) }}"
+                                           class="btn btn-default btn-sm">
+                                            <i class="far fa-edit"></i>Edit
+                                        </a>
+                                        <a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
+                                           class="btn btn-default btn-sm">
+                                            <i class="far fa-trash-alt"></i>Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="createInstagramAccount" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create instagram account</h4>
+                </div>
+                {{ form_start(instagramAccountForm) }}
+                <div class="modal-body">
+                    {{ form_widget(instagramAccountForm) }}
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                {{ form_end(instagramAccountForm) }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="createInstagramPost" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create instagram post</h4>
+                </div>
+                {{ form_start(instagramPostForm) }}
+                <div class="modal-body">
+                    {{ form_widget(instagramPostForm) }}
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                {{ form_end(instagramPostForm) }}
+            </div>
+        </div>
+    </div>
+</div>

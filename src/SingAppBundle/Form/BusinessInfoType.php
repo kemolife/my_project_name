@@ -8,6 +8,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,8 +28,9 @@ class BusinessInfoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->
+        $builder->add('name', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('category', ChoiceType::class,[
+            'attr' => ['class' => 'form-control'],
             'choices'  => array(
                 'Baby' => 'Baby',
                 'Beauty and fragrances' => 'Beauty and fragrances',
@@ -39,25 +43,34 @@ class BusinessInfoType extends AbstractType
                 'Entertainment and media' => 'Entertainment and media'
             ),
         ])->
-        add('address')->
-        add('phoneNumber')->
-        add('website')->
-        add('description')->
+        add('additionalCategories', EntityType::class,  [
+            'class' => AdditionalCategoriesBusinessInfo::class,
+            'multiple' => true,
+            'choice_label' => 'name'
+        ])->
+        add('address', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('phoneNumber', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('website', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])->
         add('openingHours')->
-        add('logo')->
+        add('logo', FileType::class, [
+            'data_class' => null, 'attr' => [
+            'class' => 'form-control border-input'],
+            'required' => false])->
         add('paymentOptions')->
-        add('video')->
-        add('photos', CollectionType::class, [
-            'entry_type' => PhotosBusinessType::class,
-            'label' => false,
-            'allow_add'    => true,
-            'allow_delete' => true,
-            'prototype'    => true,
-            'required'     => false,
-            'by_reference' => false,
-            'data_class' => null
+        add('video', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('uploadedFiles', FileType::class, [
+            'attr' => [
+                'placeholder' => 'Photo',
+                'class' => 'form-control border-input',
+                'accept' => 'image/*',
+                'multiple' => 'multiple'],
+            'multiple' => true,
+            'label' => 'Photos',
+            'required' => false,
+            'data_class' => null,
         ]);
-        $builder->get('photos')->addModelTransformer($this->transformer);
+//        $builder->get('photos')->addModelTransformer($this->transformer);
     }/**
      * {@inheritdoc}
      */

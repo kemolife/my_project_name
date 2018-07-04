@@ -4,6 +4,7 @@ namespace SingAppBundle\Controller;
 
 use FacebookAds\Http\Adapter\Curl\Curl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
+use SingAppBundle\Entity\BusinessInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +16,23 @@ use Symfony\Component\HttpFoundation\Session\Session;
  *
  * @Route("oauth")
  */
-class OAuthController extends Controller
+class OAuthController extends BaseController
 {
     /**
      * @Route("/", name="index")
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('@SingApp/oauth/index.html.twig');
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $businessForm = $this->businessPostForm(new BusinessInfo(), $request)->createView();
+        $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true)->createView();
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'businessForm' => $businessForm,
+            'businessFormEdit' => $businessFormEdit,
+            'currentBusiness' => $currentBusiness
+        ];
+        return $this->render('@SingApp/oauth/index.html.twig', $params);
     }
 
     /**

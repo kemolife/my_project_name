@@ -30,17 +30,18 @@ class AdditionalCategoriesBusinessInfo
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="BusinessInfo", inversedBy="additionalCategories", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="BusinessInfo", mappedBy="additionalCategories")
      * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      **/
     private $business;
 
     /**
-     * @var string|null
+     * Constructor
      */
-
-    private $nameCollection;
-
+    public function __construct()
+    {
+        $this->business = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -77,23 +78,35 @@ class AdditionalCategoriesBusinessInfo
     }
 
     /**
-     * Set business.
+     * Add business.
      *
-     * @param \SingAppBundle\Entity\BusinessInfo|null $business
+     * @param \SingAppBundle\Entity\BusinessInfo $business
      *
      * @return AdditionalCategoriesBusinessInfo
      */
-    public function setBusiness(\SingAppBundle\Entity\BusinessInfo $business = null)
+    public function addBusiness(\SingAppBundle\Entity\BusinessInfo $business)
     {
-        $this->business = $business;
+        $this->business[] = $business;
 
         return $this;
     }
 
     /**
+     * Remove business.
+     *
+     * @param \SingAppBundle\Entity\BusinessInfo $business
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeBusiness(\SingAppBundle\Entity\BusinessInfo $business)
+    {
+        return $this->business->removeElement($business);
+    }
+
+    /**
      * Get business.
      *
-     * @return \SingAppBundle\Entity\BusinessInfo|null
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBusiness()
     {

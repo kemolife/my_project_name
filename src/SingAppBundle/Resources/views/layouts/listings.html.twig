@@ -1,0 +1,107 @@
+<div class="main-merge row tab-pane fade in active" id="listings">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <span class="card-header-title">Your business listing report:</span>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="black-card">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="circleChart" id="0"
+                                         data-value="{{ listings.result|syncedLength('percent') }}"
+                                         data-text="{{ listings.result|syncedLength }} of {{ listings.result|length }} listings synced"></div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="listing-reports">
+                                        <p class="listing-report-title">Local listings status</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="inaccurate-sites-count">{{ listings.result|countByStatus('Inaccurate') }}</p>
+                                                <span>Inaccurate sites</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="accurate-sites-count">{{ listings.result|countByStatus('Accurate') }}</p>
+                                                <span>Accurate sites</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="hr-big-line">
+            <div class="card-body row">
+                {% for listing in listings.result %}
+                    <div class="col-md-4 list-item-container">
+                        <div class="list-item clearfix">
+                            <div>
+                                <img class="service-icon" src="{{ listing.site_name|logo }}" alt=""
+                                     width="25" height="25">
+                                <p class="list-item-title">
+                                    {{ listing.site_name }}
+                                </p>
+                                <div class="float-right">
+                                    {% if listing.name is defined %}
+                                        <p><strong>{{ listing.name }}</strong></p>
+                                    {% endif %}
+                                    {% if listing.street is defined %}
+                                        <p>{{ listing.street }}, {{ listing.city }}, {{ listing.state }}
+                                            , {{ listing.postal_code }}</p>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            {% if listing.live_link is defined %}
+                                <div class="list-item-view">
+                                    <a target="_blank" href="{{ listing.live_link }}">View Listing</a>
+                                </div>
+                            {% endif %}
+
+                            <hr class="hr-line">
+                            {% if listing.sync_status == 'sync_in_progress' %}
+                                <div class="buttons">
+                                    <div class="synced">
+                                        <div class="btn-xs">
+                                            <i class="fas fa-circle-notch fa-spin sync-in-progress"></i>
+                                            <span>In progress</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elseif listing.sync_status == 'synced' %}
+                                <div class="buttons">
+                                    <div class="synced">
+                                        <div class="btn-xs">
+                                            <i class="fas fa-check-circle synce-done"></i>
+                                            <span>Synced</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elseif listing.sync_status == 'connected' %}
+                                <div class="buttons">
+                                    <div class="synced">
+                                        <div class="btn-xs">
+                                            <i class="fas fa-check-circle synce-done"></i>
+                                            <span>Connected</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="buttons">
+                                    <div class="synced">
+                                        <div class="btn-xs">
+                                            <i class="fas fa-exclamation-circle listing-missed"></i>
+                                            <span>Listing missed</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
