@@ -19,3 +19,6 @@ services:
 
     app.facebook.service:
         class: SingAppBundle\Service\FacebookService
+
+    app.yelp.service:
+        class: SingAppBundle\Service\YelpService
