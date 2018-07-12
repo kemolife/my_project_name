@@ -1,0 +1,23 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+
+
+{% block body %}
+    <div class="container login">
+        <div class="login-form">
+            <div class="form-signin-heading">
+                <span>Register</span>
+            </div>
+            {{ form_start(form) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.plainPassword.first) }}
+            {{ form_row(form.plainPassword.second) }}
+
+            <button type="submit">Register</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

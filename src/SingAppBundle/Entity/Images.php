@@ -3,8 +3,8 @@
 
 namespace SingAppBundle\Entity;
 
-use AppBundle\Entity\Interfaces\Base64UploadInterface;
-use AppBundle\Entity\Traits\Base64UploadTrait;
+use SingAppBundle\Entity\Interfaces\Base64UploadInterface;
+use SingAppBundle\Entity\Traits\Base64UploadTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;

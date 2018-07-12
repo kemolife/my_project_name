@@ -9,10 +9,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * GooglePost.
+ * GoogleAccount.
  *
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({
+ *     "SingAppBundle\EntityListener\SetOwnerListener"})
  */
 class GoogleAccount extends SocialNetworkAccount
 {
@@ -159,5 +161,36 @@ class GoogleAccount extends SocialNetworkAccount
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return GoogleAccount
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    /**
+     * @return User[]
+     */
+    public function getOwners()
+    {
+        return [$this->getUser()];
     }
 }

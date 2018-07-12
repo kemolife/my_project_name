@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SingAppBundle\Service;
+namespace SingAppBundle\Services;
 
 
 use SingAppBundle\Entity\InstagramAccount;

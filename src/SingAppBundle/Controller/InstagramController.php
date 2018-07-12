@@ -4,15 +4,24 @@
 namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\InstagramAccount;
+use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\User;
+use SingAppBundle\Form\InstagramAccountForm;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use SingAppBundle\Providers\InstagramBusiness;
+use SingAppBundle\Services\InstagramService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class InstagramController extends BaseController
 {
     /**
      * @Route("/instagram", name="instagram")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
@@ -20,32 +29,30 @@ class InstagramController extends BaseController
          * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
 
-        if ($user->getRole() === 'ROLE_USER' && $user->getSocialPosts()) {
-            $listingReportsUrl = $this->getListingsReportUrl($request);
+        $instagram = new InstagramAccount();
+        $instagramService = $this->get('instagram_provider');
+        $form = $this->createForm(InstagramAccountForm::class, $instagram);
 
-            $instagramAccountForm = $this->instagramAccountForm($request)->createView();
-            $instagramPostForm = $this->instagramPostForm($request)->createView();
-
-            $posts = $this->findBy('AppBundle:InstagramPost', ['user' => $this->getUser()->getId()]);
-            $instagramAccounts = $this->findBy('AppBundle:InstagramAccount', ['user' => $this->getUser()->getId()]);
-            $params = [
-                'businesses' => $this->getBusinesses($currentBusiness->getType()),
-                'posts' => $posts,
-                'instagramAccounts' => $instagramAccounts,
-                'instagramAccountForm' => $instagramAccountForm,
-                'instagramPostForm' => $instagramPostForm,
-                'listingReportCsvDownloadURL' => $listingReportsUrl['csv'],
-                'listingReportPdfDownloadURL' => $listingReportsUrl['pdf'],
-            ];
-
-            $response = $this->render('@App/instagram/index.html.twig', $params);
-        }
-        else {
-            $response = $this->redirectToRoute('social-network-posts');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var InstagramBusiness $instagramService
+             */
+            try{
+                $instagramService->createAccount($currentBusiness, $instagram);
+                $instagramService->auth($user, $currentBusiness);
+                return $this->redirectToRoute('index');
+            }catch (OAuthCompanyException $e){
+                return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => 'Credential bad or try again later']);
+            }
         }
 
-        return $response;
+        return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -54,7 +61,7 @@ class InstagramController extends BaseController
     public function commentsAction(InstagramPost $instagramPost, Request $request)
     {
         /**
-         * @var Business $currentBusiness
+         * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
 
@@ -81,7 +88,7 @@ class InstagramController extends BaseController
     public function editPostAction(InstagramPost $instagramPost, Request $request)
     {
         /**
-         * @var Business $currentBusiness
+         * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
 
@@ -120,7 +127,7 @@ class InstagramController extends BaseController
     public function editAccountAction(InstagramAccount $instagramAccount, Request $request)
     {
         /**
-         * @var Business $currentBusiness
+         * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
 

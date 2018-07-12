@@ -1,0 +1,26 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+{% block body %}
+    <div class="container login">
+        <div class="login-form">
+            <div class="form-signin-heading">
+                <span>Login</span>
+            </div>
+            {{ form_start(form, {attr: {class: 'form-signin'} }) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+        <a href="{{ url('registration') }}"></a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.btn').on('click', function () {
+            var $this = $(this);
+            $this.button('loading');
+        });
+    </script>
+{% endblock %}

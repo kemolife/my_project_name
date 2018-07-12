@@ -1,0 +1,19 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+{% block body %}
+    <div class="container login">
+        <div class="login-form">
+            {% if error is defined %}
+                <span class="error-service-auth">{{ error }}</span>
+            {% endif %}
+            <div class="form-signin-heading">
+                <span>Enter Foursquare credential for sync</span>
+            </div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace SingAppBundle\Service;
+namespace SingAppBundle\Services;
 
 
 use SingAppBundle\Entity\BusinessInfo;
@@ -23,7 +23,7 @@ class GoogleService
     public function auth()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret_451730707758-fdkkh5o0viovg8vpbaeedkhnvk9mudom.apps.googleusercontent.com.json');
+        $client->setAuthConfig('client_secret_389043269771-eqgracqvstr97pmks1nkqhj0reu50pf3.apps.googleusercontent.com.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
@@ -37,7 +37,7 @@ class GoogleService
     {
 
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret_451730707758-fdkkh5o0viovg8vpbaeedkhnvk9mudom.apps.googleusercontent.com.json');
+        $client->setAuthConfig('client_secret_389043269771-eqgracqvstr97pmks1nkqhj0reu50pf3.apps.googleusercontent.com.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
@@ -49,13 +49,14 @@ class GoogleService
     public function getLocations(GoogleAccount $googleAccount)
     {
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret_451730707758-fdkkh5o0viovg8vpbaeedkhnvk9mudom.apps.googleusercontent.com.json');
+        $client->setAuthConfig('client_secret_389043269771-eqgracqvstr97pmks1nkqhj0reu50pf3.apps.googleusercontent.com.json');
         $client->setAccessToken($googleAccount->getAccessToken());
         $client->setAccessType('offline');
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
 
         $googleMyBusiness = new Google_Service_MyBusiness($client);
+        return $googleMyBusiness->categories->listCategories();
     }
 
     public function createGoogleAccount(Request $request, $accessTokeData)
@@ -87,12 +88,12 @@ class GoogleService
      */
     private function getBusinessByUID($uid)
     {
-        $repository = $this->em->getRepository('AppBundle:Business');
+        $repository = $this->em->getRepository('SingAppBundle:BusinessInfo');
 
         /**
          * @var BusinessInfo $business
          */
-        $business = $repository->findOneBy(['uid' => $uid]);
+        $business = $repository->findOneBy(['id' => 1]);
 
         return $business;
     }

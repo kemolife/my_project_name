@@ -4,7 +4,7 @@
 namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\GoogleAccount;
-use SingAppBundle\Service\GoogleService;
+use SingAppBundle\Services\GoogleService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,9 +47,9 @@ class GoogleController extends BaseController
      */
     public function chooseLocationAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:GoogleAccount');
+        $repository = $this->getDoctrine()->getRepository('SingAppBundle:GoogleAccount');
 
-        $googleAccount = $repository->findOneBy(['business' => $this->getCurrentBusiness($request)->getId()]);
+        $googleAccount = $repository->findOneBy(['business' => 1]);
 
         if ($googleAccount instanceof GoogleAccount) {
             /**
@@ -57,8 +57,9 @@ class GoogleController extends BaseController
              */
             $googleService = $this->get('app.google.service');
 
-            $googleService->getLocations($googleAccount);
+            var_dump($googleService->getLocations($googleAccount)); die;
         }
+
 
         return $this->redirectToRoute('social-network-posts');
     }

@@ -11,9 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * InstagramAccount.
  *
  * @ORM\Entity()
- * @UniqueEntity(fields={"login"})
- * @UniqueEntity(fields={"name"})
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"SingAppBundle\EntityListener\SetOwnerListener"})
  */
 class InstagramAccount extends SocialNetworkAccount
 {
@@ -196,5 +195,37 @@ class InstagramAccount extends SocialNetworkAccount
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getOwners()
+    {
+        return [$this->getUser()];
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return InstagramAccount
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

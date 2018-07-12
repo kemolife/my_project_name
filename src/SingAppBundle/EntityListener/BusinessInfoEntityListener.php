@@ -15,29 +15,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class BusinessInfoEntityListener
 {
     /**
-     * @param LifecycleEventArgs $args
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @ORM\PostUpdate
-     * @ORM\PostPersist
-     */
-    public function test(BusinessInfo $entity, LifecycleEventArgs $args)
-    {
-        $em = $args->getEntityManager();
-
-        foreach (['test1', 'test2'] as $name) {
-            $additionalCategory = new AdditionalCategoriesBusinessInfo();
-            $additionalCategory->addBusiness($entity);
-            $additionalCategory->setName($name);
-
-
-            $em->persist($additionalCategory);
-        }
-
-        $em->flush();
-    }
-
-    /**
      * @param BusinessInfo $entity
      * @param LifecycleEventArgs $args
      * @throws \Doctrine\ORM\ORMException

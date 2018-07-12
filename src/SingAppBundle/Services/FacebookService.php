@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SingAppBundle\Service;
+namespace SingAppBundle\Services;
 
 
 use SingAppBundle\Entity\BusinessInfo;
@@ -107,7 +107,7 @@ class FacebookService
      */
     private function getBusinessByUID($uid)
     {
-        $repository = $this->em->getRepository('AppBundle:Business');
+        $repository = $this->em->getRepository('SingAppBundle:Business');
 
         /**
          * @var Business $business

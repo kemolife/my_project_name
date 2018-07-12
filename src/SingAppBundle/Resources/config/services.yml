@@ -1,4 +1,14 @@
+imports:
+    - { resource: listeners.yml }
 services:
+    form_authenticator:
+        class: SingAppBundle\Security\FormAuthenticator
+        arguments: ["@router", "@security.password_encoder"]
+
+    app.user_provider:
+        class: SingAppBundle\Security\Authentication\AppUserProvider
+        arguments: ['@doctrine.orm.entity_manager']
+
     google_provider:
         class: SingAppBundle\Providers\GoogleCompanies
         arguments:
@@ -15,10 +25,24 @@ services:
             $entityManager : '@doctrine.orm.entity_manager'
 
     app.google.service:
-        class: SingAppBundle\Service\GoogleService
+        class: SingAppBundle\Services\GoogleService
+        arguments: ['@doctrine.orm.entity_manager']
 
     app.facebook.service:
-        class: SingAppBundle\Service\FacebookService
+        class: SingAppBundle\Services\FacebookService
+        arguments: ['@doctrine.orm.entity_manager']
 
     app.yelp.service:
-        class: SingAppBundle\Service\YelpService
+        class: SingAppBundle\Services\YelpService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    app.instagram.service:
+        class: SingAppBundle\Services\InstagramService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    app.foursquare.service:
+        class: SingAppBundle\Services\FoursquareService
+        arguments: ['@doctrine.orm.entity_manager']
+    app.pinterest.service:
+        class: SingAppBundle\Services\PinterestService
+        arguments: ['@doctrine.orm.entity_manager']

@@ -1,6 +1,6 @@
 <?php
 
-namespace SingAppBundle\Providers;
+namespace SingAppBundle\Providers\Exception;
 
 
 class OAuthCompanyException extends \Exception

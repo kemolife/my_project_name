@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca93dd727ca42fe8a49a0ac9e0fe893f",
+    "content-hash": "457651e3784bdf8d3093e184bf7ef4ff",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -362,6 +362,53 @@
             "description": "Powerful command-line option toolkit",
             "homepage": "http://github.com/c9s/GetOptionKit",
             "time": "2017-06-30T14:54:48+00:00"
+        },
+        {
+            "name": "dirkgroenen/pinterest-api-php",
+            "version": "0.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dirkgroenen/Pinterest-API-PHP.git",
+                "reference": "afd5e531059c09774e958e142b859d201aa00c79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dirkgroenen/Pinterest-API-PHP/zipball/afd5e531059c09774e958e142b859d201aa00c79",
+                "reference": "afd5e531059c09774e958e142b859d201aa00c79",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*",
+                "vlucas/phpdotenv": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DirkGroenen\\Pinterest\\": "src/Pinterest"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Dirk Groenen",
+                    "email": "dirk@bitlabs.nl",
+                    "homepage": "http://dirkgroenen.nl",
+                    "role": "Creator/Developer"
+                }
+            ],
+            "description": "PHP Wrapper for the official Pinterest API",
+            "keywords": [
+                "api",
+                "pinterest",
+                "wrapper"
+            ],
+            "time": "2016-05-10T15:36:53+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1798,6 +1845,33 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "hownowstephen/php-foursquare",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hownowstephen/php-foursquare.git",
+                "reference": "f2f6d3656556bf3575f8beca5dd44109c999b5a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hownowstephen/php-foursquare/zipball/f2f6d3656556bf3575f8beca5dd44109c999b5a0",
+                "reference": "f2f6d3656556bf3575f8beca5dd44109c999b5a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FoursquareApi": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "A simple PHP library for accessing the foursquare API (see: https://developer.foursquare.com)",
+            "time": "2015-06-08T14:19:23+00:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -4369,6 +4443,58 @@
                 "framework"
             ],
             "time": "2018-05-25T13:16:49+00:00"
+        },
+        {
+            "name": "thetwelvelabs/foursquare",
+            "version": "v0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chriswoodford/foursquare-php.git",
+                "reference": "edbfcba2993a101ead8f381394742a4689aec398"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chriswoodford/foursquare-php/zipball/edbfcba2993a101ead8f381394742a4689aec398",
+                "reference": "edbfcba2993a101ead8f381394742a4689aec398",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "haxx-se/curl": "1.0.0",
+                "kriswallsmith/buzz": "0.7.*",
+                "phpunit/phpunit": "4.1.*",
+                "symfony/http-foundation": "2.2.*"
+            },
+            "suggest": {
+                "kriswallsmith/buzz": "Use Buzz for HTTP Requests",
+                "symfony/http-foundation": "Use Symfony for HTTP Requests and/or Redirects"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TheTwelve\\Foursquare\\": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Woodford",
+                    "email": "chris.woodford@gmail.com",
+                    "homepage": "http://ideapatterns.com"
+                }
+            ],
+            "description": "Foursquare API Client",
+            "homepage": "http://thetwelvelabs.com",
+            "keywords": [
+                "foursquare"
+            ],
+            "time": "2014-07-26T22:49:09+00:00"
         },
         {
             "name": "twig/twig",

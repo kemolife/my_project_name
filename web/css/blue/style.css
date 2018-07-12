@@ -154,7 +154,7 @@ footer > span {
 
 .form-signin-heading {
     font-family: SegoeUIReqular;
-    font-size: 36px;
+    font-size: 18px;
     font-weight: 300;
     font-style: normal;
     font-stretch: normal;
@@ -165,10 +165,11 @@ footer > span {
     margin-bottom: 36px;
 }
 
-.form-signin-heading > span {
-    width: 86px;
-    height: 48px;
-    display: inline-block;
+.error-service-auth{
+    color: red;
+    font-size: 18px;
+    text-align: center;
+    display: block;
 }
 
 .control {

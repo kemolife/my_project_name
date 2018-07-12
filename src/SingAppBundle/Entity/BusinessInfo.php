@@ -126,9 +126,9 @@ class BusinessInfo
     protected $uploadedFiles;
 
     /**
-     * @var string|null
      *
-     * @ORM\Column(name="user_id", type="integer", length=11, nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 
@@ -392,30 +392,6 @@ class BusinessInfo
     }
 
     /**
-     * Set user.
-     *
-     * @param int $user
-     *
-     * @return BusinessInfo
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return int
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Add additionalCategory.
      *
      * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
@@ -497,5 +473,29 @@ class BusinessInfo
     public function getUploadedFiles()
     {
         return $this->uploadedFiles;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \SingAppBundle\Entity\User|null $user
+     *
+     * @return BusinessInfo
+     */
+    public function setUser(\SingAppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \SingAppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

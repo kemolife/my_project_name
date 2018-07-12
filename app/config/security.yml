@@ -1,24 +1,47 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    role_hierarchy:
+        ROLE_USER:
+          - ABILITY_USER_OWNER
+          - ABILITY_USER_UPDATE
+          - ABILITY_USER_DELETE
+          - ABILITY_MESSAGE_OWNER
+          - ABILITY_MESSAGE_UPDATE
+          - ABILITY_MESSAGE_DELETE
+          - ABILITY_INSTAGRAM_ACCOUNT_OWNER
+          - ABILITY_INSTAGRAM_ACCOUNT_UPDATE
+          - ABILITY_INSTAGRAM_ACCOUNT_DELETE
+          - ABILITY_INSTAGRAM_POST_OWNER
+          - ABILITY_INSTAGRAM_POST_UPDATE
+          - ABILITY_INSTAGRAM_POST_DELETE
+          - ABILITY_DATA_FOR_SEO_TASK_OWNER
+          - ABILITY_DATA_FOR_SEO_TASK_CREATE
+          - ABILITY_DATA_FOR_SEO_TASK_UPDATE
+          - ABILITY_DATA_FOR_SEO_TASK_DELETE
+          - ABILITY_COMPETITOR_DOMAIN_OWNER
+          - ABILITY_COMPETITOR_DOMAIN_CREATE
+          - ABILITY_COMPETITOR_DOMAIN_DELETE
+        ROLE_SUPER_ADMIN: [ROLE_USER]
+    encoders:
+        SingAppBundle\Entity\User: sha512
     providers:
-        in_memory:
-            memory: ~
-
+        app.user_provider:
+            id: app.user_provider
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            anonymous: ~
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            provider: app.user_provider
+            logout:
+                path:   /logout
+                target: /
+            guard:
+                authenticators:
+                    - form_authenticator
+        default:
+            anonymous: ~

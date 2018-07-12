@@ -1,0 +1,11 @@
+services:
+    app.user.entity_listener:
+        class: SingAppBundle\EntityListener\UserEntityListener
+        arguments: ['@security.password_encoder', '@security.token_storage']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+    app.set_owner.entity_listener:
+        class: SingAppBundle\EntityListener\SetOwnerListener
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: doctrine.orm.entity_listener }

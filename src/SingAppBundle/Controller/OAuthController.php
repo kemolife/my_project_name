@@ -5,27 +5,33 @@ namespace SingAppBundle\Controller;
 use FacebookAds\Http\Adapter\Curl\Curl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Businessinfo controller.
  *
- * @Route("oauth")
  */
 class OAuthController extends BaseController
 {
     /**
      * @Route("/", name="index")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
         $currentBusiness = $this->getCurrentBusiness($request);
-        $businessForm = $this->businessPostForm(new BusinessInfo(), $request)->createView();
-        $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true)->createView();
+        $businessForm = $this->businessPostForm(new BusinessInfo(), $request, false,  $user)->createView();
+        $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true, $user)->createView();
         $params = [
             'businesses' => $this->getBusinesses(),
             'businessForm' => $businessForm,

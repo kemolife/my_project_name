@@ -22,10 +22,19 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
 
+    SingAppBundle\:
+        resource: '../../src/SingAppBundle/*'
+        exclude: '../../src/SingAppBundle/{Entity,Migrations,Tests}'
+
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    SingAppBundle\Controller\:
+        resource: '../../src/SingAppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 

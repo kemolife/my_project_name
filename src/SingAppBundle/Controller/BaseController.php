@@ -4,7 +4,9 @@ namespace SingAppBundle\Controller;
 
 
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\User;
 use SingAppBundle\Form\BusinessInfoType;
+use SingAppBundle\Repository\BusinessInfoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,7 +19,9 @@ class BaseController extends Controller
         return $repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
-    public function businessPostForm($entity, Request $request, $update = false)
+
+
+    public function businessPostForm(BusinessInfo $entity, Request $request, $update = false, User $user)
     {
         if($update){
             $options = ['method' => 'PUT', 'validation_groups' => ['update']];
@@ -31,7 +35,7 @@ class BaseController extends Controller
 
         if ($businessPostForm->isSubmitted() && $businessPostForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
+            $entity->setUser($user);
             $em->persist($entity);
             $em->flush();
 
@@ -43,7 +47,7 @@ class BaseController extends Controller
     public function getCurrentBusiness(Request $request)
     {
         /**
-         * @var BusinessRepository $repository
+         * @var BusinessInfoRepository $repository
          */
         $repository = $this->getDoctrine()->getRepository('SingAppBundle:BusinessInfo');
 

@@ -17,11 +17,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({
  *     "google"="GoogleAccount",
  *     "instagram"="InstagramAccount",
- *     "facebook"="FacebookAccount"
+ *     "facebook"="FacebookAccount",
+ *     "yelp"="YelpAccount",
+ *     "foursquare"="FoursquareAccount",
+ *     "pinterest" = "PinterestAccount"
  * })
  * @ORM\Entity()
  */
-abstract class SocialNetworkAccount
+abstract class SocialNetworkAccount implements HasOwnerInterface
 {
 
     /**
@@ -43,6 +46,12 @@ abstract class SocialNetworkAccount
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $business;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
 
     /**
      * Get id
@@ -97,5 +106,29 @@ abstract class SocialNetworkAccount
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return SocialNetworkAccount
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

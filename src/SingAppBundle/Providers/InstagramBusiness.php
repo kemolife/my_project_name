@@ -6,11 +6,19 @@ namespace SingAppBundle\Providers;
 use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Instagram;
+use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\InstagramAccount;
+use SingAppBundle\Entity\User;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 
 class InstagramBusiness
 {
     protected $ig;
-    protected $entityManager;
+    protected $em;
+    /**
+     * @var User $business
+     */
+    protected $user;
 
     /**
      * InstagramBusiness constructor.
@@ -19,36 +27,67 @@ class InstagramBusiness
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->em = $entityManager;
+
+    }
+
+    public function auth(User $user, BusinessInfo $business)
+    {
+        $settings = $this->getSettingData($user, $business);
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-        $this->ig = new Instagram($this->getSettingData()->debug, $this->getSettingData()->runcatedDebug);
+        $this->ig = new Instagram($settings->debug, $settings->runcatedDebug);
         try {
-            $this->ig->login($this->getSettingData()->username, $this->getSettingData()->password);
+            $this->ig->login($settings->username, $settings->password);
+            return $this;
         } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
+    }
 
+    public function createAccount(BusinessInfo $business, InstagramAccount $instagram)
+    {
+        $createdDate = new \DateTime();
+
+        $instagram->setCreated($createdDate);
+        $instagram->setBusiness($business);
+
+        $this->em->persist($instagram);
+        $this->em->flush();
     }
 
     /**
      * @return \stdClass
      */
-    protected function getSettingData()
+    protected function getSettingData(User $user, BusinessInfo $business)
     {
+        $instagram = $this->getIstagramSetting($user, $business);
         $data = new \stdClass();
-        $data->debug =true;
+        $data->debug =false;
         $data->runcatedDebug = false;
-        $data->username = 'clinic_51';
-        $data->password = 'S3ptember';
+        $data->username = $instagram->getName();
+        $data->password = $instagram->getPassword();
         return $data;
     }
 
+    public function getIstagramSetting(User $user, BusinessInfo $business)
+    {
+        $repository = $this->em->getRepository('SingAppBundle:InstagramAccount');
+        $istagram = $repository->findOneBy(['user' => $user, 'business' => $business]);
+
+        return $istagram;
+    }
+
     /**
-     * @return null|object
+     * @return null|BusinessInfo
      */
     protected function getClientData()
     {
-        return $this->entityManager->getRepository('SingAppBundle:BusinessInfo')->findOneBy(['user' => 1]);
+        return $this->em->getRepository('SingAppBundle:BusinessInfo')->findOneBy(['user' => $this->user->getId()]);
+    }
+
+    protected function setUserData(User $user)
+    {
+        $this->user = $user;
     }
 
     /**
@@ -61,7 +100,7 @@ class InstagramBusiness
         $data->phone = $this->getClientData()->getPhoneNumber();
         $data->name = $this->getClientData()->getName();
         $data->biographi = $this->getClientData()->getDescription();
-        $data->email = 'mktk76@yahoo.com';
+        $data->email = 'jo@cubeonline.com.au';
         $data->gender = 3;
 
         return $data;
