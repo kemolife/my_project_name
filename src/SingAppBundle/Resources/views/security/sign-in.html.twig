@@ -9,9 +9,9 @@
             </div>
             {{ form_start(form, {attr: {class: 'form-signin'} }) }}
             {{ form_widget(form) }}
+            <a href="{{ url('registration') }}">Registration</a>
             {{ form_end(form) }}
         </div>
-        <a href="{{ url('registration') }}"></a>
     </div>
 
 {% endblock %}

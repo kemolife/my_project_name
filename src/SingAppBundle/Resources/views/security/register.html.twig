@@ -15,7 +15,8 @@
             {{ form_row(form.plainPassword.first) }}
             {{ form_row(form.plainPassword.second) }}
 
-            <button type="submit">Register</button>
+            <button class ='form-control form-button btn-primary col-md-6' type="submit">Register</button>
+            <a href="{{ url('authorization') }}">Back to Login</a>
             {{ form_end(form) }}
         </div>
     </div>

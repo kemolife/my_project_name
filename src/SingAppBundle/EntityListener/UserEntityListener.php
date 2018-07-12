@@ -4,6 +4,8 @@ namespace SingAppBundle\EntityListener;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -100,5 +102,24 @@ class UserEntityListener
         $encoded = $this->encoder->encodePassword($user, $plainPassword);
 
         $user->setPassword($encoded);
+    }
+
+    /**
+     * @param User $user
+     * @param LifecycleEventArgs $args
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function createPhotos(User $user, LifecycleEventArgs $args)
+    {
+        $business = new BusinessInfo();
+        $business->setName('test-user');
+        $business->setUser($user);
+
+        $em = $args->getEntityManager();
+        $em->persist($business);
+        $em->flush();
     }
 }

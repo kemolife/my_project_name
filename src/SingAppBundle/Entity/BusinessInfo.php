@@ -37,21 +37,21 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=255)
+     * @ORM\Column(name="category", type="string", length=255, nullable=true)
      */
     private $category;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="phone_number", type="string", length=100)
+     * @ORM\Column(name="phone_number", type="string", length=100, nullable=true)
      */
     private $phoneNumber;
 
