@@ -3,7 +3,7 @@
 
 namespace SingAppBundle\Controller;
 
-use SingAppBundle\Service\FacebookService;
+use SingAppBundle\Services\FacebookService;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

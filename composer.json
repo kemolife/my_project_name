@@ -39,6 +39,7 @@
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "spotonlive/php-google-my-business": "^4.1",
+        "stevenmaguire/oauth2-microsoft": "^2.2",
         "stevenmaguire/oauth2-yelp": "^0.1.0",
         "stevenmaguire/yelp-php": "^2.1",
         "symfony/dom-crawler": "^4.1",

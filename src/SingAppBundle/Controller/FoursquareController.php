@@ -78,7 +78,10 @@ class FoursquareController extends BaseController
         $foursquareService = $this->get('app.foursquare.service');
         $foursquareAccount = $foursquareService->getFoursquareSetting($user, $currentBusiness);
         if(null === $foursquareAccount){
-            $foursquareAccount = $foursquareService->createAccount($currentBusiness, $request->get('code'));
+            $foursquareAccount = $foursquareService->createFoursquareAccount($currentBusiness, $request->get('code'));
+        }
+        if($foursquareAccount->getCode() !== $request->get('code')){
+            $foursquareAccount = $foursquareService->updateFoursquareAccount($foursquareAccount, $request->get('code'));
         }
         if($foursquareService->getToken($foursquareAccount->getCode()) === 0){
             return $this->redirect($foursquareService->auth());

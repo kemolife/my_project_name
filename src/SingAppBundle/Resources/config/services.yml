@@ -30,7 +30,7 @@ services:
 
     app.facebook.service:
         class: SingAppBundle\Services\FacebookService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['%domain%', '@doctrine.orm.entity_manager']
 
     app.yelp.service:
         class: SingAppBundle\Services\YelpService
@@ -45,4 +45,10 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
     app.pinterest.service:
         class: SingAppBundle\Services\PinterestService
+        arguments: ['@doctrine.orm.entity_manager']
+    app.factual.service:
+        class: SingAppBundle\Services\FactualService
+        arguments: ['@doctrine.orm.entity_manager']
+    app.bing.service:
+        class: SingAppBundle\Services\BingService
         arguments: ['@doctrine.orm.entity_manager']
