@@ -21,7 +21,7 @@ class BingService
     private $em;
     private $clientId = '3KB2UCRUVZKBWAKMFLXEKO510XE52JFJTKQNW520AG3FZ514';
     private $clientSecret = 'S2ICWBIL4HZG1B4DPWH4ABWTENGJXTKZ2NDQ5FZLVZ3CIP1G';
-    private $redirectUrl = "http://localhost:8001/bing-oauth2callback";
+    private $redirectUrl = "https://listings.devcom.com/bing/oauth2callback";
 
     public function __construct(EntityManagerInterface $entityManager)
     {

@@ -54,7 +54,7 @@ class BingController extends BaseController
 //    }
 
     /**
-     * @Route("/auth-bing", name="bing-auth")
+     * @Route("/auth/bing", name="bing-auth")
      */
     public function authAction(Request $request)
     {
@@ -66,7 +66,7 @@ class BingController extends BaseController
     }
 
     /**
-     * @Route("/bing-oauth2callback", name="bing-oauth2callback")
+     * @Route("/bing/oauth2callback", name="bing-oauth2callback")
      */
     public function bingCallbackAction(Request $request)
     {

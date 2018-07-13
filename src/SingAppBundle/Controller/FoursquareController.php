@@ -53,7 +53,7 @@ class FoursquareController extends BaseController
     }
 
     /**
-     * @Route("/auth-foursquare", name="foursquare-auth")
+     * @Route("/auth/foursquare", name="foursquare-auth")
      */
     public function authAction(Request $request)
     {
@@ -62,7 +62,7 @@ class FoursquareController extends BaseController
     }
 
     /**
-     * @Route("/foursquare-oauth2callback", name="foursquare-oauth2callback")
+     * @Route("/foursquare/oauth2callback", name="foursquare-oauth2callback")
      */
     public function foursquareCallbackAction(Request $request)
     {

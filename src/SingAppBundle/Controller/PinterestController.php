@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class PinterestController extends BaseController
 {
     /**
-     * @Route("/auth-pinterest", name="pinterest-auth")
+     * @Route("/auth/pinterest", name="pinterest-auth")
      */
     public function authAction(Request $request)
     {
@@ -28,7 +28,7 @@ class PinterestController extends BaseController
     }
 
     /**
-     * @Route("/pinterest-oauth2callback", name="pinterest-oauth2callback", schemes={"https"})
+     * @Route("/pinterest/oauth2callback", name="pinterest-oauth2callback", schemes={"https"})
      */
     public function pinterestCallbackAction(Request $request)
     {
