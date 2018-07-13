@@ -1,48 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list id="ba48ed6b-a6c6-4095-9213-72c41a3bf48b" name="no commit" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/69e6bf8b-6238-4d8b-99b2-c793980f0207.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/69e6bf8b-6238-4d8b-99b2-c793980f0207.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list id="ba48ed6b-a6c6-4095-9213-72c41a3bf48b" name="no commit" comment="" />
     <list default="true" id="b794e96d-db23-4ea9-959f-093130a7565b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessImage.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Entity/Images.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/EntityListener/BusinessInfoEntityListener.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/EntityListener/FileUploadListener.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Form/AdditionCategoriesType.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Form/DataTransformers/BusinessImageTransformer.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Form/PhotosBusinessType.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Providers/CompanyResourceInterface.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Providers/Exception/OAuthCompanyException.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Providers/FacebookCompanies.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Providers/GoogleCompanies.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Providers/InstagramBusiness.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Resources/views/base.html.twig" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Resources/views/oauth/index.html.twig" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/SingAppBundle/Services/GoogleOauthService.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/web/js/google-oauth.js" />
-      <change beforePath="$PROJECT_DIR$/.idea/my_project_name.iml" afterPath="$PROJECT_DIR$/.idea/my_project_name.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
-      <change beforePath="$PROJECT_DIR$/app/AppKernel.php" afterPath="$PROJECT_DIR$/app/AppKernel.php" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
-      <change beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change beforePath="$PROJECT_DIR$/app/config/routing.yml" afterPath="$PROJECT_DIR$/app/config/routing.yml" />
-      <change beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change beforePath="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/config/services.yml" />
-      <change beforePath="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/TripAdvisorService.php" afterPath="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/TripAdvisorService.php" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Controller/BusinessInfoController.php" afterPath="$PROJECT_DIR$/src/SingAppBundle/Controller/BusinessInfoController.php" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Entity/AdditionalCategoriesBusinessInfo.php" afterPath="$PROJECT_DIR$/src/SingAppBundle/Entity/AdditionalCategoriesBusinessInfo.php" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessInfo.php" afterPath="$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessInfo.php" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Entity/PhotosBusinessInfo.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Form/BusinessInfoType.php" afterPath="$PROJECT_DIR$/src/SingAppBundle/Form/BusinessInfoType.php" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Repository/PhotosBusinessInfoRepository.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/SingAppBundle/Resources/config/services.yml" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Resources/views/businessinfo/new.html.twig" afterPath="$PROJECT_DIR$/src/SingAppBundle/Resources/views/businessinfo/new.html.twig" />
-      <change beforePath="$PROJECT_DIR$/src/SingAppBundle/Services/BusinessInfoService.php" afterPath="$PROJECT_DIR$/src/SingAppBundle/Services/BusinessInfoService.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Capfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/my_project_name.iml" afterPath="$PROJECT_DIR$/.idea/my_project_name.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,54 +21,36 @@
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
     <option name="GROUP_CONTENTS" value="false" />
     <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@127.0.0.1" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@127.0.0.1" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@127.0.0.1" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="boom_reviews: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BusinessInfoType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/BusinessInfoType.php">
+      <file leaf-file-name="GetConnectButtonAndStatus.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetConnectButtonAndStatus.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
-              <folding />
+            <state relative-caret-position="363">
+              <caret line="51" column="17" lean-forward="false" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+              <folding>
+                <element signature="e#40#80#0#PHP" expanded="true" />
+                <marker date="1531473873833" expanded="true" signature="1274:1287" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BusinessImageTransformer.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/DataTransformers/BusinessImageTransformer.php">
+      <file leaf-file-name="BingController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-              <folding>
-                <element signature="e#55#94#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="124">
+              <caret line="55" column="7" lean-forward="false" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -112,80 +58,78 @@
       <file leaf-file-name="OAuthController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="53" column="48" lean-forward="false" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="48" />
+            <state relative-caret-position="318">
+              <caret line="35" column="41" lean-forward="false" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BusinessInfoController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BusinessInfoController.php">
+      <file leaf-file-name="InstagramAccountForm.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/InstagramAccountForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="53" column="5" lean-forward="false" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdditionCategoriesType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/AdditionCategoriesType.php">
+      <file leaf-file-name="InstagramController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/InstagramController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+            <state relative-caret-position="150">
+              <caret line="22" column="44" lean-forward="false" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileUploadListener.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/EntityListener/FileUploadListener.php">
+      <file leaf-file-name="PinterestController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/PinterestController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-              <folding>
-                <element signature="e#48#90#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessInfo.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessInfo.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="109" column="74" lean-forward="false" selection-start-line="109" selection-start-column="74" selection-end-line="109" selection-end-column="74" />
+            <state relative-caret-position="150">
+              <caret line="18" column="53" lean-forward="false" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Images.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/Images.php">
+      <file leaf-file-name="YelpController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/YelpController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="53" column="6" lean-forward="false" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+            <state relative-caret-position="3">
+              <caret line="33" column="55" lean-forward="false" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BusinessImage.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessImage.php">
+      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="27" />
+            <state relative-caret-position="469">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotosBusinessType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/PhotosBusinessType.php">
+      <file leaf-file-name="development.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/deploy/development.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+            <state relative-caret-position="330">
+              <caret line="26" column="34" lean-forward="false" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deploy.rb" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/deploy.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -202,27 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>prepareReview</find>
-      <find>SASINAN</find>
-      <find>string</find>
-      <find>form</find>
-      <find>yelp_business_id</find>
-      <find>additionalCategories</find>
-      <find>additionalCategoriesField</find>
-      <find>categories-button</find>
-      <find>categoriesButton</find>
-      <find>gmb_api_version</find>
-      <find>handleClientLoad</find>
-      <find>handleAuthClick</find>
-      <find>user</find>
-      <find>sign-in-or-out-button</find>
-      <find>abstract</find>
-      <find>getResponse</find>
-      <find>getParsedResponse</find>
-      <find>statusChangeCallback</find>
-      <find>getCurrentUser</find>
-      <find>site</find>
-      <find>web</find>
       <find>dateCreation</find>
       <find>Cookie</find>
       <find>para</find>
@@ -232,12 +155,42 @@
       <find>PhotosBusinessInfo</find>
       <find>all</find>
       <find>business</find>
+      <find>AppBundle</find>
+      <find>@Notifiable</find>
+      <find>Sign</find>
+      <find>form_authenticator</find>
+      <find>authenticationUtils</find>
+      <find>editAccountAction</find>
+      <find>user</find>
+      <find>csrftok</find>
+      <find>social-network-posts</find>
+      <find>login</find>
+      <find>.form-signin-heading</find>
+      <find>Yelp</find>
+      <find>instagram</find>
+      <find>stevenmaguire</find>
+      <find>foursquare</find>
+      <find>exce</find>
+      <find>domain</find>
+      <find>getAndUpdatePrivateVenues</find>
+      <find>foursquare-oauth2callback</find>
+      <find>var_</find>
+      <find>var</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>object</replace>
       <replace>edit_form</replace>
+      <replace>SingAppBundle</replace>
+      <replace>Foursquare</replace>
+      <replace>foursquare</replace>
+      <replace>pinterest</replace>
+      <replace>bing</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/SingAppBundle</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -245,57 +198,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/Exceptions/ParserException.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/RatemyagentService.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Controller/ReviewsController.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/views/servicessetting/new.html.twig" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/SetingServices.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Form/ServicesSettingType.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Entity/SettingData.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Entity/ServicesSetting.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/views/servicessetting/edit.html.twig" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/SettingServices.php" />
-        <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/app/config/parameters.yml" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/businessinfo/edit.html.twig" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/config/services.yml" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Controller/ServicesSettingController.php" />
-        <option value="src:table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.business_info" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/PhotoBussinesType.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/PhotoBusinessType.php" />
-        <option value="$PROJECT_DIR$/app/config/config.yml" />
-        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/oauth/new.html.twig" />
-        <option value="$PROJECT_DIR$/app/config/routing.yml" />
-        <option value="$PROJECT_DIR$/web/js/google-oauth.js" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/base.html.twig" />
-        <option value="$PROJECT_DIR$/app/AppKernel.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/GoogleOauthService.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/OAuthCompanyException.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthControllerController.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/oauth/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/CompanyResourceInterface.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/GoogleCompanies.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/InstagrameBusiness.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/FacebookCompanies.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/config/services.yml" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/PhotosBusinessInfo.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/InstagramBusiness.php" />
-        <option value="$PROJECT_DIR$/src/ReviewsServicesBundle/Services/TripAdvisorService.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/AdditionCategoriesType.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/BusinessInfoService.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthController.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/AdditionalCategoriesBusinessInfo.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/EntityListener/BusinessInfoEntityListener.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/Images.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessImage.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/PhotosBusinessType.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/businessinfo/new.html.twig" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/EntityListener/FileUploadListener.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/DataTransformers/BusinessImageTransformer.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/BusinessInfoType.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Security/FormAuthenticator.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Security/Authentication/AppUserProvider.php" />
         <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessInfo.php" />
-        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/BusinessInfoController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/EntityListener/BusinessInfoEntityListener.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/HasOwnerInterface.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/EntityListener/SetOwnerListener.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/YelpAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/FacebookAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/InstagramAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/GoogleAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/RegistrationUserController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/YelpType.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/config/listeners.yml" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/DataTransformers/IntToBoolean.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/InstagramService.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/services-form/error.html.twig" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/InstagramAccountForm.php" />
+        <option value="$PROJECT_DIR$/web/css/style.css" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/services-form/instagram.html.twig" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/services-form/yelp.html.twig" />
+        <option value="$PROJECT_DIR$/web/css/blue/style.css" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Providers/InstagramBusiness.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/services-form/foursquare.html.twig" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Form/FoursquareType.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/FoursquareAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/PinterestAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/PinterestService.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/YelpController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/YelpService.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/FactualController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/FactualService.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/BingService.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/FacebookController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/app/config/parameters.yml" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Services/FoursquareService.php" />
+        <option value="$PROJECT_DIR$/vendor/hownowstephen/php-foursquare/src/FoursquareApi.php" />
+        <option value="$PROJECT_DIR$/app/config/parameters.yml.dist" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Twig/GetSiteSettings.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/BingAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Entity/SocialNetworkAccount.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/FoursquareController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Twig/GetConnectButton.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Resources/views/oauth/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/BingController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/InstagramController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/PinterestController.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Twig/GetConnectButtonAndStatus.php" />
+        <option value="$PROJECT_DIR$/src/SingAppBundle/Controller/BaseController.php" />
+        <option value="$PROJECT_DIR$/config/deploy/development.rb" />
       </list>
     </option>
   </component>
@@ -388,6 +341,20 @@
       <path value="$PROJECT_DIR$/vendor/lazyjsonmapper/lazyjsonmapper" />
       <path value="$PROJECT_DIR$/vendor/knpuniversity/oauth2-client-bundle" />
       <path value="$PROJECT_DIR$/vendor/php-curl-class/php-curl-class" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/vendor/facebook/php-business-sdk" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/oauth-subscriber" />
+      <path value="$PROJECT_DIR$/vendor/spotonlive/php-google-my-business" />
+      <path value="$PROJECT_DIR$/vendor/stevenmaguire/yelp-php" />
+      <path value="$PROJECT_DIR$/vendor/stevenmaguire/oauth2-yelp" />
+      <path value="$PROJECT_DIR$/vendor/thetwelvelabs/foursquare" />
+      <path value="$PROJECT_DIR$/vendor/hownowstephen/php-foursquare" />
+      <path value="$PROJECT_DIR$/vendor/dirkgroenen/pinterest-api-php" />
+      <path value="$PROJECT_DIR$/vendor/stevenmaguire/oauth2-microsoft" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
@@ -412,6 +379,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -422,78 +390,40 @@
             <path>
               <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
               <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
               <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SingAppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SingAppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SingAppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SingAppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="EntityListener" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="my_project_name" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my_project_name" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SingAppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Form" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="deploy" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../boom-reviews" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CubeOnline" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/SingAppBundle/EntityListener" />
-      <recent name="$PROJECT_DIR$/src/SingAppBundle/Entity" />
-      <recent name="$PROJECT_DIR$/src/SingAppBundle/Resources/views" />
-      <recent name="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/views" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web/images/listing-icons" />
       <recent name="$PROJECT_DIR$/src/SingAppBundle/Providers/Exception" />
       <recent name="$PROJECT_DIR$/src/SingAppBundle/Resources/views" />
       <recent name="$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/SingAppBundle/Entity" />
+      <recent name="$PROJECT_DIR$/src/SingAppBundle" />
+      <recent name="$PROJECT_DIR$/src/SingAppBundle/Controller" />
+      <recent name="$PROJECT_DIR$/src/SingAppBundle/Services" />
+      <recent name="$PROJECT_DIR$/src/SingAppBundle/Resources/views/services-form" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -638,6 +568,7 @@
       <workItem from="1529400579670" duration="18768000" />
       <workItem from="1529477951905" duration="15987000" />
       <workItem from="1529503693242" duration="27716000" />
+      <workItem from="1531215361855" duration="70655000" />
     </task>
     <task id="LOCAL-00001" summary="boom review">
       <created>1528962348839</created>
@@ -667,28 +598,77 @@
       <option name="project" value="LOCAL" />
       <updated>1529054041607</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="listings">
+      <created>1531388356505</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1531388356505</updated>
+    </task>
+    <task id="LOCAL-00006" summary="listings">
+      <created>1531408663719</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1531408663719</updated>
+    </task>
+    <task id="LOCAL-00007" summary="listings #1">
+      <created>1531409290751</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1531409290751</updated>
+    </task>
+    <task id="LOCAL-00008" summary="listings #2">
+      <created>1531466950786</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1531466950786</updated>
+    </task>
+    <task id="LOCAL-00009" summary="listings #3">
+      <created>1531470923028</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1531470923028</updated>
+    </task>
+    <task id="LOCAL-00010" summary="listings #4">
+      <created>1531472208762</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1531472208762</updated>
+    </task>
+    <task id="LOCAL-00011" summary="listings #5">
+      <created>1531474051139</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1531474051139</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248040000" />
+    <option name="totallyTimeSpent" value="318695000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="950" extended-state="6" />
+    <frame x="-1" y="25" width="1922" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1925844" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19477054" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893288" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20420587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299748" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20384204" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871535" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299748" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33123425" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33113313" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39924434" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -697,6 +677,7 @@
       <window_info id="Database Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914573" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -710,181 +691,151 @@
     <MESSAGE value="boom review" />
     <MESSAGE value="boom review database" />
     <MESSAGE value="boom review #2" />
-    <option name="LAST_COMMIT_MESSAGE" value="boom review #2" />
+    <MESSAGE value="listings" />
+    <MESSAGE value="listings #1" />
+    <MESSAGE value="listings #2" />
+    <MESSAGE value="listings #3" />
+    <MESSAGE value="listings #4" />
+    <MESSAGE value="listings #5" />
+    <option name="LAST_COMMIT_MESSAGE" value="listings #5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthController.php</url>
-          <line>53</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Providers/Exception/OAuthCompanyException.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/PinterestService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mgp25/instagram-php/src/Instagram.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-339">
-          <caret line="230" column="20" lean-forward="false" selection-start-line="230" selection-start-column="20" selection-end-line="230" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="59" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Providers/FacebookCompanies.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1084">
-          <caret line="95" column="27" lean-forward="false" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Services/FacebookService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="46" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Entity/Reviews.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
-          <caret line="66" column="6" lean-forward="false" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mgp25/instagram-php/src/Request/Account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="116" column="32" lean-forward="false" selection-start-line="116" selection-start-column="32" selection-end-line="116" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Providers/InstagramBusiness.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="82" column="14" lean-forward="false" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
+        <state relative-caret-position="381">
+          <caret line="58" column="60" lean-forward="false" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
           <folding>
-            <element signature="e#44#84#0#PHP" expanded="false" />
+            <element signature="e#44#58#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Providers/GoogleCompanies.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/YelpService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+        <state relative-caret-position="-912">
+          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="e#44#58#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/FactualService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="73" column="42" lean-forward="false" selection-start-line="73" selection-start-column="42" selection-end-line="73" selection-end-column="42" />
+          <folding>
+            <element signature="e#44#58#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/stevenmaguire/oauth2-microsoft/src/Provider/Microsoft.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/facebook-php-business-sdk-master/src/FacebookAds/Http/Adapter/Curl/Curl.php">
+    <entry file="file://$PROJECT_DIR$/vendor/league/oauth2-client/src/Provider/AbstractProvider.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        <state relative-caret-position="206">
+          <caret line="730" column="24" lean-forward="false" selection-start-line="730" selection-start-column="24" selection-end-line="730" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/league/oauth2-client/src/Token/AccessToken.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/FacebookService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="46" column="54" lean-forward="false" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="54" />
+          <folding>
+            <element signature="e#44#82#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Resources/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="480">
+          <caret line="32" column="28" lean-forward="false" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/Request.php">
+    <entry file="file://$PROJECT_DIR$/vendor/hownowstephen/php-foursquare/src/FoursquareApi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="108" column="19" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="19" />
+        <state relative-caret-position="-2671">
+          <caret line="78" column="34" lean-forward="true" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Services/TripAdvisorService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/web/images/listing-icons/yalwa.com.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Services/ZomatoService.php">
+    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/GoogleOauthService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Controller/ReviewsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="166" column="36" lean-forward="false" selection-start-line="166" selection-start-column="36" selection-end-line="166" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Controller/ServicesSettingController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="33" column="57" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/BusinessInfoService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="41" column="34" lean-forward="false" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="15" />
+        <state relative-caret-position="180">
+          <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/parameters.yml.dist">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="26" lean-forward="false" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/FactualController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="28" lean-forward="false" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="28" />
+          <folding>
+            <element signature="e#44#82#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/FoursquareService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="72" column="7" lean-forward="false" selection-start-line="72" selection-start-column="7" selection-end-line="72" selection-end-column="7" />
+          <folding>
+            <element signature="e#44#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/InstagramService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2329">
+          <caret line="256" column="38" lean-forward="false" selection-start-line="256" selection-start-column="38" selection-end-line="256" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/FindBy.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -892,243 +843,287 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/FormatPhoneNumber.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="11" selection-end-column="52" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetAvailableSmsCount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="20" column="46" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="20" selection-end-column="46" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetCompetitorByDomain.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetCountByStatus.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetCurrentlySynced.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetCurrentlySyncedCount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetLogoBySiteName.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetMessageStats.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetRankResultBySearchEngine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetRepliesSmsCount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetResponseByReviewId.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/FacebookAccount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/FacebookController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="421" column="23" lean-forward="false" selection-start-line="421" selection-start-column="23" selection-end-line="421" selection-end-column="23" />
+          <caret line="14" column="51" lean-forward="false" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/Event/LifecycleEventArgs.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Services/BingService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
+        <state relative-caret-position="45">
+          <caret line="3" column="23" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/common/lib/Doctrine/Common/Persistence/Event/LifecycleEventArgs.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/FoursquareAccount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="38" column="12" lean-forward="false" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+        <state relative-caret-position="345">
+          <caret line="27" column="7" lean-forward="false" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/UnitOfWork.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/PinterestAccount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-291">
-          <caret line="922" column="36" lean-forward="false" selection-start-line="922" selection-start-column="36" selection-end-line="922" selection-end-column="36" />
+        <state relative-caret-position="120">
+          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/SocialNetworkAccount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="25" column="33" lean-forward="false" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="33" />
+        <state relative-caret-position="300">
+          <caret line="23" column="12" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/BingAccount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="593" column="31" lean-forward="false" selection-start-line="593" selection-start-column="31" selection-end-line="593" selection-end-column="31" />
+        <state relative-caret-position="780">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/AdditionalCategoriesBusinessInfo.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/FoursquareController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="100" column="5" lean-forward="false" selection-start-line="100" selection-start-column="5" selection-end-line="100" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="-192">
+          <caret line="51" column="36" lean-forward="false" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
+          <folding>
+            <element signature="e#45#83#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.additional_categories_business_info">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Entity/ServicesSetting.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Resources/views/oauth/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1494">
-          <caret line="83" column="7" lean-forward="false" selection-start-line="79" selection-start-column="4" selection-end-line="83" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReviewsServicesBundle/Entity/SettingData.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="13" column="15" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/PhotosBusinessInfo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+        <state relative-caret-position="529">
+          <caret line="305" column="0" lean-forward="false" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SingAppBundle/EntityListener/BusinessInfoEntityListener.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="38" />
-          <folding>
-            <element signature="e#49#91#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Resources/views/businessinfo/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="59" lean-forward="false" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="59" />
+        <state relative-caret-position="244">
+          <caret line="33" column="46" lean-forward="false" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/collections/lib/Doctrine/Common/Collections/ArrayCollection.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/InstagramAccount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="83" column="25" lean-forward="false" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="25" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.business_info">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.images">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.photos_business_info">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/adad235d/69e6bf8b-6238-4d8b-99b2-c793980f0207/boom_reviews.business_image">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/EntityListener/FileUploadListener.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/EntityListener/SetOwnerListener.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="e#48#90#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/DataTransformers/BusinessImageTransformer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-          <folding>
-            <element signature="e#55#94#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/BusinessInfoType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+        <state relative-caret-position="435">
+          <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/PhotosBusinessType.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Providers/InstagramBusiness.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+        <state relative-caret-position="585">
+          <caret line="51" column="36" lean-forward="false" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Repository/BusinessInfoRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="32" lean-forward="false" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="55" column="7" lean-forward="false" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/PinterestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="18" column="53" lean-forward="false" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/YelpController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3">
+          <caret line="33" column="55" lean-forward="false" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Twig/GetConnectButtonAndStatus.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="51" column="17" lean-forward="false" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+          <folding>
+            <element signature="e#40#80#0#PHP" expanded="true" />
+            <marker date="1531473873833" expanded="true" signature="1274:1287" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/InstagramController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="22" column="44" lean-forward="false" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/InstagramAccountForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/OAuthController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="53" column="48" lean-forward="false" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="48" />
+        <state relative-caret-position="318">
+          <caret line="35" column="41" lean-forward="false" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessImage.php">
+    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BaseController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="27" />
+        <state relative-caret-position="469">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/Images.php">
+    <entry file="file://$PROJECT_DIR$/config/deploy/development.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="53" column="6" lean-forward="false" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+        <state relative-caret-position="330">
+          <caret line="26" column="34" lean-forward="false" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Entity/BusinessInfo.php">
+    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="109" column="74" lean-forward="false" selection-start-line="109" selection-start-column="74" selection-end-line="109" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Form/AdditionCategoriesType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingAppBundle/Controller/BusinessInfoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="53" column="5" lean-forward="false" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -4,14 +4,17 @@ namespace SingAppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * BusinessInfo
  *
  * @ORM\Table(name="business_info")
  * @ORM\Entity(repositoryClass="SingAppBundle\Repository\BusinessInfoRepository")
+ * @ORM\EntityListeners({"SingAppBundle\EntityListener\BusinessInfoEntityListener"})
  */
 class BusinessInfo
 {
@@ -27,7 +30,7 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
@@ -96,28 +99,48 @@ class BusinessInfo
 
     /**
      * @var string|null
-     *
-     * @ORM\OneToMany(targetEntity="AdditionalCategoriesBusinessInfo", mappedBy="business", cascade={"persist"})
-     *
+     * @ORM\ManyToMany(targetEntity="AdditionalCategoriesBusinessInfo", inversedBy="business", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="addition_category_business",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="bus_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     *  }
+     * )
      */
     private $additionalCategories;
 
     /**
      * @var File|null
      *
-     * @ORM\OneToMany(targetEntity="PhotosBusinessInfo", mappedBy="business", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="BusinessImage", mappedBy="businessInfo", cascade={"persist"})
      *
      */
     private $photos;
 
     /**
+     * @var ArrayCollection
+     */
+    protected $uploadedFiles;
+
+    /**
      * @var string|null
      *
-     * @ORM\Column(name="user_id", type="integer", length=11, nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -199,6 +222,30 @@ class BusinessInfo
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set phoneNumber.
+     *
+     * @param string $phoneNumber
+     *
+     * @return BusinessInfo
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber.
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 
     /**
@@ -344,14 +391,6 @@ class BusinessInfo
     {
         return $this->video;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add additionalCategory.
@@ -392,11 +431,11 @@ class BusinessInfo
     /**
      * Add photo.
      *
-     * @param \SingAppBundle\Entity\PhotosBusinessInfo $photo
+     * @param \SingAppBundle\Entity\BusinessImage $photo
      *
      * @return BusinessInfo
      */
-    public function addPhoto(\SingAppBundle\Entity\PhotosBusinessInfo $photo)
+    public function addPhoto(\SingAppBundle\Entity\BusinessImage $photo)
     {
         $this->photos[] = $photo;
 
@@ -406,11 +445,11 @@ class BusinessInfo
     /**
      * Remove photo.
      *
-     * @param \SingAppBundle\Entity\PhotosBusinessInfo $photo
+     * @param \SingAppBundle\Entity\BusinessImage $photo
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePhoto(\SingAppBundle\Entity\PhotosBusinessInfo $photo)
+    public function removePhoto(\SingAppBundle\Entity\BusinessImage $photo)
     {
         return $this->photos->removeElement($photo);
     }
@@ -425,27 +464,15 @@ class BusinessInfo
         return $this->photos;
     }
 
-    /**
-     * Set user.
-     *
-     * @param int $user
-     *
-     * @return BusinessInfo
-     */
-    public function setUser($user)
+    public function setUploadedFiles($uploadedFiles)
     {
-        $this->user = $user;
+        $this->uploadedFiles = $uploadedFiles;
 
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return int
-     */
-    public function getUser()
+    public function getUploadedFiles()
     {
-        return $this->user;
+        return $this->uploadedFiles;
     }
 }
