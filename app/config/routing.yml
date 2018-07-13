@@ -7,3 +7,8 @@ reviews_services:
     resource: "@ReviewsServicesBundle/Controller/"
     type:     annotation
     prefix:   /
+
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
