@@ -104,22 +104,22 @@ class UserEntityListener
         $user->setPassword($encoded);
     }
 
-    /**
-     * @param User $user
-     * @param LifecycleEventArgs $args
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function createPhotos(User $user, LifecycleEventArgs $args)
-    {
-        $business = new BusinessInfo();
-        $business->setName('test-user');
-        $business->setUser($user);
-
-        $em = $args->getEntityManager();
-        $em->persist($business);
-        $em->flush();
-    }
+//    /**
+//     * @param User $user
+//     * @param LifecycleEventArgs $args
+//     * @throws \Doctrine\ORM\ORMException
+//     * @throws \Doctrine\ORM\OptimisticLockException
+//     * @ORM\PostPersist()
+//     * @ORM\PostUpdate()
+//     */
+//    public function createPhotos(User $user, LifecycleEventArgs $args)
+//    {
+//        $business = new BusinessInfo();
+//        $business->setName('test-user');
+//        $business->setUser($user);
+//
+//        $em = $args->getEntityManager();
+//        $em->persist($business);
+//        $em->flush();
+//    }
 }

@@ -29,6 +29,9 @@ class OAuthController extends BaseController
          * @var User $user
          */
         $user = $this->getUser();
+        if(empty($this->getBusinesses())){
+            return $this->addBusiness($request, $user);
+        }
         $currentBusiness = $this->getCurrentBusiness($request);
         $businessForm = $this->businessPostForm(new BusinessInfo(), $request, false,  $user)->createView();
         $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true, $user)->createView();

@@ -58,4 +58,21 @@ class BaseController extends Controller
     {
         return $this->findBy('SingAppBundle:BusinessInfo', ['user' => $this->getUser()->getId()]);
     }
+
+    public function addBusiness(Request $request, User $user)
+    {
+        $businessInfo = new Businessinfo();
+        $form = $this->createForm('SingAppBundle\Form\BusinessInfoType', $businessInfo);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $businessInfo->setUser($user->getId());
+            $em->persist($businessInfo);
+            $em->flush();
+
+            return $this->redirectToRoute('index', array('id' => $businessInfo->getId()));
+        }
+        return $this->render('@SingApp/oauth/add-business.html.twig',  ['form' => $form->createView()]);
+    }
 }
