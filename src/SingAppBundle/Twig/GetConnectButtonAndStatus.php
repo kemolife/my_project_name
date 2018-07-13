@@ -9,7 +9,7 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
 use Symfony\Component\Routing\RouterInterface;
 
-class GetConnectButton extends \Twig_Extension
+class GetConnectButtonAndStatus extends \Twig_Extension
 {
 
     private $em;
@@ -25,6 +25,7 @@ class GetConnectButton extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('getButton', array($this, 'getButton')),
+            new \Twig_SimpleFunction('getStatusConnect', array($this, 'getStatusConnect')),
         );
     }
 
@@ -39,6 +40,19 @@ class GetConnectButton extends \Twig_Extension
         }
 
         return $button;
+    }
+
+    public function getStatusConnect($type, BusinessInfo $businessInfo, User $user)
+    {
+        $status = '<div class="buttons"><div class="synced"><div class="btn-xs"><i class="fas fa-check-circle synce-done"></i> <span>Connected</span></div></div></div>';
+        $repository = $this->em->getRepository('SingAppBundle:'.ucfirst($type).'Account');
+
+        $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
+        if(null !== $siteSettings){
+            $status = ' <div class="buttons"><div class="synced"><div class="btn-xs"><i class="fas fa-circle-notch fa-spin sync-in-progress"></i><span>Listing sync in progress</span></div> </div></div>';
+        }
+
+        return $status;
     }
 
 }
