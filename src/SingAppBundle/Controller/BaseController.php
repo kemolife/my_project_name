@@ -56,6 +56,6 @@ class BaseController extends Controller
 
     public function getBusinesses()
     {
-        return $this->findBy('SingAppBundle:BusinessInfo');
+        return $this->findBy('SingAppBundle:BusinessInfo', ['user' => $this->getUser()->getId()]);
     }
 }

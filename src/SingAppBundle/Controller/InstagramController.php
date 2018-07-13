@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class InstagramController extends BaseController
 {
     /**
-     * @Route("/instagram", name="instagram")
+     * @Route("/instagram", name="instagram-auth")
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)

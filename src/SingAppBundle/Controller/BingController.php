@@ -54,7 +54,7 @@ class BingController extends BaseController
 //    }
 
     /**
-     * @Route("/auth-bing", name="auth-bing")
+     * @Route("/auth-bing", name="bing-auth")
      */
     public function authAction(Request $request)
     {

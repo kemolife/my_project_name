@@ -7,6 +7,7 @@ namespace SingAppBundle\Twig;
 use Doctrine\ORM\EntityManagerInterface;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class GetConnectButtonAndStatus extends \Twig_Extension
@@ -35,8 +36,8 @@ class GetConnectButtonAndStatus extends \Twig_Extension
         $repository = $this->em->getRepository('SingAppBundle:'.ucfirst($type).'Account');
 
         $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
-        if(null !== $siteSettings){
-            $button = '<a href="'.$this->router->generate($type.'-auth').'" class="btn btn-primary"> Connect </a>';
+        if(null === $siteSettings){
+            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId()]).'" class="btn btn-primary"> Connect </a>';
         }
 
         return $button;
@@ -48,7 +49,7 @@ class GetConnectButtonAndStatus extends \Twig_Extension
         $repository = $this->em->getRepository('SingAppBundle:'.ucfirst($type).'Account');
 
         $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
-        if(null !== $siteSettings){
+        if(null === $siteSettings){
             $status = ' <div class="buttons"><div class="synced"><div class="btn-xs"><i class="fas fa-circle-notch fa-spin sync-in-progress"></i><span>Listing sync in progress</span></div> </div></div>';
         }
 

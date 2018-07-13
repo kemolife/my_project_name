@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class PinterestController extends BaseController
 {
     /**
-     * @Route("/auth-pinterest", name="auth-pinterest")
+     * @Route("/auth-pinterest", name="pinterest-auth")
      */
     public function authAction(Request $request)
     {
