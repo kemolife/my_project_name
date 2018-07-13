@@ -26,7 +26,7 @@ server '192.168.13.160', user: 'root', roles: %w{app web db}
 # Feel free to add new variables to customise your setup.
 set :deploy_to, '/var/www/listings.devcom.com/'
 # Default branch is :master
-set :branch, :'development'
+set :branch, :'master'
 
 #Custom SSH Options
 # ==================
