@@ -29,19 +29,12 @@ class BusinessInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, ['attr' => ['class' => 'form-control']])->
-        add('category', ChoiceType::class,[
-            'attr' => ['class' => 'form-control'],
-            'choices'  => array(
-                'Baby' => 'Baby',
-                'Beauty and fragrances' => 'Beauty and fragrances',
-                'Books and magazines' => 'Books and magazines',
-                'Business to business' => 'Business to business',
-                'Clothing, accessories, and shoes' => 'Clothing, accessories, and shoes',
-                'Computers, accessories, and services' => 'Computers, accessories, and services',
-                'Education' => 'Education',
-                'Electronics and telecom' => 'Electronics and telecom',
-                'Entertainment and media' => 'Entertainment and media'
-            ),
+        add('category', EntityType::class,  [
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'class' => AdditionalCategoriesBusinessInfo::class,
+            'choice_label' => 'name'
         ])->
         add('additionalCategories', EntityType::class,  [
             'class' => AdditionalCategoriesBusinessInfo::class,
