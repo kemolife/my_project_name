@@ -1,5 +1,5 @@
-set :application, 'dashboard_instances'
-set :repo_url, 'git@github.com:gruzik-igor/DashboardInstances.git'
+set :application, 'listings'
+set :repo_url, 'git@gitlab.com:kemolife1990/listings.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
