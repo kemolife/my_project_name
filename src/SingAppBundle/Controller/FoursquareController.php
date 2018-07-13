@@ -53,7 +53,7 @@ class FoursquareController extends BaseController
     }
 
     /**
-     * @Route("/auth-foursquare", name="auth-foursquare")
+     * @Route("/auth-foursquare", name="foursquare-auth")
      */
     public function authAction(Request $request)
     {

@@ -203,9 +203,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('google-auth') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('google', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -231,9 +229,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('auth-bing') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('bing', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -259,9 +255,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('facebook-auth') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('facebook', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -287,9 +281,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('yelp-auth') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('yelp', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -316,9 +308,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('instagram') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('instagram', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -345,9 +335,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('auth-foursquare') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('foursquare', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 
@@ -374,9 +362,7 @@
                                 </p>
                             </div>
                             <div class="col-md-7">
-                                <a href="{{ url('auth-pinterest') }}" class="btn btn-primary">
-                                    Connect
-                                </a>
+                                {{ getButton('pinterest', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
 

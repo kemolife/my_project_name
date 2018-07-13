@@ -20,7 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "facebook"="FacebookAccount",
  *     "yelp"="YelpAccount",
  *     "foursquare"="FoursquareAccount",
- *     "pinterest" = "PinterestAccount"
+ *     "pinterest" = "PinterestAccount",
+ *     "bing" = "BingAccount",
  * })
  * @ORM\Entity()
  */
