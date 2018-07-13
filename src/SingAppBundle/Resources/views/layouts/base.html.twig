@@ -51,7 +51,56 @@
 <body data-gr-c-s-loaded="true">
 <div class="wrap-container">
     <div>
-        {% block body %}{% endblock %}
+        <header class="header">
+            <nav>
+                <div class="title">
+                    <img src="" alt="" class="logo">
+                </div>
+                <ul class="nav nav-pills pull-right">
+                    {% if app.user %}
+                        <li class="link-container {% if app.request.attributes.get('_route') in ['index'] %}active{% endif %}">
+                            <a class="link {% if app.request.attributes.get('_route') in ['index'] %}active-link{% endif %}"
+                               href="{{ url('index') }}">Home</a>
+                        </li>
+                        <li class="link-container-line"></li>
+                        <li class="link-container">
+                            <a class="link" href="{{ url('logout') }}">Logout</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <div class="products">
+            <div class="menu">
+                <div class="selector-control">
+                    <div class="form-group">
+                        <label style="color: white">Select business</label>
+                        <select name="business" id="business" class="form-control">
+                            {% for business in businesses %}
+                                {% if app.request.get('business') == business.id %}
+                                    <option value="{{ business.id }}"
+                                            selected>{{ business.name }}</option>
+                                {% else %}
+                                    <option value="{{ business.id }}">{{ business.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <ul class="nav nav-pills nav-stacked menu-list">
+                    <li>
+                        <a class="menu-link {% if app.request.attributes.get('_route') in ['interactions'] %}selected{% endif %}"
+                           href="{{ url('interactions', app.request.query.all) }}">
+                            <div class="icon-container">
+                                <i class="fas fa-comment menu-icon"></i>
+                            </div>
+                            <span class="link">Interactions</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {% block body %}{% endblock %}
+        </div>
     </div>
 </div>
 {% include '@SingApp/layouts/modals.html.twig' %}
