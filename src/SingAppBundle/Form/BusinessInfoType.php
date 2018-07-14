@@ -45,18 +45,18 @@ class BusinessInfoType extends AbstractType
         add('phoneNumber', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('website', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])->
-        add('openingHours')->
+//        add('openingHours')->
         add('logo', FileType::class, [
-            'data_class' => null, 'attr' => [
-            'class' => 'form-control border-input'],
+            'attr' => ['class' => 'form-control-file'],
+            'data_class' => null,
             'required' => false])->
-        add('paymentOptions')->
+        add('paymentOptions', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('video', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('uploadedFiles', FileType::class, [
             'attr' => [
                 'placeholder' => 'Photo',
-                'class' => 'form-control border-input',
                 'accept' => 'image/*',
+                'class' => 'form-control-file',
                 'multiple' => 'multiple'],
             'multiple' => true,
             'label' => 'Photos',

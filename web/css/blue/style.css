@@ -30,8 +30,8 @@ body {
 }
 
 /*.wrap-container > div > div {*/
-    /*flex: 1 0 auto;*/
-    /*display: flex;*/
+/*flex: 1 0 auto;*/
+/*display: flex;*/
 /*}*/
 
 .wrap-container {
@@ -165,7 +165,7 @@ footer > span {
     margin-bottom: 36px;
 }
 
-.error-service-auth{
+.error-service-auth {
     color: red;
     font-size: 18px;
     text-align: center;
@@ -1069,7 +1069,7 @@ span.best_in_place {
 }
 
 .modal .modal-footer {
-    text-align: center;
+    text-align: right;
 }
 
 .modal-footer {
@@ -1252,32 +1252,32 @@ ul.nav-stacked li.active a:hover, .nav-stacked li.active a:focus, .nav-stacked l
     padding-bottom: 15px;
 }
 
-.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {
-    display: block !important;
-    width: 90% !important;
-    float: none !important;
-}
+/*.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {*/
+/*display: block !important;*/
+/*width: 90% !important;*/
+/*float: none !important;*/
+/*}*/
 
-.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {
-    display: block !important;
-    width: 90% !important;
-    float: none !important;
-    height: 32px;
-    box-sizing: content-box;
-    padding: 3px 6px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555555;
-    background-color: #ffffff;
-    background-image: none;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 4px;
-    -khtml-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
-    margin: 0;
-}
+/*.link-body input[type="text"], .modal input[type="text"], .link-body input[type="password"], .modal input[type="password"] {*/
+/*display: block !important;*/
+/*width: 90% !important;*/
+/*float: none !important;*/
+/*height: 32px;*/
+/*box-sizing: content-box;*/
+/*padding: 3px 6px;*/
+/*font-size: 14px;*/
+/*line-height: 1.42857143;*/
+/*color: #555555;*/
+/*background-color: #ffffff;*/
+/*background-image: none;*/
+/*border: 1px solid #cccccc;*/
+/*-webkit-border-radius: 4px;*/
+/*-khtml-border-radius: 4px;*/
+/*-moz-border-radius: 4px;*/
+/*-o-border-radius: 4px;*/
+/*border-radius: 4px;*/
+/*margin: 0;*/
+/*}*/
 
 form .field.check_box, form .field.radio_button {
     display: inline-block;
@@ -3284,92 +3284,12 @@ input[readonly], textarea[readonly] {
     cursor: pointer;
 }
 
-/* edit business modal */
-#location_edit_modal .split-two {
-    width: 50%;
-}
 
-#location_edit_modal .no-split {
-    width: 100%;
-}
 
 #location_edit_modal .control-group {
     margin-top: 20px;
 }
 
-#location_edit_modal .control-group-row {
-    display: flex;
-}
-
-#location_edit_modal .label-danger,
-#location_edit_modal .remove_fields,
-#location_edit_modal .add_field_button {
-    display: none;
-}
-
-#location_edit_modal .modal-dialog {
-    min-width: 767px;
-    max-width: 1000px;
-    width: 60%;
-}
-
-#location_edit_modal ul.pager, #location_edit_modal .control-group, #location_edit_modal .checkbox-wrapper {
-    padding-left: 12.5px;
-    padding-right: 12.5px;
-}
-
-#location_edit_modal .checkbox:last-child {
-    margin-right: 0;
-}
-
-#location_edit_modal .checkbox, #location_edit_modal .checkbox + .checkbox {
-    margin: 25px 25px 0 0;
-}
-
-#location_edit_modal .alert-danger, #location_edit_modal .fa-exclamation-circle, #location_edit_modal #multiple_items_list {
-    display: none;
-}
-
-#location_edit_modal .checkbox label, #location_edit_modal .radio label {
-    font-weight: 700;
-}
-
-#location_edit_modal .checkbox label {
-    padding-left: 20px;
-}
-
-#location_edit_modal .checkbox-flex input[type="checkbox"] {
-    margin-top: 10px;
-    -webkit-appearance: checkbox;
-}
-
-#location_edit_modal .checkbox input[type="checkbox"] {
-    margin-left: 0px;
-}
-
-#location_edit_modal .controls textarea {
-    height: auto;
-}
-
-#location_edit_modal .image-row {
-    margin-left: -1px;
-    padding-top: 10px;
-    width: 100%;
-}
-
-#location_edit_modal .row {
-    margin-right: -15px;
-    margin-left: -15px;
-}
-
-#location_edit_modal .upload input {
-    border: 0;
-    padding: 0;
-    height: auto;
-    margin-bottom: 10px;
-    display: inline-block;
-    width: 75%;
-}
 
 #location_edit_modal .day.Monday {
     border-top-left-radius: 3px;
@@ -3387,79 +3307,51 @@ input[readonly], textarea[readonly] {
     font-size: small;
 }
 
-#location_edit_modal .split-60 {
-    width: 60%;
-}
-
-#location_edit_modal .image-box {
-    margin-left: -9px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#location_edit_modal .split-60 input {
-    max-width: 355px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-}
-
-#location_edit_modal .split-60 a {
-    color: #979797;
-    font-family: 'PT Sans', sans-serif;
+#location_edit_modal .day #biz-hour-type {
+    color: rgb(102, 102, 102);
+    font-family: "PT Sans", sans-serif;
     font-size: 12px;
-    font-weight: 700;
-    line-height: 21px;
+    font-weight: 400;
+    background-color: white;
+    letter-spacing: 0.04em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    border-radius: 3px;
+    padding: 7px;
 }
 
-#location_edit_modal .remove_fields {
-    margin-left: -7px;
-    font-weight: 100 !important;
-    font-size: 12px !important;
-}
-
-#location_edit_modal select {
-    height: 39px;
-}
-
-#location_edit_modal .select2-selection__rendered {
-    padding: 0px;
+#location_edit_modal .selectpicker-time {
+    width: 100%;
     height: 30px;
+    margin-bottom: 7px;
+    background-image: url(/assets/whitelabel_dashboard/svg/bg-combobox-arrow.svg);
+    -webkit-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
 }
 
-#location_edit_modal #category-cont {
-    padding: 0px;
+#location_edit_modal .day input.loc_time {
+    border-radius: 4px;
+    padding: 0px 6px;
 }
 
-#location_edit_modal #location_biz_url {
-    width: 97% !important;
+#location_edit_modal .day input {
+    height: 30px;
+    display: inline-block;
+    width: 100%;
+    outline: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(205, 205, 205);
+    border-image: initial;
+    border-radius: 5px;
+    padding: 6px;
 }
 
-#location_edit_modal #location_street {
-    width: 99% !important;
-}
-
-#location_edit_modal .split-four {
-    width: 25% !important;
-}
-
-#location_edit_modal .label-text-padding #location_franchise, #location_edit_modal .label-text-padding #location_skip_address {
-    margin: 0 !important;
-}
-
-#location_edit_modal .label-text-padding .checkbox-text {
-    margin-left: 25px;
-}
-
-#location_edit_modal .modal-footer {
-    text-align: right !important;
-}
-
-#location_edit_modal .biz-image-cont {
-    padding-left: 29px
-}
-
-#location_edit_modal .input_fields_wrap > div {
-    display: flex;
+input[type="file"]{
+    width: 400px
 }
 
 .tree-item-inner .title {
