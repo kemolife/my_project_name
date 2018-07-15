@@ -13,7 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
- *     "SingAppBundle\EntityListener\FileUploadListener"})
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\InstagramPostEntityListener"})
  */
 class InstagramPost  extends Post
 {

@@ -5,80 +5,86 @@
         {% include '@SingApp/layouts/navigation.html.twig' %}
         <div class="messages">
             <div class="card">
-                <div class="product-card-header">
-                    <div class="card-header-title">
+                {% if activeServices is empty %}
+                    <div class="center-block">
+                        <a href="{{ url('index') }}">Connect to service</a>
+                    </div>
+                {% else %}
+                    <div class="product-card-header">
+                        <div class="card-header-title">
                         <span class="card-title">
                             Your posts
                         </span>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" data-toggle="modal"
+                                    data-target="#createPost">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#createPost">
-                            <i class="fas fa-plus"></i> Add
-                        </button>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h3>Active services</h3>
+                            <ul class="nav">
+                                {% for service in activeServices %}
+                                    <li>
+                                        <img src="{{ asset('images/icons/'~class(service)~'.svg') }}" alt="" width="24"
+                                             height="24">
+                                        Instagram
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-10">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Caption</th>
+                                    <th>Account</th>
+                                    <th>Post date</th>
+                                    <th>Post status</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for post in posts %}
+                                    {% if post.socialNetwork == 'instagram' %}
+                                        <tr>
+                                            <td>{{ post.title }}</td>
+                                            <td>{{ post.caption }}</td>
+                                            <td>
+                                                {% if post.account %}
+                                                    {{ post.account.name }}
+                                                {% else %}
+                                                    Not selected
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                            <td>{{ post.status }}</td>
+                                            <td>
+                                                <a href="{{ url('instagram-post-edit', {'instagramPost': post.id }) }}"
+                                                   class="btn btn-default btn-sm">
+                                                    <i class="far fa-edit"></i>Edit
+                                                </a>
+                                                <a data-toggle="modal"
+                                                   data-target="#deleteConfirmation"
+                                                   data-confirm-body="Do you really want to delete this post?"
+                                                   data-delete-url="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
+                                                   class="btn btn-default btn-sm btn-delete">
+                                                    <i class="far fa-trash-alt"></i>Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-2">
-                        <h3>Active services</h3>
-                        <ul class="nav">
-                            {% for service in activeServices %}
-                                <li>
-                                    <img src="{{ asset('images/icons/'~class(service)~'.svg') }}" alt="" width="24"
-                                         height="24">
-                                    Instagram
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="col-md-10">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Caption</th>
-                                <th>Account</th>
-                                <th>Post date</th>
-                                <th>Post status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for post in posts %}
-                                {% if post.socialNetwork == 'instagram' %}
-                                    <tr>
-                                        <td>{{ post.title }}</td>
-                                        <td>{{ post.caption }}</td>
-                                        <td>
-                                            {% if post.account %}
-                                                {{ post.account.name }}
-                                            {% else %}
-                                                Not selected
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
-                                        <td>{{ post.status }}</td>
-                                        <td>
-                                            <a href="{{ url('instagram-post-edit', {'instagramPost': post.id }) }}"
-                                               class="btn btn-default btn-sm">
-                                                <i class="far fa-edit"></i>Edit
-                                            </a>
-                                            <a data-toggle="modal"
-                                               data-target="#deleteConfirmation"
-                                               data-confirm-body="Do you really want to delete this post?"
-                                               data-delete-url="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
-                                               class="btn btn-default btn-sm btn-delete">
-                                                <i class="far fa-trash-alt"></i>Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
