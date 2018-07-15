@@ -1,9 +1,4 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
-{% block stylesheets %}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css"
-          rel="stylesheet"/>
-{% endblock %}
 {% block body %}
     {% if is_granted('ROLE_USER') %}
         <div class="products">
@@ -19,10 +14,7 @@
                                     data-target="#editBusinessModal">
                                 Edit Business
                             </button>
-                            <button class="btn btn-primary" data-toggle="modal"
-                                    data-target="#addBusinessModal">
-                                Add Business
-                            </button>
+                            <a href="{{ url('add-business') }}" class="btn btn-primary">Add Business</a>
                         </div>
                     </div>
                     <hr>
@@ -219,46 +211,18 @@
 {% block modal %}
     <div class="modal fade" id="editBusinessModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Edit business</h4>
                 </div>
-                {{ form_start(businessFormEdit) }}
-                <div class="modal-body">
-                    {{ form_widget(businessFormEdit) }}
-                    {% for photo in currentBusiness.photos %}
-                        <img style="width: 12%" src="{{ asset(''~photo.image~'') }}">
-                    {% endfor %}
+                <div class="modal-body" id="location_edit_modal" style="display: inline-block;">
+                    {% include '@SingApp/modal/busines-info-modal.html.twig' with {'form': businessFormEdit} %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
-                {{ form_end(businessFormEdit) }}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="addBusinessModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit business</h4>
-                </div>
-                {{ form_start(businessForm) }}
-                <div class="modal-body">
-                    {{ form_widget(businessForm) }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-                {{ form_end(businessForm) }}
             </div>
         </div>
     </div>
@@ -266,13 +230,18 @@
 
 
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
-            var html = '<img style="width: 12%" src="{{ asset(''~currentBusiness.logo~'') }}" >';
-            $('#singappbundle_businessinfo_additionalCategories')
-                .select2({width: '100%'});
-            $('#singappbundle_businessinfo_logo').parent().append(html)
+            if ('{{ currentBusiness.logo }}') {
+                var html = '<img style="width: 12%" src="{{ asset(''~currentBusiness.logo~'') }}" >';
+                $('#singappbundle_businessinfo_logo').parent().append(html)
+            }
+            {% for photo in currentBusiness.photos %}
+            if ('{{ photo.image }}') {
+                html = '<img style="width: 12%" src="{{ asset(''~photo.image~'') }}" >';
+                $('#singappbundle_businessinfo_uploadedFiles').parent().append(html)
+            }
+            {% endfor %}
         });
     </script>
 {% endblock %}

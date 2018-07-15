@@ -31,9 +31,14 @@ class AdditionalCategoriesBusinessInfo
 
     /**
      * @ORM\ManyToMany(targetEntity="BusinessInfo", mappedBy="additionalCategories")
-     * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      **/
     private $business;
+
+    /**
+     * @ORM\OneToOne(targetEntity="BusinessInfo", mappedBy="category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
 
     /**
      * Constructor
@@ -111,5 +116,33 @@ class AdditionalCategoriesBusinessInfo
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    public function __toString() {
+        return $this->name;
+    }
+
+    /**
+     * Set category.
+     *
+     * @param \SingAppBundle\Entity\BusinessInfo|null $category
+     *
+     * @return AdditionalCategoriesBusinessInfo
+     */
+    public function setCategory(\SingAppBundle\Entity\BusinessInfo $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return \SingAppBundle\Entity\BusinessInfo|null
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

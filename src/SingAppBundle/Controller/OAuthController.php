@@ -75,4 +75,17 @@ class OAuthController extends BaseController
         $em->persist($additionalCategoryEntity);
         $em->flush();
     }
+
+    /**
+     * @Route("/business/add", name="add-business")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function addBusinessAction(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        return $this->addBusiness($request, $user);
+    }
 }

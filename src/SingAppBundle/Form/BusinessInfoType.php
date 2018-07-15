@@ -39,19 +39,22 @@ class BusinessInfoType extends AbstractType
         add('additionalCategories', EntityType::class,  [
             'class' => AdditionalCategoriesBusinessInfo::class,
             'multiple' => true,
+            'attr' => [
+                'class' => 'additional-categories-select2',
+            ],
             'choice_label' => 'name'
         ])->
         add('address', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('phoneNumber', TextType::class, ['attr' => ['class' => 'form-control']])->
-        add('website', TextType::class, ['attr' => ['class' => 'form-control']])->
-        add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])->
+        add('website', TextType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
+        add('description', TextareaType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
 //        add('openingHours')->
         add('logo', FileType::class, [
             'attr' => ['class' => 'form-control-file'],
             'data_class' => null,
             'required' => false])->
-        add('paymentOptions', TextType::class, ['attr' => ['class' => 'form-control']])->
-        add('video', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('paymentOptions', TextType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
+        add('video', TextType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
         add('uploadedFiles', FileType::class, [
             'attr' => [
                 'placeholder' => 'Photo',

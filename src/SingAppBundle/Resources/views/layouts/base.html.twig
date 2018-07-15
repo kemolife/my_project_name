@@ -60,7 +60,7 @@
                     {% if app.user %}
                         <li class="link-container {% if app.request.attributes.get('_route') in ['index'] %}active{% endif %}">
                             <a class="link {% if app.request.attributes.get('_route') in ['index'] %}active-link{% endif %}"
-                               href="{{ url('index') }}">Home</a>
+                               href="{{ url('index') }}">Welcome {{ app.user.username }}</a>
                         </li>
                         <li class="link-container-line"></li>
                         <li class="link-container">
@@ -94,6 +94,12 @@
 <link rel="stylesheet" href="{{ asset('css/tags-input.css') }}">
 <script src="{{ asset('js/tags-input.js') }}"></script>
 <!-- End Tags input -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
 
 <script src="{{ asset('js/common.js') }}"></script>
 

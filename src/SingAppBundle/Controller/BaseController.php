@@ -62,12 +62,12 @@ class BaseController extends Controller
     public function addBusiness(Request $request, User $user)
     {
         $businessInfo = new Businessinfo();
-        $form = $this->createForm('SingAppBundle\Form\BusinessInfoType', $businessInfo);
+        $form = $this->createForm(BusinessInfoType::class, $businessInfo);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $businessInfo->setUser($user->getId());
+            $businessInfo->setUser($user);
+            $businessInfo->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
             $em->persist($businessInfo);
             $em->flush();
 

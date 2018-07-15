@@ -35,9 +35,7 @@ class BusinessInfo
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="category", type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="AdditionalCategoriesBusinessInfo",  inversedBy="category")
      */
     private $category;
 
@@ -70,9 +68,9 @@ class BusinessInfo
     private $description;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="opening_hours", type="time", nullable=true)
+     * @ORM\Column(name="opening_hours", type="text", nullable=true)
      */
     private $openingHours;
 
@@ -392,42 +390,6 @@ class BusinessInfo
     }
 
     /**
-     * Add additionalCategory.
-     *
-     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
-     *
-     * @return BusinessInfo
-     */
-    public function addAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
-    {
-        $this->additionalCategories[] = $additionalCategory;
-
-        return $this;
-    }
-
-    /**
-     * Remove additionalCategory.
-     *
-     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
-    {
-        return $this->additionalCategories->removeElement($additionalCategory);
-    }
-
-    /**
-     * Get additionalCategories.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAdditionalCategories()
-    {
-        return $this->additionalCategories;
-    }
-
-    /**
      * Add photo.
      *
      * @param \SingAppBundle\Entity\BusinessImage $photo
@@ -497,5 +459,41 @@ class BusinessInfo
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add additionalCategory.
+     *
+     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
+     *
+     * @return BusinessInfo
+     */
+    public function addAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
+    {
+        $this->additionalCategories[] = $additionalCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove additionalCategory.
+     *
+     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
+    {
+        return $this->additionalCategories->removeElement($additionalCategory);
+    }
+
+    /**
+     * Get additionalCategories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdditionalCategories()
+    {
+        return $this->additionalCategories;
     }
 }
