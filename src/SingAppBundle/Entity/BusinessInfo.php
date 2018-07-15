@@ -42,14 +42,14 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="phone_number", type="string", length=100, nullable=true)
+     * @ORM\Column(name="phone_number", type="string", length=100)
      */
     private $phoneNumber;
 
@@ -80,6 +80,13 @@ class BusinessInfo
      * @ORM\Column(name="logo", type="string", length=255, nullable=true)
      */
     private $logo;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var string|null
@@ -495,5 +502,29 @@ class BusinessInfo
     public function getAdditionalCategories()
     {
         return $this->additionalCategories;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return BusinessInfo
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

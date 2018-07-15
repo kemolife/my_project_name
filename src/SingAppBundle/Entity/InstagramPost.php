@@ -249,4 +249,28 @@ class InstagramPost  extends Post
     {
         return $this->socialNetwork;
     }
+
+    /**
+     * Set schedule.
+     *
+     * @param int $schedule
+     *
+     * @return InstagramPost
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * Get schedule.
+     *
+     * @return int
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
 }

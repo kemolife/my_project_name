@@ -24,5 +24,14 @@
                 <span class="link">Interactions</span>
             </a>
         </li>
+        <li>
+            <a class="menu-link {% if app.request.attributes.get('_route') in ['social-network-posts'] %}selected{% endif %}"
+               href="{{ url('social-network-posts', app.request.query.all) }}">
+                <div class="icon-container">
+                    <i class="fas fa-file-alt menu-icon"></i>
+                </div>
+                <span class="link">Social posts</span>
+            </a>
+        </li>
     </ul>
 </div>

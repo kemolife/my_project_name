@@ -71,6 +71,16 @@ abstract class Post
      * @var ArrayCollection
      */
     protected $uploadedFiles;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $schedule = 0;
     /**
      * Constructor
      */
@@ -254,5 +264,53 @@ abstract class Post
     public function getSocialNetwork()
     {
         return $this->socialNetwork;
+    }
+
+    /**
+     * Set schedule.
+     *
+     * @param int $schedule
+     *
+     * @return Post
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * Get schedule.
+     *
+     * @return int
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \SingAppBundle\Entity\User|null $user
+     *
+     * @return Post
+     */
+    public function setUser(\SingAppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \SingAppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

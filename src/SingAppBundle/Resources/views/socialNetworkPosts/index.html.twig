@@ -1,0 +1,197 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+
+    <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="messages">
+            <div class="card">
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title">
+                            Your posts
+                        </span>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#createPost">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <h3>Active services</h3>
+                        <ul class="nav">
+                            {% for service in activeServices %}
+                                <li>
+                                    <img src="{{ asset('images/icons/'~class(service)~'.svg') }}" alt="" width="24"
+                                         height="24">
+                                    Instagram
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-10">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Caption</th>
+                                <th>Account</th>
+                                <th>Post date</th>
+                                <th>Post status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for post in posts %}
+                                {% if post.socialNetwork == 'instagram' %}
+                                    <tr>
+                                        <td>{{ post.title }}</td>
+                                        <td>{{ post.caption }}</td>
+                                        <td>
+                                            {% if post.account %}
+                                                {{ post.account.name }}
+                                            {% else %}
+                                                Not selected
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                        <td>{{ post.status }}</td>
+                                        <td>
+                                            <a href="{{ url('instagram-post-edit', {'instagramPost': post.id }) }}"
+                                               class="btn btn-default btn-sm">
+                                                <i class="far fa-edit"></i>Edit
+                                            </a>
+                                            <a data-toggle="modal"
+                                               data-target="#deleteConfirmation"
+                                               data-confirm-body="Do you really want to delete this post?"
+                                               data-delete-url="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
+                                               class="btn btn-default btn-sm btn-delete">
+                                                <i class="far fa-trash-alt"></i>Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    <!-- Modal -->
+    <div class="modal fade" id="createPost" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create posts</h4>
+                </div>
+                <form action="{{ url('social-network-posts-create') }}" class="create-post-form" method="POST"
+                      enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="title" name="title" placeholder="Title"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="caption" id="caption" rows="5" placeholder="Caption"
+                                      style="width: 93% !important" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                            <input type="file" id="pro-image" name="photos[]" style="display: none;"
+                                   class="form-control"
+                                   multiple>
+                        </div>
+                        <div class="preview-images-zone">
+                        </div>
+
+                        <div class="custom-checkbox" style="display: inline-block;">
+                            <label>
+                                <input type="checkbox" name="schedule" id="schedule">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Schedule
+                            </label>
+                        </div>
+                        <div class="form-group post-date-input" style="display: none;">
+                            <label for="postDate">Post date:</label>
+                            <input type="text" class="js-datepicker form-control" name="postDate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/bootstrap-tab-history.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            document.getElementById('pro-image').addEventListener('change', readImage, false);
+
+            /*$(".preview-images-zone").sortable();*/
+
+            $(document).on('click', '.image-cancel', function () {
+                let no = $(this).data('no');
+                $(".preview-image.preview-show-" + no).remove();
+            });
+
+            $('#schedule').change(function (e) {
+                if (e.currentTarget.checked) {
+                    $('.post-date-input').css('display', 'block');
+                    $('input[name=postDate]').attr('required', true);
+                } else {
+                    $('.post-date-input').css('display', 'none');
+                    $('input[name=postDate]').removeAttr('required');
+                }
+            });
+
+        });
+
+
+        var num = 4;
+
+        function readImage() {
+            if (window.File && window.FileList && window.FileReader) {
+                var files = event.target.files; //FileList object
+                var output = $(".preview-images-zone");
+
+                for (let i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    if (!file.type.match('image')) continue;
+
+                    var picReader = new FileReader();
+
+                    picReader.addEventListener('load', function (event) {
+                        var picFile = event.target;
+                        var html = '<div class="preview-image preview-show-' + num + '">' +
+                            '<div class="image-cancel" data-no="' + num + '">x</div>' +
+                            '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '" width="100" height="100"></div>' +
+                            '</div>';
+
+                        output.append(html);
+                        num = num + 1;
+                    });
+
+                    picReader.readAsDataURL(file);
+                }
+
+            } else {
+                console.log('Browser not support');
+            }
+        }
+
+    </script>
+{% endblock %}

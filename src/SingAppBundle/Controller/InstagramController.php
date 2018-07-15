@@ -33,9 +33,15 @@ class InstagramController extends BaseController
          * @var User $user
          */
         $user = $this->getUser();
+        /**
+         * @var InstagramBusiness $instagramService
+         */
+        $instagramService = $this->get('instagram_provider');
 
         $instagram = new InstagramAccount();
-        $instagramService = $this->get('instagram_provider');
+        if(null !== $instagramService->getIstagramSetting($user, $currentBusiness)) {
+            $instagram = $instagramService->getIstagramSetting($user, $currentBusiness);
+        }
         $form = $this->createForm(InstagramAccountForm::class, $instagram);
 
         $form->handleRequest($request);
@@ -44,11 +50,11 @@ class InstagramController extends BaseController
              * @var InstagramBusiness $instagramService
              */
             try{
-                $instagramService->createAccount($currentBusiness, $instagram);
-                $instagramService->auth($user, $currentBusiness);
+                $instagramService->createUpdateAccount($currentBusiness, $instagram);
+               $instagramService->auth($user, $currentBusiness)->updateIstagramAccount();
                 return $this->redirectToRoute('index');
             }catch (OAuthCompanyException $e){
-                return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => 'Credential bad or try again later']);
+                return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
             }
         }
 

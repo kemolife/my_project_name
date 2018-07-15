@@ -4,6 +4,7 @@ namespace SingAppBundle\Providers;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Instagram;
 use SingAppBundle\Entity\BusinessInfo;
@@ -19,6 +20,7 @@ class InstagramBusiness
      * @var User $business
      */
     protected $user;
+    private $business;
 
     /**
      * InstagramBusiness constructor.
@@ -33,6 +35,8 @@ class InstagramBusiness
 
     public function auth(User $user, BusinessInfo $business)
     {
+        $this->user = $user;
+        $this->business = $business;
         $settings = $this->getSettingData($user, $business);
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $this->ig = new Instagram($settings->debug, $settings->runcatedDebug);
@@ -44,7 +48,7 @@ class InstagramBusiness
         }
     }
 
-    public function createAccount(BusinessInfo $business, InstagramAccount $instagram)
+    public function createUpdateAccount(BusinessInfo $business, InstagramAccount $instagram)
     {
         $createdDate = new \DateTime();
 
@@ -64,7 +68,7 @@ class InstagramBusiness
         $data = new \stdClass();
         $data->debug =false;
         $data->runcatedDebug = false;
-        $data->username = $instagram->getName();
+        $data->username = $instagram->getLogin();
         $data->password = $instagram->getPassword();
         return $data;
     }
@@ -80,14 +84,9 @@ class InstagramBusiness
     /**
      * @return null|BusinessInfo
      */
-    protected function getClientData()
+    protected function getCurentBusinessData()
     {
-        return $this->em->getRepository('SingAppBundle:BusinessInfo')->findOneBy(['user' => $this->user->getId()]);
-    }
-
-    protected function setUserData(User $user)
-    {
-        $this->user = $user;
+        return $this->business;
     }
 
     /**
@@ -96,11 +95,11 @@ class InstagramBusiness
     protected function getFormatDataToSave()
     {
         $data = new \stdClass();
-        $data->url = $this->getClientData()->getWebsite();
-        $data->phone = $this->getClientData()->getPhoneNumber();
-        $data->name = $this->getClientData()->getName();
-        $data->biographi = $this->getClientData()->getDescription();
-        $data->email = 'jo@cubeonline.com.au';
+        $data->url = $this->getCurentBusinessData()->getWebsite();
+        $data->phone = $this->getCurentBusinessData()->getPhoneNumber();
+        $data->name = $this->getCurentBusinessData()->getName();
+        $data->biographi = $this->getCurentBusinessData()->getDescription();
+        $data->email = $this->getCurentBusinessData()->getEmail();;
         $data->gender = 3;
 
         return $data;
@@ -109,8 +108,9 @@ class InstagramBusiness
     /**
      * @throws OAuthCompanyException
      */
-    public function updateAccount()
+    public function updateIstagramAccount()
     {
+        var_dump($this->getFormatDataToSave()->phone);
         try {
             $this->ig->account->editProfile(
                 $this->getFormatDataToSave()->url,
@@ -120,7 +120,7 @@ class InstagramBusiness
                 $this->getFormatDataToSave()->email,
                 $this->getFormatDataToSave()->gender
             );
-        }catch (InternalException $e){
+        }catch (BadRequestException $e){
             throw new OAuthCompanyException($e->getMessage());
         }
     }
