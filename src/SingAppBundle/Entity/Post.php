@@ -7,7 +7,6 @@ namespace SingAppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * Post.
@@ -77,6 +76,13 @@ abstract class Post
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BusinessInfo")
+     * @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $business;
+
     /**
      * @ORM\Column(type="smallint")
      */
@@ -312,5 +318,29 @@ abstract class Post
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set business.
+     *
+     * @param \SingAppBundle\Entity\BusinessInfo|null $business
+     *
+     * @return Post
+     */
+    public function setBusiness(\SingAppBundle\Entity\BusinessInfo $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business.
+     *
+     * @return \SingAppBundle\Entity\BusinessInfo|null
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
 }

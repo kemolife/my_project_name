@@ -8,6 +8,7 @@ use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Form\InstagramAccountForm;
+use SingAppBundle\Form\InstagramPostForm;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Providers\InstagramBusiness;
 use SingAppBundle\Services\InstagramService;
@@ -50,8 +51,8 @@ class InstagramController extends BaseController
              * @var InstagramBusiness $instagramService
              */
             try{
+                $instagramService->auth($user, $currentBusiness, $instagram)->updateIstagramAccount();
                 $instagramService->createUpdateAccount($currentBusiness, $instagram);
-               $instagramService->auth($user, $currentBusiness)->updateIstagramAccount();
                 return $this->redirectToRoute('index');
             }catch (OAuthCompanyException $e){
                 return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
@@ -71,8 +72,6 @@ class InstagramController extends BaseController
          */
         $currentBusiness = $this->getCurrentBusiness($request);
 
-        $listingReportsUrl = $this->getListingsReportUrl($request);
-
         $user = $this->getUser();
 
         /**
@@ -80,11 +79,9 @@ class InstagramController extends BaseController
          */
         $instagramService = $this->get('app.instagram.service');
 
-        return $this->render('@App/instagram/comments.html.twig', [
+        return $this->render('@SingApp/socialNetworkPosts/instagram/comments.html.twig', [
             'comments' => $instagramService->getComments($instagramPost),
-            'businesses' => $this->getBusinesses($currentBusiness->getType()),
-            'listingReportCsvDownloadURL' => $listingReportsUrl['csv'],
-            'listingReportPdfDownloadURL' => $listingReportsUrl['pdf']
+            'businesses' => $this->getBusinesses(),
         ]);
     }
 
@@ -98,7 +95,6 @@ class InstagramController extends BaseController
          */
         $currentBusiness = $this->getCurrentBusiness($request);
 
-        $listingReportsUrl = $this->getListingsReportUrl($request);
 
         $user = $this->getUser();
 
@@ -116,11 +112,9 @@ class InstagramController extends BaseController
             $response = $this->redirectToRoute('social-network-posts');
 
         } else {
-            $response = $this->render('@App/instagram/edit.html.twig', [
+            $response = $this->render('@SingApp/socialNetworkPosts/instagram/edit.html.twig', [
                 'form' => $instagramPostForm->createView(),
-                'businesses' => $this->getBusinesses($currentBusiness->getType()),
-                'listingReportCsvDownloadURL' => $listingReportsUrl['csv'],
-                'listingReportPdfDownloadURL' => $listingReportsUrl['pdf']
+                'businesses' => $this->getBusinesses(),
             ]);
         }
 
@@ -136,8 +130,6 @@ class InstagramController extends BaseController
          * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
-
-        $listingReportsUrl = $this->getListingsReportUrl($request);
 
         $user = $this->getUser();
 
@@ -155,11 +147,9 @@ class InstagramController extends BaseController
             $response = $this->redirectToRoute('social-network-posts');
 
         } else {
-            $response = $this->render('@App/instagram/edit.html.twig', [
+            $response = $this->render('@SingApp/socialNetworkPosts/instagram/edit.html.twig', [
                 'form' => $instagramAccountForm->createView(),
-                'businesses' => $this->getBusinesses($currentBusiness->getType()),
-                'listingReportCsvDownloadURL' => $listingReportsUrl['csv'],
-                'listingReportPdfDownloadURL' => $listingReportsUrl['pdf']
+                'businesses' => $this->getBusinesses(),
             ]);
         }
 
@@ -185,10 +175,16 @@ class InstagramController extends BaseController
     public function deletePostAction(InstagramPost $instagramPost, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $em->remove($instagramPost);
-        $em->flush();
-
-        $response = $this->redirectToRoute('social-network-posts');
+        try {
+            $this->get('app.instagram.service')->deletePost($instagramPost);
+            $em->remove($instagramPost);
+            $em->flush();
+            $response = $this->redirectToRoute('social-network-posts');
+        }catch (OAuthCompanyException $e){
+            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()]);
+        }catch (\Doctrine\DBAL\DBALException $e){
+            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()]);
+        }
+        return $response;
     }
 }

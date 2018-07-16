@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     "SingAppBundle\EntityListener\SetOwnerListener",
  *     "SingAppBundle\EntityListener\InstagramPostEntityListener"})
  */
-class InstagramPost  extends Post
+class InstagramPost  extends Post implements HasOwnerInterface
 {
 
 
@@ -273,5 +273,13 @@ class InstagramPost  extends Post
     public function getSchedule()
     {
         return $this->schedule;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getOwners()
+    {
+        return [$this->getUser()];
     }
 }

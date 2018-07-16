@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-class GooglePost  extends Post
+class GooglePost  extends Post implements HasOwnerInterface
 {
 
     /**
@@ -133,7 +133,7 @@ class GooglePost  extends Post
     /**
      * Add photo
      *
-     * @param Images $photo
+     * @param GooglePhoto $photo
      *
      * @return GooglePost
      */
@@ -210,5 +210,13 @@ class GooglePost  extends Post
     public function getSchedule()
     {
         return $this->schedule;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getOwners()
+    {
+        return [$this->getUser()];
     }
 }

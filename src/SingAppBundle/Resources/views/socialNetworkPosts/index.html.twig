@@ -1,13 +1,16 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
 {% block body %}
-
+    {% if app.request.get('error') is defined %}
+        <span class="error-service-auth">{{ app.request.get('error') }}</span>
+    {% endif %}
     <div class="products">
         {% include '@SingApp/layouts/navigation.html.twig' %}
         <div class="messages">
             <div class="card">
                 {% if activeServices is empty %}
-                    <div class="center-block">
-                        <a href="{{ url('index') }}">Connect to service</a>
+                    <div class="center-block" style="text-align: center;">
+                        <h3>You hav't any connected services!</h3>
+                        <a class="btn btn-primary" href="{{ url('index') }}">Connect to services</a>
                     </div>
                 {% else %}
                     <div class="product-card-header">
@@ -65,15 +68,7 @@
                                             <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
                                             <td>{{ post.status }}</td>
                                             <td>
-                                                <a href="{{ url('instagram-post-edit', {'instagramPost': post.id }) }}"
-                                                   class="btn btn-default btn-sm">
-                                                    <i class="far fa-edit"></i>Edit
-                                                </a>
-                                                <a data-toggle="modal"
-                                                   data-target="#deleteConfirmation"
-                                                   data-confirm-body="Do you really want to delete this post?"
-                                                   data-delete-url="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
-                                                   class="btn btn-default btn-sm btn-delete">
+                                                <a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}">
                                                     <i class="far fa-trash-alt"></i>Delete
                                                 </a>
                                             </td>

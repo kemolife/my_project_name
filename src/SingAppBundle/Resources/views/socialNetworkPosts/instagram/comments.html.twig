@@ -1,0 +1,56 @@
+{% extends '@App/layouts/base.html.twig' %}
+{% block body %}
+    <div class="main-merge row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header row">
+                    <div class="col-md-2">
+                        <span class="card-header-title">Comments info:</span>
+                    </div>
+                </div>
+                <hr class="hr-big-line">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Author</th>
+                                <th>Comment</th>
+                                <th>Like count</th>
+                                <th>Replie count</th>
+                                <th>Created date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for comment in comments|reverse %}
+                                <tr>
+                                    <td class="text-center">
+                                        <img class="round" width="40" height="40"
+                                             src="{{ comment.getUser().getProfilePicUrl() }}">
+                                        <br>
+                                        <a href="https://instagram.com/{{ comment.getUser().getUsername() }}"><span>{{ comment.getUser().getFullName() }}</span></a>
+                                    </td>
+                                    <td>{{ comment.getText() }}</td>
+                                    <td>{{ comment.getCommentLikeCount() }}</td>
+                                    <td>{{ comment.getChildCommentCount() }}</td>
+                                    <td>
+                                        {{ comment.getCreatedAt()|date('Y-m-d H:i:s') }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

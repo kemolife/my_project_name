@@ -4,11 +4,12 @@
 namespace SingAppBundle\Services;
 
 
+use SingAppBundle\Entity\Images;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
-use SingAppBundle\Entity\Photo;
 use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Response\ConfigureResponse;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 
 class InstagramService
 {
@@ -137,6 +138,7 @@ class InstagramService
 
         $photos = $this->getPhotos($instagramPost);
 
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
 
         try {
@@ -252,10 +254,10 @@ class InstagramService
         $photos = [];
 
         /**
-         * @var Photo $photo
+         * @var Images $photo
          */
         foreach ($instagramPost->getPhotos() as $photo) {
-            $photoPath = $this->webDir . '/' . $photo->getPath();
+            $photoPath = $this->webDir . '/' . $photo->getImage();
 
             $photos[] = [
                 'type' => 'photo',
@@ -266,5 +268,23 @@ class InstagramService
         return $photos;
     }
 
-
+    public function deletePost(InstagramPost $post)
+    {
+        $instagramAccount = $post->getAccount();
+        $mediaId = $post->getMediaId();
+        $debug = false;
+        $truncatedDebug = false;
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+        $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+        try {
+            $ig->login($instagramAccount->getLogin(), $instagramAccount->getPassword());
+            if ($mediaId) {
+                $ig->media->delete($mediaId);
+            } else {
+                throw new OAuthCompanyException('Media not found');
+            }
+        } catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
 }

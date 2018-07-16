@@ -33,12 +33,12 @@ class InstagramBusiness
 
     }
 
-    public function auth(User $user, BusinessInfo $business)
+    public function auth(User $user, BusinessInfo $business, InstagramAccount $account = null)
     {
         $this->user = $user;
         $this->business = $business;
-        $settings = $this->getSettingData($user, $business);
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+        $settings = $this->getSettingData($user, $business, $account);
         $this->ig = new Instagram($settings->debug, $settings->runcatedDebug);
         try {
             $this->ig->login($settings->username, $settings->password);
@@ -62,11 +62,15 @@ class InstagramBusiness
     /**
      * @return \stdClass
      */
-    protected function getSettingData(User $user, BusinessInfo $business)
+    protected function getSettingData(User $user, BusinessInfo $business, InstagramAccount $account = null)
     {
-        $instagram = $this->getIstagramSetting($user, $business);
+        if(null === $account) {
+            $instagram = $this->getIstagramSetting($user, $business);
+        }else{
+            $instagram = $account;
+        }
         $data = new \stdClass();
-        $data->debug =false;
+        $data->debug = false;
         $data->runcatedDebug = false;
         $data->username = $instagram->getLogin();
         $data->password = $instagram->getPassword();
@@ -120,11 +124,10 @@ class InstagramBusiness
                 $this->getFormatDataToSave()->email,
                 $this->getFormatDataToSave()->gender
             );
-        }catch (BadRequestException $e){
+        } catch (BadRequestException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
-
 
 
 }

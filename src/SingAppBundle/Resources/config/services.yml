@@ -1,5 +1,7 @@
 imports:
     - { resource: listeners.yml }
+parameters:
+    web_dir: '%kernel.root_dir%/../web'
 services:
     form_authenticator:
         class: SingAppBundle\Security\FormAuthenticator
@@ -38,7 +40,8 @@ services:
 
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
-        arguments: ['@doctrine.orm.entity_manager']
+        public: true
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%']
 
     app.foursquare.service:
         class: SingAppBundle\Services\FoursquareService

@@ -1,0 +1,68 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+    <div class="main-merge row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button class="btn btn-default" onclick="window.history.go(-1); return false;">Cancel</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ dump(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var type = document.getElementById('appbundle_system_settings_type');
+            var form = document.getElementById('appbundle_system_settings');
+            var typeValue = type.value;
+
+            var updateInputType = function (type, form) {
+                var value = document.getElementById('appbundle_system_settings_value');
+
+                if (type === 'color') {
+                    var element = document.createElement('input');
+                    element.setAttribute('id', 'appbundle_system_settings_value');
+                    element.setAttribute('name', 'appbundle_system_settings[value]');
+                    element.setAttribute('type', 'color');
+                    element.setAttribute('required', 'required');
+                    element.setAttribute('class', 'form-control border-input form-control');
+                    element.setAttribute('value', value.value);
+                    value.remove();
+
+                }
+                else {
+                    var element = document.createElement('textarea');
+                    element.setAttribute('id', 'appbundle_system_settings_value');
+                    element.setAttribute('name', 'appbundle_system_settings[value]');
+                    element.setAttribute('required', 'required');
+                    element.setAttribute('class', 'form-control border-input form-control');
+                    element.setAttribute('placeholder', 'Text');
+                    element.innerText = value.value;
+                    value.remove();
+
+                }
+
+                var div = document.createElement('div');
+                div.setAttribute('class', 'form-group');
+                div.appendChild(element);
+
+                form.appendChild(div);
+            };
+
+            type.onchange = function (ev) {
+                updateInputType(ev.target.value, form);
+            };
+
+            updateInputType(typeValue, form);
+
+
+        });
+    </script>
+{% endblock %}

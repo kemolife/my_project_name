@@ -10,6 +10,7 @@ use DateInterval;
 use DateTime;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\InstagramService;
 
 class InstagramPostEntityListener
@@ -34,7 +35,7 @@ class InstagramPostEntityListener
         $em = $args->getEntityManager();
 
         $repository = $em->getRepository('SingAppBundle:InstagramAccount');
-        $instagramAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'isDefault' => 1]);
+        $instagramAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
 
         if ($instagramAccount instanceof InstagramAccount) {
             $entity->setAccount($instagramAccount);
@@ -69,6 +70,19 @@ class InstagramPostEntityListener
                 unset($uploadedFile);
             }
         }
+
+    }
+
+    /**
+     * Schedule instagram post.
+     *
+     * @ORM\PostPersist()
+     *
+     * @param LifecycleEventArgs $args
+     */
+    public function uploadPost(InstagramPost $entity, LifecycleEventArgs $args)
+    {
+        $this->instagramService->uploadPost($entity);
 
     }
 }

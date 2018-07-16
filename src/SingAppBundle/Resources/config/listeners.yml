@@ -9,3 +9,8 @@ services:
         arguments: ['@security.token_storage']
         tags:
             - { name: doctrine.orm.entity_listener }
+    app.instagram_post.entity_listener:
+        class: SingAppBundle\EntityListener\InstagramPostEntityListener
+        arguments: ['@app.instagram.service']
+        tags:
+            - { name: doctrine.orm.entity_listener }

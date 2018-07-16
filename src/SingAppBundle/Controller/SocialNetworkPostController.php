@@ -38,7 +38,7 @@ class SocialNetworkPostController extends BaseController
         $user = $this->getUser();
 
         $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId()], ['postDate' => 'DESC']);
-        $instagramAccounts = $this->findBy('SingAppBundle:InstagramAccount', ['user' => $user->getId()], ['id' => 'DESC']);
+        $instagramAccounts = $this->findBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()], ['id' => 'DESC']);
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $activeServices = $this->getSwitchServices($request);
 
@@ -75,6 +75,7 @@ class SocialNetworkPostController extends BaseController
                     $googlePost->setSocialNetwork('google');
                     $googlePost->setUploadedFiles($request->files->get('photos'));
                     $googlePost->setSchedule(intval($request->request->get('schedule')));
+                    $googlePost->setBusiness($this->getCurrentBusiness($request));
                     $em->persist($googlePost);
                     break;
                 case $social instanceof InstagramAccount:
@@ -85,6 +86,7 @@ class SocialNetworkPostController extends BaseController
                     $instagramPost->setSocialNetwork('instagram');
                     $instagramPost->setUploadedFiles($request->files->get('photos'));
                     $instagramPost->setSchedule(intval($request->request->get('schedule') === 'on'));
+                    $instagramPost->setBusiness($this->getCurrentBusiness($request));
 
                     $em->persist($instagramPost);
                     break;
@@ -93,6 +95,6 @@ class SocialNetworkPostController extends BaseController
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('social-network-posts', $request->query->all()).'#instagram');
+        return $this->redirect($this->generateUrl('social-network-posts', $request->query->all()));
     }
 }

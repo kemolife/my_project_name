@@ -18,9 +18,19 @@ class GooglePhoto extends Images
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $isUsed = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="photos", cascade={"persist"})
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
-     * @Assert\NotBlank()
      */
     protected $post;
 
@@ -46,5 +56,77 @@ class GooglePhoto extends Images
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * Set isUsed.
+     *
+     * @param int $isUsed
+     *
+     * @return GooglePhoto
+     */
+    public function setIsUsed($isUsed)
+    {
+        $this->isUsed = $isUsed;
+
+        return $this;
+    }
+
+    /**
+     * Get isUsed.
+     *
+     * @return int
+     */
+    public function getIsUsed()
+    {
+        return $this->isUsed;
+    }
+
+    /**
+     * Set creationDate.
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return GooglePhoto
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate.
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \SingAppBundle\Entity\User|null $user
+     *
+     * @return GooglePhoto
+     */
+    public function setUser(\SingAppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \SingAppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
