@@ -35,11 +35,6 @@ class AdditionalCategoriesBusinessInfo
     private $business;
 
     /**
-     * @ORM\OneToOne(targetEntity="BusinessInfo", mappedBy="category")
-     */
-    protected $category;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -119,29 +114,5 @@ class AdditionalCategoriesBusinessInfo
 
     public function __toString() {
         return $this->name;
-    }
-
-    /**
-     * Set category.
-     *
-     * @param \SingAppBundle\Entity\BusinessInfo|null $category
-     *
-     * @return AdditionalCategoriesBusinessInfo
-     */
-    public function setCategory(\SingAppBundle\Entity\BusinessInfo $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category.
-     *
-     * @return \SingAppBundle\Entity\BusinessInfo|null
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 }

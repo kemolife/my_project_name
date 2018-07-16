@@ -1,0 +1,40 @@
+<?php
+
+namespace SingAppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Photo.
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\FileUploadListener"
+ *     })
+ */
+class SocialsPhoto extends Images
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $isUsed = 0;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="photos", cascade={"persist"})
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $post;
+}
