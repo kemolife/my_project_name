@@ -35,9 +35,8 @@ class BusinessInfo
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="category", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $category;
 
@@ -70,9 +69,9 @@ class BusinessInfo
     private $description;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="opening_hours", type="time", nullable=true)
+     * @ORM\Column(name="opening_hours", type="text", nullable=true)
      */
     private $openingHours;
 
@@ -82,6 +81,13 @@ class BusinessInfo
      * @ORM\Column(name="logo", type="string", length=255, nullable=true)
      */
     private $logo;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var string|null
@@ -126,7 +132,6 @@ class BusinessInfo
     protected $uploadedFiles;
 
     /**
-     * @var string|null
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
@@ -393,42 +398,6 @@ class BusinessInfo
     }
 
     /**
-     * Add additionalCategory.
-     *
-     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
-     *
-     * @return BusinessInfo
-     */
-    public function addAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
-    {
-        $this->additionalCategories[] = $additionalCategory;
-
-        return $this;
-    }
-
-    /**
-     * Remove additionalCategory.
-     *
-     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
-    {
-        return $this->additionalCategories->removeElement($additionalCategory);
-    }
-
-    /**
-     * Get additionalCategories.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAdditionalCategories()
-    {
-        return $this->additionalCategories;
-    }
-
-    /**
      * Add photo.
      *
      * @param \SingAppBundle\Entity\BusinessImage $photo
@@ -474,5 +443,89 @@ class BusinessInfo
     public function getUploadedFiles()
     {
         return $this->uploadedFiles;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \SingAppBundle\Entity\User|null $user
+     *
+     * @return BusinessInfo
+     */
+    public function setUser(\SingAppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \SingAppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add additionalCategory.
+     *
+     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
+     *
+     * @return BusinessInfo
+     */
+    public function addAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
+    {
+        $this->additionalCategories[] = $additionalCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove additionalCategory.
+     *
+     * @param \SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAdditionalCategory(\SingAppBundle\Entity\AdditionalCategoriesBusinessInfo $additionalCategory)
+    {
+        return $this->additionalCategories->removeElement($additionalCategory);
+    }
+
+    /**
+     * Get additionalCategories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdditionalCategories()
+    {
+        return $this->additionalCategories;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return BusinessInfo
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

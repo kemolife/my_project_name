@@ -33,11 +33,9 @@ class OAuthController extends BaseController
             return $this->addBusiness($request, $user);
         }
         $currentBusiness = $this->getCurrentBusiness($request);
-        $businessForm = $this->businessPostForm(new BusinessInfo(), $request, false,  $user)->createView();
         $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true, $user)->createView();
         $params = [
             'businesses' => $this->getBusinesses(),
-            'businessForm' => $businessForm,
             'businessFormEdit' => $businessFormEdit,
             'currentBusiness' => $currentBusiness
         ];
