@@ -36,7 +36,6 @@ class AdditionalCategoriesBusinessInfo
 
     /**
      * @ORM\OneToOne(targetEntity="BusinessInfo", mappedBy="category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
 
