@@ -217,7 +217,7 @@ class InstagramService
         $instagramAccount = $instagramPost->getAccount();
         $debug = true;
         $truncatedDebug = false;
-
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
         try {
             $ig->login($instagramAccount->getLogin(), $instagramAccount->getPassword());
