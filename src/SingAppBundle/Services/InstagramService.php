@@ -229,7 +229,7 @@ class InstagramService
             exit(0);
         }
         try {
-            $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($this->webDir . '/' . $instagramPost->getPhotos()[0]->getPath());
+            $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($this->webDir . '/' . $instagramPost->getPhotos()[0]->getImage());
 
             /**
              * @var ConfigureResponse $response
