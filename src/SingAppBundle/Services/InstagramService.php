@@ -215,7 +215,7 @@ class InstagramService
     private function uploadSinglePhoto(InstagramPost $instagramPost)
     {
         $instagramAccount = $instagramPost->getAccount();
-        $debug = true;
+        $debug = false;
         $truncatedDebug = false;
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
