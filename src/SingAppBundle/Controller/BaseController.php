@@ -85,7 +85,7 @@ class BaseController extends Controller
             $em->persist($businessInfo);
             $em->flush();
 
-            return $this->redirectToRoute('index', array('id' => $businessInfo->getId()));
+            return $this->redirectToRoute('index', array('business' => $businessInfo->getId()));
         }
         return $this->render('@SingApp/oauth/add-business.html.twig',  ['form' => $form->createView()]);
     }
