@@ -16,6 +16,15 @@
     </div>
     <ul class="nav nav-pills nav-stacked menu-list">
         <li>
+            <a class="menu-link {% if app.request.attributes.get('_route') in ['index'] %}selected{% endif %}"
+               href="{{ url('index', app.request.query.all) }}">
+                <div class="icon-container">
+                    <i class="fas fa-comment menu-icon"></i>
+                </div>
+                <span class="link">Listings</span>
+            </a>
+        </li>
+        <li>
             <a class="menu-link {% if app.request.attributes.get('_route') in ['interactions'] %}selected{% endif %}"
                href="{{ url('interactions', app.request.query.all) }}">
                 <div class="icon-container">

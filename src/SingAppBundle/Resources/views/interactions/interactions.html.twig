@@ -1,6 +1,13 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
 
 {% block body %}
-<div class="message">
-</div>
+    {% if is_granted('ROLE_USER') %}
+        <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="message">
+
+        </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

@@ -25,6 +25,13 @@ class InteractionsController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        return $this->render('@SingApp/interactions/interactions.html.twig');
+        $user = $this->getUser();
+
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'currentBusiness' => $currentBusiness
+        ];
+        return $this->render('@SingApp/interactions/interactions.html.twig', $params);
     }
 }
