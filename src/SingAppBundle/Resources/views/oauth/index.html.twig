@@ -14,7 +14,7 @@
                                     data-target="#editBusinessModal">
                                 Edit Business
                             </button>
-                            <a href="{{ url('add-business') }}" class="btn btn-primary">Add Business</a>
+                            <a href="{{ url('add-business', app.request.query.all) }}" class="btn btn-primary">Add Business</a>
                         </div>
                     </div>
                     <hr>

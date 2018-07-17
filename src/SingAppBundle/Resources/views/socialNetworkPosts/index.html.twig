@@ -10,7 +10,7 @@
                 {% if activeServices is empty %}
                     <div class="center-block" style="text-align: center;">
                         <h3>You hav't any connected services!</h3>
-                        <a class="btn btn-primary" href="{{ url('index') }}">Connect to services</a>
+                        <a class="btn btn-primary" href="{{ url('index', app.request.query.all) }}">Connect to services</a>
                     </div>
                 {% else %}
                     <div class="product-card-header">

@@ -60,7 +60,7 @@
                     {% if app.user %}
                         <li class="link-container {% if app.request.attributes.get('_route') in ['index'] %}active{% endif %}">
                             <a class="link {% if app.request.attributes.get('_route') in ['index'] %}active-link{% endif %}"
-                               href="{{ url('index') }}">Welcome {{ app.user.username }}</a>
+                               href="{{ url('index', app.request.query.all) }}">Welcome {{ app.user.username }}</a>
                         </li>
                         <li class="link-container-line"></li>
                         <li class="link-container">
