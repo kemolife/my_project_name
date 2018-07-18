@@ -65,7 +65,7 @@ class BaseController extends Controller
          */
         $repository = $this->getDoctrine()->getRepository('SingAppBundle:BusinessInfo');
 
-        return $repository->getCurrentBusiness($request);
+        return $repository->getCurrentBusiness($request, $this->getUser());
     }
 
     public function getBusinesses()
