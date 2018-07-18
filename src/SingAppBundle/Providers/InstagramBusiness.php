@@ -114,7 +114,6 @@ class InstagramBusiness
      */
     public function updateIstagramAccount()
     {
-        var_dump($this->getFormatDataToSave()->phone);
         try {
             $this->ig->account->editProfile(
                 $this->getFormatDataToSave()->url,
