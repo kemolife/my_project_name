@@ -4,11 +4,14 @@
 namespace SingAppBundle\Services;
 
 
+use InstagramScraper\Instagram;
+use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\Images;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
 use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Response\ConfigureResponse;
+use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 
 class InstagramService
@@ -73,22 +76,22 @@ class InstagramService
 
             try {
                 $ig->login($username, $password);
+
+                $mediaId = $post->getMediaId();
+
+                if ($mediaId) {
+                    $likers = $ig->media->getLikersChrono($mediaId)->getUsers();
+                } else {
+                    $likers = null;
+                }
             } catch (\Exception $e) {
-                echo 'Something went wrong: ' . $e->getMessage() . "\n";
-                exit(0);
-            }
-
-            $mediaId = $post->getMediaId();
-
-            if ($mediaId) {
-                $likers = $ig->media->getLikersChrono($mediaId)->getUsers();
-            } else {
-                $likers = null;
+                throw new OAuthCompanyException($e->getMessage());
             }
         }
 
         return $likers;
     }
+
     public function getComments(InstagramPost $post)
     {
         $comments = null;
@@ -104,17 +107,16 @@ class InstagramService
 
             try {
                 $ig->login($username, $password);
+
+                $mediaId = $post->getMediaId();
+
+                if ($mediaId) {
+                    $comments = $ig->media->getComments($mediaId)->getComments();
+                } else {
+                    $comments = null;
+                }
             } catch (\Exception $e) {
-                echo 'Something went wrong: ' . $e->getMessage() . "\n";
-                exit(0);
-            }
-
-            $mediaId = $post->getMediaId();
-
-            if ($mediaId) {
-                $comments = $ig->media->getComments($mediaId)->getComments();
-            } else {
-                $comments = null;
+                throw new OAuthCompanyException($e->getMessage());
             }
         }
 

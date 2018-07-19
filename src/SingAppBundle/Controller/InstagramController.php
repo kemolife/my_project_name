@@ -40,8 +40,8 @@ class InstagramController extends BaseController
         $instagramService = $this->get('instagram_provider');
 
         $instagram = new InstagramAccount();
-        if(null !== $instagramService->getIstagramSetting($user, $currentBusiness)) {
-            $instagram = $instagramService->getIstagramSetting($user, $currentBusiness);
+        if(null !== $instagramService->getIstagramAccount($user, $currentBusiness)) {
+            $instagram = $instagramService->getIstagramAccount($user, $currentBusiness);
         }
         $form = $this->createForm(InstagramAccountForm::class, $instagram);
 

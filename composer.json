@@ -37,6 +37,7 @@
         "league/oauth2-google": "^2.2",
         "mgp25/instagram-php": "^4.1",
         "php-curl-class/php-curl-class": "^8.1",
+        "raiym/instagram-php-scraper": "^0.8.23",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "spotonlive/php-google-my-business": "^4.1",

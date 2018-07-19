@@ -6,6 +6,7 @@ use FacebookAds\Http\Adapter\Curl\Curl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
+use SingAppBundle\Providers\InstagramBusiness;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,15 +64,23 @@ class OAuthController extends BaseController
     }
 
     /**
-     * @Route("/instagram-update", name="instagramUpdate")
+     * @Route("/test/api", name="test-api")
      */
-    public function testApi()
+    public function testApi(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $additionalCategoryEntity = new AdditionalCategoriesBusinessInfo();
-        $additionalCategoryEntity->setName('xxx');
-        $em->persist($additionalCategoryEntity);
-        $em->flush();
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var InstagramBusiness $instagram
+         */
+        $instagram = $this->get('instagram_provider');
+        var_dump($instagram->newAuth($user, $currentBusiness)->getAllComments());
     }
 
     /**

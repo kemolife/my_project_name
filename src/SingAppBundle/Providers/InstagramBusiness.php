@@ -7,6 +7,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Instagram;
+use InstagramScraper\Exception\InstagramException;
+use InstagramScraper\Instagram as InstagramScraper;
+use InstagramScraper\Model\Comment;
+use InstagramScraper\Model\Like;
+use InstagramScraper\Model\Media;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\User;
@@ -14,6 +19,9 @@ use SingAppBundle\Providers\Exception\OAuthCompanyException;
 
 class InstagramBusiness
 {
+    /**
+     * @var InstagramScraper|Instagram $ig
+     */
     protected $ig;
     protected $em;
     /**
@@ -21,6 +29,7 @@ class InstagramBusiness
      */
     protected $user;
     private $business;
+    private $account;
 
     /**
      * InstagramBusiness constructor.
@@ -38,10 +47,10 @@ class InstagramBusiness
         $this->user = $user;
         $this->business = $business;
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-        $settings = $this->getSettingData($user, $business, $account);
-        $this->ig = new Instagram($settings->debug, $settings->runcatedDebug);
+        $this->account = $this->getSettingData($user, $business, $account);
+        $this->ig = new Instagram($this->account->debug, $this->account->runcatedDebug);
         try {
-            $this->ig->login($settings->username, $settings->password);
+            $this->ig->login($this->account->username, $this->account->password);
             return $this;
         } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
@@ -65,7 +74,7 @@ class InstagramBusiness
     protected function getSettingData(User $user, BusinessInfo $business, InstagramAccount $account = null)
     {
         if(null === $account) {
-            $instagram = $this->getIstagramSetting($user, $business);
+            $instagram = $this->getIstagramAccount($user, $business);
         }else{
             $instagram = $account;
         }
@@ -77,7 +86,7 @@ class InstagramBusiness
         return $data;
     }
 
-    public function getIstagramSetting(User $user, BusinessInfo $business)
+    public function getIstagramAccount(User $user, BusinessInfo $business)
     {
         $repository = $this->em->getRepository('SingAppBundle:InstagramAccount');
         $istagram = $repository->findOneBy(['user' => $user, 'business' => $business]);
@@ -126,6 +135,79 @@ class InstagramBusiness
         } catch (BadRequestException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
+    }
+
+    public function newAuth(User $user, BusinessInfo $business)
+    {
+        $this->account = $this->getSettingData($user, $business);
+        $this->ig = InstagramScraper::withCredentials($this->account->username, $this->account->password);
+        try {
+            $this->ig->login();
+            return $this;
+        }catch (InstagramException $e){
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
+    public function getInfoNewScraper()
+    {
+        $account = $this->ig->getMedias($this->account->username);
+        return $account;
+    }
+
+    public function getAllComments()
+    {
+        $comments = [];
+        /**
+         * @var Media $media
+         * @var Comment $comment
+         */
+        foreach ($this->getInfoNewScraper() as  $media){
+            $comments[] = $this->ig->getMediaCommentsById($media->getId());
+            /**
+             * @var Comment $comment
+             */
+            foreach ($this->ig->getMediaCommentsById($media->getId()) as $key => $comment){
+                $comments[$key]['owner'] = $comment->getOwner();
+                $comments[$key]['text'] = $comment->getText();
+                $comments[$key]['createAt'] = date("Y-m-d H:i:s", $comment->getCreatedAt());
+            }
+        }
+        return $comments;
+    }
+
+    public function getAllLikesCount()
+    {
+        $likesCount = 0;
+        /**
+         * @var Media $media
+         */
+        foreach ($this->getInfoNewScraper() as  $media){
+            /**
+             * @var Like $like
+             */
+            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like){
+                $likesCount++;
+            }
+        }
+        return $likesCount;
+    }
+
+    public function getAllLikesByUser()
+    {
+        $likes = [];
+        /**
+         * @var Media $media
+         */
+        foreach ($this->getInfoNewScraper() as  $media){
+            /**
+             * @var Like $like
+             */
+            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like){
+                $likes[$key]['user'] = $like->getUserName();
+            }
+        }
+        return $likes;
     }
 
 
