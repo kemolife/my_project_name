@@ -1,5 +1,12 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
 {% block body %}
+    {% block stylesheets %}
+        <style>
+            #appbundle_instagram_account_loginForm {
+                display: none;
+            }
+        </style>
+    {% endblock %}
     {% if app.request.get('error') is defined %}
         <span class="error-service-auth">{{ app.request.get('error') }}</span>
     {% endif %}

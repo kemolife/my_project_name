@@ -30,6 +30,10 @@ class InstagramBusiness
     protected $user;
     private $business;
     private $account;
+    /**
+     * @var Instagram $igNew
+     */
+    private $igNew;
 
     /**
      * InstagramBusiness constructor.
@@ -73,9 +77,9 @@ class InstagramBusiness
      */
     protected function getSettingData(User $user, BusinessInfo $business, InstagramAccount $account = null)
     {
-        if(null === $account) {
+        if (null === $account) {
             $instagram = $this->getIstagramAccount($user, $business);
-        }else{
+        } else {
             $instagram = $account;
         }
         $data = new \stdClass();
@@ -144,7 +148,7 @@ class InstagramBusiness
         try {
             $this->ig->login();
             return $this;
-        }catch (InstagramException $e){
+        } catch (InstagramException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
@@ -155,6 +159,20 @@ class InstagramBusiness
         return $account;
     }
 
+    public function authInst()
+    {
+        $debug = false;
+        $truncatedDebug = false;
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+        $this->igNew = new Instagram($debug, $truncatedDebug);
+        try {
+            $this->igNew->login($this->account->username, $this->account->password);
+            return $this;
+        } catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
     public function getAllComments()
     {
         $comments = [];
@@ -162,18 +180,33 @@ class InstagramBusiness
          * @var Media $media
          * @var Comment $comment
          */
-        foreach ($this->getInfoNewScraper() as  $media){
-            $comments[] = $this->ig->getMediaCommentsById($media->getId());
-            /**
-             * @var Comment $comment
-             */
-            foreach ($this->ig->getMediaCommentsById($media->getId()) as $key => $comment){
-                $comments[$key]['owner'] = $comment->getOwner();
-                $comments[$key]['text'] = $comment->getText();
-                $comments[$key]['createAt'] = date("Y-m-d H:i:s", $comment->getCreatedAt());
-            }
+        foreach ($this->getInfoNewScraper() as $media) {
+            $comments[] = $this->igNew->media->getComments($media)->getComments();
         }
         return $comments;
+    }
+
+    public function getCommentReplies($media, $commentId)
+    {
+        if ($media) {
+            $comments = $this->igNew->media->getCommentReplies($media, $commentId);
+        } else {
+            $comments = null;
+        }
+
+        return $comments;
+    }
+
+    public function addComment($mediaId, $commentId = null, $text)
+    {
+        if (null === $commentId) {
+            $this->igNew->media->comment($mediaId, $text);
+            $status = true;
+        }else{
+            $this->igNew->media->comment($mediaId, '@'.$this->ig->account->getCurrentUser()->getUser()->getUsername().' '.$text, $commentId);
+            $status = true;
+        }
+        return $status;
     }
 
     public function getAllLikesCount()
@@ -182,11 +215,11 @@ class InstagramBusiness
         /**
          * @var Media $media
          */
-        foreach ($this->getInfoNewScraper() as  $media){
+        foreach ($this->getInfoNewScraper() as $media) {
             /**
              * @var Like $like
              */
-            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like){
+            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like) {
                 $likesCount++;
             }
         }
@@ -199,11 +232,11 @@ class InstagramBusiness
         /**
          * @var Media $media
          */
-        foreach ($this->getInfoNewScraper() as  $media){
+        foreach ($this->getInfoNewScraper() as $media) {
             /**
              * @var Like $like
              */
-            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like){
+            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like) {
                 $likes[$key]['user'] = $like->getUserName();
             }
         }
