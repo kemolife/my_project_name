@@ -8,6 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BusinessInfo
@@ -49,7 +50,6 @@ class BusinessInfo
 
     /**
      * @var int
-     *
      * @ORM\Column(name="phone_number", type="string", length=100)
      */
     private $phoneNumber;

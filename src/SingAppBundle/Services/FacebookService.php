@@ -31,8 +31,8 @@ class FacebookService
     public function auth()
     {
         $fb = new Facebook([
-            'app_id' => '1862006383843024',
-            'app_secret' => 'aa5188ade069106fab8e13b304b4ecb4',
+            'app_id' => '173753973300728',
+            'app_secret' => '4ccd427f6d8e6353dbd5531a476d9c65',
             'default_graph_version' => 'v2.10',
         ]);
 
@@ -52,8 +52,8 @@ class FacebookService
     public function getAccessToken()
     {
         $fb = new Facebook([
-            'app_id' => '1862006383843024',
-            'app_secret' => 'aa5188ade069106fab8e13b304b4ecb4',
+            'app_id' => '173753973300728',
+            'app_secret' => '4ccd427f6d8e6353dbd5531a476d9c65',
             'default_graph_version' => 'v2.10',
         ]);
 
@@ -76,8 +76,8 @@ class FacebookService
     {
 
         $fb = new Facebook([
-            'app_id' => '1862006383843024',
-            'app_secret' => 'aa5188ade069106fab8e13b304b4ecb4',
+            'app_id' => '173753973300728',
+            'app_secret' => '4ccd427f6d8e6353dbd5531a476d9c65',
             'default_graph_version' => 'v2.10',
         ]);
 

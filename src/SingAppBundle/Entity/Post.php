@@ -15,7 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "google"="GooglePost",
- *     "instagram"="InstagramPost"
+ *     "instagram"="InstagramPost",
+ *     "facebook"="FacebookPost"
  * })
  * @ORM\Entity()
  */

@@ -146,4 +146,5 @@ $(document).on("change", "#biz-hour-type", function () {
 $(document).ready(function () {
     $('#singappbundle_businessinfo_additionalCategories')
         .select2({width: '100%'});
+    $('#singappbundle_businessinfo_category').select2({width: '100%'});
 });

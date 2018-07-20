@@ -1,6 +1,7 @@
 imports:
     - { resource: listeners.yml }
 parameters:
+    base_dir: 'files'
     web_dir: '%kernel.root_dir%/../web'
 services:
     form_authenticator:
@@ -55,3 +56,6 @@ services:
     app.bing.service:
         class: SingAppBundle\Services\BingService
         arguments: ['@doctrine.orm.entity_manager']
+    app.photo.service:
+        class: SingAppBundle\Services\PhotoService
+        arguments: ['%web_dir%', '%base_dir%']
