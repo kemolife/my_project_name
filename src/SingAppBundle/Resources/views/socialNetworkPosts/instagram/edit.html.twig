@@ -1,19 +1,39 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
 {% block body %}
-    <div class="main-merge row">
-        <div class="col-md-12">
+    {% block stylesheets %}
+        <style>
+            #appbundle_instagram_account_loginForm {
+                display: none;
+            }
+        </style>
+    {% endblock %}
+    <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="messages">
+
             <div class="card">
-                <div class="card-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button class="btn btn-default" onclick="window.history.go(-1); return false;">Cancel</button>
-                    {{ form_end(form) }}
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title"></span>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.login) }}
+                        {{ form_row(form.password) }}
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn btn-default" onclick="window.history.go(-1); return false;">Cancel</button>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
-    {{ dump(form) }}
 {% endblock %}
 
 {% block javascripts %}

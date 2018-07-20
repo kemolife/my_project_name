@@ -101,6 +101,7 @@ class BaseController extends Controller
 
         if ($instagramAccountForm->isSubmitted() && $instagramAccountForm->isValid() && 'POST' == $request->getMethod()) {
             $em = $this->getDoctrine()->getManager();
+            $instagramAccount->setBusiness($this->getCurrentBusiness($request));
 
             $em->persist($instagramAccount);
             $em->flush();

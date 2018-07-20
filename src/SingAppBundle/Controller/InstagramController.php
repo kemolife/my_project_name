@@ -158,6 +158,7 @@ class InstagramController extends BaseController
 
     /**
      * @Route("/instagram/account-delete/{instagramAccount}", name="instagram-account-delete")
+     * @Security("is_granted('ABILITY_INSTAGRAM_ACCOUNT_DELETE', instagramAccount)")
      */
     public function deleteAccountAction(InstagramAccount $instagramAccount, Request $request)
     {
@@ -166,7 +167,7 @@ class InstagramController extends BaseController
         $em->remove($instagramAccount);
         $em->flush();
 
-        $response = $this->redirectToRoute('social-network-posts');
+        return $this->redirect($this->generateUrl('social-network-posts').'#instagram');
     }
 
     /**

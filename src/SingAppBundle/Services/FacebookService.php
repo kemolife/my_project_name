@@ -82,7 +82,7 @@ class FacebookService
         ]);
 
         $result = $fb->get('me/accounts');
-
+        return $result;
     }
 
     public function createFacebookAccount(Request $request, AccessToken $accessTokeData)
@@ -103,14 +103,14 @@ class FacebookService
 
     /**
      * @param $uid
-     * @return Business
+     * @return BusinessInfo
      */
     private function getBusinessByUID($uid)
     {
         $repository = $this->em->getRepository('SingAppBundle:Business');
 
         /**
-         * @var Business $business
+         * @var BusinessInfo $business
          */
         $business = $repository->findOneBy(['uid' => $uid]);
 

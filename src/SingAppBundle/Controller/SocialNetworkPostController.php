@@ -40,6 +40,7 @@ class SocialNetworkPostController extends BaseController
         $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId()], ['postDate' => 'DESC']);
         $instagramAccounts = $this->findBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()], ['id' => 'DESC']);
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $activeServices = $this->getSwitchServices($request);
 
         $params = [
@@ -49,6 +50,7 @@ class SocialNetworkPostController extends BaseController
             'instagramAccountForm' => $instagramAccountForm,
             'instagramPostForm' => $instagramPostForm,
             'googleAccount' => $googleAccount,
+            'facebookAccount' => $facebookAccount,
             'activeServices' => $activeServices
         ];
 
