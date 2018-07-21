@@ -38,7 +38,7 @@ class SocialNetworkPostController extends BaseController
         $user = $this->getUser();
 
         $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId()], ['postDate' => 'DESC']);
-        $instagramAccounts = $this->findBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()], ['id' => 'DESC']);
+        $instagramAccount = $this->findOneBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $activeServices = $this->getSwitchServices($request);
@@ -46,7 +46,7 @@ class SocialNetworkPostController extends BaseController
         $params = [
             'businesses' => $this->getBusinesses(),
             'posts' => $posts,
-            'instagramAccounts' => $instagramAccounts,
+            'instagramAccount' => $instagramAccount,
             'instagramAccountForm' => $instagramAccountForm,
             'instagramPostForm' => $instagramPostForm,
             'googleAccount' => $googleAccount,

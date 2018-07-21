@@ -3,205 +3,157 @@
 {% block body %}
     {% if is_granted('ROLE_USER') %}
         <div class="products">
-            {% include '@SingApp/layouts/navigation.html.twig' %}
-            <div class="message">
-                <div class="col-xs-12 col-sm-12 col-md-12 listing-content-main">
-                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-category mrb30">
-                        <div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">
-                            <a>
-                                <div class="category total-interactions active" data-mh="category"
-                                     data-count-type="all_reviews">
-                                    <div class="status">
-                                        <h1>24</h1>
-                                        <h3>Total Interactions</h3>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">
-                            <a>
-                                <div class="category new-interactions" data-mh="category" data-count-type="new_reviews">
-                                    <div class="status">
-                                        <h1>4</h1>
-                                        <h3>New Interactions</h3>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">
-                            <a>
-                                <div class="category positive-interactions" data-mh="category"
-                                     data-count-type="positive_reviews">
-                                    <div class="status">
-                                        <h1>15</h1>
-                                        <h3>Positive Interactions</h3>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">
-                            <a>
-                                <div class="category negative-interactions" data-mh="category"
-                                     data-count-type="negative_reviews">
-                                    <div class="status">
-                                        <h1>0</h1>
-                                        <h3>Negative Interactions</h3>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 filter-row">
-                        <div class="col-sm-4 col-md-2 filter-header">
-                            Time
-                        </div>
-                        <div class="col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-7 filter-header">
-                            Review Site
-                        </div>
-                        <div class="col-sm-4 col-md-2 controls control-group float-left">
-                            <select id="time-filter" class="pull-left form-control">
-                                <option value="0"> Until Today</option>
-                                <option value="1"> Past 1 day</option>
-                                <option value="7"> Past 7 days</option>
-                                <option value="14"> Past 14 days</option>
-                                <option value="30"> Past month</option>
-                                <option value="between"> Custom Range</option>
-                            </select>
-                        </div>
-                        {#<div class="col-sm-4 col-md-6 controls">#}
-                        {#<div id="date-filter" class="control-group col-md-5">#}
-                        {#<input type="text" placeholder="From Date" data-provide="datepicker"#}
-                        {#class="date-filter-input form-control" id="start-date-filter">#}
-                        {#</div>#}
-                        {#<div class="col-md-1">#}
-                        {#<span style="font-size: 19px;">and</span>#}
-                        {#</div>#}
-                        {#<div class="control-group col-md-5">#}
-                        {#<input type="text" placeholder="To Date" data-provide="datepicker"#}
-                        {#data-date-end-date="0d" class="date-filter-input form-control" id="end-date-filter">#}
-                        {#</div>#}
-                        {#</div>#}
-                        <div class="col-sm-4 col-md-3 col-md-offset-1 controls control-group float-right"
-                             id="styled-site-filter">
-                            <select class="pull-left form-control" id="site-filter" data-changed="false">
-                                <option value="all">All (24)</option>
-                                <option>Facebook (20)</option>
-                                <option>Google Maps (4)</option>
-                            </select>
-                        </div>
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="message">
+            <div class="col-xs-12 col-sm-12 col-md-12 listing-content-main">
+                <div class="col-xs-12 col-sm-12 col-md-12 interaction-category mrb30">
+                    {#<div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">#}
+                    {#<a>#}
+                    {#<div class="category total-interactions active" data-mh="category"#}
+                    {#data-count-type="all_reviews">#}
+                    {#<div class="status">#}
+                    {#<h1>24</h1>#}
+                    {#<h3>Total Interactions</h3>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</a>#}
+                    {#</div>#}
+                    {#<div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">#}
+                    {#<a>#}
+                    {#<div class="category new-interactions" data-mh="category" data-count-type="new_reviews">#}
+                    {#<div class="status">#}
+                    {#<h1>4</h1>#}
+                    {#<h3>New Interactions</h3>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</a>#}
+                    {#</div>#}
+                    {#<div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">#}
+                    {#<a>#}
+                    {#<div class="category positive-interactions" data-mh="category"#}
+                    {#data-count-type="positive_reviews">#}
+                    {#<div class="status">#}
+                    {#<h1>15</h1>#}
+                    {#<h3>Positive Interactions</h3>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</a>#}
+                    {#</div>#}
+                    {#<div class="col-xs-6 col-sm-3 col-md-3 category-item padding-5">#}
+                    {#<a>#}
+                    {#<div class="category negative-interactions" data-mh="category"#}
+                    {#data-count-type="negative_reviews">#}
+                    {#<div class="status">#}
+                    {#<h1>0</h1>#}
+                    {#<h3>Negative Interactions</h3>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</a>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12 col-sm-12 col-md-12 filter-row">#}
+                    {#<div class="col-sm-4 col-md-2 filter-header">#}
+                    {#Time#}
+                    {#</div>#}
+                    {#<div class="col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-7 filter-header">#}
+                    {#Review Site#}
+                    {#</div>#}
+                    {#<div class="col-sm-4 col-md-2 controls control-group float-left">#}
+                    {#<select id="time-filter" class="pull-left form-control">#}
+                    {#<option value="0"> Until Today</option>#}
+                    {#<option value="1"> Past 1 day</option>#}
+                    {#<option value="7"> Past 7 days</option>#}
+                    {#<option value="14"> Past 14 days</option>#}
+                    {#<option value="30"> Past month</option>#}
+                    {#<option value="between"> Custom Range</option>#}
+                    {#</select>#}
+                    {#</div>#}
+                    {#<div class="col-sm-4 col-md-6 controls">#}
+                    {#<div id="date-filter" class="control-group col-md-5">#}
+                    {#<input type="text" placeholder="From Date" data-provide="datepicker"#}
+                    {#class="date-filter-input form-control" id="start-date-filter">#}
+                    {#</div>#}
+                    {#<div class="col-md-1">#}
+                    {#<span style="font-size: 19px;">and</span>#}
+                    {#</div>#}
+                    {#<div class="control-group col-md-5">#}
+                    {#<input type="text" placeholder="To Date" data-provide="datepicker"#}
+                    {#data-date-end-date="0d" class="date-filter-input form-control" id="end-date-filter">#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-sm-4 col-md-3 col-md-offset-1 controls control-group float-right"#}
+                    {#id="styled-site-filter">#}
+                    {#<select class="pull-left form-control" id="site-filter" data-changed="false">#}
+                    {#<option value="all">All (24)</option>#}
+                    {#<option>Facebook (20)</option>#}
+                    {#<option>Google Maps (4)</option>#}
+                    {#</select>#}
+                    {#</div>#}
 
-                    </div>
-                    {% for comment in instagramServices.comments %}
-                    {{ dump(comment) }}
+                    {#</div>#}
+                    {% for mediaId, comments in instagramServices.comments %}
                     <div id="interactions-view">
-                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
-                             data-review-id="17914383">
-                            {% if comment is not empty %}
-                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
-                                    <div class="interaction-img">
-                                        <figure>
-                                            <img src="/images/listing-icons/instagrame.com.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
-                                        {{ comment.getUser().getUsername() }}
-                                        <span>
-                                      added a new comment
+                        {% if comments is not empty %}
+                            {% for comment in comments %}
+                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
+                                     data-review-id="17914383">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
+                                        <div class="interaction-img">
+                                            <figure>
+                                                <img src="/images/listing-icons/instagrame.com.png" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
+                                            {{ comment.getUser().getUsername() }}
+                                            <span>
+                                            added a new comment
                                             on {{ comment.getCreatedAt()|date('Y-m-d H:i:s') }} UTC
-                                  </span>
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
+                                            <div class="response-width">
+                                                {% if getCommentsReplies(mediaId, comment.getPk())|length > 0 %}
+                                                    <div class="response replied">Responded</div>
+                                                {% else %}
+                                                    <div class="response disable">Response Pending</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="rating"></div>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
-                                        <div class="response-width">
-                                            <div class="response replied">Responded</div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
+                                        <div class="col-md-12 no-padding">
+                                            <h3></h3>
+                                            <p>{{ comment.getText() }}</p>
                                         </div>
-                                        <div class="rating">
+                                        {% for commentReplies in getCommentsReplies(mediaId, comment.getPk()) %}
+                                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
+                                                    <p>Comment
+                                                        on {{ commentReplies.getCreatedAt()|date('Y-m-d H:i:s') }} UTC
+                                                        from <span>{{ commentReplies.getUser().getUsername() }}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
+                                                    <p>{{ commentReplies.getText() }}</p>
+                                                </div>
+                                            </div>
 
-                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <a class="btn btn-primary btn-response" data-remote="true" data-method="get"
+                                           href="/client/locations/134769/interactions/17914383/new_response">Respond</a>
+
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 review-response-form">
+
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
-                                    <div class="col-md-12 no-padding">
-                                        <h3></h3>
-                                        <p>{{ comment.getText() }}</p>
-                                    </div>
-                                    {% for commentReplies in getCommentsReplies(comment.getMediaId(), comment.getPk()) %}
-                                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
-                                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
-                                                <p>Comment on {{ commentReplies.getCreatedAt()|date('Y-m-d H:i:s') }} UTC from <span>{{ commentReplies.getUser().getUsername() }}</span>
-                                                </p>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
-                                                <p>{{ commentReplies.getText()  }}</p>
-                                            </div>
-                                        </div>
-
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a class="btn btn-primary btn-response" data-remote="true" data-method="get"
-                                   href="/client/locations/134769/interactions/17914383/new_response">Respond</a>
-
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 review-response-form">
-
-                            </div>
-                        </div>
+                            {% endfor %}
+                        {% endif %}
 
                         {% endfor %}
-
-                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
-                             data-review-id="17555980">
-                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
-                                <div class="interaction-img">
-                                    <figure>
-                                        <img src="/images/listing-icons/instagrame.com.png" alt="">
-                                    </figure>
-                                </div>
-                                <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
-                                    Addz Wong
-                                    <span>
-                      has rated you
-                    on 2018-07-08 00:00:00 UTC
-
-                  </span>
-                                </div>
-                                <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
-                                    <div class="response-width">
-                                        <div class="response replied">Responded</div>
-                                    </div>
-                                    <div class="rating">
-                                        <img src="/assets/whitelabel_dashboard/review-fullstar.svg" alt="">
-                                        <img src="/assets/whitelabel_dashboard/review-fullstar.svg" alt="">
-                                        <img src="/assets/whitelabel_dashboard/review-fullstar.svg" alt="">
-                                        <img src="/assets/whitelabel_dashboard/review-fullstar.svg" alt="">
-                                        <img src="/assets/whitelabel_dashboard/review-fullstar.svg" alt="">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
-                                <div class="col-md-12 no-padding">
-                                    <h3></h3>
-                                    <p></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
-                                        <p>Comment on 2018-07-11 00:00:00 UTC from <span>owner</span></p>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
-                                        <p>Hey, thanks for the great review!</p>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 review-response-form">
-
-                            </div>
-                        </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
                              data-review-id="17331865">
@@ -212,13 +164,9 @@
                                     </figure>
                                 </div>
                                 <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
-
-                  <span>
-                      You have
-                        177 new likes
-                    on 2018-07-04 04:40:49 UTC
-
-                  </span>
+                              <span>
+                                  You have {{ instagramServices.likes }} new likes
+                              </span>
                                 </div>
                                 <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
                                     <div class="response-width">
@@ -238,7 +186,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a title="Respond to this review" class="btn btn-primary btn-response" target="_blank"
-                                   href="https://anon.to/?https://www.facebook.com/seaforthphysio/">Respond <span
+                                   href="{{ instagramServices.href }}">Respond <span
                                             class="icon-share"></span></a>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 review-response-form">

@@ -4241,6 +4241,7 @@ body {
 }
 
 .interaction-item-content .interaction-comment {
+    margin-top: 20px;
     background-color: #fff;
     border: 2px solid rgba(16, 188, 71, 0.5);
     border-radius: 8px;

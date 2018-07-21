@@ -8,6 +8,7 @@ use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Instagram;
 use InstagramScraper\Exception\InstagramException;
+use InstagramAPI\Exception\InstagramException as InstagramApiException;
 use InstagramScraper\Instagram as InstagramScraper;
 use InstagramScraper\Model\Comment;
 use InstagramScraper\Model\Like;
@@ -16,6 +17,7 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 class InstagramBusiness
 {
@@ -28,6 +30,9 @@ class InstagramBusiness
      * @var User $business
      */
     protected $user;
+    /**
+     * @var BusinessInfo $business
+     */
     private $business;
     private $account;
     /**
@@ -143,6 +148,8 @@ class InstagramBusiness
 
     public function newAuth(User $user, BusinessInfo $business)
     {
+        $this->user = $user;
+        $this->business = $business;
         $this->account = $this->getSettingData($user, $business);
         $this->ig = InstagramScraper::withCredentials($this->account->username, $this->account->password);
         try {
@@ -155,8 +162,28 @@ class InstagramBusiness
 
     public function getInfoNewScraper()
     {
-        $medias = $this->ig->getMedias($this->account->username);
+        $cache = new FilesystemCache();
+        $hash = hash('ripemd160', 'facebook_medias.' . $this->business->getId() . 'user' . $this->user->getId());
+        try {
+            $medias = $this->ig->getMedias($this->account->username);
+            $cache->set($hash, $medias);
+        } catch (InstagramException $e) {
+            $medias = $cache->get($hash);
+        }
         return $medias;
+    }
+
+    public function getLikesByMedia(Media $media)
+    {
+        $cache = new FilesystemCache();
+        $hash = hash('ripemd160', 'facebook_media_likes.' . $this->business->getId() . 'user' . $this->user->getId());
+        try {
+            $likes = $this->igNew->media->getLikers($media->getId())->getUserCount();
+            $cache->set($hash, $likes);
+        } catch (InstagramApiException $e) {
+            $likes = $cache->get($hash);
+        }
+        return $likes;
     }
 
     public function authInst()
@@ -173,6 +200,19 @@ class InstagramBusiness
         }
     }
 
+    public function getAccount()
+    {
+        $cache = new FilesystemCache();
+        $hash = hash('ripemd160', 'facebook_account_current_user.' . $this->business->getId() . 'user' . $this->user->getId());
+        try {
+            $user = $this->igNew->account->getCurrentUser();
+            $cache->set($hash, $user);
+        }catch (InstagramApiException $e) {
+            $user = $cache->get($hash);
+        }
+        return $user;
+    }
+
     public function getAllComments()
     {
         $comments = [];
@@ -181,7 +221,7 @@ class InstagramBusiness
          * @var Comment $comment
          */
         foreach ($this->getInfoNewScraper() as $media) {
-            $comments[] = $this->igNew->media->getComments($media->getId())->getComments();
+            $comments[$media->getId()] = $this->igNew->media->getComments($media->getId())->getComments();
         }
         return $comments;
     }
@@ -202,8 +242,8 @@ class InstagramBusiness
         if (null === $commentId) {
             $this->igNew->media->comment($mediaId, $text);
             $status = true;
-        }else{
-            $this->igNew->media->comment($mediaId, '@'.$this->ig->account->getCurrentUser()->getUser()->getUsername().' '.$text, $commentId);
+        } else {
+            $this->igNew->media->comment($mediaId, '@' . $this->ig->account->getCurrentUser()->getUser()->getUsername() . ' ' . $text, $commentId);
             $status = true;
         }
         return $status;
@@ -219,10 +259,7 @@ class InstagramBusiness
             /**
              * @var Like $like
              */
-            var_dump($media->getShortCode()); die;
-            foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like) {
-                $likesCount++;
-            }
+            $likesCount += $this->getLikesByMedia($media);
         }
         return $likesCount;
     }

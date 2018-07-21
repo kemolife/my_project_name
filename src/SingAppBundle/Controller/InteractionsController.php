@@ -36,6 +36,7 @@ class InteractionsController extends BaseController
         $instagram = $this->get('instagram_provider');
         $instagramServices['likes'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllLikesCount();
         $instagramServices['comments'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllComments();
+        $instagramServices['href'] = 'https://anon.to/?https://www.instagram.com/'.$instagram->getIstagramAccount($user, $currentBusiness)->getLogin().'/';
         $params = [
             'businesses' => $this->getBusinesses(),
             'currentBusiness' => $currentBusiness,

@@ -14,6 +14,19 @@
         {% include '@SingApp/layouts/navigation.html.twig' %}
         <div class="messages">
             <div class="card">
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title">
+                            Your posts
+                        </span>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#createPost">
+                            <i class="fas fa-plus"></i>
+                            Add
+                        </button>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-2">
                         <ul class="nav nav-tabs tabs-left">
@@ -100,40 +113,32 @@
                                         <th>Name</th>
                                         <th>Login</th>
                                         <th>Password</th>
-                                        <th>Default</th>
                                         <th>
-                                            <button class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#createInstagramAccount">
-                                                <i class="fas fa-plus"></i> Add
-                                            </button>
+                                            {% if instagramAccount is null %}
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#createInstagramAccount">
+                                                    <i class="fas fa-plus"></i> Add
+                                                </button>
+                                            {% endif %}
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for instagramAccount in instagramAccounts %}
-                                        <tr>
-                                            <td>{{ instagramAccount.name }}</td>
-                                            <td>{{ instagramAccount.login }}</td>
-                                            <td>{{ instagramAccount.password }}</td>
-                                            <td>
-                                                {% if instagramAccount.isDefault %}
-                                                    <i class="fas fa-check" style="color: green"></i>
-                                                {% else %}
-                                                    <i class="fas fa-times" style="color: red"></i>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                <a href="{{ url('instagram-account-edit', {'instagramAccount': instagramAccount.id }) }}"
-                                                   class="btn btn-default btn-sm">
-                                                    <i class="far fa-edit"></i> Edit
-                                                </a>
-                                                <a href="{{ url('instagram-account-delete', {'instagramAccount': instagramAccount.id }) }}"
-                                                   class="btn btn-default btn-sm btn-delete">
-                                                    <i class="far fa-trash-alt"></i> Delete
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td>{{ instagramAccount.name }}</td>
+                                        <td>{{ instagramAccount.login }}</td>
+                                        <td>{{ instagramAccount.password }}</td>
+                                        <td>
+                                            <a href="{{ url('instagram-account-edit', {'instagramAccount': instagramAccount.id }) }}"
+                                               class="btn btn-default btn-sm">
+                                                <i class="far fa-edit"></i> Edit
+                                            </a>
+                                            <a href="{{ url('instagram-account-delete', {'instagramAccount': instagramAccount.id }) }}"
+                                               class="btn btn-default btn-sm btn-delete">
+                                                <i class="far fa-trash-alt"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <hr>
@@ -232,77 +237,77 @@
                     </div>
                 </div>
                 {#{% if activeServices is empty %}#}
-                    {#<div class="center-block" style="text-align: center;">#}
-                        {#<h3>You hav't any connected services!</h3>#}
-                        {#<a class="btn btn-primary" href="{{ url('index', app.request.query.all) }}">Connect to services</a>#}
-                    {#</div>#}
+                {#<div class="center-block" style="text-align: center;">#}
+                {#<h3>You hav't any connected services!</h3>#}
+                {#<a class="btn btn-primary" href="{{ url('index', app.request.query.all) }}">Connect to services</a>#}
+                {#</div>#}
                 {#{% else %}#}
-                    {#<div class="product-card-header">#}
-                        {#<div class="card-header-title">#}
-                        {#<span class="card-title">#}
-                            {#Your posts#}
-                        {#</span>#}
-                        {#</div>#}
-                        {#<div>#}
-                            {#<button class="btn btn-primary" data-toggle="modal"#}
-                                    {#data-target="#createPost">#}
-                                {#<i class="fas fa-plus"></i> Add#}
-                            {#</button>#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<hr>#}
-                    {#<div class="row">#}
-                        {#<div class="col-md-2">#}
-                            {#<h3>Active services</h3>#}
-                            {#<ul class="nav">#}
-                                {#{% for service in activeServices %}#}
-                                    {#<li>#}
-                                        {#<img src="{{ asset('images/icons/'~class(service)~'.svg') }}" alt="" width="24"#}
-                                             {#height="24">#}
-                                        {#Instagram#}
-                                    {#</li>#}
-                                {#{% endfor %}#}
-                            {#</ul>#}
-                        {#</div>#}
-                        {#<div class="col-md-10">#}
-                            {#<table class="table table-striped">#}
-                                {#<thead>#}
-                                {#<tr>#}
-                                    {#<th>Title</th>#}
-                                    {#<th>Caption</th>#}
-                                    {#<th>Account</th>#}
-                                    {#<th>Post date</th>#}
-                                    {#<th>Post status</th>#}
-                                    {#<th></th>#}
-                                {#</tr>#}
-                                {#</thead>#}
-                                {#<tbody>#}
-                                {#{% for post in posts %}#}
-                                    {#{% if post.socialNetwork == 'instagram' %}#}
-                                        {#<tr>#}
-                                            {#<td>{{ post.title }}</td>#}
-                                            {#<td>{{ post.caption }}</td>#}
-                                            {#<td>#}
-                                                {#{% if post.account %}#}
-                                                    {#{{ post.account.name }}#}
-                                                {#{% else %}#}
-                                                    {#Not selected#}
-                                                {#{% endif %}#}
-                                            {#</td>#}
-                                            {#<td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>#}
-                                            {#<td>{{ post.status }}</td>#}
-                                            {#<td>#}
-                                                {#<a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}">#}
-                                                    {#<i class="far fa-trash-alt"></i>Delete#}
-                                                {#</a>#}
-                                            {#</td>#}
-                                        {#</tr>#}
-                                    {#{% endif %}#}
-                                {#{% endfor %}#}
-                                {#</tbody>#}
-                            {#</table>#}
-                        {#</div>#}
-                    {#</div>#}
+                {#<div class="product-card-header">#}
+                {#<div class="card-header-title">#}
+                {#<span class="card-title">#}
+                {#Your posts#}
+                {#</span>#}
+                {#</div>#}
+                {#<div>#}
+                {#<button class="btn btn-primary" data-toggle="modal"#}
+                {#data-target="#createPost">#}
+                {#<i class="fas fa-plus"></i> Add#}
+                {#</button>#}
+                {#</div>#}
+                {#</div>#}
+                {#<hr>#}
+                {#<div class="row">#}
+                {#<div class="col-md-2">#}
+                {#<h3>Active services</h3>#}
+                {#<ul class="nav">#}
+                {#{% for service in activeServices %}#}
+                {#<li>#}
+                {#<img src="{{ asset('images/icons/'~class(service)~'.svg') }}" alt="" width="24"#}
+                {#height="24">#}
+                {#Instagram#}
+                {#</li>#}
+                {#{% endfor %}#}
+                {#</ul>#}
+                {#</div>#}
+                {#<div class="col-md-10">#}
+                {#<table class="table table-striped">#}
+                {#<thead>#}
+                {#<tr>#}
+                {#<th>Title</th>#}
+                {#<th>Caption</th>#}
+                {#<th>Account</th>#}
+                {#<th>Post date</th>#}
+                {#<th>Post status</th>#}
+                {#<th></th>#}
+                {#</tr>#}
+                {#</thead>#}
+                {#<tbody>#}
+                {#{% for post in posts %}#}
+                {#{% if post.socialNetwork == 'instagram' %}#}
+                {#<tr>#}
+                {#<td>{{ post.title }}</td>#}
+                {#<td>{{ post.caption }}</td>#}
+                {#<td>#}
+                {#{% if post.account %}#}
+                {#{{ post.account.name }}#}
+                {#{% else %}#}
+                {#Not selected#}
+                {#{% endif %}#}
+                {#</td>#}
+                {#<td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>#}
+                {#<td>{{ post.status }}</td>#}
+                {#<td>#}
+                {#<a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}">#}
+                {#<i class="far fa-trash-alt"></i>Delete#}
+                {#</a>#}
+                {#</td>#}
+                {#</tr>#}
+                {#{% endif %}#}
+                {#{% endfor %}#}
+                {#</tbody>#}
+                {#</table>#}
+                {#</div>#}
+                {#</div>#}
                 {#{% endif %}#}
             </div>
         </div>

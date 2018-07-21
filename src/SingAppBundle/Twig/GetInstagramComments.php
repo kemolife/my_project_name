@@ -15,13 +15,13 @@ class GetInstagramComments extends \Twig_Extension
 
     public function __construct(ContainerInterface $container)
     {
-        $this->instagramService = $container->get('app.anstagram.service');
+        $this->instagramService = $container->get('instagram_provider');
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('getComments', array($this, 'getComments')),
+            new \Twig_SimpleFunction('getCommentsReplies', array($this, 'getCommentsReplies')),
             new \Twig_SimpleFunction('getComment', array($this, 'getComment')),
         );
     }
@@ -31,9 +31,9 @@ class GetInstagramComments extends \Twig_Extension
         return $this->instagramService->getAllComments();
     }
 
-    public function getComments($mediaId, $commentsId)
+    public function getCommentsReplies($mediaId, $commentsId)
     {
-        return $this->instagramService->getCommentReplies($mediaId, $commentsId);
+        return $this->instagramService->getCommentReplies($mediaId, $commentsId)->getChildComments();
     }
 
     public function getComment($mediaId, $commentsId)
