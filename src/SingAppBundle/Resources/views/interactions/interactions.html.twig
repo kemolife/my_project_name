@@ -69,19 +69,20 @@
                             </select>
                         </div>
                         {#<div class="col-sm-4 col-md-6 controls">#}
-                            {#<div id="date-filter" class="control-group col-md-5">#}
-                                {#<input type="text" placeholder="From Date" data-provide="datepicker"#}
-                                       {#class="date-filter-input form-control" id="start-date-filter">#}
-                            {#</div>#}
-                            {#<div class="col-md-1">#}
-                                {#<span style="font-size: 19px;">and</span>#}
-                            {#</div>#}
-                            {#<div class="control-group col-md-5">#}
-                                {#<input type="text" placeholder="To Date" data-provide="datepicker"#}
-                                       {#data-date-end-date="0d" class="date-filter-input form-control" id="end-date-filter">#}
-                            {#</div>#}
+                        {#<div id="date-filter" class="control-group col-md-5">#}
+                        {#<input type="text" placeholder="From Date" data-provide="datepicker"#}
+                        {#class="date-filter-input form-control" id="start-date-filter">#}
                         {#</div>#}
-                        <div class="col-sm-4 col-md-3 col-md-offset-1 controls control-group float-right" id="styled-site-filter">
+                        {#<div class="col-md-1">#}
+                        {#<span style="font-size: 19px;">and</span>#}
+                        {#</div>#}
+                        {#<div class="control-group col-md-5">#}
+                        {#<input type="text" placeholder="To Date" data-provide="datepicker"#}
+                        {#data-date-end-date="0d" class="date-filter-input form-control" id="end-date-filter">#}
+                        {#</div>#}
+                        {#</div>#}
+                        <div class="col-sm-4 col-md-3 col-md-offset-1 controls control-group float-right"
+                             id="styled-site-filter">
                             <select class="pull-left form-control" id="site-filter" data-changed="false">
                                 <option value="all">All (24)</option>
                                 <option>Facebook (20)</option>
@@ -91,48 +92,52 @@
 
                     </div>
                     {% for comment in instagramServices.comments %}
+                    {{ dump(comment) }}
                     <div id="interactions-view">
                         <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
                              data-review-id="17914383">
-                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
-                                <div class="interaction-img">
-                                    <figure>
-                                        <img src="/images/listing-icons/instagrame.com.png" alt="">
-                                    </figure>
-                                </div>
-                                <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
-                                    {{ dump(comment.owner) }}
-                                    <span>
+                            {% if comment is not empty %}
+                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
+                                    <div class="interaction-img">
+                                        <figure>
+                                            <img src="/images/listing-icons/instagrame.com.png" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
+                                        {{ comment.getUser().getUsername() }}
+                                        <span>
                                       added a new comment
-                                        on {{ comment.createAt }} UTC
+                                            on {{ comment.getCreatedAt()|date('Y-m-d H:i:s') }} UTC
                                   </span>
-                                </div>
-                                <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
-                                    <div class="response-width">
-                                        <div class="response replied">Responded</div>
                                     </div>
-                                    <div class="rating">
+                                    <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
+                                        <div class="response-width">
+                                            <div class="response replied">Responded</div>
+                                        </div>
+                                        <div class="rating">
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
-                                <div class="col-md-12 no-padding">
-                                    <h3></h3>
-                                    <p>Robbie is amazing along with all the practitioners here.</p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
-                                        <p>Comment on 2018-07-17 12:54:28 UTC from <span>Seaforth Physiotherapy &amp; Sports Injury Centre</span>
-                                        </p>
+                                <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
+                                    <div class="col-md-12 no-padding">
+                                        <h3></h3>
+                                        <p>{{ comment.getText() }}</p>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
-                                        <p>Thanks Hilary 😊</p>
-                                    </div>
-                                </div>
+                                    {% for commentReplies in getCommentsReplies(comment.getMediaId(), comment.getPk()) %}
+                                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
+                                                <p>Comment on {{ commentReplies.getCreatedAt()|date('Y-m-d H:i:s') }} UTC from <span>{{ commentReplies.getUser().getUsername() }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
+                                                <p>{{ commentReplies.getText()  }}</p>
+                                            </div>
+                                        </div>
 
-
-                            </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a class="btn btn-primary btn-response" data-remote="true" data-method="get"
                                    href="/client/locations/134769/interactions/17914383/new_response">Respond</a>

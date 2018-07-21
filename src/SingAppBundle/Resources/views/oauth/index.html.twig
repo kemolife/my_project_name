@@ -209,7 +209,7 @@
     {% endif %}
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="editBusinessModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="editBusinessModal" style="overflow: hidden" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -228,7 +228,23 @@
     </div>
 {% endblock %}
 
-
+{% block stylesheets %}
+<style>
+    .pac-container {
+        background-color: #FFF;
+        z-index: 20;
+        position: fixed;
+        display: inline-block;
+        float: left;
+    }
+    .modal{
+        z-index: 20;
+    }
+    .modal-backdrop{
+        z-index: 10;
+    }​
+</style>
+{% endblock %}
 {% block javascripts %}
     <script>
         $(document).ready(function () {

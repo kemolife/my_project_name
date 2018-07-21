@@ -148,3 +148,10 @@ $(document).ready(function () {
         .select2({width: '100%'});
     $('#singappbundle_businessinfo_category').select2({width: '100%'});
 });
+
+function initAutocomplete() {
+    geocoder = new google.maps.Geocoder();
+    new google.maps.places.Autocomplete(
+        (document.getElementById('singappbundle_businessinfo_address'))/*,
+      {types: ['(cities)']}*/);
+}

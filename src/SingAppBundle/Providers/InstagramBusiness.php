@@ -51,7 +51,7 @@ class InstagramBusiness
         $this->user = $user;
         $this->business = $business;
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-        $this->account = $this->getSettingData($user, $business, $account);
+        $this->account = $this->getSettingData($this->user, $this->business, $account);
         $this->ig = new Instagram($this->account->debug, $this->account->runcatedDebug);
         try {
             $this->ig->login($this->account->username, $this->account->password);
@@ -155,8 +155,8 @@ class InstagramBusiness
 
     public function getInfoNewScraper()
     {
-        $account = $this->ig->getMedias($this->account->username);
-        return $account;
+        $medias = $this->ig->getMedias($this->account->username);
+        return $medias;
     }
 
     public function authInst()
@@ -181,7 +181,7 @@ class InstagramBusiness
          * @var Comment $comment
          */
         foreach ($this->getInfoNewScraper() as $media) {
-            $comments[] = $this->igNew->media->getComments($media)->getComments();
+            $comments[] = $this->igNew->media->getComments($media->getId())->getComments();
         }
         return $comments;
     }
@@ -219,6 +219,7 @@ class InstagramBusiness
             /**
              * @var Like $like
              */
+            var_dump($media->getShortCode()); die;
             foreach ($this->ig->getMediaLikesByCode($media->getShortCode()) as $key => $like) {
                 $likesCount++;
             }
