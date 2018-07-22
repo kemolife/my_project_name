@@ -37,7 +37,7 @@ class GetConnectButtonAndStatus extends \Twig_Extension
 
         $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
         if(null === $siteSettings){
-            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId()]).'" class="btn btn-primary"> Connect </a>';
+            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => 'index']).'" class="btn btn-primary"> Connect </a>';
         }
 
         return $button;

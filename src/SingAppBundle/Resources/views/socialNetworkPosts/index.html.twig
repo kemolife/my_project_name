@@ -31,19 +31,19 @@
                     <div class="col-md-2">
                         <ul class="nav nav-tabs tabs-left">
                             <li class="active">
-                                <a href="#google" data-toggle="tab" data-tab-history="true"
-                                   data-tab-history-changer="push"
-                                   data-tab-history-update-url="true">
-                                    <i class="icon-link-google" title="Google"></i>
-                                    Google My Business Posts
-                                </a>
-                            </li>
-                            <li>
                                 <a href="#instagram" data-toggle="tab" data-tab-history="true"
                                    data-tab-history-changer="push"
                                    data-tab-history-update-url="true">
                                     <img src="{{ asset('images/icons/instagram.svg') }}" alt="" width="24" height="24">
                                     Instagram
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#google" data-toggle="tab" data-tab-history="true"
+                                   data-tab-history-changer="push"
+                                   data-tab-history-update-url="true">
+                                    <i class="icon-link-google" title="Google"></i>
+                                    Google My Business Posts
                                 </a>
                             </li>
                             <li>
@@ -58,52 +58,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="tab-content">
-                            <div class="tab-pane active" id="google">
-                                {% if googleAccount %}
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Caption</th>
-                                            <th>Post date</th>
-                                            <th>Post status</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for post in posts %}
-                                            {% if post.socialNetwork == 'google' %}
-                                                <tr>
-                                                    <td>{{ post.title }}</td>
-                                                    <td>{{ post.caption }}</td>
-                                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
-                                                    <td>{{ post.status }}</td>
-                                                    <td>
-                                                        <a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
-                                                           class="btn btn-default btn-sm">
-                                                            <i class="far fa-trash-alt"></i>Delete
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% else %}
-                                    <div class="google-connect-cont">
-                                        <div class="insights-main-page">
-                                            <div class="insights-login-page">
-                                                <a href="{{ url('google-auth') }}">
-                                                    <img src="{{ asset('images/google-connect-btn.png') }}"
-                                                         alt="Google connect">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="tab-pane" id="instagram">
+                            <div class="tab-pane active" id="instagram">
                                 <span class="card-title">
                                     Your instagram accounts:
                                 </span>
@@ -123,23 +78,25 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>{{ instagramAccount.name }}</td>
-                                        <td>{{ instagramAccount.login }}</td>
-                                        <td>{{ instagramAccount.password }}</td>
-                                        <td>
-                                            <a href="{{ url('instagram-account-edit', {'instagramAccount': instagramAccount.id }) }}"
-                                               class="btn btn-default btn-sm">
-                                                <i class="far fa-edit"></i> Edit
-                                            </a>
-                                            <a href="{{ url('instagram-account-delete', {'instagramAccount': instagramAccount.id }) }}"
-                                               class="btn btn-default btn-sm btn-delete">
-                                                <i class="far fa-trash-alt"></i> Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    {% if instagramAccount is not null %}
+                                        <tbody>
+                                        <tr>
+                                            <td>{{ instagramAccount.name }}</td>
+                                            <td>{{ instagramAccount.login }}</td>
+                                            <td>{{ instagramAccount.password }}</td>
+                                            <td>
+                                                <a href="{{ url('instagram-account-edit', {'instagramAccount': instagramAccount.id }) }}"
+                                                   class="btn btn-default btn-sm">
+                                                    <i class="far fa-edit"></i> Edit
+                                                </a>
+                                                <a href="{{ url('instagram-account-delete', {'instagramAccount': instagramAccount.id }) }}"
+                                                   class="btn btn-default btn-sm btn-delete">
+                                                    <i class="far fa-trash-alt"></i> Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    {% endif %}
                                 </table>
                                 <hr>
                                 <span class="card-title">
@@ -186,6 +143,50 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="tab-pane" id="google">
+                                {% if googleAccount %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Caption</th>
+                                            <th>Post date</th>
+                                            <th>Post status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for post in posts %}
+                                            {% if post.socialNetwork == 'google' %}
+                                                <tr>
+                                                    <td>{{ post.title }}</td>
+                                                    <td>{{ post.caption }}</td>
+                                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ post.status }}</td>
+                                                    <td>
+                                                        <a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="google-connect-cont">
+                                        <div class="insights-main-page">
+                                            <div class="insights-login-page">
+                                                <a href="{{ url('google-auth', {'url' : 'social-network-posts'}) }}">
+                                                    <img src="{{ asset('images/google-connect-btn.png') }}"
+                                                         alt="Google connect">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
 
                             <div class="tab-pane" id="facebook">

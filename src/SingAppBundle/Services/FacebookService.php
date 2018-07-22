@@ -85,9 +85,9 @@ class FacebookService
         return $result;
     }
 
-    public function createFacebookAccount(Request $request, AccessToken $accessTokeData)
+    public function createFacebookAccount(Request $request, AccessToken $accessTokeData, $businessId)
     {
-        $business = $this->getBusinessByUID($request->cookies->get('business'));
+        $business = $this->getBusinessByID($businessId);
 
        if ($business instanceof BusinessInfo) {
            $facebookAccount = new FacebookAccount();
@@ -102,17 +102,17 @@ class FacebookService
     }
 
     /**
-     * @param $uid
+     * @param $id
      * @return BusinessInfo
      */
-    private function getBusinessByUID($uid)
+    private function getBusinessByID($id)
     {
-        $repository = $this->em->getRepository('SingAppBundle:Business');
+        $repository = $this->em->getRepository('SingAppBundle:BusinessInfo');
 
         /**
          * @var BusinessInfo $business
          */
-        $business = $repository->findOneBy(['uid' => $uid]);
+        $business = $repository->findOneBy(['id' => $id]);
 
         return $business;
     }

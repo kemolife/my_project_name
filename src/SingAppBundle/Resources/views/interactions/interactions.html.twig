@@ -110,7 +110,7 @@
                                             on {{ comment.getCreatedAt()|date('Y-m-d H:i:s') }} UTC
                                             </span>
                                         </div>
-                                        <div class="col-xs-6 col-sm-5 col-md-5 head-right pull-right">
+                                        <div class="col-xs-6 col-sm-5 col-md-3 head-right pull-right">
                                             <div class="response-width">
                                                 {% if getCommentsReplies(mediaId, comment.getPk())|length > 0 %}
                                                     <div class="response replied">Responded</div>
@@ -141,13 +141,26 @@
 
                                         {% endfor %}
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <a class="btn btn-primary btn-response" data-remote="true" data-method="get"
-                                           href="/client/locations/134769/interactions/17914383/new_response">Respond</a>
+                                    <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px;">
+                                        <button class="btn btn-primary btn-response">Respond</button>
 
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 review-response-form">
-
+                                    <div class="col-xs-12 col-sm-12 col-md-12 review-response-form" style="display: none">
+                                    {% set params = app.request.query.all|merge({ 'mediaId': mediaId, 'comment': comment.getPk() }) %}
+                                        <form class="simple_form new_review_submission" id="new_review_submission" action="{{ url('interactions-comment-add', params) }}" method="post">
+                                            <div class="alert alert-danger alert-dismissible collapse" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span></button>
+                                                <strong>Error! </strong><p> Please correct the errors before submitting</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 controls no-padding-left">
+                                                <textarea label="false" autofocus="autofocus" placeholder="Enter review response" cols="150" rows="3" required="required" class="response-content form-control" name="text" id="review_submission_content"></textarea>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-8 response-btn-row">
+                                                <input type="submit" name="commit" value="Submit" class="btn btn-primary pull-right response-submit-btn">
+                                                <a class="response-close-btn">Close</a>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -199,4 +212,25 @@
         </div>
     {% endif %}
 
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.btn-response').on('click', function() {
+                $(this).parent().parent().find('.review-response-form').fadeIn();
+            });
+            $('.response-close-btn').on('click', function() {
+                $(this).parent().parent().parent().parent().find('.review-response-form').fadeOut();
+            })
+         });
+        {% if app.request.query.all.error is defined %}
+            $.notify({
+                title: "<strong>Error!</strong> ",
+                message: '{{ app.request.query.all.error }}'
+            }, {
+                type: 'danger',
+                delay: 5000
+            });
+        {% endif %}
+    </script>
 {% endblock %}

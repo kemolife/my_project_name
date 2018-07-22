@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * BusinessInfo
@@ -16,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="business_info")
  * @ORM\Entity(repositoryClass="SingAppBundle\Repository\BusinessInfoRepository")
  * @ORM\EntityListeners({"SingAppBundle\EntityListener\BusinessInfoEntityListener"})
+ * @UniqueEntity("name")
  */
 class BusinessInfo
 {
@@ -31,7 +33,7 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -51,6 +53,7 @@ class BusinessInfo
     /**
      * @var int
      * @ORM\Column(name="phone_number", type="string", length=100)
+     * @Assert\Regex(pattern="/^[0-9\-\+]{9,15}$/", message="invalid phone number")
      */
     private $phoneNumber;
 

@@ -13,9 +13,17 @@ use SingAppBundle\Form\InstagramPostForm;
 use SingAppBundle\Repository\BusinessInfoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BaseController extends Controller
 {
+    protected $session;
+
+    public function __construct()
+    {
+        $this->session = new Session();
+    }
+
     public function getRepository($entity)
     {
         return $this->getDoctrine()->getRepository($entity);
@@ -38,9 +46,9 @@ class BaseController extends Controller
     public function businessPostForm(BusinessInfo $entity, Request $request, $update = false, User $user)
     {
         if($update){
-            $options = ['method' => 'PUT', 'validation_groups' => ['update']];
+            $options = ['method' => 'PUT'];
         }else{
-            $options = ['method' => 'POST', 'validation_groups' => ['create']];
+            $options = ['method' => 'POST'];
         }
         $businessPostForm = $this->createForm(BusinessInfoType::class, $entity, $options);
 
@@ -50,12 +58,18 @@ class BaseController extends Controller
         if ($businessPostForm->isSubmitted() && $businessPostForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setUser($user);
+            $entity->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
             $em->persist($entity);
             $em->flush();
 
+            return $this->redirectToRoute('index', array('business' => $entity->getId()));
+
         }
 
-        return $businessPostForm;
+        return $this->render('@SingApp/oauth/add-business.html.twig',  [
+            'form' => $businessPostForm->createView(),
+            'business' => $entity
+            ]);
     }
 
     public function getCurrentBusiness(Request $request)

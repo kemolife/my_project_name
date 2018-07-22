@@ -10,10 +10,7 @@
                             <span class="card-title">Your business listing report</span>
                         </div>
                         <div>
-                            <button class="btn btn-primary" data-toggle="modal"
-                                    data-target="#editBusinessModal">
-                                Edit Business
-                            </button>
+                            <a href="{{ url('edit-business', app.request.query.all) }}" class="btn btn-primary">Edit Business</a>
                             <a href="{{ url('add-business', app.request.query.all) }}" class="btn btn-primary">Add Business</a>
                         </div>
                     </div>
@@ -122,26 +119,26 @@
                                 {{ getStatusConnect('facebook', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/yelp.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Yelp
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('yelp', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
+                        {#<div class="col-md-12 list-item-container">#}
+                            {#<div class="list-item clearfix col-md-12">#}
+                                {#<div class="col-md-12">#}
+                                    {#<div class="col-md-5">#}
+                                        {#<img class="service-icon" src="/images/listing-icons/yelp.com.png" alt=""#}
+                                             {#width="25"#}
+                                             {#height="25">#}
+                                        {#<p class="list-item-title">#}
+                                            {#Yelp#}
+                                        {#</p>#}
+                                    {#</div>#}
+                                    {#<div class="col-md-7">#}
+                                        {#{{ getButton('yelp', currentBusiness, app.user)|raw }}#}
+                                    {#</div>#}
+                                {#</div>#}
 
-                                <hr class="hr-line">
-                                {{ getStatusConnect('yelp', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
+                                {#<hr class="hr-line">#}
+                                {#{{ getStatusConnect('yelp', currentBusiness, app.user)|raw }}#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="col-md-12 list-item-container">
                             <div class="list-item clearfix col-md-12">
                                 <div class="col-md-12">
@@ -209,23 +206,23 @@
     {% endif %}
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="editBusinessModal" style="overflow: hidden" role="dialog"
-         aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit business</h4>
-                </div>
-                <div class="modal-body" id="location_edit_modal" style="display: inline-block;">
-                    {% include '@SingApp/modal/busines-info-modal.html.twig' with {'form': businessFormEdit} %}
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
+    {#<div class="modal fade" id="editBusinessModal" style="overflow: hidden" role="dialog"#}
+         {#aria-labelledby="myModalLabel">#}
+        {#<div class="modal-dialog modal-lg" role="document">#}
+            {#<div class="modal-content">#}
+                {#<div class="modal-header">#}
+                    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
+                                {#aria-hidden="true">&times;</span></button>#}
+                    {#<h4 class="modal-title" id="myModalLabel">Edit business</h4>#}
+                {#</div>#}
+                {#<div class="modal-body" id="location_edit_modal" style="display: inline-block;">#}
+                    {#{% include '@SingApp/modal/busines-info-modal.html.twig' with {'form': businessFormEdit} %}#}
+                {#</div>#}
+                {#<div class="modal-footer">#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
 {% endblock %}
 
 {% block stylesheets %}
@@ -259,5 +256,14 @@
             }
             {% endfor %}
         });
+        {% if app.request.query.all.error is defined %}
+            $.notify({
+                title: "<strong>Error!</strong> ",
+                message: '{{ app.request.query.all.error }}'
+            }, {
+                type: 'danger',
+                delay: 5000
+            });
+        {% endif %}
     </script>
 {% endblock %}

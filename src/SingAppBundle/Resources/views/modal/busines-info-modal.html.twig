@@ -1,3 +1,6 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/intlTelInput.min.css') }}">
+{% endblock %}
 {{ form_start(form, {'attr': {'class': 'add-business-class'}}) }}
 {{ form_errors(form) }}
 <div class="row">
@@ -44,6 +47,8 @@
         </div>
         <div class="control-group col-md-6 col-sm-12">
             {{ form_row(form.phoneNumber) }}
+            <span id="valid-msg" class="hide">✓ Valid</span>
+            <span id="error-msg" class="hide">Invalid number</span>
         </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="biz_details">
@@ -322,4 +327,42 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </div>
 {{ form_end(form) }}
+{% block javascripts %}
+    <script src="{{ asset('js/intlTelInput.min.js') }}"></script>
+    <script>
+        function initAutocomplete() {
+            geocoder = new google.maps.Geocoder();
+            new google.maps.places.Autocomplete(
+                (document.getElementById('singappbundle_businessinfo_address'))/*,
+      {types: ['(cities)']}*/);
+        }
+        $(document).ready(function () {
+            if ('{{ business.logo }}') {
+                var html = '<img style="width: 12%" src="{{ asset(''~business.logo~'') }}" >';
+                $('#singappbundle_businessinfo_logo').parent().append(html)
+            }
+            {% for photo in business.photos %}
+            if ('{{ photo.image }}') {
+                html = '<img style="width: 12%" src="{{ asset(''~photo.image~'') }}" >';
+                $('#singappbundle_businessinfo_uploadedFiles').parent().append(html)
+            }
+            {% endfor %}
+            // var telInput = $("#singappbundle_businessinfo_phoneNumber"),
+            //     errorMsg = $("#error-msg"),
+            //     validMsg = $("#valid-msg");
+            //
+            // telInput.intlTelInput({
+            //     autoHideDialCode: false,
+            //     nationalMode: false,
+            //     placeholderNumberType: "MOBILE",
+            //     preferredCountries: ['au', 'nz', 'gbr'],
+            //     separateDialCode: true,
+            //     utilsScript: "/js/utils.js"
+            // });
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6NMVYn2rplTpyqotdkzqDwZ4m4mylD2E&libraries=places&callback=initAutocomplete"
+            async defer></script>
+{% endblock %}
+
 

@@ -11,6 +11,7 @@ use SingAppBundle\Entity\InstagramPost;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
+use SingAppBundle\Providers\InstagramBusiness;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -68,7 +69,7 @@ class SocialNetworkPostController extends BaseController
         $query = $request->request->all();
         $em = $this->getDoctrine()->getManager();
         foreach ($dataSocial as $social) {
-            switch ($social){
+            switch ($social) {
                 case $social instanceof GoogleAccount :
                     $googlePost = new GooglePost();
                     $googlePost->setTitle($query['title']);

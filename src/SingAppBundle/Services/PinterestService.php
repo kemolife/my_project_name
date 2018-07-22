@@ -8,9 +8,7 @@ use Curl\Curl;
 use DirkGroenen\Pinterest\Exceptions\PinterestException;
 use DirkGroenen\Pinterest\Pinterest;
 use Doctrine\ORM\EntityManagerInterface;
-use FoursquareApi;
 use SingAppBundle\Entity\BusinessInfo;
-use SingAppBundle\Entity\FoursquareAccount;
 use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
@@ -37,16 +35,16 @@ class PinterestService
     public function createAccount(BusinessInfo $business, $code)
     {
         $createdDate = new \DateTime();
-        $Foursquare = new FoursquareAccount();
+        $pinterest = new PinterestAccount();
 
-        $Foursquare->setCreated($createdDate);
-        $Foursquare->setBusiness($business);
-        $Foursquare->setCode($code);
+        $pinterest->setCreated($createdDate);
+        $pinterest->setBusiness($business);
+        $pinterest->setCode($code);
 
-        $this->em->persist($Foursquare);
+        $this->em->persist($pinterest);
         $this->em->flush();
 
-        return $Foursquare;
+        return $pinterest;
     }
 
 
@@ -82,9 +80,9 @@ class PinterestService
     public function getPinterestSetting(User $user, BusinessInfo $business)
     {
         $repository = $this->em->getRepository('SingAppBundle:PinterestAccount');
-        $foursquare = $repository->findOneBy(['user' => $user, 'business' => $business]);
+        $pinterest = $repository->findOneBy(['user' => $user, 'business' => $business]);
 
-        return $foursquare;
+        return $pinterest;
     }
 
     /**
@@ -99,7 +97,7 @@ class PinterestService
 
     private function updateAccount($venue)
     {
-        $foursquare = new FoursquareAPI($this->clientId, $this->clientSecret);
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
         $params['name'] = $this->getClientData()->getName();
         $params['address'] = $this->getClientData()->getAddress();
         $params['description'] = $this->getClientData()->getDescription();
@@ -107,7 +105,7 @@ class PinterestService
 //        $params['primaryCategoryId'] = $this->getClientData()->getCategory();
         $params['hours'] = $this->getClientData()->getOpeningHours();
 
-        $response = json_decode($foursquare->GetPrivate('venues/' . $venue->id . '/proposeedit', $params, true));
+        $response = json_decode($pinterest->GetPrivate('venues/' . $venue->id . '/proposeedit', $params, true));
         if($response->meta->code != 200 ){
             throw new OAuthCompanyException('Try later!');
         }

@@ -4,7 +4,11 @@
     {% if is_granted('ROLE_USER') %}
         <div class="products">
             <div class="messages">
-                <h2 style="text-align: center">Add new business</h2>
+                {% if form.vars.method == "PUT" %}
+                    <h2 style="text-align: center">Edit business</h2>
+                {% else %}
+                    <h2 style="text-align: center">Add new business</h2>
+                {% endif %}
                 <div class="card add-business-block">
                     {% include '@SingApp/modal/busines-info-modal.html.twig' with {'form': form} %}
                 </div>

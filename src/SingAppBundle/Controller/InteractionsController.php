@@ -6,6 +6,7 @@ use FacebookAds\Http\Adapter\Curl\Curl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Providers\InstagramBusiness;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,14 +35,41 @@ class InteractionsController extends BaseController
          * @var InstagramBusiness $instagram
          */
         $instagram = $this->get('instagram_provider');
-        $instagramServices['likes'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllLikesCount();
-        $instagramServices['comments'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllComments();
-        $instagramServices['href'] = 'https://anon.to/?https://www.instagram.com/'.$instagram->getIstagramAccount($user, $currentBusiness)->getLogin().'/';
-        $params = [
-            'businesses' => $this->getBusinesses(),
-            'currentBusiness' => $currentBusiness,
-            'instagramServices' => $instagramServices
-        ];
+        if (null !== $instagram->getIstagramAccount($user, $currentBusiness)) {
+            $instagramServices['likes'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllLikesCount();
+            $instagramServices['comments'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllComments();
+            $instagramServices['href'] = 'https://anon.to/?https://www.instagram.com/' . $instagram->getIstagramAccount($user, $currentBusiness)->getLogin() . '/';
+            $params = [
+                'businesses' => $this->getBusinesses(),
+                'currentBusiness' => $currentBusiness,
+                'instagramServices' => $instagramServices
+            ];
+        }else{
+            return $this->redirectToRoute('index', $request->query->all()+['error' => 'Please connect to instagram service!']);
+        }
         return $this->render('@SingApp/interactions/interactions.html.twig', $params);
+    }
+
+    /**
+     * @Route("/interactions-comments/add", name="interactions-comment-add")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function commentAddAction(Request $request)
+    {
+        $dataPost = $request->request->all();
+        $dataGet = $request->query->all();
+
+        $user = $this->getUser();
+        $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var InstagramBusiness $instagramService
+         */
+        $instagramService = $this->get('instagram_provider');
+        try{
+            $instagramService->auth($user, $currentBusiness)->addComment($dataGet['mediaId'], $dataGet['comment'], $dataPost['text']);
+            return $this->redirectToRoute('interactions', ['business' => $request->query->all()['business']]);
+        }catch (OAuthCompanyException $e){
+            return $this->redirectToRoute('interactions', ['business' => $request->query->all()['business'], 'error' => $e->getMessage()]);
+        }
     }
 }

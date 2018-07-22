@@ -23,7 +23,7 @@ class GoogleService
     public function auth()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret.json');
+        $client->setAuthConfig('client_secret_local.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
@@ -37,7 +37,7 @@ class GoogleService
     {
 
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret.json');
+        $client->setAuthConfig('client_secret_local.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
@@ -59,11 +59,11 @@ class GoogleService
         return $googleMyBusiness->categories->listCategories();
     }
 
-    public function createGoogleAccount(Request $request, $accessTokeData)
+    public function createGoogleAccount(Request $request, $accessTokeData, $businessId)
     {
-        $neededDataKeys =['access_token', 'token_type', 'expires_in', 'refresh_token', 'created'];
+        $neededDataKeys =['access_token', 'token_type', 'expires_in', 'created'];
 
-        $business = $this->getBusinessByUID($request->cookies->get('business'));
+        $business = $this->getBusinessByID($businessId);
 
         if (PHPFunctionsHelper::array_keys_exist($neededDataKeys, $accessTokeData) && $business instanceof BusinessInfo) {
             $createdDate = new \DateTime();
@@ -71,7 +71,7 @@ class GoogleService
 
             $googleAccount = new GoogleAccount();
             $googleAccount->setAccessToken($accessTokeData['access_token']);
-            $googleAccount->setRefreshToken($accessTokeData['refresh_token']);
+            $googleAccount->setRefreshToken($accessTokeData['access_token']);
             $googleAccount->setCreated($createdDate);
             $googleAccount->setExpiresIn(new \DateTime('+ '.$accessTokeData['expires_in'].' seconds'));
             $googleAccount->setBusiness($business);
@@ -83,17 +83,17 @@ class GoogleService
     }
 
     /**
-     * @param $uid
+     * @param $id
      * @return BusinessInfo
      */
-    private function getBusinessByUID($uid)
+    private function getBusinessByID($id)
     {
         $repository = $this->em->getRepository('SingAppBundle:BusinessInfo');
 
         /**
          * @var BusinessInfo $business
          */
-        $business = $repository->findOneBy(['id' => 1]);
+        $business = $repository->findOneBy(['id' => $id]);
 
         return $business;
     }

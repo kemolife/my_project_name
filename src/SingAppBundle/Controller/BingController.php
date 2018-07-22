@@ -70,25 +70,37 @@ class BingController extends BaseController
      */
     public function bingCallbackAction(Request $request)
     {
-//        /**
-//         * @var BusinessInfo $currentBusiness
-//         */
-//        $currentBusiness = $this->getCurrentBusiness($request);
-//        /**
-//         * @var User $user
-//         */
-//        $user = $this->getUser();
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
 
 
-
+        /**
+         * @var BingService $bingService
+         */
         $bingService = $this->get('app.bing.service');
-//        $bingAccount = $bingService->getbingSetting($user, $currentBusiness);
-//        if(null === $bingAccount){
-//            $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
-//        }
-//        if($bingService->getToken($bingAccount->getCode()) === 0){
-//            return $this->redirect($bingService->auth());
-//        }
+        $bingAccount = $bingService->getBingSetting($user, $currentBusiness);
+        if(null === $bingAccount){
+            $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
+        }
+        if($bingService->getToken($bingAccount->getCode()) === 0){
+            return $this->redirect($bingService->auth());
+        }
+        $bingAccount = $bingService->getBingSetting($user, $currentBusiness);
+        if(null === $bingAccount){
+            $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
+        }
+        if($bingAccount->getCode() !== $request->get('code')){
+            $bingAccount = $bingService->updateAccounts($bingAccount, $request->get('code'));
+        }
+        if($bingService->getToken($bingAccount->getCode()) === 0){
+            return $this->redirect($bingAccount->auth());
+        }
         try {
             $bingService->getOwner($bingService->getToken($request->get('code')));
             return $this->redirectToRoute('index');

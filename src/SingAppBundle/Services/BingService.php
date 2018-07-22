@@ -6,10 +6,9 @@ namespace SingAppBundle\Services;
 
 use Curl\Curl;
 use Doctrine\ORM\EntityManagerInterface;
-use FoursquareApi;
 use GuzzleHttp\Exception\BadResponseException;
 use SingAppBundle\Entity\BusinessInfo;
-use SingAppBundle\Entity\FoursquareAccount;
+use SingAppBundle\Entity\BingAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
@@ -41,16 +40,16 @@ class BingService
     public function createAccount(BusinessInfo $business, $code)
     {
         $createdDate = new \DateTime();
-        $Foursquare = new FoursquareAccount();
+        $bing = new BingAccount();
 
-        $Foursquare->setCreated($createdDate);
-        $Foursquare->setBusiness($business);
-        $Foursquare->setCode($code);
+        $bing->setCreated($createdDate);
+        $bing->setBusiness($business);
+        $bing->setCode($code);
 
-        $this->em->persist($Foursquare);
+        $this->em->persist($bing);
         $this->em->flush();
 
-        return $Foursquare;
+        return $bing;
     }
 
 
@@ -93,14 +92,14 @@ class BingService
     }
 
     /**
-     * @return null|FoursquareAccount
+     * @return null|BingAccount
      */
-    public function getFoursquareSetting(User $user, BusinessInfo $business)
+    public function getBingSetting(User $user, BusinessInfo $business)
     {
-        $repository = $this->em->getRepository('SingAppBundle:FoursquareAccount');
-        $foursquare = $repository->findOneBy(['user' => $user, 'business' => $business]);
+        $repository = $this->em->getRepository('SingAppBundle:BingAccount');
+        $bing = $repository->findOneBy(['user' => $user, 'business' => $business]);
 
-        return $foursquare;
+        return $bing;
     }
 
     /**
@@ -115,7 +114,7 @@ class BingService
 
     private function updateAccount($venue)
     {
-        $foursquare = new FoursquareAPI($this->clientId, $this->clientSecret);
+        $bing = $this->getProvider();
         $params['name'] = $this->getClientData()->getName();
         $params['address'] = $this->getClientData()->getAddress();
         $params['description'] = $this->getClientData()->getDescription();
@@ -123,7 +122,7 @@ class BingService
 //        $params['primaryCategoryId'] = $this->getClientData()->getCategory();
         $params['hours'] = $this->getClientData()->getOpeningHours();
 
-        $response = json_decode($foursquare->GetPrivate('venues/' . $venue->id . '/proposeedit', $params, true));
+        $response = json_decode($bing->get('venues/' . $venue->id . '/proposeedit', $params, true));
         if($response->meta->code != 200 ){
             throw new OAuthCompanyException('Try later!');
         }

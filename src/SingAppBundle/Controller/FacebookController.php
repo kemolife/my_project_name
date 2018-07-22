@@ -16,6 +16,7 @@ class FacebookController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $this->session->set('url', $request->get('url'));
         /**
          * @var FacebookService $facebookService
          */
@@ -36,9 +37,9 @@ class FacebookController extends BaseController
 
         $accessTokeData = $facebookService->getAccessToken();
 
-        $facebookService->createFacebookAccount($request, $accessTokeData);
+        $facebookService->createFacebookAccount($request, $accessTokeData, $this->getCurrentBusiness($request)->getId());
 
-        return $this->redirectToRoute('social-network-posts');
+        return $this->redirectToRoute(($this->session->get('url')));
     }
 
 }

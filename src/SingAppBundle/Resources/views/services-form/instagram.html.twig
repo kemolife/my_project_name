@@ -4,9 +4,6 @@
 {% block body %}
     <div class="container login">
         <div class="login-form">
-            {% if error is defined %}
-                <span class="error-service-auth">{{ error }}</span>
-            {% endif %}
             <div class="form-signin-heading">
                 <span>Enter Instagram credential for sync</span>
             </div>
@@ -16,4 +13,18 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% if error is defined %}
+            $.notify({
+                title: "<strong>Error!</strong> ",
+                message: '{{ error }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
+            }, {
+                type: 'danger',
+                delay: 5000
+            });
+        {% endif %}
+    </script>
 {% endblock %}

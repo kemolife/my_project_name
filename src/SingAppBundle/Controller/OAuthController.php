@@ -34,10 +34,10 @@ class OAuthController extends BaseController
             return $this->addBusiness($request, $user);
         }
         $currentBusiness = $this->getCurrentBusiness($request);
-        $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true, $user)->createView();
+//        $businessFormEdit = $this->businessPostForm($currentBusiness, $request, true, $user)->createView();
         $params = [
             'businesses' => $this->getBusinesses(),
-            'businessFormEdit' => $businessFormEdit,
+//            'businessFormEdit' => $businessFormEdit,
             'currentBusiness' => $currentBusiness
         ];
         return $this->render('@SingApp/oauth/index.html.twig', $params);
@@ -89,10 +89,25 @@ class OAuthController extends BaseController
      */
     public function addBusinessAction(Request $request)
     {
+        $businessInfo = new Businessinfo();
         /**
          * @var User $user
          */
         $user = $this->getUser();
-        return $this->addBusiness($request, $user);
+        return $this->businessPostForm($businessInfo, $request, false, $user);
+    }
+
+    /**
+     * @Route("/business/edit", name="edit-business")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editBusinessAction(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $user = $this->getUser();
+        return $this->businessPostForm($currentBusiness, $request, true, $user);
     }
 }

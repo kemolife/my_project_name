@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Instagram;
+use InstagramScraper\Exception\InstagramAuthException;
 use InstagramScraper\Exception\InstagramException;
 use InstagramAPI\Exception\InstagramException as InstagramApiException;
 use InstagramScraper\Instagram as InstagramScraper;
@@ -43,7 +44,6 @@ class InstagramBusiness
     /**
      * InstagramBusiness constructor.
      * @param EntityManagerInterface $entityManager
-     * @throws OAuthCompanyException
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -51,6 +51,13 @@ class InstagramBusiness
 
     }
 
+    /**
+     * @param User $user
+     * @param BusinessInfo $business
+     * @param InstagramAccount|null $account
+     * @return $this
+     * @throws OAuthCompanyException
+     */
     public function auth(User $user, BusinessInfo $business, InstagramAccount $account = null)
     {
         $this->user = $user;
@@ -146,6 +153,13 @@ class InstagramBusiness
         }
     }
 
+    /**
+     * @param User $user
+     * @param BusinessInfo $business
+     * @return $this
+     * @throws OAuthCompanyException
+     * @throws \phpFastCache\Exceptions\phpFastCacheDriverCheckException
+     */
     public function newAuth(User $user, BusinessInfo $business)
     {
         $this->user = $user;
@@ -155,11 +169,15 @@ class InstagramBusiness
         try {
             $this->ig->login();
             return $this;
-        } catch (InstagramException $e) {
+        } catch (InstagramAuthException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
 
+    /**
+     * @return Media[]|mixed|null
+     * @throws \InstagramScraper\Exception\InstagramNotFoundException
+     */
     public function getInfoNewScraper()
     {
         $cache = new FilesystemCache();
@@ -173,6 +191,10 @@ class InstagramBusiness
         return $medias;
     }
 
+    /**
+     * @param Media $media
+     * @return int|mixed|null
+     */
     public function getLikesByMedia(Media $media)
     {
         $cache = new FilesystemCache();
@@ -186,6 +208,10 @@ class InstagramBusiness
         return $likes;
     }
 
+    /**
+     * @return $this
+     * @throws OAuthCompanyException
+     */
     public function authInst()
     {
         $debug = false;
@@ -213,6 +239,10 @@ class InstagramBusiness
         return $user;
     }
 
+    /**
+     * @return array
+     * @throws \InstagramScraper\Exception\InstagramNotFoundException
+     */
     public function getAllComments()
     {
         $comments = [];
@@ -237,16 +267,23 @@ class InstagramBusiness
         return $comments;
     }
 
+    /**
+     * @param $mediaId
+     * @param null $commentId
+     * @param $text
+     * @throws OAuthCompanyException
+     */
     public function addComment($mediaId, $commentId = null, $text)
     {
-        if (null === $commentId) {
-            $this->igNew->media->comment($mediaId, $text);
-            $status = true;
-        } else {
-            $this->igNew->media->comment($mediaId, '@' . $this->ig->account->getCurrentUser()->getUser()->getUsername() . ' ' . $text, $commentId);
-            $status = true;
+        try {
+            if (null === $commentId) {
+                $this->ig->media->comment($mediaId, $text);
+            } else {
+                $this->ig->media->comment($mediaId, '@' . $this->ig->account->getCurrentUser()->getUser()->getUsername() . ' ' . $text, $commentId);
+            }
+        }catch (\Exception $e){
+            throw new OAuthCompanyException($e->getMessage());
         }
-        return $status;
     }
 
     public function getAllLikesCount()

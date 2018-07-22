@@ -53,7 +53,7 @@ class InstagramController extends BaseController
             try{
                 $instagramService->auth($user, $currentBusiness, $instagram)->updateIstagramAccount();
                 $instagramService->createUpdateAccount($currentBusiness, $instagram);
-                return $this->redirectToRoute('index');
+                return $this->redirectToRoute('index', $request->query->all());
             }catch (OAuthCompanyException $e){
                 return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
             }
@@ -109,7 +109,7 @@ class InstagramController extends BaseController
             $em->persist($instagramPost);
             $em->flush();
 
-            $response = $this->redirectToRoute('social-network-posts');
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
 
         } else {
             $response = $this->render('@SingApp/socialNetworkPosts/instagram/edit.html.twig', [
@@ -144,7 +144,7 @@ class InstagramController extends BaseController
             $em->persist($instagramAccount);
             $em->flush();
 
-            $response = $this->redirectToRoute('social-network-posts');
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
 
         } else {
             $response = $this->render('@SingApp/socialNetworkPosts/instagram/edit.html.twig', [
@@ -167,7 +167,7 @@ class InstagramController extends BaseController
         $em->remove($instagramAccount);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('social-network-posts').'#instagram');
+        return $this->redirect($this->generateUrl('social-network-posts', $request->query->all()).'#instagram');
     }
 
     /**
