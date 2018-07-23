@@ -18,8 +18,8 @@ use Symfony\Component\Serializer\Exception\ExtraAttributesException;
 class BingService
 {
     private $em;
-    private $clientId = '3KB2UCRUVZKBWAKMFLXEKO510XE52JFJTKQNW520AG3FZ514';
-    private $clientSecret = 'S2ICWBIL4HZG1B4DPWH4ABWTENGJXTKZ2NDQ5FZLVZ3CIP1G';
+    private $clientId = '4dca26fc-ab69-4b78-b5fa-b0d683005bb0';
+    private $clientSecret = 'lvzpPQ399-wijAZBCZ53{|$';
     private $redirectUrl = "https://listings.devcom.com/bing/oauth2callback";
 
     public function __construct(EntityManagerInterface $entityManager)
