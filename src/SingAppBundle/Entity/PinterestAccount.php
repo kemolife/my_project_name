@@ -22,7 +22,7 @@ class PinterestAccount extends SocialNetworkAccount
     /**
      * @ORM\Column(type="string", nullable=false)
      */
-    protected $code;
+    protected $accessToken;
 
     /**
      * Set user
@@ -57,26 +57,26 @@ class PinterestAccount extends SocialNetworkAccount
 
 
     /**
-     * Set code.
+     * Set accessToken.
      *
-     * @param string $code
+     * @param string $accessToken
      *
      * @return PinterestAccount
      */
-    public function setCode($code)
+    public function setAccessToken($accessToken)
     {
-        $this->code = $code;
+        $this->code = $accessToken;
 
         return $this;
     }
 
     /**
-     * Get code.
+     * Get accessToken.
      *
      * @return string
      */
-    public function getCode()
+    public function getAccessToken()
     {
-        return $this->code;
+        return $this->accessToken;
     }
 }

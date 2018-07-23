@@ -32,19 +32,20 @@ class PinterestService
         return $pinterest->auth->getLoginUrl($this->redirectUrl, array('read_public'));
     }
 
-    public function createAccount(BusinessInfo $business, $code)
+    public function createAccount(BusinessInfo $business, $accessTokeData)
     {
-        $createdDate = new \DateTime();
-        $pinterest = new PinterestAccount();
+        if ($business instanceof BusinessInfo) {
+            $createdDate = new \DateTime();
+            $pinterest = new PinterestAccount();
 
-        $pinterest->setCreated($createdDate);
-        $pinterest->setBusiness($business);
-        $pinterest->setCode($code);
+            $pinterest->setCreated($createdDate);
+            $pinterest->setBusiness($business);
+            $pinterest->setAccessToken($accessTokeData);
 
-        $this->em->persist($pinterest);
-        $this->em->flush();
+            $this->em->persist($pinterest);
+            $this->em->flush();
 
-        return $pinterest;
+        }
     }
 
 

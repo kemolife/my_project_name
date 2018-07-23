@@ -18,41 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class BingController extends BaseController
 {
-//    /**
-//     * @Route("/bing", name="bing")
-//     * @Security("has_role('ROLE_USER')")
-//     */
-//    public function indexAction(Request $request)
-//    {
-//        /**
-//         * @var BusinessInfo $currentBusiness
-//         */
-//        $currentBusiness = $this->getCurrentBusiness($request);
-//        /**
-//         * @var User $user
-//         */
-//        $user = $this->getUser();
-//
-//        $bing = new BingAccount();
-//        $bingService = $this->get('app.bing.service');
-//        $form = $this->createForm(BingType::class, $bing);
-//
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            /**
-//             * @var bingService $bingService
-//             */
-//            try{
-//                $bingService->createAccount($currentBusiness, $bing);
-//                return $this->redirectToRoute('index');
-//            }catch (OAuthCompanyException $e){
-//                return $this->render('@SingApp/services-form/bing.html.twig', ['form' => $form->createView(), 'error' => 'Credential bad or try again later']);
-//            }
-//        }
-//
-//        return $this->render('@SingApp/services-form/bing.html.twig', ['form' => $form->createView()]);
-//    }
-
     /**
      * @Route("/auth/bing", name="bing-auth")
      */
@@ -62,6 +27,7 @@ class BingController extends BaseController
          * @var BingService $bingService
          */
         $bingService = $this->get('app.bing.service');
+        $this->session->set('url', $request->get('url'));
         return $this->redirect($bingService->auth());
     }
 
@@ -74,40 +40,13 @@ class BingController extends BaseController
          * @var BusinessInfo $currentBusiness
          */
         $currentBusiness = $this->getCurrentBusiness($request);
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-
 
         /**
          * @var BingService $bingService
          */
         $bingService = $this->get('app.bing.service');
-        $bingAccount = $bingService->getBingSetting($user, $currentBusiness);
-        if(null === $bingAccount){
-            $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
-        }
-        if($bingService->getToken($bingAccount->getCode()) === 0){
-          return  $this->redirect($bingService->auth());
-        }
-        $bingAccount = $bingService->getBingSetting($user, $currentBusiness);
-        if(null === $bingAccount){
-            $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
-        }
-        if($bingAccount->getCode() !== $request->get('code')){
-            $bingAccount = $bingService->updateAccounts($bingAccount, $request->get('code'));
-        }
-        if($bingService->getToken($bingAccount->getCode()) === 0){
-            return $this->redirect($bingAccount->auth());
-        }
-        try {
-            $bingService->getOwner($bingService->getToken($request->get('code')));
-            $response = $this->redirectToRoute('index');
-        }catch (OAuthCompanyException $e){
-            $response = $this->redirectToRoute('index');
-        }
-
-        return $response;
+        $accessTokeData = $bingService->getToken($request->get('code'));
+        $bingService->createAccount($currentBusiness, $accessTokeData);
+        return $this->redirectToRoute($this->session->get('url'));
     }
 }

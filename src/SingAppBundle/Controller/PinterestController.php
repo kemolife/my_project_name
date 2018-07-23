@@ -24,6 +24,7 @@ class PinterestController extends BaseController
          * @var PinterestService $pinterestService
          */
         $pinterestService = $this->get('app.pinterest.service');
+        $this->session->set('url', $request->get('url'));
         return $this->redirect($pinterestService->auth());
     }
 
@@ -44,21 +45,9 @@ class PinterestController extends BaseController
          * @var PinterestService $pinterestService
          */
         $pinterestService = $this->get('app.pinterest.service');
-        $pinterestAccount = $pinterestService->getPinterestSetting($user, $currentBusiness);
-        if(null === $pinterestAccount){
-            $pinterestAccount = $pinterestService->createAccount($currentBusiness, $request->get('code'));
-        }
-        if($pinterestService->getToken($pinterestAccount->getCode()) === 0){
-            return $this->redirect($pinterestService->auth());
-        }
-        try {
-            $token = $pinterestService->getToken($pinterestAccount->getCode());
-            $pinterestService->getAndUpdatePrivateVenues($token);
-            $response = $this->redirectToRoute('index');
-        }catch (OAuthCompanyException $e){
-            $response = $this->redirectToRoute('index');
-        }
-        return $response;
+        $accessTokeData = $pinterestService->getToken($request->get('code'));
+        $pinterestService->createAccount($currentBusiness, $accessTokeData);
+        return $this->redirectToRoute($this->session->get('url'));
     }
 
     /**

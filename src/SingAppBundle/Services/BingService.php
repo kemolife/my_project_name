@@ -37,19 +37,20 @@ class BingService
         }
     }
 
-    public function createAccount(BusinessInfo $business, $code)
+    public function createAccount(BusinessInfo $business, $accessTokeData)
     {
-        $createdDate = new \DateTime();
-        $bing = new BingAccount();
+        if ($business instanceof BusinessInfo) {
+            $createdDate = new \DateTime();
+            $bing = new BingAccount();
 
-        $bing->setCreated($createdDate);
-        $bing->setBusiness($business);
-        $bing->setCode($code);
+            $bing->setCreated($createdDate);
+            $bing->setBusiness($business);
+            $bing->setAccessToken($accessTokeData);
 
-        $this->em->persist($bing);
-        $this->em->flush();
+            $this->em->persist($bing);
+            $this->em->flush();
 
-        return $bing;
+        }
     }
 
 
