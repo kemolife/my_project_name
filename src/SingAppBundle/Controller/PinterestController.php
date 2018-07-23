@@ -54,10 +54,11 @@ class PinterestController extends BaseController
         try {
             $token = $pinterestService->getToken($pinterestAccount->getCode());
             $pinterestService->getAndUpdatePrivateVenues($token);
-            return $this->redirectToRoute('index');
+            $response = $this->redirectToRoute('index');
         }catch (OAuthCompanyException $e){
-
+            $response = $this->redirectToRoute('index');
         }
+        return $response;
     }
 
     /**

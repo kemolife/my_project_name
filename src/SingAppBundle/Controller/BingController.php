@@ -89,7 +89,7 @@ class BingController extends BaseController
             $bingAccount = $bingService->createAccount($currentBusiness, $request->get('code'));
         }
         if($bingService->getToken($bingAccount->getCode()) === 0){
-            return $this->redirect($bingService->auth());
+          return  $this->redirect($bingService->auth());
         }
         $bingAccount = $bingService->getBingSetting($user, $currentBusiness);
         if(null === $bingAccount){
@@ -103,9 +103,11 @@ class BingController extends BaseController
         }
         try {
             $bingService->getOwner($bingService->getToken($request->get('code')));
-            return $this->redirectToRoute('index');
+            $response = $this->redirectToRoute('index');
         }catch (OAuthCompanyException $e){
-            return $this->redirectToRoute('index');
+            $response = $this->redirectToRoute('index');
         }
+
+        return $response;
     }
 }
