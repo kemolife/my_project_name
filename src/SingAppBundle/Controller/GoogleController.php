@@ -38,7 +38,7 @@ class GoogleController extends BaseController
 
         $accessTokeData = $googleService->getAccessToken($request->get('code'));
 
-        $googleService->createGoogleAccount($request, $accessTokeData, $this->getCurrentBusiness($request)->getId());
+        $googleService->createGoogleAccount($request, $accessTokeData, $this->getCurrentBusiness($request));
 
         return $this->redirectToRoute($this->session->get('url'));
     }

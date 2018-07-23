@@ -23,7 +23,7 @@ set :log_level, :info
 set :linked_files, fetch(:linked_files, []).push('app/config/parameters.yml')
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('vendor', 'web/files')
+set :linked_dirs, fetch(:linked_dirs, []).push('vendor', 'web/files', 'web/photos')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

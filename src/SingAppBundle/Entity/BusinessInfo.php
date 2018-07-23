@@ -307,7 +307,7 @@ class BusinessInfo
     /**
      * Set openingHours.
      *
-     * @param \DateTime|null $openingHours
+     * @param string|null $openingHours
      *
      * @return BusinessInfo
      */
@@ -321,7 +321,7 @@ class BusinessInfo
     /**
      * Get openingHours.
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getOpeningHours()
     {

@@ -59,25 +59,26 @@ class GoogleService
         return $googleMyBusiness->categories->listCategories();
     }
 
-    public function createGoogleAccount(Request $request, $accessTokeData, $businessId)
+    public function createGoogleAccount(Request $request, $accessTokeData, $business)
     {
-        $neededDataKeys =['access_token', 'token_type', 'expires_in', 'created'];
-
-        $business = $this->getBusinessByID($businessId);
-
-        if (PHPFunctionsHelper::array_keys_exist($neededDataKeys, $accessTokeData) && $business instanceof BusinessInfo) {
+        if (array_key_exists('access_token', $accessTokeData) && $business instanceof BusinessInfo) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp($accessTokeData['created']);
-
             $googleAccount = new GoogleAccount();
-            $googleAccount->setAccessToken($accessTokeData['access_token']);
-            $googleAccount->setRefreshToken($accessTokeData['access_token']);
-            $googleAccount->setCreated($createdDate);
-            $googleAccount->setExpiresIn(new \DateTime('+ '.$accessTokeData['expires_in'].' seconds'));
-            $googleAccount->setBusiness($business);
 
-            $this->em->persist($googleAccount);
-            $this->em->flush();
+            if (array_key_exists('refresh_token', $accessTokeData)) {
+                $googleAccount->setRefreshToken($accessTokeData['refresh_token']);
+            }
+
+            if ($googleAccount instanceof GoogleAccount) {
+                $googleAccount->setAccessToken($accessTokeData['access_token']);
+                $googleAccount->setCreated($createdDate);
+                $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
+                $googleAccount->setBusiness($business);
+
+                $this->em->persist($googleAccount);
+                $this->em->flush();
+            }
         }
 
     }

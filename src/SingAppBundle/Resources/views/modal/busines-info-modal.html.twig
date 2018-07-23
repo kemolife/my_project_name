@@ -3,6 +3,8 @@
 {% endblock %}
 {{ form_start(form, {'attr': {'class': 'add-business-class'}}) }}
 {{ form_errors(form) }}
+{% set objHours = form.phoneNumber | json_encode %}
+    {{ dump(objHours) }}
 <div class="row">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
