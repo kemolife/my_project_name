@@ -29,7 +29,7 @@ class PinterestController extends BaseController
     }
 
     /**
-     * @Route("/pinterest/oauth2callback", name="pinterest-oauth2callback", schemes={"https"})
+     * @Route("/pinterest/oauth2callback", name="pinterest-oauth2callback")
      */
     public function pinterestCallbackAction(Request $request)
     {
@@ -38,16 +38,16 @@ class PinterestController extends BaseController
          */
         $currentBusiness = $this->getCurrentBusiness($request);
         /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-        /**
          * @var PinterestService $pinterestService
          */
-        $pinterestService = $this->get('app.pinterest.service');
-        $accessTokeData = $pinterestService->getToken($request->get('code'));
-        $pinterestService->createAccount($currentBusiness, $accessTokeData);
-        return $this->redirectToRoute($this->session->get('url'));
+        try {
+            $pinterestService = $this->get('app.pinterest.service');
+            $accessTokeData = $pinterestService->getToken($request->get('code'));
+            $pinterestService->createAccount($currentBusiness, $accessTokeData);
+            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->getCurrentBusiness($request)]);
+        }catch (OAuthCompanyException $e){
+            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->getCurrentBusiness($request)]);
+        }
     }
 
     /**

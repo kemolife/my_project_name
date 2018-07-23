@@ -37,6 +37,16 @@ class BingService
         }
     }
 
+    public function getToken($code)
+    {
+        $provider = $this->getProvider();
+        try {
+            return $provider->getAccessToken('authorization_code', ['code' => $code]);
+        }catch (\Exception $e){
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
     public function createAccount(BusinessInfo $business, $accessTokeData)
     {
         if ($business instanceof BusinessInfo) {
@@ -50,17 +60,6 @@ class BingService
             $this->em->persist($bing);
             $this->em->flush();
 
-        }
-    }
-
-
-    public function getToken($code)
-    {
-        $provider = $this->getProvider();
-        try {
-            return $provider->getAccessToken('authorization_code', ['code' => $code]);
-        }catch (\Exception $e){
-            throw new OAuthCompanyException($e->getMessage());
         }
     }
 
