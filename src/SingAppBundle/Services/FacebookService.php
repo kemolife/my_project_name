@@ -42,7 +42,7 @@ class FacebookService
             'user_posts', 'publish_to_groups', 'user_managed_groups',
             'groups_access_member_info', 'business_management',
             'manage_pages', 'publish_pages', 'pages_manage_cta', 'pages_manage_instant_articles',
-            'pages_show_list', ''];
+            'pages_show_list'];
 
         $loginUrl = $helper->getLoginUrl($this->domain . '/facebook/oauth2callback', $permissions);
 
