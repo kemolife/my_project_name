@@ -40,7 +40,7 @@ class PinterestService
 
             $pinterest->setCreated($createdDate);
             $pinterest->setBusiness($business);
-            $pinterest->setAccessToken($accessTokeData);
+            $pinterest->setAccessToken($accessTokeData['access_token']);
 
             $this->em->persist($pinterest);
             $this->em->flush();

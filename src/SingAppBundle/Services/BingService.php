@@ -55,7 +55,7 @@ class BingService
 
             $bing->setCreated($createdDate);
             $bing->setBusiness($business);
-            $bing->setAccessToken($accessTokeData);
+            $bing->setAccessToken($accessTokeData['access_token']);
 
             $this->em->persist($bing);
             $this->em->flush();
