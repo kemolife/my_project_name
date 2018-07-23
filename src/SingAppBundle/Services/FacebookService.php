@@ -39,7 +39,7 @@ class FacebookService
         $helper = $fb->getRedirectLoginHelper();
         $permissions = [
             'email', 'user_likes', 'user_location',
-            'user_posts', 'publish_to_groups', 'user_managed_groups',
+            'user_posts', 'publish_to_groups',
             'groups_access_member_info', 'business_management',
             'manage_pages', 'publish_pages', 'pages_manage_cta', 'pages_manage_instant_articles',
             'pages_show_list'];
