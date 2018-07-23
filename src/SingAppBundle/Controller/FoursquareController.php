@@ -60,7 +60,6 @@ class FoursquareController extends BaseController
         $foursquareService = $this->get('app.foursquare.service');
         $this->session->set('business', $request->get('business'));
         $this->session->set('url', $request->get('url'));
-        var_dump($foursquareService->auth()); die;
         return $this->redirect($foursquareService->auth());
     }
 
