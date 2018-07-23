@@ -23,7 +23,7 @@ class GoogleService
     public function auth()
     {
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret_local.json');
+        $client->setAuthConfig('client_secret.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
@@ -37,7 +37,7 @@ class GoogleService
     {
 
         $client = new Google_Client();
-        $client->setAuthConfig('client_secret_local.json');
+        $client->setAuthConfig('client_secret.json');
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
