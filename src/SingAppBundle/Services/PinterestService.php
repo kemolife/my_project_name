@@ -35,7 +35,7 @@ class PinterestService
 
     public function createAccount(BusinessInfo $business, Response $accessTokeData)
     {
-        var_dump($accessTokeData->data); die;
+        var_dump($accessTokeData); die;
         if ($business instanceof BusinessInfo) {
             $createdDate = new \DateTime();
             $pinterest = new PinterestAccount();
