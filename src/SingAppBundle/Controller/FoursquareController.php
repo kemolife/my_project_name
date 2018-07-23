@@ -68,7 +68,6 @@ class FoursquareController extends BaseController
      */
     public function foursquareCallbackAction(Request $request)
     {
-        var_dump($this->session->get('business')); die;
         /**
          * @var FoursquareService $foursquareService
          */
