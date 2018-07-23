@@ -35,12 +35,11 @@ class PinterestService
 
     public function createAccount(Response $accessTokeData)
     {
-        var_dump($accessTokeData->access_token); die;
         $createdDate = new \DateTime();
         $pinterest = new PinterestAccount();
 
         $pinterest->setCreated($createdDate);
-        $pinterest->setAccessToken($accessTokeData->access_token);
+        $pinterest->setAccessToken(($accessTokeData->access_token)[0]);
 
         $this->em->persist($pinterest);
         $this->em->flush();
