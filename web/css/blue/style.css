@@ -362,6 +362,15 @@ footer > span {
     justify-content: space-between;
     margin-bottom: 29px;
 }
+.checkbox input{
+    margin-top: 10px;
+    -webkit-appearance: checkbox;
+    margin-left: 0px!important;
+}
+
+.checkbox label{
+    padding-left: 20px!important;
+}
 
 .card-button {
     width: 138px;
@@ -3566,7 +3575,7 @@ form .file-inputs input[type="file"] {
 
 .checkbox label {
     padding-right: 20px;
-    padding-left: 0 !important;
+    padding-left: 0;
 }
 
 .checkbox label:after,

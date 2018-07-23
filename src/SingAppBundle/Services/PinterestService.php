@@ -39,7 +39,7 @@ class PinterestService
         $pinterest = new PinterestAccount();
 
         $pinterest->setCreated($createdDate);
-        $pinterest->setAccessToken(($accessTokeData->access_token)[0]);
+        $pinterest->setAccessToken($accessTokeData->access_token);
 
         $this->em->persist($pinterest);
         $this->em->flush();

@@ -310,8 +310,32 @@
                 </div>
             </div>
         </div>
-        <div class="control-group col-md-12 col-sm-12">
+        <div class="control-group col-md-12 col-sm-12" style="display: none">
             {{ form_row(form.paymentOptions) }}
+        </div>
+        <div class="col-md-12">
+            <div class="checkbox">
+                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'Visa' in form.paymentOptions.vars.value %} checked {% endif %} value="Visa">
+                <label for="">
+                    <img class="checkbox-img" src="/images/edit-business-modal/visa.png" alt="">
+                </label>
+                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'American Express' in form.paymentOptions.vars.value %} checked {% endif %}  value="American Express">
+                <label for="">
+                    <img class="checkbox-img" src="/images/edit-business-modal/american-express.png" alt="">
+                </label>
+                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'Master Card' in form.paymentOptions.vars.value %} checked {% endif %} value="Master Card">
+                <label for="">
+                    <img class="checkbox-img" src="/images/edit-business-modal/master-card.png" alt="">
+                </label>
+                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]"{% if 'Cash' in form.paymentOptions.vars.value %} checked {% endif %} value="Cash">
+                <label for="">
+                    <img class="checkbox-img" src="/images/edit-business-modal/cash.png" alt="">
+                </label>
+                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]"{% if 'Cheque' in form.paymentOptions.vars.value %} checked {% endif %} value="Cheque">
+                <label for="">
+                    <img class="checkbox-img" src="/images/edit-business-modal/cheque.png" alt="">
+                </label>
+            </div>
         </div>
 
     </div>

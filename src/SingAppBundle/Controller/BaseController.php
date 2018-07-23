@@ -59,6 +59,7 @@ class BaseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setUser($user);
             $entity->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
+            $entity->setPaymentOptions(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['payment_methods']));
             $em->persist($entity);
             $em->flush();
 
@@ -96,6 +97,7 @@ class BaseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $businessInfo->setUser($user);
             $businessInfo->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
+            $businessInfo->setPaymentOptions(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['payment_methods']));
             $em->persist($businessInfo);
             $em->flush();
 
