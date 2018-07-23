@@ -24,7 +24,7 @@ class GoogleAccount extends SocialNetworkAccount
     protected $accessToken;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $refreshToken;
 
