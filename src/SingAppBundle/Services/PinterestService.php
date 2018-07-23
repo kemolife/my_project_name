@@ -7,6 +7,7 @@ namespace SingAppBundle\Services;
 use Curl\Curl;
 use DirkGroenen\Pinterest\Exceptions\PinterestException;
 use DirkGroenen\Pinterest\Pinterest;
+use DirkGroenen\Pinterest\Transport\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\PinterestAccount;
@@ -32,7 +33,7 @@ class PinterestService
         return $pinterest->auth->getLoginUrl($this->redirectUrl, array('read_public'));
     }
 
-    public function createAccount(BusinessInfo $business, $accessTokeData)
+    public function createAccount(BusinessInfo $business, Response $accessTokeData)
     {
         if ($business instanceof BusinessInfo) {
             $createdDate = new \DateTime();
@@ -40,7 +41,7 @@ class PinterestService
 
             $pinterest->setCreated($createdDate);
             $pinterest->setBusiness($business);
-            $pinterest->setAccessToken($accessTokeData['access_token']);
+            $pinterest->setAccessToken($accessTokeData->data['access_token']);
 
             $this->em->persist($pinterest);
             $this->em->flush();

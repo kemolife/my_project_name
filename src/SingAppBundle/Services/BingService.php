@@ -7,6 +7,7 @@ namespace SingAppBundle\Services;
 use Curl\Curl;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Exception\BadResponseException;
+use League\OAuth2\Client\Token\AccessToken;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\BingAccount;
 use SingAppBundle\Entity\User;
@@ -47,7 +48,7 @@ class BingService
         }
     }
 
-    public function createAccount(BusinessInfo $business, $accessTokeData)
+    public function createAccount(BusinessInfo $business, AccessToken $accessTokeData)
     {
         if ($business instanceof BusinessInfo) {
             $createdDate = new \DateTime();
@@ -55,7 +56,7 @@ class BingService
 
             $bing->setCreated($createdDate);
             $bing->setBusiness($business);
-            $bing->setAccessToken($accessTokeData['access_token']);
+            $bing->setAccessToken($accessTokeData->getToken());
 
             $this->em->persist($bing);
             $this->em->flush();
