@@ -23,6 +23,7 @@ class GoogleController extends BaseController
         $googleService = $this->get('app.google.service');
 
         $this->session->set('url', $request->get('url'));
+        $this->session->set('business', $request->get('business'));
         return $this->redirect($googleService->auth());
     }
 
@@ -38,9 +39,9 @@ class GoogleController extends BaseController
 
         $accessTokeData = $googleService->getAccessToken($request->get('code'));
 
-        $googleService->createGoogleAccount($request, $accessTokeData, $this->getCurrentBusiness($request));
+        $googleService->createGoogleAccount($request, $accessTokeData);
 
-        return $this->redirectToRoute($this->session->get('url'));
+        return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
     }
 
     /**

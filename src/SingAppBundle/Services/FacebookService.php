@@ -85,20 +85,14 @@ class FacebookService
         return $result;
     }
 
-    public function createFacebookAccount(Request $request, AccessToken $accessTokeData, $businessId)
+    public function createFacebookAccount(Request $request, AccessToken $accessTokeData)
     {
-        $business = $this->getBusinessByID($businessId);
+        $facebookAccount = new FacebookAccount();
+        $facebookAccount->setAccessToken($accessTokeData->getValue());
+        $facebookAccount->setExpiresIn($accessTokeData->getExpiresAt());
 
-       if ($business instanceof BusinessInfo) {
-           $facebookAccount = new FacebookAccount();
-           $facebookAccount->setAccessToken($accessTokeData->getValue());
-           $facebookAccount->setExpiresIn($accessTokeData->getExpiresAt());
-           $facebookAccount->setBusiness($business);
-
-           $this->em->persist($facebookAccount);
-           $this->em->flush();
-       }
-
+        $this->em->persist($facebookAccount);
+        $this->em->flush();
     }
 
     /**

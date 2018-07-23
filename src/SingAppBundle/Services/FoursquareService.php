@@ -31,14 +31,19 @@ class FoursquareService
         return $foursquare->AuthenticationLink( $this->redirectUrl);
     }
 
-    public function createFoursquareAccount(BusinessInfo $business, $code)
+    public function getToken($code)
+    {
+        $foursquare = new FoursquareAPI($this->clientId, $this->clientSecret);
+        return $foursquare->GetToken($code, $this->redirectUrl);
+    }
+
+    public function createAccount($accessToken)
     {
         $createdDate = new \DateTime();
         $Foursquare = new FoursquareAccount();
 
         $Foursquare->setCreated($createdDate);
-        $Foursquare->setBusiness($business);
-        $Foursquare->setCode($code);
+        $Foursquare->setAccessToken($accessToken);
 
         $this->em->persist($Foursquare);
         $this->em->flush();
@@ -46,20 +51,13 @@ class FoursquareService
         return $Foursquare;
     }
 
-    public function updateFoursquareAccount(FoursquareAccount $foursquareAccount, $code)
+    public function updateFoursquareAccount(FoursquareAccount $foursquareAccount, $accessToken)
     {
-        $foursquareAccount->setCode($code);
+        $foursquareAccount->setAccessToken($accessToken);
         $this->em->persist($foursquareAccount);
         $this->em->flush();
 
         return $foursquareAccount;
-    }
-
-
-    public function getToken($code)
-    {
-        $foursquare = new FoursquareAPI($this->clientId, $this->clientSecret);
-        return $foursquare->GetToken($code, $this->redirectUrl);
     }
 
     public function getAndUpdatePrivateVenues($token)

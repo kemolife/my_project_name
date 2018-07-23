@@ -28,6 +28,7 @@ class BingController extends BaseController
          */
         $bingService = $this->get('app.bing.service');
         $this->session->set('url', $request->get('url'));
+        $this->session->set('business', $request->get('business'));
         return $this->redirect($bingService->auth());
     }
 
@@ -37,20 +38,15 @@ class BingController extends BaseController
     public function bingCallbackAction(Request $request)
     {
         /**
-         * @var BusinessInfo $currentBusiness
-         */
-        $currentBusiness = $this->getCurrentBusiness($request);
-
-        /**
          * @var BingService $bingService
          */
         try {
             $bingService = $this->get('app.bing.service');
             $accessTokeData = $bingService->getToken($request->get('code'));
-            $bingService->createAccount($currentBusiness, $accessTokeData);
-            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->getCurrentBusiness($request)]);
+            $bingService->createAccount($accessTokeData);
+            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
         }catch (OAuthCompanyException $e){
-            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->getCurrentBusiness($request)]);
+            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->session->get('business')]);
         }
     }
 }

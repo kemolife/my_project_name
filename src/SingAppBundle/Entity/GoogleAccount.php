@@ -14,7 +14,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
- *     "SingAppBundle\EntityListener\SetOwnerListener"})
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\SetBusinessListener"
+ *     })
  */
 class GoogleAccount extends SocialNetworkAccount
 {

@@ -59,9 +59,9 @@ class GoogleService
         return $googleMyBusiness->categories->listCategories();
     }
 
-    public function createGoogleAccount(Request $request, $accessTokeData, $business)
+    public function createGoogleAccount(Request $request, $accessTokeData)
     {
-        if (array_key_exists('access_token', $accessTokeData) && $business instanceof BusinessInfo) {
+        if (array_key_exists('access_token', $accessTokeData)) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp($accessTokeData['created']);
             $googleAccount = new GoogleAccount();
@@ -74,7 +74,6 @@ class GoogleService
                 $googleAccount->setAccessToken($accessTokeData['access_token']);
                 $googleAccount->setCreated($createdDate);
                 $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
-                $googleAccount->setBusiness($business);
 
                 $this->em->persist($googleAccount);
                 $this->em->flush();

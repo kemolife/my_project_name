@@ -58,6 +58,9 @@ class FoursquareController extends BaseController
     public function authAction(Request $request)
     {
         $foursquareService = $this->get('app.foursquare.service');
+        $this->session->set('business', $request->get('business'));
+        $this->session->set('url', $request->get('url'));
+        var_dump($foursquareService->auth()); die;
         return $this->redirect($foursquareService->auth());
     }
 
@@ -66,31 +69,33 @@ class FoursquareController extends BaseController
      */
     public function foursquareCallbackAction(Request $request)
     {
+        var_dump($this->session->get('business')); die;
         /**
-         * @var BusinessInfo $currentBusiness
+         * @var FoursquareService $foursquareService
          */
-        $currentBusiness = $this->getCurrentBusiness($request);
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-
         $foursquareService = $this->get('app.foursquare.service');
-        $foursquareAccount = $foursquareService->getFoursquareSetting($user, $currentBusiness);
-        if(null === $foursquareAccount){
-            $foursquareAccount = $foursquareService->createFoursquareAccount($currentBusiness, $request->get('code'));
-        }
-        if($foursquareAccount->getCode() !== $request->get('code')){
-            $foursquareAccount = $foursquareService->updateFoursquareAccount($foursquareAccount, $request->get('code'));
-        }
-        if($foursquareService->getToken($foursquareAccount->getCode()) === 0){
-            return $this->redirect($foursquareService->auth());
-        }
         try {
-            $foursquareService->getAndUpdatePrivateVenues($foursquareService->getToken($foursquareAccount->getCode()));
-            return $this->redirectToRoute('index');
+            $accessTokeData = $foursquareService->getToken($request->get('code'));
+            $foursquareService->createAccount($accessTokeData);
+            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
         }catch (OAuthCompanyException $e){
-
+            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->session->get('business')]);
         }
+//        $foursquareAccount = $foursquareService->getFoursquareSetting($user, $currentBusiness);
+//        if(null === $foursquareAccount){
+//            $foursquareAccount = $foursquareService->createFoursquareAccount($currentBusiness, $request->get('code'));
+//        }
+//        if($foursquareAccount->getCode() !== $request->get('code')){
+//            $foursquareAccount = $foursquareService->updateFoursquareAccount($foursquareAccount, $request->get('code'));
+//        }
+//        if($foursquareService->getToken($foursquareAccount->getCode()) === 0){
+//            return $this->redirect($foursquareService->auth());
+//        }
+//        try {
+//            $foursquareService->getAndUpdatePrivateVenues($foursquareService->getToken($foursquareAccount->getCode()));
+//            return $this->redirectToRoute('index', ['business' => $this->session->get('business')]);
+//        }catch (OAuthCompanyException $e){
+//
+//        }
     }
 }

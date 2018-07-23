@@ -33,7 +33,7 @@ class BingService
         $provider = $this->getProvider();
         try {
             return $provider->getAuthorizationUrl();
-        }catch (BadResponseException $e){
+        } catch (BadResponseException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
@@ -43,45 +43,42 @@ class BingService
         $provider = $this->getProvider();
         try {
             return $provider->getAccessToken('authorization_code', ['code' => $code]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
 
-    public function createAccount(BusinessInfo $business, AccessToken $accessTokeData)
+    public function createAccount(AccessToken $accessTokeData)
     {
-        if ($business instanceof BusinessInfo) {
-            $createdDate = new \DateTime();
-            $bing = new BingAccount();
+        $createdDate = new \DateTime();
+        $bing = new BingAccount();
 
-            $bing->setCreated($createdDate);
-            $bing->setBusiness($business);
-            $bing->setAccessToken($accessTokeData->getToken());
+        $bing->setCreated($createdDate);
+        $bing->setAccessToken($accessTokeData->getToken());
 
-            $this->em->persist($bing);
-            $this->em->flush();
-
-        }
+        $this->em->persist($bing);
+        $this->em->flush();
     }
 
     private function getProvider()
     {
         return new Microsoft([
             // Required
-            'clientId'                  =>  $this->clientId,
-            'clientSecret'              =>  $this->clientSecret,
-            'redirectUri'               =>  $this->redirectUrl,
+            'clientId' => $this->clientId,
+            'clientSecret' => $this->clientSecret,
+            'redirectUri' => $this->redirectUrl,
             // Optional
-            'urlAuthorize'              => 'https://login.live.com/oauth20_authorize.srf',
-            'urlAccessToken'            => 'https://login.live.com/oauth20_token.srf',
-            'urlResourceOwnerDetails'   => 'https://outlook.office.com/api/v1.0/me'
+            'urlAuthorize' => 'https://login.live.com/oauth20_authorize.srf',
+            'urlAccessToken' => 'https://login.live.com/oauth20_token.srf',
+            'urlResourceOwnerDetails' => 'https://outlook.office.com/api/v1.0/me'
         ]);
     }
 
     public function getOwner($token)
     {
         $provider = $this->getProvider();
-        var_dump($provider->getResourceOwner($token)); die;
+        var_dump($provider->getResourceOwner($token));
+        die;
     }
 
     /**
@@ -108,7 +105,7 @@ class BingService
      */
     public function updateAccounts($venues)
     {
-        foreach ($venues->response->venues->items as $venue){
+        foreach ($venues->response->venues->items as $venue) {
             $this->updateAccount($venue);
         }
     }
@@ -124,7 +121,7 @@ class BingService
         $params['hours'] = $this->getClientData()->getOpeningHours();
 
         $response = json_decode($bing->get('venues/' . $venue->id . '/proposeedit', $params, true));
-        if($response->meta->code != 200 ){
+        if ($response->meta->code != 200) {
             throw new OAuthCompanyException('Try later!');
         }
 

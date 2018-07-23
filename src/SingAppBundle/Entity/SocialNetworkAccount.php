@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * })
  * @ORM\Entity()
  */
-abstract class SocialNetworkAccount implements HasOwnerInterface
+abstract class SocialNetworkAccount implements HasOwnerInterface, HasBusinessrInterface
 {
 
     /**

@@ -25,6 +25,7 @@ class PinterestController extends BaseController
          */
         $pinterestService = $this->get('app.pinterest.service');
         $this->session->set('url', $request->get('url'));
+        $this->session->set('business', $request->get('business'));
         return $this->redirect($pinterestService->auth());
     }
 
@@ -34,19 +35,15 @@ class PinterestController extends BaseController
     public function pinterestCallbackAction(Request $request)
     {
         /**
-         * @var BusinessInfo $currentBusiness
-         */
-        $currentBusiness = $this->getCurrentBusiness($request);
-        /**
          * @var PinterestService $pinterestService
          */
         try {
             $pinterestService = $this->get('app.pinterest.service');
             $accessTokeData = $pinterestService->getToken($request->get('code'));
-            $pinterestService->createAccount($currentBusiness, $accessTokeData);
-            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->getCurrentBusiness($request)]);
+            $pinterestService->createAccount($accessTokeData);
+            return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
         }catch (OAuthCompanyException $e){
-            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->getCurrentBusiness($request)]);
+            return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->session->get('business')]);
         }
     }
 

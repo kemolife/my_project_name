@@ -15,7 +15,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
- *     "SingAppBundle\EntityListener\SetOwnerListener"})
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\SetBusinessListener"
+ *     })
  */
 class FoursquareAccount extends SocialNetworkAccount
 {
@@ -33,7 +35,7 @@ class FoursquareAccount extends SocialNetworkAccount
     /**
      * @ORM\Column(type="string", nullable=false)
      */
-    protected $code;
+    protected $accessToken;
 
     /**
      * Set user
@@ -115,26 +117,26 @@ class FoursquareAccount extends SocialNetworkAccount
     }
 
     /**
-     * Set code.
+     * Set accessToken.
      *
-     * @param string $code
+     * @param string $accessToken
      *
      * @return FoursquareAccount
      */
-    public function setCode($code)
+    public function setAccessToken($accessToken)
     {
-        $this->code = $code;
+        $this->accessToken = $accessToken;
 
         return $this;
     }
 
     /**
-     * Get code.
+     * Get accessToken.
      *
      * @return string
      */
-    public function getCode()
+    public function getAccessToken()
     {
-        return $this->code;
+        return $this->accessToken;
     }
 }

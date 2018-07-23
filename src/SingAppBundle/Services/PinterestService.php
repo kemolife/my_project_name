@@ -33,30 +33,25 @@ class PinterestService
         return $pinterest->auth->getLoginUrl($this->redirectUrl, array('read_public'));
     }
 
-    public function createAccount(BusinessInfo $business, Response $accessTokeData)
+    public function createAccount(Response $accessTokeData)
     {
-        var_dump($accessTokeData); die;
-        if ($business instanceof BusinessInfo) {
-            $createdDate = new \DateTime();
-            $pinterest = new PinterestAccount();
+        $createdDate = new \DateTime();
+        $pinterest = new PinterestAccount();
 
-            $pinterest->setCreated($createdDate);
-            $pinterest->setBusiness($business);
-            $pinterest->setAccessToken($accessTokeData->data['access_token']);
+        $pinterest->setCreated($createdDate);
+        $pinterest->setAccessToken($accessTokeData->getAccessToken());
 
-            $this->em->persist($pinterest);
-            $this->em->flush();
-
-        }
+        $this->em->persist($pinterest);
+        $this->em->flush();
     }
 
 
     public function getToken($code)
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        try{
+        try {
             return $pinterest->auth->getOAuthToken($code);
-        }catch (PinterestException $e){
+        } catch (PinterestException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
@@ -66,7 +61,8 @@ class PinterestService
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
         $pinterest->auth->setOAuthToken($token->access_token);
         $me = $pinterest->users->me();
-        var_dump($me); die;
+        var_dump($me);
+        die;
     }
 
     /**
@@ -93,7 +89,7 @@ class PinterestService
      */
     public function updateAccounts($venues)
     {
-        foreach ($venues->response->venues->items as $venue){
+        foreach ($venues->response->venues->items as $venue) {
             $this->updateAccount($venue);
         }
     }
@@ -109,7 +105,7 @@ class PinterestService
         $params['hours'] = $this->getClientData()->getOpeningHours();
 
         $response = json_decode($pinterest->GetPrivate('venues/' . $venue->id . '/proposeedit', $params, true));
-        if($response->meta->code != 200 ){
+        if ($response->meta->code != 200) {
             throw new OAuthCompanyException('Try later!');
         }
 
