@@ -24,10 +24,15 @@ class PinterestService
     private $clientId = '4977395529412522088';
     private $clientSecret = 'bd7d90db3f897fc007353d27d283f486b8d71ba98985291177a35cc4fb439b19';
     private $redirectUrl = "https://listings.devcom.com/pinterest/oauth2callback";
+    private $curl;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
+        $this->curl = new Curl(self::BASE_URL);
+        $this->curl->setDefaultJsonDecoder(function ($item){
+            return json_decode($item, true);
+        });
     }
 
     public function auth()
@@ -61,9 +66,8 @@ class PinterestService
 
     public function getAndUpdatePrivateVenues($token)
     {
-        $curl = new Curl(self::BASE_URL);
-        $curl->get(self::URL_ME, ['access_token' => $token]);
-        var_dump($curl->response);
+        $this->curl->get(self::URL_ME, ['access_token' => $token]);
+        var_dump($this->curl->response);
     }
 
     /**
