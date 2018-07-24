@@ -82,7 +82,7 @@ class PinterestService
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
         $pinterest->auth->setOAuthToken($token);
-        var_dump($pinterest->users->getMeBoards());
+        var_dump($pinterest->users->getMeBoards()->all());
     }
 
     public function getPins($token)
