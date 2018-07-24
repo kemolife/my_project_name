@@ -68,6 +68,6 @@ class BingController extends BaseController
          */
         $bingService = $this->get('app.bing.service');
         $account = $bingService->getBingAccount($user, $business);
-        var_dump($bingService->getOwner($account->getAccessToken())); die;
+        var_dump($bingService->setTokenObject($account)->getOwner()); die;
     }
 }
