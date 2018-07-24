@@ -74,14 +74,15 @@ class PinterestService
     }
 
     /**
-     * @return null|PinterestAccount
+     * @param User $user
+     * @param BusinessInfo $business
+     * @return null|object
      */
-    public function getPinterestSetting(User $user, BusinessInfo $business)
+    public function getPinterestAccount(User $user, BusinessInfo $business)
     {
         $repository = $this->em->getRepository('SingAppBundle:PinterestAccount');
-        $pinterest = $repository->findOneBy(['user' => $user, 'business' => $business]);
+        return $repository->findOneBy(['user' => $user, 'business' => $business]);
 
-        return $pinterest;
     }
 
     /**

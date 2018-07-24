@@ -50,12 +50,21 @@ class PinterestController extends BaseController
     /**
      * @Route("/pinterest-test", name="pinterest-test")
      */
-    public function testAction()
+    public function testAction(Request $request)
     {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var BusinessInfo $business
+         */
+        $business = $this->getCurrentBusiness($request);
         /**
          * @var PinterestService $pinterestService
          */
         $pinterestService = $this->get('app.pinterest.service');
-        $pinterestService->getAndUpdatePrivateVenues($pinterestService->getToken('c853c2bcdd30ae86'));
+        $account = $pinterestService->getPinterestAccount($user, $business);
+        $pinterestService->getAndUpdatePrivateVenues($account->getToken());
     }
 }
