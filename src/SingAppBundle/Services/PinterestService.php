@@ -85,6 +85,17 @@ class PinterestService
         var_dump($pinterest->users->getMeBoards()->all());
     }
 
+    public function createPin($token)
+    {
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+        $pinterest->auth->setOAuthToken($token);
+        $pinterest->pins->create(array(
+            "note"          => "Test board from API",
+            "image"         => "/images/stars.png",
+            "board"         => "dirkgroenen/pinterest-api-test"
+        ));
+    }
+
     public function getPins($token)
     {
         $this->curl->get(self::URL_PINS, ['access_token' => $token]);
