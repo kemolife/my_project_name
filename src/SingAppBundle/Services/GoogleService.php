@@ -61,6 +61,7 @@ class GoogleService
 
     public function createGoogleAccount(Request $request, $accessTokeData)
     {
+        var_dump($accessTokeData);
         if (array_key_exists('access_token', $accessTokeData)) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp($accessTokeData['created']);
@@ -79,6 +80,7 @@ class GoogleService
             }
 
         }
+        die;
     }
 
     /**
