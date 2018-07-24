@@ -27,7 +27,7 @@ class GoogleService
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
-        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/google/oauth2callback');
+        $client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/google/oauth2callback');
 
 
         return $client->createAuthUrl();
@@ -41,7 +41,7 @@ class GoogleService
         $client->setAccessType("offline");        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
-        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/google/oauth2callback');
+        $client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/google/oauth2callback');
 
         return  $client->authenticate($code);
     }
