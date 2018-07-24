@@ -95,7 +95,7 @@ class PinterestService
         $pinterest->pins->create(array(
             "note"          => "Test board from API",
             "image"         => $this->webDir."/images/stars.png",
-            "board"         => "dirkgroenen/pinterest-api-test"
+            "board"         => "test"
         ));
     }
 
