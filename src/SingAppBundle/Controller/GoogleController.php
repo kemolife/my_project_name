@@ -24,6 +24,7 @@ class GoogleController extends BaseController
 
         $this->session->set('url', $request->get('url'));
         $this->session->set('business', $request->get('business'));
+        var_dump($googleService->auth()); die;
         return $this->redirect($googleService->auth());
     }
 
