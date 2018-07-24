@@ -78,6 +78,13 @@ class PinterestService
         var_dump($pinterest->users->me()->toArray());
     }
 
+    public function getBoardsSdk($token)
+    {
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+        $pinterest->auth->setOAuthToken($token);
+        var_dump($pinterest->users->getMeBoards());
+    }
+
     public function getPins($token)
     {
         $this->curl->get(self::URL_PINS, ['access_token' => $token]);
