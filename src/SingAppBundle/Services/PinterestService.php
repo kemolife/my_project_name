@@ -62,7 +62,6 @@ class PinterestService
         $pinterest->auth->setOAuthToken($token->access_token);
         $me = $pinterest->users->me();
         var_dump($me);
-        die;
     }
 
     /**
