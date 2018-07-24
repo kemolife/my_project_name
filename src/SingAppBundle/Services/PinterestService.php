@@ -75,7 +75,7 @@ class PinterestService
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
         $pinterest->auth->setOAuthToken($token);
-        var_dump($pinterest->users->me());
+        var_dump($pinterest->users->me()->toArray());
     }
 
     public function getPins($token)
