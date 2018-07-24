@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PinterestService
 {
+    const BASE_URL = 'https://api.pinterest.com';
+    const URL_ME = '/v1/me/';
+
     private $em;
     private $clientId = '4977395529412522088';
     private $clientSecret = 'bd7d90db3f897fc007353d27d283f486b8d71ba98985291177a35cc4fb439b19';
@@ -58,10 +61,9 @@ class PinterestService
 
     public function getAndUpdatePrivateVenues($token)
     {
-        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token->access_token);
-        $me = $pinterest->users->me();
-        var_dump($me);
+        $curl = new Curl(self::BASE_URL);
+        $curl->get(self::URL_ME, ['access_token' => $token]);
+        var_dump($curl->response);
     }
 
     /**
