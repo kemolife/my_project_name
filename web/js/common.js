@@ -69,7 +69,7 @@ $('.action-edit').on('click', function (e) {
 
 $(document).ready(function () {
 
-    var selectTheme =  $('#available_themes');
+    var selectTheme = $('#available_themes');
 
     if (selectTheme) {
         selectTheme.attr('class', 'form-control');
@@ -88,12 +88,12 @@ $(document).ready(function () {
     });
 });
 
-$('#available_themes').on('change', function(el) {
+$('#available_themes').on('change', function (el) {
     $('.signature-option').addClass('hidden');
-    $('#signature-'+$(this).val()).removeClass('hidden');
+    $('#signature-' + $(this).val()).removeClass('hidden');
 });
 
-$('.collapse-group .toggle').on('click', function(e) {
+$('.collapse-group .toggle').on('click', function (e) {
     e.preventDefault();
     var text = $(this).data('toggle-text');
     if (text) {
@@ -103,7 +103,7 @@ $('.collapse-group .toggle').on('click', function(e) {
     $(this).closest('.collapse-group').find('.collapse').collapse('toggle');
 });
 
-$('.collapse-group .expand').on('click', function(e) {
+$('.collapse-group .expand').on('click', function (e) {
     e.preventDefault();
     var $this = $(this);
     var $collapse = $this.closest('.collapse-group').find('.collapse');
@@ -139,6 +139,16 @@ function i() {
     })
 }
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 $(document).on("change", "#biz-hour-type", function () {
     i(), n(this, this.value)
 })
@@ -147,4 +157,14 @@ $(document).ready(function () {
     $('#singappbundle_businessinfo_additionalCategories')
         .select2({width: '100%'});
     $('#singappbundle_businessinfo_category').select2({width: '100%'});
+
+    var error = getParameterByName('error');
+    if (error) {
+        $.notify({
+            title: "<strong>Error!</strong> ",
+            message: error
+        }, {
+            type: 'danger',
+        });
+    }
 });

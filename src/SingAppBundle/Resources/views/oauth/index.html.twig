@@ -203,6 +203,7 @@
                 </div>
             </div>
         </div>
+        {{ dump(app.request.query.all) }}
     {% endif %}
 {% endblock %}
 {% block modal %}
@@ -256,14 +257,6 @@
             }
             {% endfor %}
         });
-        {% if app.request.query.all.error is defined %}
-            $.notify({
-                title: "<strong>Error!</strong> ",
-                message: '{{ app.request.query.all.error }}'
-            }, {
-                type: 'danger',
-                delay: 5000
-            });
-        {% endif %}
+
     </script>
 {% endblock %}
