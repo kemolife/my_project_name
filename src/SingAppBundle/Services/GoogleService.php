@@ -80,8 +80,9 @@ class GoogleService
                 $this->em->persist($googleAccount);
                 $this->em->flush();
             }
-            die;
+
         }
+        die;
 
     }
 
