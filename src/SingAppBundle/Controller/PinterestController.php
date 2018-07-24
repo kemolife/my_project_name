@@ -66,7 +66,7 @@ class PinterestController extends BaseController
         $pinterestService = $this->get('app.pinterest.service');
         $account = $pinterestService->getPinterestAccount($user, $business);
         try {
-            $pinterestService->getAndUpdatePrivateVenues($account->getAccessToken()); die;
+            $pinterestService->getMeSdk($account->getAccessToken()); die;
         }catch (\Exception $e){
             var_dump($e->getMessage());
         }

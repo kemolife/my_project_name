@@ -19,6 +19,7 @@ class PinterestService
 {
     const BASE_URL = 'https://api.pinterest.com';
     const URL_ME = '/v1/me/';
+    const URL_PINS = '/v1/me/pins/';
 
     private $em;
     private $clientId = '4977395529412522088';
@@ -64,9 +65,22 @@ class PinterestService
         }
     }
 
-    public function getAndUpdatePrivateVenues($token)
+    public function getMe($token)
     {
         $this->curl->get(self::URL_ME, ['access_token' => $token]);
+        var_dump($this->curl->response);
+    }
+
+    public function getMeSdk($token)
+    {
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+        $pinterest->auth->setOAuthToken($token);
+        var_dump($pinterest->users->me());
+    }
+
+    public function getPins($token)
+    {
+        $this->curl->get(self::URL_PINS, ['access_token' => $token]);
         var_dump($this->curl->response);
     }
 
