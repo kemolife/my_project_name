@@ -49,7 +49,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
     app.pinterest.service:
         class: SingAppBundle\Services\PinterestService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%']
     app.factual.service:
         class: SingAppBundle\Services\FactualService
         arguments: ['@doctrine.orm.entity_manager']

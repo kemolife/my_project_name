@@ -29,14 +29,14 @@ class PinterestService
     private $curl;
     private $webDir;
 
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, $webDir)
     {
         $this->em = $entityManager;
         $this->curl = new Curl(self::BASE_URL);
         $this->curl->setDefaultJsonDecoder(function ($item){
             return json_decode($item, true);
         });
-        $this->webDir = $container->getParameter('web_dir');
+        $this->webDir = $webDir;
     }
 
     public function auth()
