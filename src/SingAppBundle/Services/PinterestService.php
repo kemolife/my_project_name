@@ -35,7 +35,6 @@ class PinterestService
 
     public function createAccount(Response $accessTokeData)
     {
-        var_dump($accessTokeData->access_token); die;
         $createdDate = new \DateTime();
         $pinterest = new PinterestAccount();
 

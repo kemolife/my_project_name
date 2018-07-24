@@ -67,7 +67,7 @@ class PinterestAccount extends SocialNetworkAccount
      */
     public function setAccessToken($accessToken)
     {
-        $this->code = $accessToken;
+        $this->accessToken = $accessToken;
 
         return $this;
     }
