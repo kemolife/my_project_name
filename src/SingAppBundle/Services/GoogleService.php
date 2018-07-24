@@ -61,7 +61,6 @@ class GoogleService
 
     public function createGoogleAccount(Request $request, $accessTokeData)
     {
-        var_dump($accessTokeData);
         if (array_key_exists('access_token', $accessTokeData)) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp($accessTokeData['created']);
@@ -75,15 +74,11 @@ class GoogleService
                 $googleAccount->setCreated($createdDate);
                 $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
 
-                var_dump($googleAccount);
-
                 $this->em->persist($googleAccount);
                 $this->em->flush();
             }
 
         }
-        die;
-
     }
 
     /**
