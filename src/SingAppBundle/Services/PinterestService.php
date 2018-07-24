@@ -82,7 +82,6 @@ class PinterestService
     {
         $repository = $this->em->getRepository('SingAppBundle:PinterestAccount');
         return $repository->findOneBy(['user' => $user, 'business' => $business]);
-
     }
 
     /**

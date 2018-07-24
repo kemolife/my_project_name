@@ -65,6 +65,6 @@ class PinterestController extends BaseController
          */
         $pinterestService = $this->get('app.pinterest.service');
         $account = $pinterestService->getPinterestAccount($user, $business);
-        $pinterestService->getAndUpdatePrivateVenues($account->getToken());
+        $pinterestService->getAndUpdatePrivateVenues($account->getAccessToken());
     }
 }
