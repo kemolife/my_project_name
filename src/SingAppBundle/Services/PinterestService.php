@@ -13,6 +13,7 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PinterestService
@@ -26,14 +27,16 @@ class PinterestService
     private $clientSecret = 'bd7d90db3f897fc007353d27d283f486b8d71ba98985291177a35cc4fb439b19';
     private $redirectUrl = "https://listings.devcom.com/pinterest/oauth2callback";
     private $curl;
+    private $webDir;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
     {
         $this->em = $entityManager;
         $this->curl = new Curl(self::BASE_URL);
         $this->curl->setDefaultJsonDecoder(function ($item){
             return json_decode($item, true);
         });
+        $this->webDir = $container->getParameter('web_dir');
     }
 
     public function auth()
@@ -91,7 +94,7 @@ class PinterestService
         $pinterest->auth->setOAuthToken($token);
         $pinterest->pins->create(array(
             "note"          => "Test board from API",
-            "image"         => "/images/stars.png",
+            "image"         => $this->webDir."/images/stars.png",
             "board"         => "dirkgroenen/pinterest-api-test"
         ));
     }
