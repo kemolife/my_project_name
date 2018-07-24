@@ -49,4 +49,25 @@ class BingController extends BaseController
             return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->session->get('business')]);
         }
     }
+
+    /**
+     * @Route("/bing/owner", name="bing-owner")
+     */
+    public function getOwner(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var BusinessInfo $business
+         */
+        $business = $this->getCurrentBusiness($request);
+        /**
+         * @var BingService $bingService
+         */
+        $bingService = $this->get('app.bing.service');
+        $account = $bingService->getBingAccount($user, $business);
+        var_dump($bingService->getOwner($account->getAccessToken())); die;
+    }
 }

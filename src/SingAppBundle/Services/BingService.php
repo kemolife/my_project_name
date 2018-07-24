@@ -77,8 +77,7 @@ class BingService
     public function getOwner($token)
     {
         $provider = $this->getProvider();
-        var_dump($provider->getResourceOwner($token));
-        die;
+        return $provider->getResourceOwner($token);
     }
 
     /**
@@ -92,12 +91,10 @@ class BingService
     /**
      * @return null|BingAccount
      */
-    public function getBingSetting(User $user, BusinessInfo $business)
+    public function getBingAccount(User $user, BusinessInfo $business)
     {
         $repository = $this->em->getRepository('SingAppBundle:BingAccount');
-        $bing = $repository->findOneBy(['user' => $user, 'business' => $business]);
-
-        return $bing;
+        return $repository->findOneBy(['user' => $user, 'business' => $business]);
     }
 
     /**
