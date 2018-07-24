@@ -22,10 +22,25 @@ class BingService
     private $clientId = '4dca26fc-ab69-4b78-b5fa-b0d683005bb0';
     private $clientSecret = 'lvzpPQ399-wijAZBCZ53{|$';
     private $redirectUrl = "https://listings.devcom.com/bing/oauth2callback";
+    private $token;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
+    }
+
+    private function getProvider()
+    {
+        return new Microsoft([
+            // Required
+            'clientId' => $this->clientId,
+            'clientSecret' => $this->clientSecret,
+            'redirectUri' => $this->redirectUrl,
+            // Optional
+            'urlAuthorize' => 'https://login.live.com/oauth20_authorize.srf',
+            'urlAccessToken' => 'https://login.live.com/oauth20_token.srf',
+            'urlResourceOwnerDetails' => 'https://outlook.office.com/api/v1.0/me'
+        ]);
     }
 
     public function auth()
@@ -48,36 +63,53 @@ class BingService
         }
     }
 
+    /**
+     * @param BingAccount $bingAccount
+     * @return $this
+     * @throws OAuthCompanyException
+     */
+    public function setTokenObject(BingAccount $bingAccount)
+    {
+        $value = [
+            'access_token' => $bingAccount->getAccessToken(),
+            'resource_owner_id' => $bingAccount->getResourceOwnerId(),
+            'refresh_token' => $bingAccount->getRefreshToken(),
+            'expires' => $bingAccount->getExpires()
+        ];
+        try {
+            $this->token = new AccessToken($value);
+            return $this;
+        }catch (\InvalidArgumentException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
     public function createAccount(AccessToken $accessTokeData)
     {
-        $createdDate = new \DateTime();
-        $bing = new BingAccount();
+        if ($accessTokeData instanceof AccessToken) {
+            $createdDate = new \DateTime();
+            $createdDate->setTimestamp(time());
+            $bingAccount = new BingAccount();
 
-        $bing->setCreated($createdDate);
-        $bing->setAccessToken($accessTokeData->getToken());
+            if ($accessTokeData->getRefreshToken() !== null) {
+                $bingAccount->setRefreshToken($accessTokeData->getRefreshToken());
+            }
 
-        $this->em->persist($bing);
-        $this->em->flush();
+            $bingAccount->setAccessToken($accessTokeData->getToken());
+            $bingAccount->setCreated($createdDate);
+            $bingAccount->setExpires($accessTokeData->getExpires());
+            $bingAccount->setResourceOwnerId($accessTokeData->getResourceOwnerId());
+
+            $this->em->persist($bingAccount);
+            $this->em->flush();
+
+        }
     }
 
-    private function getProvider()
-    {
-        return new Microsoft([
-            // Required
-            'clientId' => $this->clientId,
-            'clientSecret' => $this->clientSecret,
-            'redirectUri' => $this->redirectUrl,
-            // Optional
-            'urlAuthorize' => 'https://login.live.com/oauth20_authorize.srf',
-            'urlAccessToken' => 'https://login.live.com/oauth20_token.srf',
-            'urlResourceOwnerDetails' => 'https://outlook.office.com/api/v1.0/me'
-        ]);
-    }
-
-    public function getOwner($token)
+    public function getOwner()
     {
         $provider = $this->getProvider();
-        return $provider->getResourceOwner($token);
+        return $provider->getResourceOwner($this->token);
     }
 
     /**

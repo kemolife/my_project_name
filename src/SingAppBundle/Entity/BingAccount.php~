@@ -146,28 +146,4 @@ class BingAccount extends SocialNetworkAccount
     {
         return $this->resourceOwnerId;
     }
-
-    /**
-     * Set expires.
-     *
-     * @param int $expires
-     *
-     * @return BingAccount
-     */
-    public function setExpires($expires)
-    {
-        $this->expires = $expires;
-
-        return $this;
-    }
-
-    /**
-     * Get expires.
-     *
-     * @return int
-     */
-    public function getExpires()
-    {
-        return $this->expires;
-    }
 }
