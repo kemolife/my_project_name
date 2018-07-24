@@ -61,6 +61,7 @@ class GoogleService
 
     public function createGoogleAccount(Request $request, $accessTokeData)
     {
+        var_dump($accessTokeData);
         if (array_key_exists('access_token', $accessTokeData)) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp($accessTokeData['created']);
@@ -69,14 +70,17 @@ class GoogleService
             if (array_key_exists('refresh_token', $accessTokeData)) {
                 $googleAccount->setRefreshToken($accessTokeData['refresh_token']);
             }
-
             if ($googleAccount instanceof GoogleAccount) {
                 $googleAccount->setAccessToken($accessTokeData['access_token']);
                 $googleAccount->setCreated($createdDate);
                 $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
+
+                var_dump($googleAccount);
+
                 $this->em->persist($googleAccount);
                 $this->em->flush();
             }
+            die;
         }
 
     }
