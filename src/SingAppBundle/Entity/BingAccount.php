@@ -37,7 +37,7 @@ class BingAccount extends SocialNetworkAccount
     protected $expires;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $resourceOwnerId;
 
