@@ -42,7 +42,7 @@ class PinterestService
     public function auth()
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        return $pinterest->auth->getLoginUrl($this->redirectUrl, array('read_public'));
+        return $pinterest->auth->getLoginUrl($this->redirectUrl, array('read_public', 'write_public'));
     }
 
     public function createAccount(Response $accessTokeData)
@@ -91,11 +91,11 @@ class PinterestService
     public function createPin($token)
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token);
+        $pinterest->auth->sePPOtOAuthToken($token);
         $pinterest->pins->create(array(
             "note"          => "Test board from API",
             "image"         => $this->webDir."/images/stars.png",
-            "board"         => "test"
+            "board"         => "cubeonlineaustralia/test"
         ));
     }
 
