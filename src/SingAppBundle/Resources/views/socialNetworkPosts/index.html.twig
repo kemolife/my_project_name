@@ -7,9 +7,6 @@
             }
         </style>
     {% endblock %}
-    {% if app.request.get('error') is defined %}
-        <span class="error-service-auth">{{ app.request.get('error') }}</span>
-    {% endif %}
     <div class="products">
         {% include '@SingApp/layouts/navigation.html.twig' %}
         <div class="messages">
@@ -52,6 +49,14 @@
                                    data-tab-history-update-url="true">
                                     <img src="{{ asset('images/icons/facebook.png') }}" alt="" width="24" height="24">
                                     Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pinterest" data-toggle="tab" data-tab-history="true"
+                                   data-tab-history-changer="push"
+                                   data-tab-history-update-url="true">
+                                    <img src="{{ asset('images/icons/pinterest.png') }}" alt="" width="24" height="24">
+                                    Pinterest
                                 </a>
                             </li>
                         </ul>
@@ -181,6 +186,57 @@
                                             <div class="insights-login-page">
                                                 <a href="{{ url('google-auth', {'url' : 'social-network-posts'}) }}">
                                                     <img src="{{ asset('images/google-connect-btn.png') }}"
+                                                         alt="Google connect">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="tab-pane" id="pinterest">
+                                {% if pinterestAccount %}
+                                    <ul class="nav nav-tabs">
+                                        <li><a href="{{ url('boards-list', clearQuery(app.request.query.all)) }}">Boards</a></li>
+                                    </ul>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Caption</th>
+                                            <th>Post date</th>
+                                            <th>Post status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for post in posts %}
+                                            {% if post.socialNetwork == 'pinterest' %}
+                                                <tr>
+                                                    <td>{{ post.title }}</td>
+                                                    <td>{{ post.caption }}</td>
+                                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ post.status }}</td>
+                                                    <td>
+                                                        <a href="{{ url('pin-edit', {'pinterestPin': post.id }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-edit"></i> Edit
+                                                        </a>
+                                                        <a href="{{ url('pin-delete', {'pinterestPin': post.id }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="google-connect-cont">
+                                        <div class="insights-main-page">
+                                            <div class="insights-login-page">
+                                                <a href="{{ url('pinterest-auth', {'url' : 'social-network-posts'}) }}">
+                                                    <img style="width: 9%;" src="{{ asset('images/pinterest-connect-btn.png') }}"
                                                          alt="Google connect">
                                                 </a>
                                             </div>
@@ -333,19 +389,38 @@
                             <input class="form-control" type="text" id="title" name="title" placeholder="Title"
                                    required>
                         </div>
+                        <div class="form-group pinterest" style="display: none">
+                            <input class="form-control" type="text" id="link" name="link" placeholder="Link pin"
+                                   required>
+                        </div>
+                        <div class="form-group pinterest" style="display: none">
+                            {{ getBoardSelect(pinterestAccount) | raw }}
+                        </div>
                         <div class="form-group">
                             <textarea class="form-control" name="caption" id="caption" rows="5" placeholder="Caption"
                                       style="width: 93% !important" required></textarea>
                         </div>
                         <div class="form-group">
-                            <a href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
-                            <input type="file" id="pro-image" name="photos[]" style="display: none;"
+                            <a href="javascript:void(0)" onclick="$('#media').click()">Upload media</a>
+                            <input type="file" id="media" name="media[]" style="display: none;"
                                    class="form-control"
                                    multiple>
                         </div>
-                        <div class="preview-images-zone">
-                        </div>
+                        <table role="presentation" class="table table-striped">
+                            <tbody class="preview-media-zone">
 
+                            </tbody>
+                        </table>
+
+                        <div class="form-group">
+                            <select id="socials" class="selectpicker" multiple data-style="btn-primary"
+                                    data-none-selected-text="Select social networks" name="socials[]" required>
+                                <option value="instagram">Instagram</option>
+                                <option value="pinterest">Pinteres</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="google">Google</option>
+                            </select>
+                        </div>
                         <div class="custom-checkbox" style="display: inline-block;">
                             <label>
                                 <input type="checkbox" name="schedule" id="schedule">
@@ -356,6 +431,8 @@
                         <div class="form-group post-date-input" style="display: none;">
                             <label for="postDate">Post date:</label>
                             <input type="text" class="js-datepicker form-control" name="postDate">
+                            <input type="hidden" name="timezoneOffset" id="timezoneOffset">
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -368,25 +445,63 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+
     <script src="{{ asset('js/bootstrap-tab-history.js') }}"></script>
     <script>
+        var showNot = true;
         $(document).ready(function () {
-            document.getElementById('pro-image').addEventListener('change', readImage, false);
+            document.getElementById('media').addEventListener('change', previewMedia, false);
 
             /*$(".preview-images-zone").sortable();*/
 
-            $(document).on('click', '.image-cancel', function () {
-                let no = $(this).data('no');
-                $(".preview-image.preview-show-" + no).remove();
+            $(document).on('click', '.delete-preview', function () {
+                let no = $(this).data('preview');
+                $("#preview-" + no).remove();
             });
 
             $('#schedule').change(function (e) {
                 if (e.currentTarget.checked) {
+                    var offset = new Date().getTimezoneOffset() / 60;
+
                     $('.post-date-input').css('display', 'block');
                     $('input[name=postDate]').attr('required', true);
+                    $('#timezoneOffset').val(offset);
                 } else {
                     $('.post-date-input').css('display', 'none');
                     $('input[name=postDate]').removeAttr('required');
+                    $('#timezoneOffset').val('');
+
+                }
+            });
+
+            $('#socials').on('change', function() {
+                var value = $(this).val();
+                if($.inArray("pinterest", value) !== -1){
+                    if($(document).find('span.error-api').length === 1) {
+                        $.notify({
+                            title: "<strong>Error!</strong> ",
+                            message: 'Api not work please try create pinterest pin later'
+                        }, {
+                            type: 'danger',
+                            position: 'absolute',
+                            z_index: 99999999
+                        });
+                    }else {
+                        if (showNot === true) {
+                            $.notify({
+                                title: "<strong>Warning!</strong> ",
+                                message: 'Pinterest Pin allows you to upload one photo, so for pinterest choose the first uploaded'
+                            }, {
+                                type: 'warning',
+                                position: 'absolute',
+                                z_index: 99999999
+                            });
+                            showNot = false;
+                        }
+                        $('.pinterest').css({'display' : 'block'})
+                    }
+                }else{
+                    $('.pinterest').css({'display' : 'none'})
                 }
             });
 
@@ -395,35 +510,97 @@
 
         var num = 4;
 
-        function readImage() {
+        function previewMedia() {
             if (window.File && window.FileList && window.FileReader) {
                 var files = event.target.files; //FileList object
-                var output = $(".preview-images-zone");
+                var output = $(".preview-media-zone");
 
                 for (let i = 0; i < files.length; i++) {
                     var file = files[i];
-                    if (!file.type.match('image')) continue;
+                    if (file.type.match('image')) {
+                        var picReader = new FileReader();
 
-                    var picReader = new FileReader();
+                        picReader.addEventListener('load', function (event) {
+                            var picFile = event.target;
+                            var html = '<tr class="template-upload fade in" id="preview-' + num + '">' +
+                                '        <td>' +
+                                '            <span class="preview"><img src="' + picFile.result + '" alt="" height="100"></span>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '            <p class="name">' + file.name + '</p>' +
+                                '            <strong class="error text-danger"></strong>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '            <p class="size">' + bytesToSize(file.size) + '</p>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '                <a class="btn btn-warning cancel delete-preview" data-preview="' + num + '">' +
+                                '                    <i class="glyphicon glyphicon-ban-circle"></i>' +
+                                '                    <span>Delete</span>' +
+                                '                </a>' +
+                                '            ' +
+                                '        </td>' +
+                                '    </tr>';
 
-                    picReader.addEventListener('load', function (event) {
-                        var picFile = event.target;
-                        var html = '<div class="preview-image preview-show-' + num + '">' +
-                            '<div class="image-cancel" data-no="' + num + '">x</div>' +
-                            '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '" width="100" height="100"></div>' +
-                            '</div>';
+
+                            output.append(html);
+                            num = num + 1;
+                        });
+
+                        picReader.readAsDataURL(file);
+                    }
+                    else if (file.type.match('video')) {
+                        var html = '<tr class="template-upload fade in" id="preview-' + num + '">' +
+                            '        <td>' +
+                            '            <span class="preview">' +
+                            '<video width="150" controls>' +
+                            '  <source src="mov_bbb.mp4" id="pro-img-' + num + '">' +
+                            '    Your browser does not support HTML5 video.' +
+                            '</video>' +
+                            '</span>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '            <p class="name">' + file.name + '</p>' +
+                            '            <strong class="error text-danger"></strong>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '            <p class="size">' + bytesToSize(file.size) + '</p>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '                <a class="btn btn-warning cancel delete-preview" data-preview="' + num + '">' +
+                            '                    <i class="glyphicon glyphicon-ban-circle"></i>' +
+                            '                    <span>Delete</span>' +
+                            '                </a>' +
+                            '            ' +
+                            '        </td>' +
+                            '    </tr>';
+
 
                         output.append(html);
-                        num = num + 1;
-                    });
 
-                    picReader.readAsDataURL(file);
+                        var $source = $('#pro-img-' + num);
+                        $source[0].src = URL.createObjectURL(file);
+                        $source.parent()[0].load();
+
+                        num = num + 1;
+
+                    }
+
+
                 }
 
             } else {
                 console.log('Browser not support');
             }
         }
+
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes == 0) return '0 Byte';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        };
+
 
     </script>
 {% endblock %}

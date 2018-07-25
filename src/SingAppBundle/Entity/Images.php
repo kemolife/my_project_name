@@ -17,7 +17,8 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\DiscriminatorMap({
  *     "business"="BusinessImage",
  *     "instagram" = "InstagramPhoto",
- *     "google" = "GooglePhoto"
+ *     "google" = "GooglePhoto",
+ *     "pinterest" = "PinterestPhoto"
  * })
  * @ORM\Entity()
  */

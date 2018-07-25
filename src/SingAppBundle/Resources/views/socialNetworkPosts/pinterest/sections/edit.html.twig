@@ -1,0 +1,23 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+    <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="messages">
+
+            <div class="card">
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title">Edit Section</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include '@SingApp/form/sections.html.twig' with {'pinterestSection': pinterestSection} %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

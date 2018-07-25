@@ -24,3 +24,8 @@ services:
         arguments: ['@app.photo.service']
         tags:
             - { name: doctrine.orm.entity_listener }
+    app.pinterest.entity_listener:
+        class: SingAppBundle\EntityListener\PinterestPinEntityListener
+        arguments: ['@app.pinterest.service']
+        tags:
+            - { name: doctrine.orm.entity_listener }

@@ -11,6 +11,9 @@ use DirkGroenen\Pinterest\Transport\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\PinterestAccount;
+use SingAppBundle\Entity\PinterestBoard;
+use SingAppBundle\Entity\PinterestPin;
+use SingAppBundle\Entity\PinterestSection;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -68,41 +71,118 @@ class PinterestService
         }
     }
 
-    public function getMe($token)
-    {
-        $this->curl->get(self::URL_ME, ['access_token' => $token]);
-        var_dump($this->curl->response);
-    }
-
-    public function getMeSdk($token)
-    {
-        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token);
-        var_dump($pinterest->users->me()->toArray());
-    }
-
-    public function getBoardsSdk($token)
-    {
-        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token);
-        var_dump($pinterest->users->getMeBoards()->all());
-    }
-
-    public function createPin($token)
-    {
-        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token);
-        $pinterest->pins->create(array(
-            "note"          => "Test board from API",
-            "image"         => $this->webDir."/images/stars.png",
-            "board"         => "cubeonlineaustralia/test"
-        ));
-    }
-
     public function getPins($token)
     {
-        $this->curl->get(self::URL_PINS, ['access_token' => $token]);
-        var_dump($this->curl->response);
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+        $pinterest->auth->setOAuthToken($token);
+        return $pinterest->users->getMePins()->all();
+    }
+
+    public function createPin(PinterestPin $pinterestPin)
+    {
+
+        if ($pinterestPin->getAccount() instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
+
+            $pinterest->pins->create(array(
+                "note" => $pinterestPin->getCaption(),
+                "image" => $this->webDir . "/images/" . $pinterestPin->getPhotos()[0],
+                "link" => $pinterestPin->getLink(),
+                "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
+            ));
+        }
+    }
+
+    public function editPin(PinterestPin $pinterestPin)
+    {
+
+        if ($pinterestPin->getAccount() instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
+
+            $pinterest->pins->edit($pinterestPin->getMediaId(), array(
+                "note" => $pinterestPin->getCaption(),
+                "image" => $this->webDir . "/images/" . $pinterestPin->getPhotos()[0],
+                "link" => $pinterestPin->getLink(),
+                "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
+            ));
+        }
+    }
+
+    public function deletePin($pinId,  PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+            return $pinterest->pins->delete($pinId);
+        }
+    }
+
+    public function getBoards(PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+            return $pinterest->users->getMeBoards()->a;
+        }
+    }
+
+    public function createBoard($formData, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+            $pinterest->boards->create(array(
+                "name" => $formData['name'],
+                "description" => $formData['description'],
+            ));
+        }
+    }
+
+    public function editBoard($boardId, $formData, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+            $pinterest->boards->edit($boardId, array(
+                "name" => $formData['name'],
+                "description" => $formData['description'],
+            ));
+        }
+    }
+
+    public function deleteBoards($boardId, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+            return $pinterest->boards->delete($boardId);
+        }
+    }
+
+    public function getSectionsByBoard($boardName, $token)
+    {
+        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+        $pinterest->auth->setOAuthToken($token);
+        $this->curl->get('/v1/board/'.$boardName.'/sections/', ['access_token' => $token]);
+        return $this->curl->response;
+    }
+
+    public function createSectionByBoard($boardName, $formData, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $this->curl->setUrl('/v1/board/'.$boardName.'/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
+
+            $this->curl->post($this->curl->url, [
+                "title" => $formData['title']
+            ]);
+        }
+    }
+
+    public function deleteSection($sectionId, $token)
+    {
+        $this->curl->delete('/v1/board/sections/'.$sectionId, ['access_token' => $token]);
     }
 
     /**

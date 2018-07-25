@@ -1,0 +1,54 @@
+<?php
+
+namespace SingAppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * PinterestPin.
+ *
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\PinterestSectionEntityListener"
+ *     })
+ */
+class PinterestSection implements HasOwnerInterface
+{
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SocialNetworkAccount")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $account;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BusinessInfo")
+     * @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $business;
+
+    /**
+     * @return User[]
+     */
+    public function getOwners()
+    {
+        return 'xx';
+    }
+}

@@ -1,0 +1,46 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+<div class="products">
+    {% include '@SingApp/layouts/navigation.html.twig' %}
+    <div class="messages">
+        <div class="card">
+            <ul class="nav nav-tabs">
+                <li><a href="{{ url('sections-list', {'boardId': board.id }) }}">Sections</a></li>
+            </ul>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Board date</th>
+                    <th>Pins count</th>
+                    <th>Board link</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for board in boards.data %}
+                    <tr>
+                        <td>{{ board.name }}</td>
+                        <td>{{ board.description }}</td>
+                        <td>{{ board.created_at }}</td>
+                        <td>{{ board.counts }}</td>
+                        <td>{{ board.url }}</td>
+                        <td>
+                            <a href="{{ url('board-edit', {'boardId': board.id }) }}"
+                               class="btn btn-default btn-sm">
+                                <i class="far fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ url('board-delete', {'boardId': board.id }) }}"
+                               class="btn btn-default btn-sm">
+                                <i class="far fa-trash-alt"></i>Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,100 +1,81 @@
 <?php
 
-
 namespace SingAppBundle\Entity;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Post.
+ * PinterestPin.
  *
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({
- *     "google"="GooglePost",
- *     "instagram"="InstagramPost",
- *     "facebook"="FacebookPost",
- *     "pinterest" = "PinterestPin"
- * })
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\PinterestPinEntityListener"})
  */
-abstract class Post
+class PinterestPin  extends Post implements HasOwnerInterface
 {
 
+
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\ManyToOne(targetEntity="SocialNetworkAccount")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $id;
+    protected $account;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $mediaId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\Length(max="255")
-     * @Assert\NotBlank()
      */
-    protected $title;
+    protected $board;
 
     /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @Assert\Length(max="1500")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $caption;
+    protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Images", mappedBy="post", cascade={"persist"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $photos;
+    protected $imageUrl;
 
-    /**
-     * @ORM\Column(type="enum_post_status_type", length=255, nullable=true)
-     *
-     */
-    protected $status;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $postDate;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $socialNetwork;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $uploadedFiles;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="BusinessInfo")
-     * @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $business;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $schedule = 0;
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set mediaId
+     *
+     * @param string $mediaId
+     *
+     * @return PinterestPin
+     */
+    public function setMediaId($mediaId)
+    {
+        $this->mediaId = $mediaId;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaId
+     *
+     * @return string
+     */
+    public function getMediaId()
+    {
+        return $this->mediaId;
     }
 
     /**
@@ -112,7 +93,7 @@ abstract class Post
      *
      * @param string $title
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setTitle($title)
     {
@@ -136,7 +117,7 @@ abstract class Post
      *
      * @param string $caption
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setCaption($caption)
     {
@@ -160,7 +141,7 @@ abstract class Post
      *
      * @param enum_post_status_type $status
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setStatus($status)
     {
@@ -184,7 +165,7 @@ abstract class Post
      *
      * @param \DateTime $postDate
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setPostDate($postDate)
     {
@@ -204,11 +185,35 @@ abstract class Post
     }
 
     /**
+     * Set account
+     *
+     * @param SocialNetworkAccount $account
+     *
+     * @return PinterestPin
+     */
+    public function setAccount(SocialNetworkAccount $account = null)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return SocialNetworkAccount
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
      * Add photo
      *
      * @param Images $photo
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function addPhoto(Images $photo)
     {
@@ -237,25 +242,12 @@ abstract class Post
         return $this->photos;
     }
 
-
-    public function setUploadedFiles($uploadedFiles)
-    {
-        $this->uploadedFiles = $uploadedFiles;
-
-        return $this;
-    }
-
-    public function getUploadedFiles()
-    {
-        return $this->uploadedFiles;
-    }
-
     /**
      * Set socialNetwork
      *
      * @param string $socialNetwork
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setSocialNetwork($socialNetwork)
     {
@@ -279,7 +271,7 @@ abstract class Post
      *
      * @param int $schedule
      *
-     * @return Post
+     * @return PinterestPin
      */
     public function setSchedule($schedule)
     {
@@ -299,50 +291,82 @@ abstract class Post
     }
 
     /**
-     * Set user.
-     *
-     * @param \SingAppBundle\Entity\User|null $user
-     *
-     * @return Post
+     * @return User[]
      */
-    public function setUser(\SingAppBundle\Entity\User $user = null)
+    public function getOwners()
     {
-        $this->user = $user;
+        return [$this->getUser()];
+    }
+
+    /**
+     * Set board.
+     *
+     * @param string $board
+     *
+     * @return PinterestPin
+     */
+    public function setBoard($board)
+    {
+        $this->board = $board;
 
         return $this;
     }
 
     /**
-     * Get user.
+     * Get board.
      *
-     * @return \SingAppBundle\Entity\User|null
+     * @return string
      */
-    public function getUser()
+    public function getBoard()
     {
-        return $this->user;
+        return $this->board;
     }
 
     /**
-     * Set business.
+     * Set link.
      *
-     * @param \SingAppBundle\Entity\BusinessInfo|null $business
+     * @param string|null $link
      *
-     * @return Post
+     * @return PinterestPin
      */
-    public function setBusiness(\SingAppBundle\Entity\BusinessInfo $business = null)
+    public function setLink($link = null)
     {
-        $this->business = $business;
+        $this->link = $link;
 
         return $this;
     }
 
     /**
-     * Get business.
+     * Get link.
      *
-     * @return \SingAppBundle\Entity\BusinessInfo|null
+     * @return string|null
      */
-    public function getBusiness()
+    public function getLink()
     {
-        return $this->business;
+        return $this->link;
+    }
+
+    /**
+     * Set imageUrl.
+     *
+     * @param string|null $imageUrl
+     *
+     * @return PinterestPin
+     */
+    public function setImageUrl($imageUrl = null)
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get imageUrl.
+     *
+     * @return string|null
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
     }
 }

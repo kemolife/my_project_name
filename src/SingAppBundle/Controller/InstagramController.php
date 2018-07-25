@@ -180,11 +180,11 @@ class InstagramController extends BaseController
             $this->get('app.instagram.service')->deletePost($instagramPost);
             $em->remove($instagramPost);
             $em->flush();
-            $response = $this->redirectToRoute('social-network-posts');
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
         }catch (OAuthCompanyException $e){
-            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()]);
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
         }catch (\Doctrine\DBAL\DBALException $e){
-            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()]);
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
         }
         return $response;
     }

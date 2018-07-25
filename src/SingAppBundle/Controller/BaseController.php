@@ -11,6 +11,7 @@ use SingAppBundle\Form\BusinessInfoType;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
 use SingAppBundle\Repository\BusinessInfoRepository;
+use SingAppBundle\Services\PinterestService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -150,5 +151,22 @@ class BaseController extends Controller
     public function getSwitchServices(Request $request)
     {
         return $this->findBy('SingAppBundle:SocialNetworkAccount', ['user' => $this->getUser()->getId(), 'business' => $this->getCurrentBusiness($request)->getId()]);
+    }
+
+    public function getPinterestAccount(Request $request)
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var BusinessInfo $business
+         */
+        $business = $this->getCurrentBusiness($request);
+        /**
+         * @var PinterestService $pinterestService
+         */
+        $pinterestService = $this->get('app.pinterest.service');
+        return $pinterestService->getPinterestAccount($user, $business);
     }
 }

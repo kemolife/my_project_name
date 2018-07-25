@@ -8,6 +8,8 @@ use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\PinterestAccount;
+use SingAppBundle\Entity\PinterestPin;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
@@ -42,6 +44,7 @@ class SocialNetworkPostController extends BaseController
         $instagramAccount = $this->findOneBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $activeServices = $this->getSwitchServices($request);
 
         $params = [
@@ -52,6 +55,7 @@ class SocialNetworkPostController extends BaseController
             'instagramPostForm' => $instagramPostForm,
             'googleAccount' => $googleAccount,
             'facebookAccount' => $facebookAccount,
+            'pinterestAccount' => $pinterestAccount,
             'activeServices' => $activeServices
         ];
 
@@ -87,11 +91,27 @@ class SocialNetworkPostController extends BaseController
                     $instagramPost->setCaption($query['caption']);
                     $instagramPost->setPostDate(new \DateTime($query['postDate']));
                     $instagramPost->setSocialNetwork('instagram');
-                    $instagramPost->setUploadedFiles($request->files->get('photos'));
+                    $instagramPost->setUploadedFiles($request->files->get('media'));
                     $instagramPost->setSchedule(intval($request->request->get('schedule') === 'on'));
                     $instagramPost->setBusiness($this->getCurrentBusiness($request));
 
                     $em->persist($instagramPost);
+                    break;
+                case $social instanceof PinterestAccount:
+                    if(isset($query['board'])) {
+                        $pinterestPin = new PinterestPin();
+                        $pinterestPin->setTitle($query['title']);
+                        $pinterestPin->setCaption($query['caption']);
+                        $pinterestPin->setBoard($query['board']);
+                        $pinterestPin->setLink($query['link']);
+                        $pinterestPin->setPostDate(new \DateTime($query['postDate']));
+                        $pinterestPin->setSocialNetwork('instagram');
+                        $pinterestPin->setUploadedFiles($request->files->get('photos'));
+                        $pinterestPin->setSchedule(intval($request->request->get('schedule') === 'on'));
+                        $pinterestPin->setBusiness($this->getCurrentBusiness($request));
+
+                        $em->persist($pinterestPin);
+                    }
                     break;
             }
 
