@@ -91,7 +91,7 @@ class PinterestService
     public function createPin($token)
     {
         $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->sePPOtOAuthToken($token);
+        $pinterest->auth->setOAuthToken($token);
         $pinterest->pins->create(array(
             "note"          => "Test board from API",
             "image"         => $this->webDir."/images/stars.png",
