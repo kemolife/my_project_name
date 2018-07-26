@@ -23,7 +23,6 @@ class SectionsController extends BaseController
      */
     public function newAction(Request $request, $boardId)
     {
-        var_dump($boardId);
         /**
          * @var PinterestService $pinterestService
          */

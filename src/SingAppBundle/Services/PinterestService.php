@@ -124,7 +124,7 @@ class PinterestService
         if ($pinterestAccount instanceof PinterestAccount) {
             $pinterest = new Pinterest($this->clientId, $this->clientSecret);
             $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
-            return $pinterest->users->getMeBoards()->a;
+            return $pinterest->users->getMeBoards()->toArray();
         }
     }
 
@@ -161,18 +161,18 @@ class PinterestService
         }
     }
 
-    public function getSectionsByBoard($boardName, $token)
-    {
-        $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-        $pinterest->auth->setOAuthToken($token);
-        $this->curl->get('/v1/board/'.$boardName.'/sections/', ['access_token' => $token]);
-        return $this->curl->response;
-    }
-
-    public function createSectionByBoard($boardName, $formData, PinterestAccount $pinterestAccount)
+    public function getSectionsByBoard($boardId, PinterestAccount $pinterestAccount)
     {
         if ($pinterestAccount instanceof PinterestAccount) {
-            $this->curl->setUrl('/v1/board/'.$boardName.'/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
+            $this->curl->get('/v1/board/' . $boardId . '/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
+            return $this->curl->response;
+        }
+    }
+
+    public function createSectionByBoard($boardId, $formData, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $this->curl->setUrl('/v1/board/'.$boardId.'/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
 
             $this->curl->post($this->curl->url, [
                 "title" => $formData['title']

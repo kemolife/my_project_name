@@ -4,9 +4,6 @@
     {% include '@SingApp/layouts/navigation.html.twig' %}
     <div class="messages">
         <div class="card">
-            <ul class="nav nav-tabs">
-                <li><a href="{{ url('sections-list', {'boardId': board.id }) }}">Sections</a></li>
-            </ul>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -15,6 +12,7 @@
                     <th>Board date</th>
                     <th>Pins count</th>
                     <th>Board link</th>
+                    <th>Board section</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -26,6 +24,7 @@
                         <td>{{ board.created_at }}</td>
                         <td>{{ board.counts }}</td>
                         <td>{{ board.url }}</td>
+                        <td><a href="{{ url('sections-list', {'boardId': board.id }) }}">Sections</a></td>
                         <td>
                             <a href="{{ url('board-edit', {'boardId': board.id }) }}"
                                class="btn btn-default btn-sm">

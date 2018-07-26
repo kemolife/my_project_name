@@ -10,7 +10,7 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Entity\YelpAccount;
 
-class YelpService
+class WordofmouthService
 {
     private $em;
 
@@ -51,7 +51,7 @@ class YelpService
     {
         $response = null;
 
-        if ($yelpSetting instanceof YelpAccount) {
+        if ($yelpSetting !== null) {
             $cookies = [];
 
             $curl = new Curl();
@@ -70,13 +70,12 @@ class YelpService
             $curl->setCookies($curl->getResponseCookies());
             $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
             $curl->post('https://biz.yelp.com/login', $params);
-            print_r($curl->response); die;
             if (strpos($curl->responseHeaders['location'], 'locations') > 0) {
                 $cookies = array_merge($cookies, $curl->getResponseCookies());
                 $curl->setCookies($cookies);
                 $curl->get('https://biz.yelp.com/');
                 $url_pattern = '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#';
-
+                var_dump($curl->response); die;
 
                 if (preg_match($url_pattern, $curl->response, $matches)) {
                     $curl->setCookies($cookies);
