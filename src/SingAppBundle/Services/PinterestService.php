@@ -36,9 +36,6 @@ class PinterestService
     {
         $this->em = $entityManager;
         $this->curl = new Curl(self::BASE_URL);
-        $this->curl->setDefaultJsonDecoder(function ($item){
-            return json_decode($item, true);
-        });
         $this->webDir = $webDir;
     }
 
@@ -161,10 +158,19 @@ class PinterestService
         }
     }
 
+    public function getPinsByBoard($boardId, PinterestAccount $pinterestAccount)
+    {
+        if ($pinterestAccount instanceof PinterestAccount) {
+            $this->curl->get('/v1/board/' . $boardId . '/pins/', ['access_token' => $pinterestAccount->getAccessToken()]);
+            var_dump($this->curl->response); die;
+        }
+    }
+
     public function getSectionsByBoard($boardId, PinterestAccount $pinterestAccount)
     {
         if ($pinterestAccount instanceof PinterestAccount) {
             $this->curl->get('/v1/board/' . $boardId . '/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
+            var_dump($this->curl->response); die;
             return $this->curl->response;
         }
     }

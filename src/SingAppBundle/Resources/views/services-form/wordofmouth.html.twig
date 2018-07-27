@@ -9,6 +9,7 @@
             </div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
+            <a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>
             {{ form_end(form) }}
             <div id="captcha_container"></div>
         </div>

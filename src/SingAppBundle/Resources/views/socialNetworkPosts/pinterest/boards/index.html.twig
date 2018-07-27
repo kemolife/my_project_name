@@ -24,7 +24,7 @@
                         <td>{{ board.created_at }}</td>
                         <td>{{ board.counts }}</td>
                         <td>{{ board.url }}</td>
-                        <td><a href="{{ url('sections-list', {'boardId': board.id }) }}">Sections</a></td>
+                        <td><a href="{{ url('pins-in-board', {'boardId': board.id }) }}">Pins</a></td>
                         <td>
                             <a href="{{ url('board-edit', {'boardId': board.id }) }}"
                                class="btn btn-default btn-sm">
