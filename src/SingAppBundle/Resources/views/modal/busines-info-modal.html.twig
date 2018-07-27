@@ -1,5 +1,13 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/intlTelInput.min.css') }}">
+    <style>
+        .buttons-click {
+            display: inline-block;
+            float: right;
+            margin-top: 17px;
+        }
+        .required:after { content:" *"; }
+    </style>
 {% endblock %}
 {{ form_start(form, {'attr': {'class': 'add-business-class'}}) }}
 {{ form_errors(form) }}
@@ -52,6 +60,9 @@
             <span id="valid-msg" class="hide">✓ Valid</span>
             <span id="error-msg" class="hide">Invalid number</span>
         </div>
+        <div class="buttons-click">
+            <button class="btn btn-info btnNext">Next</button>
+        </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="biz_details">
         <div class="control-group col-md-6 col-sm-12">
@@ -63,11 +74,15 @@
         <div class="control-group col-md-12 col-sm-12">
             {{ form_row(form.description) }}
         </div>
+        <div class="buttons-click">
+            <button class="btn btn-info btnNext">Next</button>
+            <button class="btn btn-info btnPrevious">Previous</button>
+        </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="add_info">
         <div class="control-group col-md-12 col-sm-12">
             <div class="control-group no-split">
-                <label class="control-label no-split">Hours of Operation</label>
+                <label class="control-label no-split required">Hours of Operation</label>
 
                 <div class="day Monday">
                     <p class="day-title">Monday</p>
@@ -337,6 +352,10 @@
                 </label>
             </div>
         </div>
+        <div class="buttons-click">
+            <button class="btn btn-info btnNext">Next</button>
+            <button class="btn btn-info btnPrevious">Previous</button>
+        </div>
 
     </div>
     <div role="tabpanel" class="tab-pane fade" id="media">
@@ -345,6 +364,9 @@
         </div>
         <div class="control-group col-md-6 col-sm-12">
             {{ form_row(form.uploadedFiles) }}
+        </div>
+        <div class="buttons-click">
+            <button class="btn btn-info btnPrevious">Previous</button>
         </div>
     </div>
 
@@ -356,13 +378,22 @@
 {% block javascripts %}
     <script src="{{ asset('js/intlTelInput.min.js') }}"></script>
     <script>
-        function initAutocomplete() {
-            geocoder = new google.maps.Geocoder();
-            new google.maps.places.Autocomplete(
-                (document.getElementById('singappbundle_businessinfo_address'))/*,
-      {types: ['(cities)']}*/);
-        }
+//        function initAutocomplete() {
+//            geocoder = new google.maps.Geocoder();
+//            new google.maps.places.Autocomplete(
+//                (document.getElementById('singappbundle_businessinfo_address'))/*,
+//      {types: ['(cities)']}*/);
+//        }
         $(document).ready(function () {
+            $('.btnNext').click(function(e){
+                e.preventDefault()
+                $('.nav-tabs > .active').next('li').find('a').trigger('click');
+            });
+
+            $('.btnPrevious').click(function(e){
+                e.preventDefault()
+                $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+            });
             if ('{{ business.logo }}') {
                 var html = '<img style="width: 12%" src="{{ asset(''~business.logo~'') }}" >';
                 $('#singappbundle_businessinfo_logo').parent().append(html)
@@ -373,18 +404,28 @@
                 $('#singappbundle_businessinfo_uploadedFiles').parent().append(html)
             }
             {% endfor %}
-            // var telInput = $("#singappbundle_businessinfo_phoneNumber"),
-            //     errorMsg = $("#error-msg"),
-            //     validMsg = $("#valid-msg");
-            //
-            // telInput.intlTelInput({
-            //     autoHideDialCode: false,
-            //     nationalMode: false,
-            //     placeholderNumberType: "MOBILE",
-            //     preferredCountries: ['au', 'nz', 'gbr'],
-            //     separateDialCode: true,
-            //     utilsScript: "/js/utils.js"
-            // });
+
+            $("#singappbundle_businessinfo_phoneNumber").intlTelInput({
+                // allowDropdown: false,
+                autoHideDialCode: false,
+                //autoPlaceholder: "on",
+                // dropdownContainer: "body",
+                // excludeCountries: ["us"],
+                //formatOnDisplay: true,
+                //hiddenInput: "full_number",
+                //initialCountry: "auto",
+                // localizedCountries: { 'de': 'Deutschland' },
+                nationalMode: false,
+                hiddenInput: "phone[receivers_internationl][]",
+                // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+                placeholderNumberType: "MOBILE",
+                customPlaceholder: function (selectedCountryPlaceholder, selectedCountryData) {
+                    return selectedCountryPlaceholder;
+                },
+                preferredCountries: ['au', 'nz', 'gbr'],
+                separateDialCode: true,
+                utilsScript: "{{ asset('js/utils.js') }}"
+             });
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6NMVYn2rplTpyqotdkzqDwZ4m4mylD2E&libraries=places&callback=initAutocomplete"

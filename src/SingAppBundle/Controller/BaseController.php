@@ -46,6 +46,7 @@ class BaseController extends Controller
 
     public function businessPostForm(BusinessInfo $entity, Request $request, $update = false, User $user)
     {
+        $paymentMethods = [];
         if($update){
             $options = ['method' => 'PUT'];
         }else{
@@ -60,7 +61,11 @@ class BaseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setUser($user);
             $entity->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
-            $entity->setPaymentOptions(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['payment_methods']));
+            if(isset($request->get('singappbundle_businessinfo')['payment_methods'])) {
+                $paymentMethods = $request->get('singappbundle_businessinfo')['payment_methods'];
+            }
+            $entity->setPaymentOptions(\GuzzleHttp\json_encode($paymentMethods));
+            $entity->setPhoneNumber($request->get('phone')['receivers_internationl'][0]);
             $em->persist($entity);
             $em->flush();
 

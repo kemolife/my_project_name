@@ -39,6 +39,10 @@ services:
         class: SingAppBundle\Services\YelpService
         arguments: ['@doctrine.orm.entity_manager']
 
+    app.wordofmouth.service:
+        class: SingAppBundle\Services\WordofmouthService
+        arguments: ['@doctrine.orm.entity_manager']
+
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
         public: true

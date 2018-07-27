@@ -1,0 +1,44 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+{% block body %}
+    <iframe id="tripadvisorId" style="margin-left: auto; margin-right: auto;"
+            src="https://www.tripadvisor.com/RegistrationController?flow=core_reg_growth&pid=40375&returnTo=%2F&fullscreen=true"
+            width="1200" height="600">
+        <div>
+            <script type="text/javascript">
+                function createCookie(name, value, days) {
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        var expires = "; expires=" + date.toGMTString();
+                    }
+                    else var expires = "";
+                    document.cookie = name + "=" + value + expires + "; path=/";
+                }
+
+                function readCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
+                createCookie('testCookie', "test content", 1);
+                parent.postMessage(readCookie('testCookie'), "http://127.0.0.1:8000/tripadvisor/auth");
+            </script>
+        </div>
+    </iframe>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        window.addEventListener("message",
+            function (e) {
+                console.log(e.data);
+            },false);
+    </script>
+{% endblock %}

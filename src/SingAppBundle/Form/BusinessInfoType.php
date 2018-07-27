@@ -37,7 +37,8 @@ class BusinessInfoType extends AbstractType
                 'class' => 'form-control',
             ],
             'class' => AdditionalCategoriesBusinessInfo::class,
-            'choice_label' => 'name'
+            'choice_label' => 'name',
+            'required' => true
         ])->
         add('additionalCategories', EntityType::class,  [
             'class' => AdditionalCategoriesBusinessInfo::class,
@@ -51,7 +52,7 @@ class BusinessInfoType extends AbstractType
         add('email', EmailType::class, ['attr' => ['class' => 'form-control']])->
         add('phoneNumber', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('website', TextType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
-        add('description', TextareaType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->
+        add('description', TextareaType::class, ['required' => true, 'attr' => ['class' => 'form-control']])->
 //        add('openingHours')->
         add('logo', FileType::class, [
             'attr' => ['class' => 'form-control-file'],
