@@ -41,9 +41,10 @@ class ZomatoController extends BaseController
              * @var ZomatoService $zomatoServices
              */
             try{
-                $zomatoServices->auth($zomatoAccount);
-                $zomatoServices->createAccount($zomatoAccount);
-                return $this->redirectToRoute('index');
+                $this->session->set('business', $request->get('business'));
+                $serviceUserId = $zomatoServices->auth($zomatoAccount);
+                $zomatoServices->createAccount($zomatoAccount, $serviceUserId);
+                return $this->redirectToRoute('index', $request->query->all());
             }catch (OAuthCompanyException $e){
                 return $this->render('@SingApp/services-form/zomato.html.twig', ['form' => $form->createView(), 'error' => 'Credential bad or try again later']);
             }

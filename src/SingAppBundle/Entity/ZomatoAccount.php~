@@ -115,28 +115,4 @@ class ZomatoAccount extends SocialNetworkAccount
     {
         return $this->userPassword;
     }
-
-    /**
-     * Set userServiceId.
-     *
-     * @param string|null $userServiceId
-     *
-     * @return ZomatoAccount
-     */
-    public function setUserServiceId($userServiceId = null)
-    {
-        $this->userServiceId = $userServiceId;
-
-        return $this;
-    }
-
-    /**
-     * Get userServiceId.
-     *
-     * @return string|null
-     */
-    public function getUserServiceId()
-    {
-        return $this->userServiceId;
-    }
 }

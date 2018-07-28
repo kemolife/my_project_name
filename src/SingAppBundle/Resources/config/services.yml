@@ -45,7 +45,7 @@ services:
 
     app.zomato.service:
         class: SingAppBundle\Services\ZomatoService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%']
 
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
