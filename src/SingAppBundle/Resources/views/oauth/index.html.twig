@@ -10,8 +10,10 @@
                             <span class="card-title">Your business listing report</span>
                         </div>
                         <div>
-                            <a href="{{ url('edit-business', app.request.query.all) }}" class="btn btn-primary">Edit Business</a>
-                            <a href="{{ url('add-business', app.request.query.all) }}" class="btn btn-primary">Add Business</a>
+                            <a href="{{ url('edit-business', app.request.query.all) }}" class="btn btn-primary">Edit
+                                Business</a>
+                            <a href="{{ url('add-business', app.request.query.all) }}" class="btn btn-primary">Add
+                                Business</a>
                         </div>
                     </div>
                     <hr>
@@ -120,24 +122,24 @@
                             </div>
                         </div>
                         {#<div class="col-md-12 list-item-container">#}
-                            {#<div class="list-item clearfix col-md-12">#}
-                                {#<div class="col-md-12">#}
-                                    {#<div class="col-md-5">#}
-                                        {#<img class="service-icon" src="/images/listing-icons/wordofmouth.com.svg" alt=""#}
-                                             {#width="25"#}
-                                             {#height="25">#}
-                                        {#<p class="list-item-title">#}
-                                            {#Word Of Mouth#}
-                                        {#</p>#}
-                                    {#</div>#}
-                                    {#<div class="col-md-7">#}
-                                        {#{{ getButton('wordofmouth', currentBusiness, app.user)|raw }}#}
-                                    {#</div>#}
-                                {#</div>#}
+                        {#<div class="list-item clearfix col-md-12">#}
+                        {#<div class="col-md-12">#}
+                        {#<div class="col-md-5">#}
+                        {#<img class="service-icon" src="/images/listing-icons/wordofmouth.com.svg" alt=""#}
+                        {#width="25"#}
+                        {#height="25">#}
+                        {#<p class="list-item-title">#}
+                        {#Word Of Mouth#}
+                        {#</p>#}
+                        {#</div>#}
+                        {#<div class="col-md-7">#}
+                        {#{{ getButton('wordofmouth', currentBusiness, app.user)|raw }}#}
+                        {#</div>#}
+                        {#</div>#}
 
-                                {#<hr class="hr-line">#}
-                                {#{{ getStatusConnect('wordofmouth', currentBusiness, app.user)|raw }}#}
-                            {#</div>#}
+                        {#<hr class="hr-line">#}
+                        {#{{ getStatusConnect('wordofmouth', currentBusiness, app.user)|raw }}#}
+                        {#</div>#}
                         {#</div>#}
                         <div class="col-md-12 list-item-container">
                             <div class="list-item clearfix col-md-12">
@@ -199,6 +201,26 @@
                                 {{ getStatusConnect('pinterest', currentBusiness, app.user)|raw }}
                             </div>
                         </div>
+                        <div class="col-md-12 list-item-container">
+                            <div class="list-item clearfix col-md-12">
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                        <img class="service-icon" src="/images/listing-icons/zomato.com.png" alt=""
+                                             width="25"
+                                             height="25">
+                                        <p class="list-item-title">
+                                            Zomato
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        {{ getButton('zomato', currentBusiness, app.user)|raw }}
+                                    </div>
+                                </div>
+
+                                <hr class="hr-line">
+                                {{ getStatusConnect('zomato', currentBusiness, app.user)|raw }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -207,21 +229,25 @@
 {% endblock %}
 
 {% block stylesheets %}
-<style>
-    .pac-container {
-        background-color: #FFF;
-        z-index: 20;
-        position: fixed;
-        display: inline-block;
-        float: left;
-    }
-    .modal{
-        z-index: 20;
-    }
-    .modal-backdrop{
-        z-index: 10;
-    }​
-</style>
+    <style>
+        .pac-container {
+            background-color: #FFF;
+            z-index: 20;
+            position: fixed;
+            display: inline-block;
+            float: left;
+        }
+
+        .modal {
+            z-index: 20;
+        }
+
+        .modal-backdrop {
+            z-index: 10;
+        }
+
+        ​
+    </style>
 {% endblock %}
 {% block javascripts %}
     <script>

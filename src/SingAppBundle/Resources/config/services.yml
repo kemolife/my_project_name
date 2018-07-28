@@ -43,6 +43,10 @@ services:
         class: SingAppBundle\Services\WordofmouthService
         arguments: ['@doctrine.orm.entity_manager']
 
+    app.zomato.service:
+        class: SingAppBundle\Services\ZomatoService
+        arguments: ['@doctrine.orm.entity_manager']
+
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
         public: true

@@ -104,12 +104,13 @@ class BaseController extends Controller
             $businessInfo->setUser($user);
             $businessInfo->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
             $businessInfo->setPaymentOptions(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['payment_methods']));
+            $businessInfo->setPhoneNumber($request->get('phone')['receivers_internationl'][0]);
             $em->persist($businessInfo);
             $em->flush();
 
             return $this->redirectToRoute('index', array('business' => $businessInfo->getId()));
         }
-        return $this->render('@SingApp/oauth/add-business.html.twig',  ['form' => $form->createView()]);
+        return $this->render('@SingApp/oauth/add-business.html.twig',  ['form' => $form->createView(), 'business' => $this->getCurrentBusiness($request)]);
     }
 
     public function instagramAccountForm(Request $request)

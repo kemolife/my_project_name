@@ -1,0 +1,32 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+{% block body %}
+    <div class="container login">
+        <div class="login-form">
+            <div class="form-signin-heading">
+                <span>Zomato credential for sync</span>
+            </div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>
+            {{ form_end(form) }}
+            <div id="captcha_container"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% if error is defined %}
+        $.notify({
+            title: "<strong>Error!</strong> ",
+            message: '{{ error }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
+        }, {
+            type: 'danger',
+            delay: 5000
+        });
+        {% endif %}
+    </script>
+{% endblock %}

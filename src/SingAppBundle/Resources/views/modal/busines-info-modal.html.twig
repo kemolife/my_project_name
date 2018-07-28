@@ -6,13 +6,14 @@
             float: right;
             margin-top: 17px;
         }
-        .required:after { content:" *"; }
+
+        .required:after {
+            content: " *";
+        }
     </style>
 {% endblock %}
 {{ form_start(form, {'attr': {'class': 'add-business-class'}}) }}
 {{ form_errors(form) }}
-{#{% set objHours = form.phoneNumber | json_encode %}#}
-    {#{{ dump(objHours) }}#}
 <div class="row">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
@@ -83,246 +84,57 @@
         <div class="control-group col-md-12 col-sm-12">
             <div class="control-group no-split">
                 <label class="control-label no-split required">Hours of Operation</label>
+                {% for key, daySetting in jsonDecode(form.vars.value.openingHours) %}
+                    <div class="day {{ key }}">
+                        <p class="day-title">{{ key }}</p>
+                        <select id="biz-hour-type"
+                                name="singappbundle_businessinfo[openingHours][days][{{ key }}][type]"
+                                class="selectpicker-time">
 
-                <div class="day Monday">
-                    <p class="day-title">Monday</p>
+                            <option value="open"
+                                    {% if daySetting['type'] == 'open' %}selected="&quot;selected&quot;"{% endif %}>
+                                Open
+                            </option>
+                            <option value="closed"
+                                    {% if daySetting['type'] == 'closed' %}selected="&quot;selected&quot;"{% endif %}>
+                                Closed
+                            </option>
+                        </select>
+                        {% if daySetting['slots'] is defined and daySetting['type'] == 'open' %}
+                            <div id="hours_open" class="hours ">
+                                <div class="relative">
+                                    <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
+                                           id="{{ key }}_start_time" placeholder="Start time"
+                                           name="singappbundle_businessinfo[openingHours][days][{{ key }}][slots][][start]"
+                                           value="{{ daySetting['slots'][0]['start'] }}" onkeydown="return false"
+                                           autocomplete="off">
+                                    <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
+                                           id="{{ key }}_end_time" placeholder="End time"
+                                           name="singappbundle_businessinfo[openingHours][days][{{ key }}][slots][][end]"
+                                           value="{{ daySetting['slots'][1]['end'] }}" onkeydown="return false"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        {% else %}
+                            <div id="hours_open" class="hours hide">
+                                <div class="relative">
+                                    <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
+                                           id="{{ key }}_start_time" placeholder="Start time"
+                                           name="singappbundle_businessinfo[openingHours][days][{{ key }}][slots][][start]"
+                                           value="07:30am" onkeydown="return false"
+                                           autocomplete="off">
+                                    <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
+                                           id="{{ key }}_end_time" placeholder="End time"
+                                           name="singappbundle_businessinfo[openingHours][days][{{ key }}][slots][][end]"
+                                           value="07:30pm" onkeydown="return false"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        {% endif %}
 
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Monday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Monday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Monday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Monday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Monday][slots][][end]"
-                                   value="07:30pm" onkeydown="return false" autocomplete="off">
-                        </div>
-
+                        <div id="hours_closed" class="hide hours"></div>
                     </div>
-                    <div id="hours_closed" class="hide hours"></div>
-                </div>
-                <div class="day Tuesday">
-                    <p class="day-title">Tuesday</p>
-
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Tuesday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Tuesday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Tuesday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Tuesday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Tuesday][slots][][end]"
-                                   value="07:30pm" onkeydown="return false" autocomplete="off">
-                        </div>
-
-                    </div>
-
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
-                <div class="day Wednesday">
-                    <p class="day-title">Wednesday</p>
-
-
-                    <select id="biz-hour-type"
-                            name="singappbundle_businessinfo[openingHours][days][Wednesday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Wednesday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Wednesday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Wednesday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Wednesday][slots][][end]"
-                                   value="07:30pm" onkeydown="return false" autocomplete="off" aria-invalid="false">
-                        </div>
-
-                    </div>
-
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
-                <div class="day Thursday">
-                    <p class="day-title">Thursday</p>
-
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Thursday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Thursday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Thursday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Thursday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Thursday][slots][][end]"
-                                   value="07:30pm" onkeydown="return false" autocomplete="off">
-                        </div>
-
-                    </div>
-
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
-                <div class="day Friday">
-                    <p class="day-title">Friday</p>
-
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Friday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Friday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Friday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Friday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Friday][slots][][end]"
-                                   value="07:30pm" onkeydown="return false" autocomplete="off">
-                        </div>
-
-                    </div>
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
-                <div class="day Saturday">
-                    <p class="day-title">Saturday</p>
-
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Saturday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open" selected="&quot;selected&quot;">
-                            Open
-                        </option>
-                        <option value="closed">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours ">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Saturday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Saturday][slots][][start]"
-                                   value="07:30am" onkeydown="return false" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Saturday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Saturday][slots][][end]"
-                                   value="02:00pm" onkeydown="return false" autocomplete="off">
-                        </div>
-
-                    </div>
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
-                <div class="day Sunday">
-                    <p class="day-title">Sunday</p>
-
-
-                    <select id="biz-hour-type" name="singappbundle_businessinfo[openingHours][days][Sunday][type]"
-                            class="selectpicker-time">
-
-                        <option value="open">
-                            Open
-                        </option>
-                        <option value="closed" selected="&quot;selected&quot;">
-                            Closed
-                        </option>
-                    </select>
-                    <div id="hours_open" class="hours hide">
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Sunday_start_time" placeholder="Start time"
-                                   name="singappbundle_businessinfo[openingHours][days][Sunday][slots][][start]"
-                                   value="" onkeydown="return false" disabled="" autocomplete="off">
-                        </div>
-                        <div class="relative">
-                            <input type="text" class="loc_time selectpicker-time ui-timepicker-input"
-                                   id="Sunday_end_time" placeholder="End time"
-                                   name="singappbundle_businessinfo[openingHours][days][Sunday][slots][][end]"
-                                   value="" onkeydown="return false" disabled="" autocomplete="off">
-                        </div>
-
-                    </div>
-                    <div id="hours_closed" class="hide hours"></div>
-
-                    <div class="dummy-div">
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="control-group col-md-12 col-sm-12" style="display: none">
@@ -330,23 +142,33 @@
         </div>
         <div class="col-md-12">
             <div class="checkbox">
-                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'Visa' in form.paymentOptions.vars.value %} checked {% endif %} value="Visa">
+                <input type="checkbox" id=""
+                       name="singappbundle_businessinfo[payment_methods][]" {% if 'Visa' in form.paymentOptions.vars.value %} checked {% endif %}
+                       value="Visa">
                 <label for="">
                     <img class="checkbox-img" src="/images/edit-business-modal/visa.png" alt="">
                 </label>
-                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'American Express' in form.paymentOptions.vars.value %} checked {% endif %}  value="American Express">
+                <input type="checkbox" id=""
+                       name="singappbundle_businessinfo[payment_methods][]" {% if 'American Express' in form.paymentOptions.vars.value %} checked {% endif %}
+                       value="American Express">
                 <label for="">
                     <img class="checkbox-img" src="/images/edit-business-modal/american-express.png" alt="">
                 </label>
-                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]" {% if 'Master Card' in form.paymentOptions.vars.value %} checked {% endif %} value="Master Card">
+                <input type="checkbox" id=""
+                       name="singappbundle_businessinfo[payment_methods][]" {% if 'Master Card' in form.paymentOptions.vars.value %} checked {% endif %}
+                       value="Master Card">
                 <label for="">
                     <img class="checkbox-img" src="/images/edit-business-modal/master-card.png" alt="">
                 </label>
-                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]"{% if 'Cash' in form.paymentOptions.vars.value %} checked {% endif %} value="Cash">
+                <input type="checkbox" id=""
+                       name="singappbundle_businessinfo[payment_methods][]"{% if 'Cash' in form.paymentOptions.vars.value %} checked {% endif %}
+                       value="Cash">
                 <label for="">
                     <img class="checkbox-img" src="/images/edit-business-modal/cash.png" alt="">
                 </label>
-                <input type="checkbox" id="" name="singappbundle_businessinfo[payment_methods][]"{% if 'Cheque' in form.paymentOptions.vars.value %} checked {% endif %} value="Cheque">
+                <input type="checkbox" id=""
+                       name="singappbundle_businessinfo[payment_methods][]"{% if 'Cheque' in form.paymentOptions.vars.value %} checked {% endif %}
+                       value="Cheque">
                 <label for="">
                     <img class="checkbox-img" src="/images/edit-business-modal/cheque.png" alt="">
                 </label>
@@ -373,27 +195,30 @@
 </div>
 <div class="footer-add-business">
     <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to listings</a>
 </div>
 {{ form_end(form) }}
 {% block javascripts %}
     <script src="{{ asset('js/intlTelInput.min.js') }}"></script>
     <script>
-//        function initAutocomplete() {
-//            geocoder = new google.maps.Geocoder();
-//            new google.maps.places.Autocomplete(
-//                (document.getElementById('singappbundle_businessinfo_address'))/*,
-//      {types: ['(cities)']}*/);
-//        }
+     //    function initAutocomplete() {
+     //        geocoder = new google.maps.Geocoder();
+     //        new google.maps.places.Autocomplete(
+     //            (document.getElementById('singappbundle_businessinfo_address'))/*,
+     // {types: ['(cities)']}*/);
+     //    }
+
         $(document).ready(function () {
-            $('.btnNext').click(function(e){
+            $('.btnNext').click(function (e) {
                 e.preventDefault()
                 $('.nav-tabs > .active').next('li').find('a').trigger('click');
             });
 
-            $('.btnPrevious').click(function(e){
+            $('.btnPrevious').click(function (e) {
                 e.preventDefault()
                 $('.nav-tabs > .active').prev('li').find('a').trigger('click');
             });
+            {% if business is not null %}
             if ('{{ business.logo }}') {
                 var html = '<img style="width: 12%" src="{{ asset(''~business.logo~'') }}" >';
                 $('#singappbundle_businessinfo_logo').parent().append(html)
@@ -404,6 +229,7 @@
                 $('#singappbundle_businessinfo_uploadedFiles').parent().append(html)
             }
             {% endfor %}
+            {% endif %}
 
             $("#singappbundle_businessinfo_phoneNumber").intlTelInput({
                 // allowDropdown: false,
@@ -425,7 +251,7 @@
                 preferredCountries: ['au', 'nz', 'gbr'],
                 separateDialCode: true,
                 utilsScript: "{{ asset('js/utils.js') }}"
-             });
+            });
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6NMVYn2rplTpyqotdkzqDwZ4m4mylD2E&libraries=places&callback=initAutocomplete"

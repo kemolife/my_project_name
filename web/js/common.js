@@ -122,22 +122,22 @@ function n(e, t) {
     i.addClass("hide").end().removeClass("hide"), i.find("input").attr("disabled", "disabled"), $(n).find("#hours_" + t + " input").removeAttr("disabled")
 }
 
-function i() {
-    var e = $(".Monday").find("#biz-hour-type")[0].value;
-    $(".day").each(function () {
-        var t = $(this),
-            i = t.find("#biz-hour-type")[0],
-            r = t.find("#hours_" + e).find(".loc_time");
-        if ("closed" !== i.value) {
-            i.value = e, n(t, e);
-            for (var o = 0; o < r.length; o++) {
-                var a = $(".Monday").find("#hours_" + e).find(".loc_time"),
-                    s = t.find("#hours_" + e).find(".loc_time");
-                s[o].value = a[o].value
-            }
-        }
-    })
-}
+// function i() {
+//     var e = $(".Monday").find("#biz-hour-type")[0].value;
+//     $(".day").each(function () {
+//         var t = $(this),
+//             i = t.find("#biz-hour-type")[0],
+//             r = t.find("#hours_" + e).find(".loc_time");
+//         if ("closed" !== i.value) {
+//             i.value = e, n(t, e);
+//             for (var o = 0; o < r.length; o++) {
+//                 var a = $(".Monday").find("#hours_" + e).find(".loc_time"),
+//                     s = t.find("#hours_" + e).find(".loc_time");
+//                 s[o].value = a[o].value
+//             }
+//         }
+//     })
+// }
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -150,7 +150,7 @@ function getParameterByName(name, url) {
 }
 
 $(document).on("change", "#biz-hour-type", function () {
-    i(), n(this, this.value)
+    n(this, this.value)
 })
 
 $(document).ready(function () {
