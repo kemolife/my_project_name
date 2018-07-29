@@ -8,6 +8,9 @@ use Curl\Curl;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use League\OAuth2\Client\Token\AccessToken;
+use Microsoft\BingAds\Auth\AuthorizationData;
+use Microsoft\BingAds\Auth\OAuthTokenRequestException;
+use Microsoft\BingAds\Auth\OAuthWebAuthCodeGrant;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\BingAccount;
 use SingAppBundle\Entity\User;
@@ -20,8 +23,10 @@ class BingService
 {
     private $em;
     private $clientId = '4dca26fc-ab69-4b78-b5fa-b0d683005bb0';
+    private $developerToken = "118062AN7O421835";
     private $clientSecret = 'lvzpPQ399-wijAZBCZ53{|$';
     private $redirectUrl = "https://listings.devcom.com/bing/oauth2callback";
+
     private $token;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -31,34 +36,48 @@ class BingService
 
     private function getProvider()
     {
-        return new Microsoft([
-            // Required
-            'clientId' => $this->clientId,
-            'clientSecret' => $this->clientSecret,
-            'redirectUri' => $this->redirectUrl,
-            // Optional
-            'urlAuthorize' => 'https://login.live.com/oauth20_authorize.srf',
-            'urlAccessToken' => 'https://login.live.com/oauth20_token.srf',
-            'urlResourceOwnerDetails' => 'https://outlook.office.com/api/v1.0/me'
-        ]);
+//        return new Microsoft([
+//            // Required
+//            'clientId' => $this->clientId,
+//            'clientSecret' => $this->clientSecret,
+//            'redirectUri' => $this->redirectUrl,
+//            // Optional
+//            'urlAuthorize'              => 'https://login.windows.net/common/oauth2/authorize',
+//            'urlAccessToken'            => 'https://login.windows.net/common/oauth2/token',
+//            'urlResourceOwnerDetails' => 'https://outlook.office.com/api/v1.0/me'
+//        ]);
+        return (new OAuthWebAuthCodeGrant())
+            ->withClientId($this->clientId)
+            ->withClientSecret($this->clientSecret)
+            ->withRedirectUri($this->redirectUrl)
+            ->withState(rand(0,999999999));
+    }
+
+    private function getAuthorizationData()
+    {
+        return (new AuthorizationData())
+            ->withAuthentication($this->getProvider())
+            ->withDeveloperToken($this->developerToken);
     }
 
     public function auth()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getAuthorizationData();
         try {
-            return $provider->getAuthorizationUrl();
-        } catch (BadResponseException $e) {
+            return $provider->Authentication->GetAuthorizationEndpoint();
+        } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
 
-    public function getToken($code)
+    public function getToken($url)
     {
-        $provider = $this->getProvider();
+        $provider = $this->getAuthorizationData();
         try {
-            return $provider->getAccessToken('authorization_code', ['code' => $code]);
-        } catch (\Exception $e) {
+            return $provider->Authentication->RequestOAuthTokensByResponseUri($url);
+        } catch (OAuthTokenRequestException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        } catch(\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }

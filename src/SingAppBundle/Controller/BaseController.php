@@ -3,13 +3,17 @@
 namespace SingAppBundle\Controller;
 
 
+use JMS\JobQueueBundle\Entity\Job;
+use ReflectionClass;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
 use SingAppBundle\Entity\User;
+use SingAppBundle\Entity\ZomatoAccount;
 use SingAppBundle\Form\BusinessInfoType;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Repository\BusinessInfoRepository;
 use SingAppBundle\Services\PinterestService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,9 +51,9 @@ class BaseController extends Controller
     public function businessPostForm(BusinessInfo $entity, Request $request, $update = false, User $user)
     {
         $paymentMethods = [];
-        if($update){
+        if ($update) {
             $options = ['method' => 'PUT'];
-        }else{
+        } else {
             $options = ['method' => 'POST'];
         }
         $businessPostForm = $this->createForm(BusinessInfoType::class, $entity, $options);
@@ -61,22 +65,27 @@ class BaseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setUser($user);
             $entity->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
-            if(isset($request->get('singappbundle_businessinfo')['payment_methods'])) {
+            if (isset($request->get('singappbundle_businessinfo')['payment_methods'])) {
                 $paymentMethods = $request->get('singappbundle_businessinfo')['payment_methods'];
             }
             $entity->setPaymentOptions(\GuzzleHttp\json_encode($paymentMethods));
             $entity->setPhoneNumber($request->get('phone')['receivers_internationl'][0]);
             $em->persist($entity);
             $em->flush();
+            try {
+                $this->updateConnectServices($request);
+            } catch (OAuthCompanyException $e) {
+                return $this->redirectToRoute('index', ['business' => $entity->getId(), 'error' => $e->getMessage()]);
+            }
 
             return $this->redirectToRoute('index', array('business' => $entity->getId()));
 
         }
 
-        return $this->render('@SingApp/oauth/add-business.html.twig',  [
+        return $this->render('@SingApp/oauth/add-business.html.twig', [
             'form' => $businessPostForm->createView(),
             'business' => $entity
-            ]);
+        ]);
     }
 
     public function getCurrentBusiness(Request $request)
@@ -110,7 +119,7 @@ class BaseController extends Controller
 
             return $this->redirectToRoute('index', array('business' => $businessInfo->getId()));
         }
-        return $this->render('@SingApp/oauth/add-business.html.twig',  ['form' => $form->createView(), 'business' => $this->getCurrentBusiness($request)]);
+        return $this->render('@SingApp/oauth/add-business.html.twig', ['form' => $form->createView(), 'business' => $this->getCurrentBusiness($request)]);
     }
 
     public function instagramAccountForm(Request $request)
@@ -174,5 +183,19 @@ class BaseController extends Controller
          */
         $pinterestService = $this->get('app.pinterest.service');
         return $pinterestService->getPinterestAccount($user, $business);
+    }
+
+    public function updateConnectServices(Request $request)
+    {
+        $servicesAccount = $this->getSwitchServices($request);
+        $em = $this->getDoctrine()->getManager();
+        foreach ($servicesAccount as $serviceAccount) {
+            if ($serviceAccount instanceof ZomatoAccount) {
+                $job = new Job('app:update:service', [$serviceAccount->getId()]);
+                //        $job->setExecuteAfter((new \DateTime())->setTimestamp(time()+600));
+                $em->persist($job);
+                $em->flush();
+            }
+        }
     }
 }

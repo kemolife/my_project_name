@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  *
  * @Route("business-info")
  */
-class BusinessInfoController extends Controller
+class BusinessInfoController extends BaseController
 {
     /**
      * Creates a new businessInfo entity.
@@ -57,7 +57,6 @@ class BusinessInfoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('bussines-info_edit', array('id' => $businessInfo->getId()));
         }
 

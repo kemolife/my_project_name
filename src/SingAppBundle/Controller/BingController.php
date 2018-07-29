@@ -42,7 +42,7 @@ class BingController extends BaseController
          */
         try {
             $bingService = $this->get('app.bing.service');
-            $accessTokeData = $bingService->getToken($request->get('code'));
+            $accessTokeData = $bingService->getToken($request->getUri());
             $bingService->createAccount($accessTokeData);
             return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
         }catch (OAuthCompanyException $e){

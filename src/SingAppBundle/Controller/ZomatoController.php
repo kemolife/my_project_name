@@ -23,14 +23,6 @@ class ZomatoController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        /**
-         * @var BusinessInfo $currentBusiness
-         */
-        $currentBusiness = $this->getCurrentBusiness($request);
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
         $zomatoAccount = new ZomatoAccount();
         $zomatoServices = $this->get('app.zomato.service');
         $form = $this->createForm(ZomatoType::class, $zomatoAccount);
@@ -43,10 +35,11 @@ class ZomatoController extends BaseController
             try{
                 $this->session->set('business', $request->get('business'));
                 $serviceUserId = $zomatoServices->auth($zomatoAccount);
-                $zomatoServices->createAccount($zomatoAccount, $serviceUserId);
+                $zomatoAccount = $zomatoServices->createAccount($zomatoAccount, $serviceUserId);
+                $zomatoServices->editAccount($zomatoAccount, $this->getCurrentBusiness($request));
                 return $this->redirectToRoute('index', $request->query->all());
             }catch (OAuthCompanyException $e){
-                return $this->render('@SingApp/services-form/zomato.html.twig', ['form' => $form->createView(), 'error' => 'Credential bad or try again later']);
+                return $this->render('@SingApp/services-form/zomato.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
             }
         }
 
@@ -55,13 +48,24 @@ class ZomatoController extends BaseController
 
     /**
      * @Route("/zomato-test", name="zomato-test")
+     * @param Request $request
+     * @throws OAuthCompanyException
      */
-    public function testAction()
+    public function testAction(Request $request)
     {
         /**
-         * @var YelpService $yelpService
+         * @var BusinessInfo $currentBusiness
          */
-        $yelpService = $this->get('app.yelp.service');
-        $yelpService->auth();
+        $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var ZomatoService $zomatoServices
+         */
+        $zomatoServices = $this->get('app.zomato.service');
+        $account = $zomatoServices->getAccount($user, $currentBusiness);
+        $zomatoServices->editAccount($account);
     }
 }

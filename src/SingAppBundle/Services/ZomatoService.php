@@ -16,6 +16,11 @@ class ZomatoService
     private $em;
     private $curl;
     private $webDir;
+    /**
+     * @var BusinessInfo
+     */
+    private $business;
+    private $message = 'zomato service error, please connect to technical advice';
 
     /**
      * ZomatoService constructor.
@@ -37,20 +42,18 @@ class ZomatoService
      */
     public function auth(ZomatoAccount $zomatoAccount)
     {
-
         $response = null;
 
         if ($zomatoAccount instanceof ZomatoAccount) {
 
             $this->curl->setHeaders([
-                'cookie' => 'ak_bmsc=1D5BBDEAC86708D1F077C9773E723D9968513C953706000033BE5C5B87B4751B~plH1+1DU5Wons/c/1q3K8iUqBL0YHt3VTbzRZPDK5YF0yLh8+k+OXIVnlOP579SfzNrmI3EjX7CRjz84TJYk3MYG1ra92Gae82XamBeufLIIfLqaiVwoRmXe4qUvmwbiMEVilHvVJKVknIOtqeWguBRibrWnJLe/eypA4TW+YGAAlB2o0jHoJfD3h+5qrptHeeYaoF4SDanLYySue4xnLeRmYiBLVYd9FZZpj/s232BQ8=; _ga=GA1.2.1717303302.1532804660; _gid=GA1.2.1918272120.1532804660; _gat_country=1; _gat_global=1; __utmx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:-1; __utmxx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:1532804659:8035200; fbtrack=6532b9465992b-ac41-4b2e-b209-fb4a3e64942a; session_id=2532a44659934-5ca1-4d64-9c26-69c01eeebf6b; AMP_TOKEN=%24NOT_FOUND; _gat_globalV3=1; fbcity=267; dpr=1; cto_lwid=67977408-078a-4b8d-a4f5-781d89fa390a; PHPSESSID=962de5f9145e6022906733faf8bc32922c9439de; csrf=ab0bd9be6de54d84142fe1058adef231; zl=pl; bm_sv=0428D2747FB1DA3442E4083D3D4164E0~Cf4o/+zcY4WM7LlXwCK8GPv0TlGrT5PX8oQQnIEbtmV6liRR1tv6B79BnWEBsDH8LHpyjPY5/chAv4mxbOU5lb0PjVRGNuO6uIgcil9mjJ1bZCtE8KHlPrDamiZIgfrxM8PTBqzVit9yu2t3I+fGy7/lKXcHFjzriR1I6BiswNk=; G_ENABLED_IDPS=google'
+                'cookie' => $this->getCookies()
             ]);
             $params['login'] = $zomatoAccount->getUserEmail();
             $params['password'] = $zomatoAccount->getUserPassword();
             $this->curl->post('https://www.zomato.com/php/asyncLogin.php', $params);
-            $response = $this->curl->response;
             if(!isset($response->user_id)){
-                throw new OAuthCompanyException('check your credential, or try again later');
+                throw new OAuthCompanyException($this->message);
             }
             $this->saveCookies('zomato_'. $zomatoAccount->getUserEmail(), $this->curl->getResponseCookies());
         }
@@ -81,15 +84,19 @@ class ZomatoService
     public function getAccount(User $user, BusinessInfo $business)
     {
         $repository = $this->em->getRepository('SingAppBundle:ZomatoAccount');
-        $yelp = $repository->findOneBy(['user' => $user, 'business' => $business]);
+        $zomato = $repository->findOneBy(['user' => $user, 'business' => $business]);
 
-        return $yelp;
+        return $zomato;
     }
 
-    public function editAccount(ZomatoAccount $zomatoAccount)
+    /**
+     * @param ZomatoAccount $zomatoAccount
+     * @throws OAuthCompanyException
+     */
+    public function editAccount(ZomatoAccount $zomatoAccount, BusinessInfo $business)
     {
-        $fileName = $this->webDir . '/cookies/cookies_' . $zomatoAccount->getUserEmail() . '.txt';
-
+        $this->business = $business;
+        $fileName = $this->webDir . '/cookies/cookies_zomato_' . $zomatoAccount->getUserEmail() . '.txt';
         if (file_exists($fileName) && $zomatoAccount instanceof ZomatoAccount) {
             $cookies = json_decode(file_get_contents($fileName), true);
             $prepareCookie = $cookies;
@@ -97,14 +104,43 @@ class ZomatoService
                 $value = "{$key}={$value};";
             });
             $this->curl->setHeaders(['cookie' => implode($prepareCookie)]);
+            $this->curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
             $this->curl->get('https://www.zomato.com/pl/users/' . $zomatoAccount->getUserServiceId() . '/edit');
-            var_dump($this->curl->response); die;
+            if($this->curl->response){
+                $csrf = $this->getCSRFToken($this->curl->response, 'csrf_token', $zomatoAccount, $business);
+                $params['edit-profile-form-submitted'] = 1;
+                $params['csrf_token'] = $csrf;
+                $params['name'] = $this->business->getName();
+                $params['city'] = 3057;
+                $params['bio'] = $this->business->getDescription();;
+                $params['twitter_handle'] = '';
+                $params['language'] = 1;
+                $params['website_link'] = $this->business->getWebsite();;
+                $params['mobile'] = $this->business->getPhoneNumber();
+                $params['submit'] = 'Zapisz';
+                $this->curl->setHeaders(['cookie' => implode($prepareCookie)]);
+                $this->curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
+                $this->curl->post('https://www.zomato.com/pl/users/'.$zomatoAccount->getUserServiceId().'/edit', $params);
+                if($this->curl->httpStatusCode !== '200'){
+                    throw new OAuthCompanyException($this->message);
+                };
+            }else{
+                $this->auth($zomatoAccount);
+                $this->editAccount($zomatoAccount, $business);
+            }
         }else{
-            throw new OAuthCompanyException('please try again later');
+            throw new OAuthCompanyException($this->message);
         }
     }
 
-    private function getCSRFToken($content, $inputName)
+    /**
+     * @param $content
+     * @param $inputName
+     * @param ZomatoAccount $zomatoAccount
+     * @return mixed
+     * @throws OAuthCompanyException
+     */
+    private function getCSRFToken($content, $inputName, ZomatoAccount $zomatoAccount, $business)
     {
 
         if ($inputName == 'meta') {
@@ -114,15 +150,22 @@ class ZomatoService
             $csrf = str_replace('"', '', $second_step[0]);
         } else {
             $first_step = explode($inputName, $content);
-            var_dump($first_step);
-            die;
+            if(!isset($first_step[2])){
+                $this->auth($zomatoAccount);
+                $this->editAccount($zomatoAccount, $business);
+            }
             $second_step = explode('value="', $first_step[2]);
-            $third_step = explode('">', $second_step[1]);
+            $third_step = explode('" />', $second_step[1]);
             $csrf = str_replace('"', '', $third_step[0]);
         }
 
 
         return $csrf;
+    }
+
+    private function getCookies()
+    {
+        return 'fbcity=267; zl=pl; fbtrack=5cd25883e54c93fcd8c2d63e77f7aefd; _ga=GA1.2.243531173.1532788938; _gid=GA1.2.2083606592.1532788938; __utmx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:NaN; dpr=1; cto_lwid=e73b8097-e200-4a2f-b8ab-c88fcff59317; G_ENABLED_IDPS=google; zhli=1; al=0; PHPSESSID=1776864e23458b90c947617bd837858468605135; session_id=8532863259909-5b4d-43f1-95bf-765acf2dbffc; AMP_TOKEN=%24NOT_FOUND; ak_bmsc=DDF61A1B1081BF77B38119CF66E89EDF68513C953706000046D45D5BCF42397F~plQAwOb4S0w+/1YwljwIR5YtyIU5A1snxxQicz1q0oBajPdKOLQLegClymCqDmuIcmY7+1Ay+fS+jhPpE8F87IRoOHXTuRpjEqf+xficO2+TJdTb9303n7Js7a5VPfSIHCFiozpU5JTKowLlEJ4KWWfW0OTiL7YczwRAAx2rnnvZiCgpZQlfM5+luiN7c2xmbaAnz25/3y36Wc3regrXavc9vCGSZVWxL/w7dUMb2tx+c=; _gat_global=1; _gat_country=1; _gat_globalV3=1; __utmxx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:1532865053:8035200; csrf=f384ac6f2f9843d34c1c0cba76c7ca49; bm_sv=517B4119E96261A343E301C9B3F17644~Cf4o/+zcY4WM7LlXwCK8GKlfpJiPRfhvci4VJMQmvLS8QpNa1XblDICyYxOS6CZtC/gBVRuO7GzkM1ZIeR//f8thR0hvtxqNZ3OPEMQJni1DoLO33bkpcnVsw9GxuQWARcLQzBrNHYylIbCmud/IyiEH7QwtkhLtmhZEwtuV4r8=';
     }
 
     private function saveCookies($prefix, $cookies)
