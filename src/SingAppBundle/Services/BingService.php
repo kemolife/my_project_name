@@ -74,7 +74,6 @@ class BingService
     {
         $provider = $this->getAuthorizationData();
         try {
-            var_dump($provider->Authentication->RequestOAuthTokensByResponseUri($url)); die;
             return $provider->Authentication->RequestOAuthTokensByResponseUri($url);
         } catch (OAuthTokenRequestException $e) {
             throw new OAuthCompanyException($e->getMessage());
@@ -111,11 +110,11 @@ class BingService
             $createdDate->setTimestamp(time());
             $bingAccount = new BingAccount();
 
-            if ($accessTokeData->getRefreshToken() !== null) {
+            if ($accessTokeData->OAuthTokens->RefreshToken !== null) {
                 $bingAccount->setRefreshToken($accessTokeData->getRefreshToken());
             }
 
-            $bingAccount->setAccessToken($accessTokeData->getToken());
+            $bingAccount->setAccessToken($accessTokeData->OAuthTokens->AccessToken);
             $bingAccount->setCreated($createdDate);
             $bingAccount->setExpires($accessTokeData->getExpires());
             $bingAccount->setResourceOwnerId($accessTokeData->getResourceOwnerId());
