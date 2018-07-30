@@ -74,6 +74,7 @@ class BingService
     {
         $provider = $this->getAuthorizationData();
         try {
+            var_dump($provider->Authentication->RequestOAuthTokensByResponseUri($url));
             return $provider->Authentication->RequestOAuthTokensByResponseUri($url);
         } catch (OAuthTokenRequestException $e) {
             throw new OAuthCompanyException($e->getMessage());

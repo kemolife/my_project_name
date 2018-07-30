@@ -42,6 +42,17 @@ class ZomatoService
      */
     public function auth(ZomatoAccount $zomatoAccount)
     {
+        $handle = fopen($this->webDir .  "/cacert-2018-06-20.pem", "r");
+        var_dump(fread($handle, filesize($this->webDir .  "/cacert-2018-06-20.pem")));
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://www.zomato.com/pl/perth");
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_CAINFO, $this->webDir .  "/cacert-2017-09-20.pem");
+        curl_exec($curl);
+        var_dump(curl_error($curl)); die;
+//        $curl->('https://www.zomato.com/pl/perth');
+//        var_dump($this->curl->responseHeaders); die;
         $response = null;
 
         if ($zomatoAccount instanceof ZomatoAccount) {
@@ -73,6 +84,8 @@ class ZomatoService
 
         $this->em->persist($zomatoAccount);
         $this->em->flush();
+
+        return $zomatoAccount;
     }
 
     /**
@@ -165,7 +178,7 @@ class ZomatoService
 
     private function getCookies()
     {
-        return 'fbcity=267; zl=pl; fbtrack=5cd25883e54c93fcd8c2d63e77f7aefd; _ga=GA1.2.243531173.1532788938; _gid=GA1.2.2083606592.1532788938; __utmx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:NaN; dpr=1; cto_lwid=e73b8097-e200-4a2f-b8ab-c88fcff59317; G_ENABLED_IDPS=google; zhli=1; al=0; PHPSESSID=1776864e23458b90c947617bd837858468605135; session_id=8532863259909-5b4d-43f1-95bf-765acf2dbffc; AMP_TOKEN=%24NOT_FOUND; ak_bmsc=DDF61A1B1081BF77B38119CF66E89EDF68513C953706000046D45D5BCF42397F~plQAwOb4S0w+/1YwljwIR5YtyIU5A1snxxQicz1q0oBajPdKOLQLegClymCqDmuIcmY7+1Ay+fS+jhPpE8F87IRoOHXTuRpjEqf+xficO2+TJdTb9303n7Js7a5VPfSIHCFiozpU5JTKowLlEJ4KWWfW0OTiL7YczwRAAx2rnnvZiCgpZQlfM5+luiN7c2xmbaAnz25/3y36Wc3regrXavc9vCGSZVWxL/w7dUMb2tx+c=; _gat_global=1; _gat_country=1; _gat_globalV3=1; __utmxx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:1532865053:8035200; csrf=f384ac6f2f9843d34c1c0cba76c7ca49; bm_sv=517B4119E96261A343E301C9B3F17644~Cf4o/+zcY4WM7LlXwCK8GKlfpJiPRfhvci4VJMQmvLS8QpNa1XblDICyYxOS6CZtC/gBVRuO7GzkM1ZIeR//f8thR0hvtxqNZ3OPEMQJni1DoLO33bkpcnVsw9GxuQWARcLQzBrNHYylIbCmud/IyiEH7QwtkhLtmhZEwtuV4r8=';
+        return 'LEL_JS=true; zl=pl; _ga=GA1.2.1739363514.1531490815; dpr=1; zhli=1; frcp_g=1; cto_lwid=56aa1fba-8c69-42da-8344-aecb5d32005e; G_ENABLED_IDPS=google; __utmx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:NaN; fbcity=296; al=0; orange=6973945; fbtrack=5532724475b66-3c82-402f-a3ce-fe0bda3b7d1e; csrf=4cd690d82bb79a495dfd139a8d9f823e; PHPSESSID=d71677826e00517bc873b7ee144cc1b4bb94524e; squeeze=9261975c5aa51f049ef65794d24ceade; ak_bmsc=5612D1FADD3DD3919D86536253E985CF68513C953706000080BE5E5B6AC20265~pl6W+IOJdgUMRYNL7VID3MLuH17PtvTfpix5IAlK8KO99UMdj+ss8oEo7Xaks4/leTIeS/Ry7mUA8wyyOpcNGbnrGUFudyZncBenAAp1MvSXtZap8TKRtjHjofsdJc0CiqBSfMZwTd4tnrnMQrdWZXew2fQHDSMQoGFufdzcUZtmH8+5bneA9oEk/pZ2fogQtg8jY5VZW+lScI4Z5NvuwsSOO1XGk3iaFvZFmcjyrF9FM=; _gid=GA1.2.1196688860.1532935809; _gat_city=1; _gat_country=1; _gat_global=1; __utmxx=141625785.FQnzc5UZQdSMS6ggKyLrqQ$0:1532935809:8035200; AMP_TOKEN=%24NOT_FOUND; _gat_globalV3=1; bm_sv=383A9D231605B81693BA01B31EE45044~Cf4o/+zcY4WM7LlXwCK8GEhVTyQts2Kmxf/7q1UwWMkIQJ0iIv3JwnVyDFGdwOBNP+NxMB5q0agUpnFTDxVizsHevjw4kczFELjkv8tquU2QdkymZFCsjoWuPM8q5ZibpOlt8LW9hd7YEvsOtwImgSnPhMh7AROS6hXqufzhcNw=';
     }
 
     private function saveCookies($prefix, $cookies)
