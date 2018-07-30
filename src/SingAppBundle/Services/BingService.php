@@ -106,19 +106,18 @@ class BingService
 
     public function createAccount(OAuthTokens $accessTokeData)
     {
-        if ($accessTokeData instanceof AccessToken) {
+        if ($accessTokeData instanceof OAuthTokens) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp(time());
             $bingAccount = new BingAccount();
 
             if ($accessTokeData->RefreshToken !== null) {
-                $bingAccount->setRefreshToken($accessTokeData->getRefreshToken());
+                $bingAccount->setRefreshToken($accessTokeData->RefreshToken);
             }
 
             $bingAccount->setAccessToken($accessTokeData->AccessToken);
             $bingAccount->setCreated($createdDate);
-            $bingAccount->setExpires($accessTokeData->getExpires());
-            $bingAccount->setResourceOwnerId($accessTokeData->getResourceOwnerId());
+            $bingAccount->setExpires($accessTokeData->AccessTokenExpiresInSeconds);
 
             $this->em->persist($bingAccount);
             $this->em->flush();
