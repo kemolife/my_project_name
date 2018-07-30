@@ -42,21 +42,12 @@ class ZomatoService
      */
     public function auth(ZomatoAccount $zomatoAccount)
     {
-        $handle = fopen($this->webDir .  "/cacert-2018-06-20.pem", "r");
-        var_dump(fread($handle, filesize($this->webDir .  "/cacert-2018-06-20.pem")));
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://www.zomato.com/pl/perth");
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_CAINFO, $this->webDir .  "/cacert-2017-09-20.pem");
-        curl_exec($curl);
-        var_dump(curl_error($curl)); die;
-//        $curl->('https://www.zomato.com/pl/perth');
-//        var_dump($this->curl->responseHeaders); die;
         $response = null;
 
         if ($zomatoAccount instanceof ZomatoAccount) {
-
+            $this->curl->setOpt(CURLOPT_SSL_VERIFYPEER, 1);
+            $this->curl->setOpt(CURLOPT_SSL_VERIFYPEER, 2);
+            $this->curl->setOpt(CURLOPT_CAINFO, $this->webDir .  "/cacert-2017-09-20.pem");
             $this->curl->setHeaders([
                 'cookie' => $this->getCookies()
             ]);
