@@ -27,7 +27,7 @@ class BingAccount extends SocialNetworkAccount
     protected $accessToken;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $refreshToken;
 
