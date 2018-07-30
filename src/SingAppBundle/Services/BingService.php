@@ -131,7 +131,7 @@ class BingService
 
     public function getOwner()
     {
-        $this->getCustomerManagementProxy()->SetAuthorizationData($this->getProvider());
+        $this->getCustomerManagementProxy()->SetAuthorizationData($this->getAuthorizationData());
         $GLOBALS['Proxy'] = $GLOBALS['CustomerManagementProxy'];
         $request = new GetUserRequest();
         $request->UserId = null;
