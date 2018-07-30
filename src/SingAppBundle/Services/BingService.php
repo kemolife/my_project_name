@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use League\OAuth2\Client\Token\AccessToken;
 use Microsoft\BingAds\Auth\AuthorizationData;
 use Microsoft\BingAds\Auth\OAuthTokenRequestException;
+use Microsoft\BingAds\Auth\OAuthTokens;
 use Microsoft\BingAds\Auth\OAuthWebAuthCodeGrant;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\BingAccount;
@@ -103,18 +104,18 @@ class BingService
         }
     }
 
-    public function createAccount(AccessToken $accessTokeData)
+    public function createAccount(OAuthTokens $accessTokeData)
     {
         if ($accessTokeData instanceof AccessToken) {
             $createdDate = new \DateTime();
             $createdDate->setTimestamp(time());
             $bingAccount = new BingAccount();
 
-            if ($accessTokeData->OAuthTokens->RefreshToken !== null) {
+            if ($accessTokeData->RefreshToken !== null) {
                 $bingAccount->setRefreshToken($accessTokeData->getRefreshToken());
             }
 
-            $bingAccount->setAccessToken($accessTokeData->OAuthTokens->AccessToken);
+            $bingAccount->setAccessToken($accessTokeData->AccessToken);
             $bingAccount->setCreated($createdDate);
             $bingAccount->setExpires($accessTokeData->getExpires());
             $bingAccount->setResourceOwnerId($accessTokeData->getResourceOwnerId());
