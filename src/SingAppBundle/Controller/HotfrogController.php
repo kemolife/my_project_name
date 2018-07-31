@@ -22,6 +22,7 @@ class HotfrogController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $this->session->set('business', $request->get('business'));
         $hotfrogAccount = new HotfrogAccount();
         $hotfrogServices = $this->get('app.hotfrog.service');
         $form = $this->createForm(HotfrogType::class, $hotfrogAccount);
@@ -32,7 +33,6 @@ class HotfrogController extends BaseController
              * @var HotfrogService $hotfrogServices
              */
             try {
-                $this->session->set('business', $request->get('business'));
                 $companyId = $hotfrogServices->auth($hotfrogAccount);
                 $hotfrogAccount = $hotfrogServices->createAccount($hotfrogAccount, $companyId);
                 $hotfrogServices->editAccount($hotfrogAccount, $this->getCurrentBusiness($request));

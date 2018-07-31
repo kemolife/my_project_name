@@ -26,6 +26,7 @@ class InstagramController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $this->session->set('business', $request->get('business'));
         /**
          * @var BusinessInfo $currentBusiness
          */

@@ -31,7 +31,7 @@ class BingService
     private $clientId = '4dca26fc-ab69-4b78-b5fa-b0d683005bb0';
     private $developerToken = "118062AN7O421835";
     private $clientSecret = 'lvzpPQ399-wijAZBCZ53{|$';
-    private $redirectUrl = "https://listings.devcom.com/bing/oauth2callback";
+    private $redirectUrl = "https://businesslistings.cubeonline.com.au/bing/oauth2callback";
 
     private $token;
 

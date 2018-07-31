@@ -23,6 +23,7 @@ class ZomatoController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $this->session->set('business', $request->get('business'));
         $zomatoAccount = new ZomatoAccount();
         $zomatoServices = $this->get('app.zomato.service');
         $form = $this->createForm(ZomatoType::class, $zomatoAccount);
@@ -33,7 +34,6 @@ class ZomatoController extends BaseController
              * @var ZomatoService $zomatoServices
              */
             try{
-                $this->session->set('business', $request->get('business'));
                 $serviceUserId = $zomatoServices->auth($zomatoAccount);
                 $zomatoAccount = $zomatoServices->createAccount($zomatoAccount, $serviceUserId);
                 $zomatoServices->editAccount($zomatoAccount, $this->getCurrentBusiness($request));

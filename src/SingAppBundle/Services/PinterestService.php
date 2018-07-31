@@ -28,7 +28,7 @@ class PinterestService
     private $em;
     private $clientId = '4977395529412522088';
     private $clientSecret = 'bd7d90db3f897fc007353d27d283f486b8d71ba98985291177a35cc4fb439b19';
-    private $redirectUrl = "https://listings.devcom.com/pinterest/oauth2callback";
+    private $redirectUrl = "https://businesslistings.cubeonline.com.au/pinterest/oauth2callback";
     private $curl;
     private $webDir;
 
