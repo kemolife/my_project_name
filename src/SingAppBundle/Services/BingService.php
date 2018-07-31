@@ -42,15 +42,15 @@ class BingService
 
     private function getProvider()
     {
-//        return (new OAuthWebAuthCodeGrant())
-//            ->withClientId($this->clientId)
-//            ->withClientSecret($this->clientSecret)
-//            ->withRedirectUri($this->redirectUrl)
-//            ->withState(rand(0,999999999));
+        return (new OAuthWebAuthCodeGrant())
+            ->withClientId($this->clientId)
+            ->withClientSecret($this->clientSecret)
+            ->withRedirectUri($this->redirectUrl)
+            ->withState(rand(0,999999999));
 
-       return (new OAuthDesktopMobileAuthCodeGrant())
-            ->withEnvironment(ApiEnvironment::Production)
-            ->withClientId($this->clientId);
+//       return (new OAuthDesktopMobileAuthCodeGrant())
+//            ->withEnvironment(ApiEnvironment::Production)
+//            ->withClientId($this->clientId);
     }
 
     private function getAuthorizationData()
