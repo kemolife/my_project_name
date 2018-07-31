@@ -1,0 +1,61 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+
+
+{% block body %}
+    <div class="container login">
+        <div class="login-form">
+            <div class="form-signin-heading">
+                <span>Hot Frog new account</span>
+            </div>
+            <form name="hotfrog" method="post">
+                <div>
+                    <label for="hotfrog_first_name" class="required">First name</label>
+                    <input type="text" id="hotfrog_first_name" name="hotfrog[firstName]" required="required"
+                           class="form-control">
+                </div>
+                <div>
+                    <label for="hotfrog_surname" class="required">Surname</label>
+                    <input type="text" id="hotfrog_surname" name="hotfrog[Surname]" required="required"
+                           class="form-control">
+                </div>
+                <div>
+                    <label for="hotfrog_email" class="required">Email</label>
+                    <input type="text" id="hotfrog_email" name="hotfrog[email]" required="required"
+                           class="form-control">
+                </div>
+                <div>
+                    <label for="hotfrog_userPassword" class="required">Hotfrog Password</label>
+                    <input type="password" id="hotfrog_userPassword" name="hotfrog[userPassword]" required="required"
+                           class="form-control">
+                </div>
+                <div>
+                    <label for="hotfrog_captcha" class="required">Captcha code</label>
+                    <img src="{{ elementsCaptcha[0] }}" />
+                    <input type="hidden" id="hotfrog_captcha_hash" name="hotfrog[captcha-hash]" value="{{ elementsCaptcha[1] }}"
+                           class="form-control">
+                    <input type="text" id="hotfrog_captcha" name="hotfrog[captcha]" required="required"
+                           class="form-control">
+                </div>
+                <div>
+                    <button type="submit" class="form-control form-button btn-primary">Create</button>
+                </div>
+                <a href="{{ url('hotfrog-auth', app.request.query.all) }}" style="float:right">Back to login</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% if error is defined %}
+        $.notify({
+            title: "<strong>Error!</strong> ",
+            message: '{{ error }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to login</a>'
+        }, {
+            type: 'danger',
+            delay: 5000
+        });
+        {% endif %}
+    </script>
+{% endblock %}

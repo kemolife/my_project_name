@@ -42,11 +42,15 @@ class BingService
 
     private function getProvider()
     {
-        return (new OAuthWebAuthCodeGrant())
-            ->withClientId($this->clientId)
-            ->withClientSecret($this->clientSecret)
-            ->withRedirectUri($this->redirectUrl)
-            ->withState(rand(0,999999999));
+//        return (new OAuthWebAuthCodeGrant())
+//            ->withClientId($this->clientId)
+//            ->withClientSecret($this->clientSecret)
+//            ->withRedirectUri($this->redirectUrl)
+//            ->withState(rand(0,999999999));
+
+       return (new OAuthDesktopMobileAuthCodeGrant())
+            ->withEnvironment(ApiEnvironment::Production)
+            ->withClientId($this->clientId);
     }
 
     private function getAuthorizationData()
@@ -125,17 +129,15 @@ class BingService
 
             $this->em->persist($bingAccount);
             $this->em->flush();
-
         }
     }
 
     public function getOwner()
     {
-        $this->getCustomerManagementProxy()->SetAuthorizationData($this->getAuthorizationData());
-        $GLOBALS['Proxy'] = $GLOBALS['CustomerManagementProxy'];
+//        $this->getCustomerManagementProxy()->SetAuthorizationData($this->getAuthorizationData());
         $request = new GetUserRequest();
         $request->UserId = null;
-        return $this->getCustomerManagementProxy()->GetService()->GetUser($request)->User;
+        return $this->getCustomerManagementProxy()->GetService()->SearchAccounts($request);
     }
 
     public function resetToken(BingAccount $account)

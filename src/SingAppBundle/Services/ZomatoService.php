@@ -45,11 +45,7 @@ class ZomatoService
         $response = null;
 
         if ($zomatoAccount instanceof ZomatoAccount) {
-//            $this->curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-//            $this->curl->setOpt(CURLOPT_SSL_VERIFYHOST, 2);
-//            $this->curl->setOpt(CURLOPT_CAINFO, $this->webDir .  "/cacert-2018-06-20.pem");
             $this->curl->get('https://www.zomato.com/pl/perth');
-            var_dump($this->curl->response); die;
             $this->curl->setHeaders([
                 'cookie' => $this->getCookies()
             ]);

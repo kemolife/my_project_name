@@ -47,6 +47,10 @@ services:
         class: SingAppBundle\Services\ZomatoService
         arguments: ['@doctrine.orm.entity_manager', '%web_dir%']
 
+    app.hotfrog.service:
+        class: SingAppBundle\Services\HotfrogService
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%' , '@session']
+
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
         public: true

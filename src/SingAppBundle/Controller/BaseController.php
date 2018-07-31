@@ -6,6 +6,7 @@ namespace SingAppBundle\Controller;
 use JMS\JobQueueBundle\Entity\Job;
 use ReflectionClass;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\HotfrogAccount;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
 use SingAppBundle\Entity\User;
@@ -190,7 +191,7 @@ class BaseController extends Controller
         $servicesAccount = $this->getSwitchServices($request);
         $em = $this->getDoctrine()->getManager();
         foreach ($servicesAccount as $serviceAccount) {
-            if ($serviceAccount instanceof ZomatoAccount) {
+            if ($serviceAccount instanceof HotfrogAccount) {
                 $job = new Job('app:update:service', [$serviceAccount->getId()]);
                 //        $job->setExecuteAfter((new \DateTime())->setTimestamp(time()+600));
                 $em->persist($job);
