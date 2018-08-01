@@ -126,7 +126,7 @@ class OAuthController extends BaseController
         $params['email'] = 'kemolife1990@gmail.com';
         $params['password'] = 'kemo2701';
         $curl->post($url, \GuzzleHttp\json_encode($params));
-        var_dump($curl->response); die;
+        print_r($curl->response); die;
         $this->session->set('cookie', $curl->getResponseCookies());
     }
 
