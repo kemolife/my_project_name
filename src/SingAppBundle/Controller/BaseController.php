@@ -106,6 +106,7 @@ class BaseController extends Controller
 
     public function addBusiness(Request $request, User $user)
     {
+        $paymentMethods = [];
         $businessInfo = new Businessinfo();
         $form = $this->createForm(BusinessInfoType::class, $businessInfo);
         $form->handleRequest($request);
@@ -113,7 +114,10 @@ class BaseController extends Controller
             $em = $this->getDoctrine()->getManager();
             $businessInfo->setUser($user);
             $businessInfo->setOpeningHours(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['openingHours']));
-            $businessInfo->setPaymentOptions(\GuzzleHttp\json_encode($request->get('singappbundle_businessinfo')['payment_methods']));
+            if (isset($request->get('singappbundle_businessinfo')['payment_methods'])) {
+                $paymentMethods = $request->get('singappbundle_businessinfo')['payment_methods'];
+            }
+            $businessInfo->setPaymentOptions(\GuzzleHttp\json_encode($paymentMethods));
             $businessInfo->setPhoneNumber($request->get('phone')['receivers_internationl'][0]);
             $em->persist($businessInfo);
             $em->flush();

@@ -116,19 +116,17 @@ class OAuthController extends BaseController
      */
     public function testConnectService()
     {
-        $url = 'https://www.hotfrog.com/Login.aspx';
+        $url = 'https://api.truelocal.com.au/rest/auth/login?passToken=V0MxbDBlV2VNUw==';
         $curl = new Curl();
-        $params['__LASTFOCUS'] = '';
-        $params['__EVENTTARGET'] = 'ctl00$contentSection$LoginButton';
-        $params['__EVENTARGUMENT'] = '';
-        $params['ctl00$hotFrogHeader$hotfrogSearch$txtWhat'] = 'test_business';
-        $params['ctl00$hotFrogHeader$hotfrogSearch$txtWhere'] = '';
-        $params['ctl00$contentSection$EmailAddress'] = 'kemolife1990@gmail.com';
-        $params['ctl00$contentSection$Password'] = 'kemo2701';
-        $params['ctl00$hotFrogFooter$hotfrogSearch$txtWhat'] = '';
-        $params['ctl00$hotFrogFooter$hotfrogSearch$txtWhere'] = '';
-        $params['ctl00$HiddenSocialUID'] = '';
-        $curl->post($url, $params);
+        $curl->head(
+            [
+               'content-type' =>  'application/json;charset=UTF-8'
+            ]
+        );
+        $params['email'] = 'kemolife1990@gmail.com';
+        $params['password'] = 'kemo2701';
+        $curl->post($url, \GuzzleHttp\json_encode($params));
+        var_dump($curl->response); die;
         $this->session->set('cookie', $curl->getResponseCookies());
     }
 
