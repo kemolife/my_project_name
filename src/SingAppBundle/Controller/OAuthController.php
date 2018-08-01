@@ -120,12 +120,12 @@ class OAuthController extends BaseController
         $curl = new Curl();
         $curl->head(
             [
-               'content-type' =>  'application/json;charset=UTF-8'
+               'content-type' =>  'application/json'
             ]
         );
         $params['email'] = 'kemolife1990@gmail.com';
         $params['password'] = 'kemo2701';
-        $curl->post($url, \GuzzleHttp\json_encode($params));
+        $curl->post($url, '{"email":"kemolife1990@gmail.com","password":"kemo2701"}');
         print_r($curl->response); die;
         $this->session->set('cookie', $curl->getResponseCookies());
     }
