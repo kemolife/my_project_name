@@ -201,12 +201,12 @@
 {% block javascripts %}
     <script src="{{ asset('js/intlTelInput.min.js') }}"></script>
     <script>
-//         function initAutocomplete() {
-//             geocoder = new google.maps.Geocoder();
-//             new google.maps.places.Autocomplete(
-//                 (document.getElementById('singappbundle_businessinfo_address'))/*,
-//      {types: ['(cities)']}*/);
-//         }
+         function initAutocomplete() {
+             geocoder = new google.maps.Geocoder();
+             new google.maps.places.Autocomplete(
+                 (document.getElementById('singappbundle_businessinfo_address'))/*,
+      {types: ['(cities)']}*/);
+         }
 
         $(document).ready(function () {
             $('.btnNext').click(function (e) {
