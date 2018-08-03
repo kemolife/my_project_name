@@ -56,7 +56,8 @@ class SocialNetworkPostController extends BaseController
             'googleAccount' => $googleAccount,
             'facebookAccount' => $facebookAccount,
             'pinterestAccount' => $pinterestAccount,
-            'activeServices' => $activeServices
+            'activeServices' => $activeServices,
+            'currentBusiness' => $currentBusiness
         ];
 
 

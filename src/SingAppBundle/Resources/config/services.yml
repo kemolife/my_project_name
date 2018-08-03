@@ -29,7 +29,7 @@ services:
 
     app.google.service:
         class: SingAppBundle\Services\GoogleService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%domain%']
 
     app.facebook.service:
         class: SingAppBundle\Services\FacebookService

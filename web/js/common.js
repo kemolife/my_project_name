@@ -113,7 +113,7 @@ $('.collapse-group .expand').on('click', function (e) {
 
 $(".loc_time").timepicker({
     showDuration: !0,
-    timeFormat: "h:ia"
+    timeFormat: "H:i"
 });
 
 function n(e, t) {

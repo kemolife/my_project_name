@@ -27,6 +27,7 @@ class GetConnectButtonAndStatus extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('getButton', array($this, 'getButton')),
             new \Twig_SimpleFunction('getStatusConnect', array($this, 'getStatusConnect')),
+            new \Twig_SimpleFunction('getPostButton', array($this, 'getPostButton')),
         );
     }
 
@@ -38,6 +39,20 @@ class GetConnectButtonAndStatus extends \Twig_Extension
         $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
         if(null === $siteSettings){
             $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => 'index']).'" class="btn btn-primary"> Connect </a>';
+        }
+
+        return $button;
+    }
+
+    public function getPostButton($type, BusinessInfo $businessInfo, User $user)
+    {
+        $button = null;
+        $repository = $this->em->getRepository('SingAppBundle:'.ucfirst($type).'Account');
+
+        $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
+        if(null === $siteSettings){
+            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => 'social-network-posts']).'"> <img src="images/'.$type.'-button-connect.png"
+                                                         alt="'.$type.' connect" height="50"></a>';
         }
 
         return $button;

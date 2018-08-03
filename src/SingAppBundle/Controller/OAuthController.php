@@ -76,11 +76,23 @@ class OAuthController extends BaseController
          * @var User $user
          */
         $user = $this->getUser();
-        /**
-         * @var InstagramBusiness $instagram
-         */
-        $instagram = $this->get('instagram_provider');
-        var_dump($instagram->newAuth($user, $currentBusiness)->getAllComments());
+        $period = [];
+        foreach (\GuzzleHttp\json_decode($currentBusiness->getOpeningHours())->days as $key => $item) {
+            if ($item->type === 'open') {
+                $day = new \stdClass();
+                $day->openDay = strtoupper($key);
+                $day->openTime = $item->slots[0]->start;
+                $day->closeDay = strtoupper($key);
+                $day->closeTime = $item->slots[1]->end;
+                array_push($period, $day);
+            }
+        }
+        var_dump(\GuzzleHttp\json_encode($period));
+//        /**
+//         * @var InstagramBusiness $instagram
+//         */
+//        $instagram = $this->get('instagram_provider');
+//        var_dump($instagram->newAuth($user, $currentBusiness)->getAllComments());
     }
 
     /**
@@ -118,7 +130,7 @@ class OAuthController extends BaseController
     {
         $url = 'https://api.truelocal.com.au/rest/auth/login?passToken=V0MxbDBlV2VNUw==';
         $curl = new Curl();
-        $curl->head(
+        $curl->setHeaders(
             [
                'content-type' =>  'application/json'
             ]
@@ -136,10 +148,7 @@ class OAuthController extends BaseController
     public function testUpdateBusiness()
     {
         $curl = new Curl();
-        $curl->setHeaders([
-            'accept' => 'https://www.hotfrog.com',
-            'referer' => 'https://www.hotfrog.com/UpdateDetails.aspx?editSection=ContactDetails&CompanyID=43444136',
-        ]);
+        $curl->setHeaders(['content-type' =>  'application/json']);
         $params['__LASTFOCUS'] = '';
         $params['__EVENTTARGET'] = 'ctl00$contentSection$btnUpdate';
         $params['__EVENTARGUMENT'] = '';
@@ -149,7 +158,7 @@ class OAuthController extends BaseController
         $params['ctl00$contentSection$ctrlContactDetails$hiddenAccuracy'] = 4;
         $params['l00$contentSection$ctrlContactDetails$hiddenCountry'] = '';
         $params['ctl00$contentSection$ctrlContactDetails$txtBusinessName'] = 'test_business';
-        $params['ctl00$contentSection$ctrlContactDetails$txtStreetAddress'] = 'Lvіv-poshtamt';
+        $params['ctl00$contentSection$ctrlContactDetails$txtStreetAddress'] = 'Lv ^ v-poshtamt';
         $params['ctl00$contentSection$ctrlContactDetails$txtAddress2'] = '';
         $params['ctl00$contentSection$ctrlContactDetails$txtAddress3'] = '';
         $params['ctl00$contentSection$ctrlContactDetails$txtSuburb'] = 'Abbeville';
@@ -161,7 +170,10 @@ class OAuthController extends BaseController
         $params['ctl00$contentSection$ctrlContactDetails$txtEmail'] = 'kemolife1990@gmail.com';
         $params['hiddenInputToUpdateATBuffer_CommonToolkitScripts'] = 1;
         $curl->setCookies($this->session->get('cookie'));
-        $curl->post('https://www.hotfrog.com/UpdateDetails.aspx?editSection=ContactDetails&CompanyID=43444136', $params);
-        print_r($curl->response); die;
+        $curl->post('https://api.truelocal.com.au/rest/users/3F4CDD76-A06B-4851-94C3-D659E434CB4A/update?passToken=V0MxbDBlV2VNUzo2NDMyMzAwNjhhY2QzZDYwOTEyMWFlZWVkNGM4ZjlkZDgzMzMxYzc1NzZiNjYzYWNhYzhjNGU0ZTkyZmYyMjE4',
+            '{"displayName":"vitalii antoniuk12","address":{"suburb":"Rosebery","postCode":"3395","state":"VIC"},"description":"test12","firstName":"kemolife1990","lastName":"Pissas","phoneNumber":"0435546567","hideSuburb":false}');
+        var_dump($curl->response); die;
+
     }
+
 }

@@ -3,7 +3,9 @@
 
 namespace SingAppBundle\Controller;
 
+use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\GoogleAccount;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,9 +41,9 @@ class GoogleController extends BaseController
 
         $accessTokeData = $googleService->getAccessToken($request->get('code'));
 
-        $googleService->createGoogleAccount($request, $accessTokeData);
+        $googleService->createUpdateGoogleAccount($accessTokeData);
 
-        return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
+        return $this->redirectToRoute('google-location', ['business' => $this->session->get('business')]);
     }
 
     /**
@@ -51,7 +53,7 @@ class GoogleController extends BaseController
     {
         $repository = $this->getDoctrine()->getRepository('SingAppBundle:GoogleAccount');
 
-        $googleAccount = $repository->findOneBy(['business' => 1]);
+        $googleAccount = $repository->findOneBy(['business' => $this->getCurrentBusiness($request)]);
 
         if ($googleAccount instanceof GoogleAccount) {
             /**
@@ -59,10 +61,75 @@ class GoogleController extends BaseController
              */
             $googleService = $this->get('app.google.service');
 
-            var_dump($googleService->getLocations($googleAccount)); die;
+            $accounts = $googleService->getAccountsLocations($googleAccount);
+
+            return $this->render('@SingApp/services-form/google-location.html.twig', ['accounts' => $accounts, 'businesses' => $this->getBusinesses()]);
+
         }
 
 
         return $this->redirectToRoute('social-network-posts');
+    }
+
+    /**
+     * @Route("/google/create/location", name="google-crete-location")
+     */
+    public function createLocationAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('SingAppBundle:GoogleAccount');
+
+        $googleAccount = $repository->findOneBy(['business' => $this->getCurrentBusiness($request)]);
+
+        if ($googleAccount instanceof GoogleAccount) {
+            /**
+             * @var BusinessInfo $currentBusiness
+             */
+            $currentBusiness = $this->getCurrentBusiness($request);
+            /**
+             * @var GoogleService $googleService
+             */
+            $googleService = $this->get('app.google.service');
+            try {
+                $location = $googleService->createLocation($googleAccount, $request->get('account'), $currentBusiness);
+                $googleService->updateAccountLocation($googleAccount, $location->name);
+            }catch (OAuthCompanyException $e){
+                return $this->redirectToRoute('google-location', [
+                    'accounts' => $googleAccount,
+                    'businesses' => $this->getBusinesses(),
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        return $this->redirectToRoute($this->session->get('url'), ['businesses' => $this->getBusinesses()]);
+    }
+
+    /**
+     * @Route("/google/choose/location", name="google-choose-location")
+     */
+    public function chooseLocationAccountAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('SingAppBundle:GoogleAccount');
+
+        $googleAccount = $repository->findOneBy(['business' => $this->getCurrentBusiness($request)]);
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        /**
+         * @var GoogleService $googleService
+         */
+        $googleService = $this->get('app.google.service');
+        if ($googleAccount instanceof GoogleAccount) {
+            $googleService->updateAccountLocation($googleAccount, $request->get('location'));
+            try {
+                $googleService->updateLocation($googleAccount,  $request->get('location'), $currentBusiness);
+                $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
+            }catch (OAuthCompanyException $e) {
+                $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business'), 'error' => $e->getMessage().' Please update your business ']);
+            }
+        }
+
+        return $this->redirectToRoute(($this->session->get('url')), ['business' => $this->session->get('business')]);
     }
 }

@@ -36,6 +36,11 @@ class GoogleAccount extends SocialNetworkAccount
     protected $expiresIn;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $location;
+
+    /**
      * Set accessToken
      *
      * @param string $accessToken
@@ -194,5 +199,29 @@ class GoogleAccount extends SocialNetworkAccount
     public function getOwners()
     {
         return [$this->getUser()];
+    }
+
+    /**
+     * Set location.
+     *
+     * @param string|null $location
+     *
+     * @return GoogleAccount
+     */
+    public function setLocation($location = null)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location.
+     *
+     * @return string|null
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

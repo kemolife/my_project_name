@@ -19,7 +19,7 @@ class SignInForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, ['attr' => ['placeholder' => 'E-mail or username', 'class' => 'form-control'], 'label' => 'E-mail', 'required' => false])
+            ->add('username', TextType::class, ['attr' => ['placeholder' => 'E-mail', 'class' => 'form-control'], 'label' => 'E-mail', 'required' => false])
             ->add('password', PasswordType::class, ['attr' => ['placeholder' => 'Password', 'class' => 'form-control'], 'label' => 'Password', 'required' => false])
             ->add('signin', SubmitType::class, ['attr' => ['class' => 'form-control form-button btn-primary', 'data-loading-text' => '<i class="fas fa-spinner fa-spin"></i> Loading'], 'label' => 'Sign in']);
     }

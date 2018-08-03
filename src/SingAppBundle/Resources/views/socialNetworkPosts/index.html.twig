@@ -184,10 +184,7 @@
                                     <div class="google-connect-cont">
                                         <div class="insights-main-page">
                                             <div class="insights-login-page">
-                                                <a href="{{ url('google-auth', {'url' : 'social-network-posts'}) }}">
-                                                    <img src="{{ asset('images/google-connect-btn.png') }}"
-                                                         alt="Google connect">
-                                                </a>
+                                                {{  getPostButton('google', currentBusiness, app.user)|raw }}
                                             </div>
                                         </div>
                                     </div>
@@ -235,10 +232,7 @@
                                     <div class="google-connect-cont">
                                         <div class="insights-main-page">
                                             <div class="insights-login-page">
-                                                <a href="{{ url('pinterest-auth', {'url' : 'social-network-posts'}) }}">
-                                                    <img style="width: 9%;" src="{{ asset('images/pinterest-connect-btn.png') }}"
-                                                         alt="Google connect">
-                                                </a>
+                                                {{  getPostButton('pinterest', currentBusiness, app.user)|raw }}
                                             </div>
                                         </div>
                                     </div>
@@ -280,10 +274,7 @@
                                     <div class="facebook-connect-cont">
                                         <div class="insights-main-page">
                                             <div class="insights-login-page">
-                                                <a href="{{ url('facebook-auth') }}">
-                                                    <img src="{{ asset('images/facebook-button-connect.png') }}"
-                                                         alt="Facebook connect" height="50">
-                                                </a>
+                                                {{  getPostButton('facebook', currentBusiness, app.user)|raw }}
                                             </div>
                                         </div>
                                     </div>

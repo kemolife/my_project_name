@@ -1,0 +1,146 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+    <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="message col-md-12">
+            <div class="card">
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title">Choose a GMB location to connect</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="locations-body">
+                    {% for account in accounts %}
+                        {% for location in  account.locations %}
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#" class="click-location list-group-item">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1"
+                                                style="color: green">{{ location.locationName }}</h5>
+                                            <div style="float: right;">
+                                                <p>{{ account.info.accountName }}</p>
+                                                <p>My Business Account ID: {{ account.info.name }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1">
+                                            {{ location.address.addressLines[0] }}
+                                            , {{ location.address.administrativeArea }}
+                                            , {{ location.address.regionCode }}
+                                        </p>
+                                        <p>{{ location.address.postalCode }}, </p>
+                                        <p>Phone: {{ location.primaryPhone }}</p>
+                                        <button
+                                                data-location-id="{{ location.name }}"
+                                                class="btn btn-primary location-choose"
+                                                style="display: none; width: 12%;margin-top: 15px;">Connect this
+                                            location
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    {% endfor %}
+                    <div id="choose_account" style="display: none">
+                        <div>
+                            <span class="card-title">Choose a GMB account to create a new business on Google</span>
+                        </div>
+                        <div>
+                            <ul class="list-group">
+                                {% for account in accounts %}
+                                    <li class="list-group-item">
+                                        <a href="{{ url('google-crete-location') }}"
+                                           class="choose-account list-group-item" data-account="{{ account.info.name }}">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <div>
+                                                    <p>{{ account.info.accountName }}</p>
+                                                    <p>My Business Account ID: {{ account.info.name }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{{ url('google-crete-location') }}" class="btn btn-success create-location-button" disabled
+                               style="pointer-events: none;">Create a new business on Google</a>
+                        </div>
+                    </div>
+                    <div id="create_new_biz_cont">
+                        <p>
+                            Didn't find your location in all your Google accounts? Click below to create a new business
+                            on
+                            Google
+                        </p>
+                        <div>
+                            <button class="btn btn-sm btn-info" id="create_new_biz" href="#choose_account">Create a new
+                                business on Google
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.click-location').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('active-block')) {
+                $this.removeClass('active-block');
+                $this.parent().css('border-color', 'none');
+                $this.find('.location-choose').css('display', 'transparent');
+            } else {
+                $('.click-location').each(function (index, item) {
+                    if ($(item).hasClass('active-block')) {
+                        $(item).removeClass('active-block');
+                        $(item).find('.location-choose').css('display', 'none');
+                        $(item).parent().css('border-color', 'transparent');
+                    }
+                });
+                $this.addClass('active-block');
+                $this.parent().css('border-color', 'green');
+                $this.find('.location-choose').css('display', 'block');
+            }
+        });
+        $('#create_new_biz').on('click', function (e) {
+            e.preventDefault();
+            $('#choose_account').css('display', 'block');
+            $('#create_new_biz_cont').css('display', 'none')
+        })
+        $('.choose-account').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('active-block')) {
+                $this.removeClass('active-block');
+                $this.parent().css('border-color', 'none');
+            } else {
+                $('.choose-account').each(function (index, item) {
+                    if ($(item).hasClass('active-block')) {
+                        $(item).removeClass('active-block');
+                        $(item).parent().css('border-color', 'transparent');
+                    }
+                });
+                $this.addClass('active-block');
+                $this.parent().css('border-color', 'green');
+                $('.create-location-button').removeAttr('disabled').removeAttr('style').attr('data-account', $this.data('account'));
+            }
+        })
+        $('.create-location-button').on('click', function (e) {
+            e.preventDefault();
+            window.location.href = $(this).attr('href')+'?account='+$(this).attr('data-account')
+        })
+        $('.location-choose').click(function (event) {
+            event.preventDefault();
+
+            $('.click-location').off('click');
+
+            var locationId = $(this).data('locationId');
+
+            window.location.href = '{{ url('google-choose-location') }}'+'?location='+locationId
+
+        });
+    </script>
+{% endblock %}
