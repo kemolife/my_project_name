@@ -52,6 +52,12 @@
         </div>
         <div class="control-group col-md-6 col-sm-12">
             {{ form_row(form.address) }}
+            {{ form_row(form.regionCode) }}
+            {{ form_row(form.administrativeArea) }}
+            {{ form_row(form.locality) }}
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}
+            {{ form_row(form.postalCode) }}
             <button type="button" class="close" style="top: 27px;position: absolute; right: 20px;"
                     onclick="document.getElementById('singappbundle_businessinfo_address').value = ''"><span
                         aria-hidden="true">&times;</span></button>
@@ -76,8 +82,8 @@
             {{ form_row(form.description) }}
         </div>
         <div class="buttons-click">
-            <button class="btn btn-info btnNext">Next</button>
             <button class="btn btn-info btnPrevious">Previous</button>
+            <button class="btn btn-info btnNext">Next</button>
         </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="add_info">
@@ -175,8 +181,8 @@
             </div>
         </div>
         <div class="buttons-click">
-            <button class="btn btn-info btnNext">Next</button>
             <button class="btn btn-info btnPrevious">Previous</button>
+            <button class="btn btn-info btnNext">Next</button>
         </div>
 
     </div>
@@ -203,9 +209,28 @@
     <script>
          function initAutocomplete() {
              geocoder = new google.maps.Geocoder();
-             new google.maps.places.Autocomplete(
-                 (document.getElementById('singappbundle_businessinfo_address'))/*,
-      {types: ['(cities)']}*/);
+             var autocomplete = new google.maps.places.Autocomplete(
+                 (document.getElementById('singappbundle_businessinfo_address')));
+             google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                 var palce = autocomplete.getPlace();
+                 console.log()
+                 palce.address_components.forEach(function (value) {
+                     if(value.types[0] == 'country'){
+                         $('#singappbundle_businessinfo_regionCode').val(value.short_name);
+                     }
+                     if(value.types[0] == 'postal_code'){
+                         $('#singappbundle_businessinfo_postalCode').val(value.long_name);
+                     }
+                     if(value.types[0] == "administrative_area_level_1"){
+                         $('#singappbundle_businessinfo_administrativeArea').val(value.long_name);
+                     }
+                     if(value.types[0] == 'locality'){
+                         $('#singappbundle_businessinfo_locality').val(value.long_name);
+                     }
+                 });
+                 $('#singappbundle_businessinfo_latitude').val(palce.geometry.location.lat());
+                 $('#singappbundle_businessinfo_longitude').val(palce.geometry.location.lng());
+             })
          }
 
         $(document).ready(function () {

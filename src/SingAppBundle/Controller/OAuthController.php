@@ -75,6 +75,10 @@ class OAuthController extends BaseController
         /**
          * @var User $user
          */
+        var_dump($currentBusiness->getLongitude());
+        var_dump($currentBusiness->getCategory()->getName());
+        var_dump($currentBusiness->getCategory()->getCategoryId());
+        var_dump($currentBusiness->getAdditionalCategories());
         $user = $this->getUser();
         $period = [];
         foreach (\GuzzleHttp\json_decode($currentBusiness->getOpeningHours())->days as $key => $item) {

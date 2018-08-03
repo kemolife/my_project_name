@@ -8,6 +8,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * BusinessInfo
@@ -15,6 +17,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="business_info")
  * @ORM\Entity(repositoryClass="SingAppBundle\Repository\BusinessInfoRepository")
  * @ORM\EntityListeners({"SingAppBundle\EntityListener\BusinessInfoEntityListener"})
+ * @UniqueEntity("name")
  */
 class BusinessInfo
 {
@@ -30,12 +33,12 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="AdditionalCategoriesBusinessInfo")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $category;
@@ -43,14 +46,14 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, unique=true)
      */
     private $address;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="phone_number", type="string", length=100)
+     * @Assert\Regex(pattern="/^[0-9\-\+]{9,15}$/", message="invalid phone number")
      */
     private $phoneNumber;
 
@@ -139,8 +142,49 @@ class BusinessInfo
     private $user;
 
     /**
-     * Constructor
+     * @var string
+     *
+     * @ORM\Column(name="region-code", type="string", length=255)
      */
+    private $regionCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="administrative-area", type="string", length=255)
+     */
+    private $administrativeArea;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=255)
+     */
+    private $locality;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="string", length=255)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="string", length=255)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postal-code", type="string", length=255)
+     */
+    private $postalCode;
+
+
+
     public function __construct()
     {
         $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
@@ -304,7 +348,7 @@ class BusinessInfo
     /**
      * Set openingHours.
      *
-     * @param \DateTime|null $openingHours
+     * @param string|null $openingHours
      *
      * @return BusinessInfo
      */
@@ -318,7 +362,7 @@ class BusinessInfo
     /**
      * Get openingHours.
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getOpeningHours()
     {

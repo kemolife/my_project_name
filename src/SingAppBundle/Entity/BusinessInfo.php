@@ -46,14 +46,14 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, unique=true)
      */
     private $address;
 
     /**
      * @var int
      * @ORM\Column(name="phone_number", type="string", length=100)
-     * @Assert\Regex(pattern="/^[0-9\-\+]{9,15}$/", message="invalid phone number")
+     * @Assert\Regex(pattern="/^[0-9\-\+\s]{9,15}$/", message="invalid phone number")
      */
     private $phoneNumber;
 
@@ -142,8 +142,49 @@ class BusinessInfo
     private $user;
 
     /**
-     * Constructor
+     * @var string
+     *
+     * @ORM\Column(name="region_code", type="string", length=255)
      */
+    private $regionCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="administrative_area", type="string", length=255)
+     */
+    private $administrativeArea;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=255)
+     */
+    private $locality;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float")
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float")
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postal_code", type="string")
+     */
+    private $postalCode;
+
+
+
     public function __construct()
     {
         $this->additionalCategories = new \Doctrine\Common\Collections\ArrayCollection();
@@ -530,5 +571,149 @@ class BusinessInfo
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set regionCode.
+     *
+     * @param string $regionCode
+     *
+     * @return BusinessInfo
+     */
+    public function setRegionCode($regionCode)
+    {
+        $this->regionCode = $regionCode;
+
+        return $this;
+    }
+
+    /**
+     * Get regionCode.
+     *
+     * @return string
+     */
+    public function getRegionCode()
+    {
+        return $this->regionCode;
+    }
+
+    /**
+     * Set administrativeArea.
+     *
+     * @param string $administrativeArea
+     *
+     * @return BusinessInfo
+     */
+    public function setAdministrativeArea($administrativeArea)
+    {
+        $this->administrativeArea = $administrativeArea;
+
+        return $this;
+    }
+
+    /**
+     * Get administrativeArea.
+     *
+     * @return string
+     */
+    public function getAdministrativeArea()
+    {
+        return $this->administrativeArea;
+    }
+
+    /**
+     * Set locality.
+     *
+     * @param string $locality
+     *
+     * @return BusinessInfo
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Get locality.
+     *
+     * @return string
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * Set latitude.
+     *
+     * @param string $latitude
+     *
+     * @return BusinessInfo
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude.
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude.
+     *
+     * @param string $longitude
+     *
+     * @return BusinessInfo
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude.
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set postalCode.
+     *
+     * @param string $postalCode
+     *
+     * @return BusinessInfo
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode.
+     *
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
     }
 }

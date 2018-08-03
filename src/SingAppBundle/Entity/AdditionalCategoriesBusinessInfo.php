@@ -28,6 +28,13 @@ class AdditionalCategoriesBusinessInfo
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_id", type="string", length=255)
+     */
+    private $categoryId;
+
 
     /**
      * @ORM\ManyToMany(targetEntity="BusinessInfo", mappedBy="additionalCategories")
@@ -114,5 +121,29 @@ class AdditionalCategoriesBusinessInfo
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * Set categoryId.
+     *
+     * @param string $categoryId
+     *
+     * @return AdditionalCategoriesBusinessInfo
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId.
+     *
+     * @return string
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
     }
 }

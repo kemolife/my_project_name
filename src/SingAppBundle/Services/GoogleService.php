@@ -96,7 +96,6 @@ class GoogleService
                 throw new OAuthCompanyException(json_encode($e->getMessage()));
             }
         }
-
         /**
          * @var Google_Service_MyBusiness_Account $account
          */
@@ -121,23 +120,31 @@ class GoogleService
         $postBody->setWebsiteUrl($businessInfo->getWebsite());
 
         $address = new Google_Service_MyBusiness_PostalAddress();
-        $address->setRegionCode('UA');
-        $address->setAddressLines('lviv postal 123');
-        $address->setAdministrativeArea('Львівська область');
-        $address->setLocality('Lviv');
-        $address->setPostalCode('79020');
-        $address->setLanguageCode('uk');
+        $address->setRegionCode($businessInfo->getRegionCode());
+        $address->setAddressLines($businessInfo->getAddress());
+        $address->setAdministrativeArea($businessInfo->getAdministrativeArea());
+        $address->setLocality($businessInfo->getLocality());
+        $address->setPostalCode($businessInfo->getPostalCode());
+        $address->setLanguageCode('en');
         $postBody->setAddress($address);
 
         $latLng = new Google_Service_MyBusiness_LatLng();
-        $latLng->setLatitude(49.839683);
-        $latLng->setLongitude(24.029717);
+        $latLng->setLatitude($businessInfo->getLatitude());
+        $latLng->setLongitude($businessInfo->getLongitude());
         $postBody->setLatlng($latLng);
 
         $primaryCategory = new Google_Service_MyBusiness_Category();
-        $primaryCategory->setDisplayName('Crop Grower');
-        $primaryCategory->setCategoryId('gcid:crop_grower');
+        $primaryCategory->setDisplayName($businessInfo->getCategory()->getName());
+        $primaryCategory->setCategoryId($businessInfo->getCategory()->getCategoryId());
         $postBody->setPrimaryCategory($primaryCategory);
+        $additionalCategory = [];
+        foreach ($businessInfo->getAdditionalCategories() as  $item){
+            $category = new Google_Service_MyBusiness_Category();
+            $category->setDisplayName($item->getName());
+            $category->setCategoryId($item->getCategoryId());
+            array_push($additionalCategory, $category);
+        }
+        $postBody->setAdditionalCategories($additionalCategory);
 
         $regularHours = new Google_Service_MyBusiness_BusinessHours();
         $period = [];
@@ -145,9 +152,9 @@ class GoogleService
             if ($item->type === 'open') {
                 $day = new \stdClass();
                 $day->openDay = strtoupper($key);
-                $day->openTime = substr($item->slots[0]->start, 0, 5);
+                $day->openTime = $item->slots[0]->start;
                 $day->closeDay = strtoupper($key);
-                $day->closeTime = substr($item->slots[1]->end,0,5);
+                $day->closeTime = $item->slots[1]->end;
                 array_push($period, $day);
             }
         }
@@ -177,9 +184,7 @@ class GoogleService
                 }
             }
             foreach ($curl->response->error->details as $errorDetails) {
-                if ($errorDetails->{'@type'} === 'type.googleapis.com/google.mybusiness.v4.ValidationError') {
-                    throw new OAuthCompanyException(json_encode($errorDetails->errorDetails));
-                }
+                throw new OAuthCompanyException(json_encode($errorDetails->errorDetails));
             }
         }
 
