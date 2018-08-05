@@ -142,6 +142,7 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
             $params['description'] = $business->getDescription();
             $params['phoneNumber'] = $business->getPhoneNumber();
             $params['hideSuburb'] = false;
+            var_dump($cookies); var_dump(json_encode($params)); die;
             $this->curl->post('https://api.truelocal.com.au/rest/users/'.$truelocalAccount->getProfile().'/update?passToken=' . $cookies['token'], json_encode($params));
             if ($this->curl->response->meta->httpCode === 400) {
                 throw new OAuthCompanyException($this->curl->response->meta->errors);
