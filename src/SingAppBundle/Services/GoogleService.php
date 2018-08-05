@@ -200,7 +200,7 @@ class GoogleService
 
     public function updateLocation(GoogleAccount $googleAccount, $location, BusinessInfo $businessInfo)
     {
-        $scope = 'primaryPhone,primaryCategory,locationName,websiteUrl,profile,regularHours';
+        $scope = 'primaryPhone,primaryCategory,additionalCategories,locationName,websiteUrl,profile,regularHours';
         $url = 'https://mybusiness.googleapis.com/v4/' . $location . '?updateMask=' . $scope;
         $postBody = $this->getPostBody($businessInfo);
         $postBody->setName($businessInfo->getName());

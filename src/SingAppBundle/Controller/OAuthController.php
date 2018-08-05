@@ -142,7 +142,7 @@ class OAuthController extends BaseController
         $params['email'] = 'kemolife1990@gmail.com';
         $params['password'] = 'kemo2701';
         $curl->post($url, '{"email":"kemolife1990@gmail.com","password":"kemo2701"}');
-        print_r($curl->response); die;
+        var_dump($curl->response); die;
         $this->session->set('cookie', $curl->getResponseCookies());
     }
 
@@ -153,26 +153,6 @@ class OAuthController extends BaseController
     {
         $curl = new Curl();
         $curl->setHeaders(['content-type' =>  'application/json']);
-        $params['__LASTFOCUS'] = '';
-        $params['__EVENTTARGET'] = 'ctl00$contentSection$btnUpdate';
-        $params['__EVENTARGUMENT'] = '';
-        $params['ctl00$contentSection$ctrlContactDetails$txtBusinessName'] = 'test_business2';
-        $params['ctl00$contentSection$ctrlContactDetails$hiddenX'] = '-85.250489';
-        $params['ctl00$contentSection$ctrlContactDetails$hiddenY'] = '31.571835';
-        $params['ctl00$contentSection$ctrlContactDetails$hiddenAccuracy'] = 4;
-        $params['l00$contentSection$ctrlContactDetails$hiddenCountry'] = '';
-        $params['ctl00$contentSection$ctrlContactDetails$txtBusinessName'] = 'test_business';
-        $params['ctl00$contentSection$ctrlContactDetails$txtStreetAddress'] = 'Lv ^ v-poshtamt';
-        $params['ctl00$contentSection$ctrlContactDetails$txtAddress2'] = '';
-        $params['ctl00$contentSection$ctrlContactDetails$txtAddress3'] = '';
-        $params['ctl00$contentSection$ctrlContactDetails$txtSuburb'] = 'Abbeville';
-        $params['ctl00$contentSection$ctrlContactDetails$cboState'] = 'AL';
-        $params['ctl00$contentSection$ctrlContactDetails$txtPostcode'] = '36310';
-        $params['ctl00$contentSection$ctrlContactDetails$txtPhone'] = '+3809696903531';
-        $params['ctl00$contentSection$ctrlContactDetails$txtFax'] = '';
-        $params['ctl00$contentSection$ctrlContactDetails$txtWebsite'] = 'http://test.com.ua';
-        $params['ctl00$contentSection$ctrlContactDetails$txtEmail'] = 'kemolife1990@gmail.com';
-        $params['hiddenInputToUpdateATBuffer_CommonToolkitScripts'] = 1;
         $curl->setCookies($this->session->get('cookie'));
         $curl->post('https://api.truelocal.com.au/rest/users/3F4CDD76-A06B-4851-94C3-D659E434CB4A/update?passToken=V0MxbDBlV2VNUzo2NDMyMzAwNjhhY2QzZDYwOTEyMWFlZWVkNGM4ZjlkZDgzMzMxYzc1NzZiNjYzYWNhYzhjNGU0ZTkyZmYyMjE4',
             '{"displayName":"vitalii antoniuk12","address":{"suburb":"Rosebery","postCode":"3395","state":"VIC"},"description":"test12","firstName":"kemolife1990","lastName":"Pissas","phoneNumber":"0435546567","hideSuburb":false}');
