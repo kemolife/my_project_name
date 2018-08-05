@@ -85,7 +85,6 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
            $url = $this->auth($truelocalAccount);
            $this->getProfileData($url, $truelocalAccount);
         }
-        var_dump($response); die;
         return $response;
     }
 
