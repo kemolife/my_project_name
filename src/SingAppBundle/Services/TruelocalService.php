@@ -138,7 +138,7 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
      */
     public function editAccount(SocialNetworkAccount $truelocalAccount, BusinessInfo $business)
     {
-        if(array_key_exists($business->getAdministrativeArea(),self::$stateAbr) || strpos($business->getPhoneNumber(), '+61') === false){
+        if(array_key_exists($business->getAdministrativeArea(),self::$stateAbr) === false || strpos($business->getPhoneNumber(), '+61') === false){
             throw new OAuthCompanyException('You need australian address or phone');
         }
         $this->business = $business;
