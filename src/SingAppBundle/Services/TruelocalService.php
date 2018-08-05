@@ -80,11 +80,12 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
         $response = null;
         $this->curl->get($url);
         if(isset($this->curl->response->meta) && $this->curl->response->meta->httpCode === 200) {
-            $response = $this->curl->response->id;
+            $response = $this->curl->response->data->id;
         }else{
            $url = $this->auth($truelocalAccount);
            $this->getProfileData($url, $truelocalAccount);
         }
+        var_dump($response); die;
         return $response;
     }
 
