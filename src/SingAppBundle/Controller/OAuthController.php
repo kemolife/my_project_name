@@ -132,7 +132,7 @@ class OAuthController extends BaseController
      */
     public function testConnectService()
     {
-        var_dump(trim('+61412123423', '+')); die;
+        var_dump('0'.trim('+61394164003', '+61')); die;
         $url = 'https://api.truelocal.com.au/rest/auth/login?passToken=V0MxbDBlV2VNUw==';
         $curl = new Curl();
         $curl->setHeaders(

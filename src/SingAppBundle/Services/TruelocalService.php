@@ -32,6 +32,17 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
     private $urlEditBusiness = 'https://www.truelocal.com/UpdateDetails.aspx?editSection=ContactDetails&CompanyID=';
     private $session;
 
+    private static $stateAbr = [
+        'New South Wales' => 'NSW',
+        'Queensland' => 'QLD',
+        'South Australia' => 'SA',
+        'Tasmania' => 'TAS',
+        'Victoria' => 'VIC',
+        'Western Australia' => 'WA',
+        'Australian Capital Territory' => 'ACT',
+        'Northern Territory' => 'NT',
+    ];
+
     /**
      * truelocalService constructor.
      * @param EntityManagerInterface $entityManager
@@ -127,25 +138,27 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
      */
     public function editAccount(SocialNetworkAccount $truelocalAccount, BusinessInfo $business)
     {
+        if(array_key_exists($business->getAdministrativeArea(),self::$stateAbr) || strpos($business->getPhoneNumber(), '+61') === false){
+            throw new OAuthCompanyException('You need australian address or phone');
+        }
         $this->business = $business;
         $fileName = $this->webDir . '/cookies/cookies_truelocal_' . $truelocalAccount->getUserEmail() . '.txt';
         if (file_exists($fileName) && $truelocalAccount instanceof truelocalAccount) {
             $cookies = json_decode(file_get_contents($fileName), true);
             $this->curl->setHeaders(['content-type' =>  'application/json']);
             $address = new \stdClass();
-            $address->suburb = $business->getLocality();
+            $address->suburb = strtoupper($business->getLocality());
             $address->postCode = $business->getPostalCode();
-            $address->state = $business->getRegionCode();
+            $address->state = strtoupper(self::$stateAbr[$business->getAdministrativeArea()]);
             $params['firstName'] = $business->getName();
             $params['displayName'] = $business->getName();
             $params['address'] = $address;
             $params['description'] = $business->getDescription();
-            $params['phoneNumber'] = trim($business->getPhoneNumber(), '+');
+            $params['phoneNumber'] = '0'.trim($business->getPhoneNumber(), '+61');
             $params['hideSuburb'] = false;
             $this->curl->post('https://api.truelocal.com.au/rest/users/'.$truelocalAccount->getProfile().'/update?passToken=' . $cookies['token'], json_encode($params));
-            var_dump($this->curl->response); die;
             if ($this->curl->response->meta->httpCode === 400) {
-                throw new OAuthCompanyException(json_decode($this->curl->response->meta->errors));
+                throw new OAuthCompanyException(json_encode($this->curl->response->meta->errors));
             }
             if (isset($this->curl->response->status) && $this->curl->response->status === 500) {
                 $url = $this->auth($truelocalAccount);
