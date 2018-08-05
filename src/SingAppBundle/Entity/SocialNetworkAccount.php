@@ -24,7 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "bing" = "BingAccount",
  *     "wordofmouth"  ="WordofmouthAccount",
  *     "zomato"  = "ZomatoAccount",
- *     "hotfrog" = "HotfrogAccount"
+ *     "hotfrog" = "HotfrogAccount",
+ *     "truelocal" = "TruelocalAccount"
  * })
  * @ORM\Entity()
  */

@@ -51,6 +51,10 @@ services:
         class: SingAppBundle\Services\HotfrogService
         arguments: ['@doctrine.orm.entity_manager', '%web_dir%' , '@session']
 
+    app.truelocal.service:
+        class: SingAppBundle\Services\TruelocalService
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%' , '@session']
+
     app.instagram.service:
         class: SingAppBundle\Services\InstagramService
         public: true
