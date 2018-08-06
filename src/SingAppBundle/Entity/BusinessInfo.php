@@ -158,6 +158,13 @@ class BusinessInfo
     /**
      * @var string
      *
+     * @ORM\Column(name="administrative_area_short", type="string", length=255)
+     */
+    private $administrativeAreaShort;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="locality", type="string", length=255)
      */
     private $locality;
@@ -715,5 +722,29 @@ class BusinessInfo
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * Set administrativeAreaShort.
+     *
+     * @param string $administrativeAreaShort
+     *
+     * @return BusinessInfo
+     */
+    public function setAdministrativeAreaShort($administrativeAreaShort)
+    {
+        $this->administrativeAreaShort = $administrativeAreaShort;
+
+        return $this;
+    }
+
+    /**
+     * Get administrativeAreaShort.
+     *
+     * @return string
+     */
+    public function getAdministrativeAreaShort()
+    {
+        return $this->administrativeAreaShort;
     }
 }

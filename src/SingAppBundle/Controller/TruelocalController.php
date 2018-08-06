@@ -60,16 +60,15 @@ class TruelocalController extends BaseController
          * @var TruelocalService $truelocalServices
          */
         $truelocalServices = $this->get('app.truelocal.service');
-        $elementsCaptcha = $truelocalServices->getCaptcha();
         if($request->getMethod() === 'POST') {
             try {
                 $truelocalServices->createServiceAccount($request->request->all(), $currentBusiness);
                 return $this->redirectToRoute('truelocal-auth', $request->query->all());
             } catch (OAuthCompanyException $e) {
-                return $this->render('@SingApp/new-service-account/truelocal.html.twig', ['elementsCaptcha' => $elementsCaptcha, 'error' => $e->getMessage()]);
+                return $this->render('@SingApp/new-service-account/truelocal.html.twig', ['error' => $e->getMessage()]);
             }
         }
-        return $this->render('@SingApp/new-service-account/truelocal.html.twig', ['elementsCaptcha' => $elementsCaptcha]);
+        return $this->render('@SingApp/new-service-account/truelocal.html.twig');
     }
 
     /**

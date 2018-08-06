@@ -52,6 +52,7 @@ class BusinessInfoType extends AbstractType
         add('address', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('regionCode', HiddenType::class, ['attr' => ['class' => 'form-control']])->
         add('administrativeArea', HiddenType::class, ['attr' => ['class' => 'form-control']])->
+        add('administrativeAreaShort', HiddenType::class, ['attr' => ['class' => 'form-control']])->
         add('locality', HiddenType::class, ['attr' => ['class' => 'form-control']])->
         add('latitude', HiddenType::class, ['attr' => ['class' => 'form-control']])->
         add('longitude', HiddenType::class, ['attr' => ['class' => 'form-control']])->

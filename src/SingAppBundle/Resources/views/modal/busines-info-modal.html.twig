@@ -54,6 +54,7 @@
             {{ form_row(form.address) }}
             {{ form_row(form.regionCode) }}
             {{ form_row(form.administrativeArea) }}
+            {{ form_row(form.administrativeAreaShort) }}
             {{ form_row(form.locality) }}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
@@ -223,6 +224,7 @@
                      }
                      if(value.types[0] == "administrative_area_level_1"){
                          $('#singappbundle_businessinfo_administrativeArea').val(value.long_name);
+                         $('#singappbundle_businessinfo_administrativeAreaShort').val(value.short_name);
                      }
                      if(value.types[0] == 'locality'){
                          $('#singappbundle_businessinfo_locality').val(value.long_name);
