@@ -205,22 +205,12 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
 
     public function createServiceAccount($data, BusinessInfo $business)
     {
+        $this->curl->setHeaders(['content-type' =>  'application/json']);
         $params['displayName'] = $data['truelocal']['name'];
         $params['email'] = $data['truelocal']['email'];
         $params['password'] = $data['truelocal']['userPassword'];
         $params['confirmPassword'] = $data['truelocal']['userPassword'];
         $this->curl->post($this->createAccount, json_encode($params));
         print_r($this->curl->response); die;
-    }
-
-    public function getCaptcha()
-    {
-        $this->curl->get('https://www.truelocal.com/AddYourBusinessSingle.aspx');
-        $this->session->set('coocie_truelocal', $this->curl->getResponseCookies());
-        $dom = new DomDocument();
-        $dom->loadHTMLFile('https://www.truelocal.com/AddYourBusinessSingle.aspx');
-        $captchaImage = 'https://www.truelocal.com/'.$dom->getElementById('addyourbusinesssingle_ctl00_contentsection_captchamanager_ctl00_captcha_CaptchaImage')->getAttribute('src');
-        $captchaText = $dom->getElementById('LBD_VCT_addyourbusinesssingle_ctl00_contentsection_captchamanager_ctl00_captcha')->getAttribute('value');
-        return [$captchaImage, $captchaText];
     }
 }
