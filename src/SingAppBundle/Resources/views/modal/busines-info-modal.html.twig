@@ -213,7 +213,7 @@
                  (document.getElementById('singappbundle_businessinfo_address')));
              google.maps.event.addListener(autocomplete, 'place_changed', function () {
                  var palce = autocomplete.getPlace();
-                 console.log()
+                 console.log(palce)
                  palce.address_components.forEach(function (value) {
                      if(value.types[0] == 'country'){
                          $('#singappbundle_businessinfo_regionCode').val(value.short_name);
