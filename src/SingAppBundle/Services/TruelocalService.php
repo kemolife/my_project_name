@@ -211,6 +211,8 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
         $params['password'] = $data['truelocal']['userPassword'];
         $params['confirmPassword'] = $data['truelocal']['userPassword'];
         $this->curl->post($this->createAccount, json_encode($params));
-        print_r($this->curl->response); die;
+        if ($this->curl->response->meta->httpCode === 400) {
+            throw new OAuthCompanyException(json_encode($this->curl->response->meta->errors));
+        }
     }
 }
