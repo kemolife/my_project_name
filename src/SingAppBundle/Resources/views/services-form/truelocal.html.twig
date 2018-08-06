@@ -20,13 +20,22 @@
 {% block javascripts %}
     <script>
         {% if error is defined %}
-        $.notify({
-            title: "<strong>Error!</strong> ",
-            message: '{{ error }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
-        }, {
-            type: 'danger',
-            delay: 5000
-        });
+            $.notify({
+                title: "<strong>Error!</strong> ",
+                message: '{{ error }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
+            }, {
+                type: 'danger',
+                delay: 5000
+            });
+        {% endif %}
+        {% if success is defined %}
+            $.notify({
+                title: "<strong>Success ! </strong> ",
+                message: '{{ success }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
+            }, {
+                type: 'danger',
+                delay: 5000
+            });
         {% endif %}
     </script>
 {% endblock %}

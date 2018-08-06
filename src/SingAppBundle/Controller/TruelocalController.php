@@ -63,7 +63,7 @@ class TruelocalController extends BaseController
         if($request->getMethod() === 'POST') {
             try {
                 $truelocalServices->createServiceAccount($request->request->all(), $currentBusiness);
-                return $this->redirectToRoute('truelocal-auth', $request->query->all()+['success' => 'Your account create, please verified email']);
+                return $this->redirectToRoute('truelocal-auth', $request->query->all()+['success' => 'Your account create, please verified email, after that please login']);
             } catch (OAuthCompanyException $e) {
                 return $this->render('@SingApp/new-service-account/truelocal.html.twig', ['error' => $e->getMessage()]);
             }
