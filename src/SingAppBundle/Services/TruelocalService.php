@@ -210,7 +210,7 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
         $params['password'] = $data['truelocal']['userPassword'];
         $params['confirmPassword'] = $data['truelocal']['userPassword'];
         $this->curl->post($this->createAccount, json_encode($params));
-        var_dump($this->curl->response); die;
+        print_r($this->curl->response); die;
     }
 
     public function getCaptcha()
