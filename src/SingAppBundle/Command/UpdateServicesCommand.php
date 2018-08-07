@@ -29,7 +29,7 @@ class UpdateServicesCommand extends ContainerAwareCommand
         try {
             $serviceAccount = $this->getAccountById($input->getArgument('account'));
 
-            $service = $this->getContainer()->get('apps.' . strtolower(stristr((new ReflectionClass($serviceAccount))->getShortName(), 'Account', true)) . '.service');
+            $service = $this->getContainer()->get('app.' . strtolower(stristr((new ReflectionClass($serviceAccount))->getShortName(), 'Account', true)) . '.service');
             $service->editAccount($serviceAccount, $serviceAccount->getBusiness());
         } catch (OAuthCompanyException $e) {
             $this->getContainer()->get('logger')->error($e->getMessage(), array('exception' => $e->getMessage()));
