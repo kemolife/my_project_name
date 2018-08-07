@@ -15,8 +15,8 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener }
     app.instagram_post.entity_listener:
-        class: SingAppBundle\EntityListener\InstagramPostEntityListener
-        arguments: ['@app.instagram.service']
+        class: SingAppBundle\EntityListener\PostEntityListener
+        arguments: ['@app.instagram.service', '@app.google.service']
         tags:
             - { name: doctrine.orm.entity_listener }
     app.media.entity_listener:

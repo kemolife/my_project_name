@@ -40,7 +40,7 @@ class InstagramAccount extends SocialNetworkAccount
     /**
      * @ORM\Column(type="smallint", nullable=true)
      */
-    protected $isDefault = 0;
+    protected $isDefault = 1;
 
     /**
      * Set name

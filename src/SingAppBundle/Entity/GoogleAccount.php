@@ -41,6 +41,11 @@ class GoogleAccount extends SocialNetworkAccount
     protected $location;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $googleId;
+
+    /**
      * Set accessToken
      *
      * @param string $accessToken
@@ -223,5 +228,29 @@ class GoogleAccount extends SocialNetworkAccount
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set googleId.
+     *
+     * @param string|null $googleId
+     *
+     * @return GoogleAccount
+     */
+    public function setGoogleId($googleId = null)
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get googleId.
+     *
+     * @return string|null
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
     }
 }

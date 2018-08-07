@@ -65,7 +65,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="instagram">
                                 <span class="card-title">
-                                    Your instagram accounts:
+                                    Your instagram account:
                                 </span>
                                 <table class="table table-striped">
                                     <thead>
@@ -163,16 +163,19 @@
                                         </thead>
                                         <tbody>
                                         {% for post in posts %}
-                                            {% if post.socialNetwork == 'google' %}
+                                            {% if post.socialNetwork == 'google' and post.account.location == googleAccount.location  %}
                                                 <tr>
                                                     <td>{{ post.title }}</td>
                                                     <td>{{ post.caption }}</td>
                                                     <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
                                                     <td>{{ post.status }}</td>
                                                     <td>
-                                                        <a href="{{ url('instagram-post-delete', {'instagramPost': post.id }) }}"
-                                                           class="btn btn-default btn-sm">
-                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        <a data-toggle="modal"
+                                                           data-target="#deleteConfirmation"
+                                                           data-confirm-body="Do you really want to delete this account?"
+                                                           data-delete-url="{{ url('google-post-delete', {'post': post.id }) }}"
+                                                           class="btn btn-default btn-sm btn-delete">
+                                                            <i class="far fa-trash-alt"></i> Delete
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -180,6 +183,17 @@
                                         {% endfor %}
                                         </tbody>
                                     </table>
+                                {% elseif googleAccount and googleAccount.location is empty %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <h4 class="alert-heading">You have not selected any
+                                            location!</h4>
+                                        <p>Please choose a location to create posts</p>
+                                        <hr>
+                                        <p class="mb-0">
+                                            <a href="{{ url('google-location') }}">Сhoose
+                                                location</a>
+                                        </p>
+                                    </div>
                                 {% else %}
                                     <div class="google-connect-cont">
                                         <div class="insights-main-page">
@@ -382,7 +396,7 @@
                         </div>
                         <div class="form-group pinterest" style="display: none">
                             <input class="form-control" type="text" id="link" name="link" placeholder="Link pin"
-                                   required>
+                                   >
                         </div>
                         <div class="form-group pinterest" style="display: none">
                             {{ getBoardSelect(pinterestAccount) | raw }}

@@ -5,6 +5,7 @@ namespace SingAppBundle\Controller;
 use FacebookAds\Http\Adapter\Curl\Curl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Providers\InstagramBusiness;
@@ -35,6 +36,12 @@ class InteractionsController extends BaseController
          * @var InstagramBusiness $instagram
          */
         $instagram = $this->get('instagram_provider');
+        $googleService = $this->get('app.google.service');
+        $googleReviews = [];
+        $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        if ($googleAccount instanceof GoogleAccount && $googleAccount->getLocation()) {
+            $googleReviews = $googleService->getReviews($googleAccount);
+        }
         if (null !== $instagram->getIstagramAccount($user, $currentBusiness)) {
             $instagramServices['likes'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllLikesCount();
             $instagramServices['comments'] = $instagram->newAuth($user, $currentBusiness)->authInst()->getAllComments();
@@ -42,7 +49,8 @@ class InteractionsController extends BaseController
             $params = [
                 'businesses' => $this->getBusinesses(),
                 'currentBusiness' => $currentBusiness,
-                'instagramServices' => $instagramServices
+                'instagramServices' => $instagramServices,
+                'googleReviews' => $googleReviews,
             ];
         }else{
             return $this->redirectToRoute('index', $request->query->all()+['error' => 'Please connect to instagram service!']);

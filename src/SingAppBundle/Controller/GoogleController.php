@@ -3,19 +3,23 @@
 
 namespace SingAppBundle\Controller;
 
+use Google_Exception;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\GoogleAccount;
+use SingAppBundle\Entity\Post;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class GoogleController extends BaseController
 {
     /**
      * @Route("/google/auth", name="google-auth")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
@@ -31,6 +35,7 @@ class GoogleController extends BaseController
 
     /**
      * @Route("/google/oauth2callback", name="google-oauth2callback")
+     * @Security("has_role('ROLE_USER')")
      */
     public function oauth2callbackAction(Request $request)
     {
@@ -48,6 +53,7 @@ class GoogleController extends BaseController
 
     /**
      * @Route("/google/location", name="google-location")
+     * @Security("has_role('ROLE_USER')")
      */
     public function chooseLocationAction(Request $request)
     {
@@ -73,6 +79,7 @@ class GoogleController extends BaseController
 
     /**
      * @Route("/google/create/location", name="google-crete-location")
+     * @Security("has_role('ROLE_USER')")
      */
     public function createLocationAction(Request $request)
     {
@@ -106,6 +113,7 @@ class GoogleController extends BaseController
 
     /**
      * @Route("/google/choose/location", name="google-choose-location")
+     * @Security("has_role('ROLE_USER')")
      */
     public function chooseLocationAccountAction(Request $request)
     {
@@ -131,5 +139,45 @@ class GoogleController extends BaseController
         }
 
         return $this->redirectToRoute(($this->session->get('url')), ['business' => $this->session->get('business')]);
+    }
+
+    /**
+     * @Route("/google/post-delete/{post}", name="google-post-delete")
+     * @Security("is_granted('ABILITY_GOOGLE_POST_DELETE', post)")
+     */
+    public function googlePostDeletePostAction(Post $post, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('social-network-posts'));
+    }
+
+    /**
+     * @Route("/google/reviews/reply", name="google-reviews-reply")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function googleReviewsReplyAction(Request $request)
+    {
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+
+        /**
+         * @var GoogleService $googleService
+         */
+        $googleService = $this->get('app.google.service');
+
+        $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $this->getUser()->getId(), 'business' => $currentBusiness->getId()]);
+
+        try{
+            $googleService->reply($googleAccount, $request->get('reviewId'), $request->get('text'));
+            return $this->redirectToRoute('interactions', ['business' => $request->query->all()['business']]);
+        }catch (Google_Exception $e){
+            return $this->redirectToRoute('interactions', ['business' => $request->query->all()['business'], 'error' => $e->getMessage()]);
+        }
     }
 }

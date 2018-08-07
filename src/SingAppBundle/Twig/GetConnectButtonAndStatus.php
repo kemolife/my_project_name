@@ -40,6 +40,9 @@ class GetConnectButtonAndStatus extends \Twig_Extension
         if(null === $siteSettings){
             $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => 'index']).'" class="btn btn-primary"> Connect </a>';
         }
+        if(null !== $siteSettings && $type === 'google'){
+            $button =  '<a style="margin-right: -30px; float: right;" href="'.$this->router->generate('google-location', ['business' => $businessInfo->getId(), 'url' => 'index']).'" class="btn btn-primary"> Change location </a>';
+        }
 
         return $button;
     }

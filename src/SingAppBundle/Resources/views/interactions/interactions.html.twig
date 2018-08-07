@@ -91,8 +91,94 @@
                     {#</div>#}
 
                     {#</div>#}
-                    {% for mediaId, comments in instagramServices.comments %}
+
                     <div id="interactions-view">
+                    {% for review in googleReviews %}
+                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
+                             data-review-id="17914383">
+                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-head">
+                                <div class="interaction-img">
+                                    <figure>
+                                        <img src="/images/listing-icons/google.com.png" alt="">
+                                    </figure>
+                                </div>
+                                <div class="col-xs-6 col-sm-7 col-md-7 head-left left6p5percent">
+                                    {{ review.reviewer.displayName }}
+                                    <span>
+                                    added a new comment
+                                    on {{ review.createTime|date('Y-m-d H:i:s') }} UTC
+                                    </span>
+                                </div>
+                                <div class="col-xs-6 col-sm-5 col-md-3 head-right pull-right">
+                                    <div class="response-width">
+                                        {% if review.reviewReply is defined and review.reviewReply is not empty %}
+                                            <div class="response replied">Responded</div>
+                                        {% else %}
+                                            <div class="response disable">Response Pending</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="rating">
+                                        {% if review.starRating == 'FIVE' %}
+                                            <span class="float-right"><i
+                                                        class="text-warning fa fa-star"></i></span>
+                                            <span class="float-right"><i
+                                                        class="text-warning fa fa-star"></i></span>
+                                            <span class="float-right"><i
+                                                        class="text-warning fa fa-star"></i></span>
+                                            <span class="float-right"><i
+                                                        class="text-warning fa fa-star"></i></span>
+                                            <span class="float-right"><i
+                                                        class="text-warning fa fa-star"></i></span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 interaction-item-content">
+                                <div class="col-md-12 no-padding">
+                                    <h3></h3>
+                                    <p>{{ review.comment }}</p>
+                                </div>
+                                {% if review.reviewReply is defined and review.reviewReply is not empty %}
+                                    <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment no-padding mrt20">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-head">
+                                            <p>Comment
+                                                on {{ review.reviewReply.updateTime|date('Y-m-d H:i:s') }} UTC
+                                                from <span>Owner</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 interaction-comment-content">
+                                            <p>{{ review.reviewReply.comment }}</p>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            </div>
+                            {% if review.reviewReply is not defined or review.reviewReply is empty %}
+                                <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px;">
+                                    <button class="btn btn-primary btn-response">Respond</button>
+
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 review-response-form" style="display: none">
+                                    <form class="simple_form new_review_submission" id="new_review_submission" action="{{ url('google-reviews-reply', app.request.query.all) }}" method="post">
+                                        <div class="alert alert-danger alert-dismissible collapse" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span></button>
+                                            <strong>Error! </strong><p> Please correct the errors before submitting</p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 controls no-padding-left">
+                                            <textarea label="false" autofocus="autofocus" placeholder="Enter review response" cols="150" rows="3" required="required" class="response-content form-control" name="text" id="review_submission_content"></textarea>
+                                        </div>
+                                         <input type="hidden" name="reviewId" value="{{ review.name }}">
+                                        <div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9 response-btn-row">
+                                            <input type="submit" name="commit" value="Submit" class="btn btn-primary pull-right response-submit-btn">
+                                            <a class="response-close-btn">Close</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {% for mediaId, comments in instagramServices.comments %}
                         {% if comments is not empty %}
                             {% for comment in comments %}
                                 <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
@@ -156,7 +242,8 @@
                                             <div class="col-xs-12 col-sm-12 col-md-12 controls no-padding-left">
                                                 <textarea label="false" autofocus="autofocus" placeholder="Enter review response" cols="150" rows="3" required="required" class="response-content form-control" name="text" id="review_submission_content"></textarea>
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-8 response-btn-row">
+
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9 response-btn-row">
                                                 <input type="submit" name="commit" value="Submit" class="btn btn-primary pull-right response-submit-btn">
                                                 <a class="response-close-btn">Close</a>
                                             </div>
@@ -167,6 +254,7 @@
                         {% endif %}
 
                         {% endfor %}
+
 
                         <div class="col-xs-12 col-sm-12 col-md-12 interaction-item no-padding mrb30"
                              data-review-id="17331865">

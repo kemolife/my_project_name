@@ -9,11 +9,14 @@ use Google_Service_MyBusiness_Account;
 use Google_Service_MyBusiness_BusinessHours;
 use Google_Service_MyBusiness_Category;
 use Google_Service_MyBusiness_LatLng;
+use Google_Service_MyBusiness_LocalPost;
 use Google_Service_MyBusiness_Location;
 use Google_Service_MyBusiness_PostalAddress;
 use Google_Service_MyBusiness_Profile;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\GoogleAccount;
+use SingAppBundle\Entity\GooglePost;
+use SingAppBundle\Entity\Media;
 use SingAppBundle\Helper\PHPFunctionsHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Google_Client;
@@ -58,7 +61,7 @@ class GoogleService
         return $client->authenticate($code);
     }
 
-    public function refreshAccessToken(GoogleAccount $googleAccount)
+    public function refreshAccessToken(GoogleAccount &$googleAccount)
     {
 
         $client = new Google_Client();
@@ -69,7 +72,34 @@ class GoogleService
         $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
         $client->setRedirectUri($this->domain . '/google/oauth2callback');
 
-        return $client->fetchAccessTokenWithRefreshToken($googleAccount->getRefreshToken());
+        $accessTokenData = $client->fetchAccessTokenWithRefreshToken($googleAccount->getRefreshToken());
+
+        if (array_key_exists('access_token', $accessTokenData) && array_key_exists('refresh_token', $accessTokenData)) {
+            $oauthService = new \Google_Service_Oauth2($client);
+
+            $repository = $this->em->getRepository('SingAppBundle:GoogleAccount');
+
+            $googleAccounts = $repository->findBy(['googleId' => $oauthService->userinfo->get()->getId()]);
+
+            /**
+             * @var GoogleAccount $account
+             */
+            foreach ($googleAccounts as $account) {
+                $account->setAccessToken($accessTokenData['access_token']);
+                $account->setRefreshToken($accessTokenData['refresh_token']);
+                $account->setExpiresIn(new \DateTime('+ ' . $accessTokenData['expires_in'] . ' seconds'));
+
+                $this->em->persist($account);
+            }
+
+            $googleAccount->setAccessToken($accessTokenData['access_token']);
+            $googleAccount->setRefreshToken($accessTokenData['refresh_token']);
+            $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokenData['expires_in'] . ' seconds'));
+
+            $this->em->persist($googleAccount);
+
+            $this->em->flush();
+        }
 
     }
 
@@ -211,22 +241,50 @@ class GoogleService
     public function createUpdateGoogleAccount($accessTokeData, $googleAccount = null)
     {
         if (array_key_exists('access_token', $accessTokeData)) {
-            $createdDate = new \DateTime();
-            $createdDate->setTimestamp($accessTokeData['created']);
-            if ($googleAccount === null) {
-                $googleAccount = new GoogleAccount();
-            }
+            {
+                $client = new Google_Client();
+                $client->setAuthConfig('client_secret.json');
+                $client->setAccessToken($accessTokeData['access_token']);
+                $client->setAccessType('offline');
+                $client->setIncludeGrantedScopes(true);   // incremental auth
+                $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
 
-            if (array_key_exists('refresh_token', $accessTokeData)) {
-                $googleAccount->setRefreshToken($accessTokeData['refresh_token']);
-            }
-            if ($googleAccount instanceof GoogleAccount) {
-                $googleAccount->setAccessToken($accessTokeData['access_token']);
-                $googleAccount->setCreated($createdDate);
-                $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
+                $oauthService = new \Google_Service_Oauth2($client);
 
-                $this->em->persist($googleAccount);
-                $this->em->flush();
+                $createdDate = new \DateTime();
+                $createdDate->setTimestamp($accessTokeData['created']);
+                if ($googleAccount === null) {
+                    $googleAccount = new GoogleAccount();
+                }
+
+                if (array_key_exists('refresh_token', $accessTokeData)) {
+                    $googleAccount->setRefreshToken($accessTokeData['refresh_token']);
+                } else {
+                    $repository = $this->em->getRepository('SingAppBundle:GoogleAccount');
+
+                    $googleAccounts = $repository->findBy(['googleId' => $oauthService->userinfo->get()->getId()]);
+
+                    /**
+                     * @var GoogleAccount $account
+                     */
+                    foreach ($googleAccounts as $account) {
+                        if ($account->getRefreshToken()) {
+                            $googleAccount->setRefreshToken($account->getRefreshToken());
+
+                            break;
+                        }
+                    }
+                }
+
+                if ($googleAccount instanceof GoogleAccount) {
+                    $googleAccount->setAccessToken($accessTokeData['access_token']);
+                    $googleAccount->setCreated($createdDate);
+                    $googleAccount->setExpiresIn(new \DateTime('+ ' . $accessTokeData['expires_in'] . ' seconds'));
+                    $googleAccount->setGoogleId($oauthService->userinfo->get()->getId());
+
+                    $this->em->persist($googleAccount);
+                    $this->em->flush();
+                }
             }
 
         }
@@ -255,5 +313,121 @@ class GoogleService
         $business = $repository->findOneBy(['id' => $id]);
 
         return $business;
+    }
+
+    public function createPost(GooglePost $post)
+    {
+        if ($post->getAccount() instanceof GoogleAccount) {
+            $client = new Google_Client();
+            $client->setAuthConfig('client_secret.json');
+            $client->setAccessToken($post->getAccount()->getAccessToken());
+            $client->setAccessType('offline');
+            $client->setIncludeGrantedScopes(true);   // incremental auth
+            $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
+
+            $googleMyBusiness = new Google_Service_MyBusiness($client);
+            $googlePost = new Google_Service_MyBusiness_LocalPost();
+            $googlePost->setName($post->getTitle());
+            $googlePost->setSummary($post->getCaption());
+            $googlePost->setLanguageCode('en');
+
+            $googleMediaArray = [];
+
+            /**
+             * @var Media $media
+             */
+            foreach ($post->getMedia() as $media) {
+                $mimeType = mime_content_type($media->getPath());
+
+                $googleMedia = new \Google_Service_MyBusiness_MediaItem();
+
+                if (strpos($mimeType, 'image') !== false) {
+                    $type = 'PHOTO';
+                } else {
+                    $type = 'VIDEO';
+                }
+
+                $googleMedia->setMediaFormat($type);
+                $googleMedia->setSourceUrl($this->domain . '/' . $media->getPath());
+
+                $googleMediaArray[] = $googleMedia;
+            }
+
+            $googlePost->setMedia($googleMediaArray);
+
+
+            try {
+                $googleMyBusiness->accounts_locations_localPosts->create($post->getAccount()->getLocation(), $googlePost);
+            } catch (\Exception $exception) {
+                $error = json_decode($exception->getMessage(), true);
+
+                if ($error['error']['status'] == 'UNAUTHENTICATED') {
+                    $googleAccount = $post->getAccount();
+                    $this->refreshAccessToken($googleAccount);
+                    $this->createPost($post);
+                } else {
+                    throw new \Google_Exception($exception->getMessage());
+                }
+            }
+        } else {
+            throw new \Google_Exception('You are not connected a Google My Business account');
+        }
+    }
+
+    public function getReviews(GoogleAccount $googleAccount)
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secret.json');
+        $client->setAccessToken($googleAccount->getAccessToken());
+        $client->setAccessType('offline');
+        $client->setIncludeGrantedScopes(true);   // incremental auth
+        $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
+
+        $googleMyBusiness = new Google_Service_MyBusiness($client);
+
+        try {
+            $reviews = $googleMyBusiness->accounts_locations_reviews->listAccountsLocationsReviews($googleAccount->getLocation())->getReviews();
+        } catch (\Exception $exception) {
+            $error = json_decode($exception->getMessage(), true);
+
+            if ($error['error']['status'] == 'UNAUTHENTICATED') {
+                $this->refreshAccessToken($googleAccount);
+                $reviews = $this->getReviews($googleAccount);
+            } else {
+                throw new \Google_Exception($exception->getMessage());
+            }
+        }
+
+
+        return $reviews;
+    }
+
+    public function reply(GoogleAccount $googleAccount, $reviewId, $comment)
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secret.json');
+        $client->setAccessToken($googleAccount->getAccessToken());
+        $client->setAccessType('offline');
+        $client->setIncludeGrantedScopes(true);   // incremental auth
+        $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
+
+        $googleMyBusiness = new Google_Service_MyBusiness($client);
+
+        $reply = new \Google_Service_MyBusiness_ReviewReply();
+        $reply->setComment($comment);
+
+        try {
+            $googleMyBusiness->accounts_locations_reviews->updateReply($reviewId, $reply);
+        } catch (\Exception $exception) {
+            $error = json_decode($exception->getMessage(), true);
+
+            if ($error['error']['status'] == 'UNAUTHENTICATED') {
+                $this->refreshAccessToken($googleAccount);
+                $this->reply($googleAccount, $reviewId, $comment);
+            } else {
+                throw new \Google_Exception($exception->getMessage());
+            }
+        }
+
     }
 }

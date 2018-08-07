@@ -52,7 +52,7 @@ class Media implements HasOwnerInterface
     protected $creationDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="photos", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="media", cascade={"persist"})
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $post;

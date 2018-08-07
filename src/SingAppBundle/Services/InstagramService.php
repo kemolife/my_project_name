@@ -11,6 +11,7 @@ use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
 use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Response\ConfigureResponse;
+use SingAppBundle\Entity\Media;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 
@@ -125,7 +126,7 @@ class InstagramService
 
     public function uploadPost(InstagramPost $instagramPost)
     {
-        if ($instagramPost->getPhotos()->count() > 1) {
+        if (count($instagramPost->getMedia()) > 1) {
             $this->uploadMultiplePhotos($instagramPost);
         } else {
             $this->uploadSinglePhoto($instagramPost);
@@ -138,7 +139,7 @@ class InstagramService
         $debug = false;
         $truncatedDebug = false;
 
-        $photos = $this->getPhotos($instagramPost);
+        $media = $this->getMedia($instagramPost);
 
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
@@ -149,8 +150,9 @@ class InstagramService
             $instagramPost->setStatus('failed');
             $this->em->persist($instagramPost);
             $this->em->flush();
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
-            exit(0);
+
+            throw new OAuthCompanyException($e->getMessage());
+
         }
 
         $mediaOptions = [
@@ -159,7 +161,7 @@ class InstagramService
             //'operation' => \InstagramAPI\Media\InstagramMedia::EXPAND,
         ];
 
-        foreach ($photos as &$item) {
+        foreach ($media as &$item) {
             /** @var \InstagramAPI\Media\InstagramMedia|null $validMedia */
             $validMedia = null;
             switch ($item['type']) {
@@ -199,7 +201,7 @@ class InstagramService
             /**
              * @var ConfigureResponse $response
              */
-            $response = $ig->timeline->uploadAlbum($photos, ['caption' => $instagramPost->getCaption()]);
+            $response = $ig->timeline->uploadAlbum($media, ['caption' => $instagramPost->getCaption()]);
 
             $instagramPost->setStatus('posted');
             $instagramPost->setMediaId($response->getMedia()->getId());
@@ -210,64 +212,152 @@ class InstagramService
             $instagramPost->setStatus('failed');
             $this->em->persist($instagramPost);
             $this->em->flush();
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+            throw new OAuthCompanyException($e->getMessage());
         }
     }
 
-    private function uploadSinglePhoto(InstagramPost $instagramPost)
+    private function uploadSingleMedia(InstagramPost $instagramPost)
     {
         $instagramAccount = $instagramPost->getAccount();
         $debug = false;
         $truncatedDebug = false;
+
         \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+
         try {
             $ig->login($instagramAccount->getLogin(), $instagramAccount->getPassword());
         } catch (\Exception $e) {
             $instagramPost->setStatus('failed');
             $this->em->persist($instagramPost);
             $this->em->flush();
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
-            exit(0);
+
+            throw new OAuthCompanyException($e->getMessage());
+
         }
         try {
-            $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($this->webDir . '/' . $instagramPost->getPhotos()[0]->getImage());
+            $mimeType = $this->_mime_content_type($this->webDir . '/' . $instagramPost->getMedia()[0]->getPath());
 
-            /**
-             * @var ConfigureResponse $response
-             */
-            $response = $ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $instagramPost->getCaption()]);
-            $instagramPost->setMediaId($response->getMedia()->getId());
+            if (strpos($mimeType, 'image') !== false) {
+                $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($this->webDir . '/' . $instagramPost->getMedia()[0]->getPath());
 
-            $instagramPost->setStatus('posted');
-            $this->em->persist($instagramPost);
-            $this->em->flush();
+                /**
+                 * @var ConfigureResponse $response
+                 */
+                $response = $ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $instagramPost->getCaption()]);
+                $instagramPost->setMediaId($response->getMedia()->getId());
+
+                $instagramPost->setStatus('posted');
+                $this->em->persist($instagramPost);
+                $this->em->flush();
+            } elseif (strpos($mimeType, 'video') !== false) {
+                \InstagramAPI\Utils::$ffprobeBin = '/usr/bin/ffprobe';
+                $mediaPath = $this->webDir . '/' . $instagramPost->getMedia()[0]->getPath();
+
+                $videoDuration = exec('ffprobe -i '.$mediaPath.' -show_entries format=duration -v quiet -of csv="p=0"');
+
+                if ($videoDuration > 60) {
+
+                    $newMediaPath = str_replace(basename($mediaPath), 'cut_'.basename($mediaPath), $mediaPath);
+
+                    exec('ffmpeg -i '.$mediaPath.' -ss 00:00:00 -t 00:00:59 -strict -2 '.$newMediaPath, $output);
+
+
+                    $mediaPath = $newMediaPath;
+                }
+
+                $video = new \InstagramAPI\Media\Video\InstagramVideo($mediaPath);
+
+                /**
+                 * @var ConfigureResponse $response
+                 */
+                $response = $ig->timeline->uploadVideo($video->getFile(), ['caption' => $instagramPost->getCaption()]);
+                $instagramPost->setMediaId($response->getMedia()->getId());
+
+                $instagramPost->setStatus('posted');
+                $this->em->persist($instagramPost);
+                $this->em->flush();
+            }
+
         } catch (\Exception $e) {
             $instagramPost->setStatus('failed');
             $this->em->persist($instagramPost);
             $this->em->flush();
 
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+            throw new OAuthCompanyException($e->getMessage());
         }
     }
 
-    private function getPhotos(InstagramPost $instagramPost)
+    private function getMedia(InstagramPost $instagramPost)
     {
         $photos = [];
 
         /**
-         * @var Images $photo
+         * @var Media $media
          */
-        foreach ($instagramPost->getPhotos() as $photo) {
-            $photoPath = $this->webDir . '/' . $photo->getImage();
+        foreach ($instagramPost->getMedia() as $media) {
+            $mediaPath = $this->webDir . '/' . $media->getPath();
+            $mimeType = $this->_mime_content_type($mediaPath);
+            $type = 'photo';
+
+            if (strpos($mimeType, 'video') !== false) {
+                $type = 'video';
+
+                $videoDuration = exec('ffprobe -i '.$mediaPath.' -show_entries format=duration -v quiet -of csv="p=0"');
+
+                if ($videoDuration > 60) {
+
+                    $newMediaPath = str_replace(basename($mediaPath), 'cut_'.basename($mediaPath), $mediaPath);
+                    exec('ffmpeg -i '.$mediaPath.' -ss 00:00:00 -t 00:01:00 -strict -2 '.$newMediaPath, $output);
+
+                    $mediaPath = $newMediaPath;
+                }
+            }
 
             $photos[] = [
-                'type' => 'photo',
-                'file' => $photoPath,
+                'type' => $type,
+                'file' => $mediaPath,
             ];
         }
 
         return $photos;
+    }
+
+
+    private function _mime_content_type($filename)
+    {
+        # Returns the system MIME type (as defined in /etc/mime.types) for the filename specified.
+        #
+        # $file - the filename to examine
+        static $types;
+        if (!isset($types))
+            $types = $this->system_extension_mime_types();
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if (!$ext)
+            $ext = $filename;
+        $ext = strtolower($ext);
+
+        return isset($types[$ext]) ? $types[$ext] : null;
+    }
+
+    private function system_extension_mime_types()
+    {
+        # Returns the system MIME type mapping of extensions to MIME types, as defined in /etc/mime.types.
+        $out = array();
+        $file = fopen('/etc/mime.types', 'r');
+        while (($line = fgets($file)) !== false) {
+            $line = trim(preg_replace('/#.*/', '', $line));
+            if (!$line)
+                continue;
+            $parts = preg_split('/\s+/', $line);
+            if (count($parts) == 1)
+                continue;
+            $type = array_shift($parts);
+            foreach ($parts as $part)
+                $out[$part] = $type;
+        }
+        fclose($file);
+        return $out;
     }
 
     public function deletePost(InstagramPost $post)

@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * })
  * @ORM\Entity()
  */
-abstract class Post
+abstract class Post implements HasBusinessrInterface
 {
 
     /**
@@ -48,9 +48,9 @@ abstract class Post
     protected $caption;
 
     /**
-     * @ORM\OneToMany(targetEntity="Images", mappedBy="post", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="post", cascade={"persist"})
      */
-    protected $photos;
+    protected $media;
 
     /**
      * @ORM\Column(type="enum_post_status_type", length=255, nullable=true)
@@ -89,13 +89,11 @@ abstract class Post
      * @ORM\Column(type="smallint")
      */
     protected $schedule = 0;
+
     /**
-     * Constructor
+     * @ORM\Column(type="integer")
      */
-    public function __construct()
-    {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    protected $timezoneOffset = 0;
 
     /**
      * Get id
@@ -202,41 +200,6 @@ abstract class Post
     {
         return $this->postDate;
     }
-
-    /**
-     * Add photo
-     *
-     * @param Images $photo
-     *
-     * @return Post
-     */
-    public function addPhoto(Images $photo)
-    {
-        $this->photos[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Remove photo
-     *
-     * @param Images $photo
-     */
-    public function removePhoto(Images $photo)
-    {
-        $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
-
 
     public function setUploadedFiles($uploadedFiles)
     {
@@ -345,4 +308,72 @@ abstract class Post
     {
         return $this->business;
     }
+
+    /**
+     * Set timezoneOffset.
+     *
+     * @param int $timezoneOffset
+     *
+     * @return Post
+     */
+    public function setTimezoneOffset($timezoneOffset)
+    {
+        $this->timezoneOffset = $timezoneOffset;
+
+        return $this;
+    }
+
+    /**
+     * Get timezoneOffset.
+     *
+     * @return int
+     */
+    public function getTimezoneOffset()
+    {
+        return $this->timezoneOffset;
+    }
+
+    /**
+     * Add medium.
+     *
+     * @param \SingAppBundle\Entity\Media $medium
+     *
+     * @return Post
+     */
+    public function addMedia(\SingAppBundle\Entity\Media $medium)
+    {
+        $this->media[] = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Remove medium.
+     *
+     * @param \SingAppBundle\Entity\Media $medium
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeMedia(\SingAppBundle\Entity\Media $medium)
+    {
+        return $this->media->removeElement($medium);
+    }
+
+    /**
+     * Get media.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

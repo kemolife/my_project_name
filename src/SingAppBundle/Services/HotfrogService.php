@@ -134,8 +134,8 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
             $params['ctl00$contentSection$ctrlContactDetails$txtAddress2'] = '';
             $params['ctl00$contentSection$ctrlContactDetails$txtAddress3'] = '';
             $params['ctl00$contentSection$ctrlContactDetails$txtSuburb'] = $business->getLocality();
-            $params['ctl00$contentSection$ctrlContactDetails$cboState'] = $business->getAdministrativeAreaShort();
-            $params['ctl00$contentSection$ctrlContactDetails$txtPostcode'] = $business->getPostalCode();
+            $params['ctl00$contentSection$ctrlContactDetails$cboState'] = 'AL';
+            $params['ctl00$contentSection$ctrlContactDetails$txtPostcode'] = 36310;
             $params['ctl00$contentSection$ctrlContactDetails$txtPhone'] = $business->getPhoneNumber();
             $params['ctl00$contentSection$ctrlContactDetails$txtFax'] = '';
             $params['ctl00$contentSection$ctrlContactDetails$txtWebsite'] = $business->getWebsite();
@@ -219,8 +219,8 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $params['ctl00$contentSection$CompanyDetailsControl$txtAddress2'] = '';
         $params['ctl00$contentSection$CompanyDetailsControl$txtAddress3'] = '';
         $params['ctl00$contentSection$CompanyDetailsControl$txtSuburb'] = $business->getLocality();
-        $params['ctl00$contentSection$CompanyDetailsControl$cboState'] = $business->getAdministrativeAreaShort();
-        $params['ctl00$contentSection$CompanyDetailsControl$txtPostcode'] = $business->getPostalCode();
+        $params['ctl00$contentSection$CompanyDetailsControl$cboState'] = 'AL';
+        $params['ctl00$contentSection$CompanyDetailsControl$txtPostcode'] = 36310;
         $params['ctl00$contentSection$ContactDetailsControl$txtPhone'] = $business->getPhoneNumber();
         $params['ctl00$contentSection$ContactDetailsControl$txtEmail'] = $business->getEmail();
         $params['ctl00$contentSection$ContactDetailsControl$txtWebsite'] = $business->getWebsite();

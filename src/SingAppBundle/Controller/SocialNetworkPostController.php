@@ -45,7 +45,6 @@ class SocialNetworkPostController extends BaseController
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
-        $activeServices = $this->getSwitchServices($request);
 
         $params = [
             'businesses' => $this->getBusinesses(),
@@ -56,7 +55,6 @@ class SocialNetworkPostController extends BaseController
             'googleAccount' => $googleAccount,
             'facebookAccount' => $facebookAccount,
             'pinterestAccount' => $pinterestAccount,
-            'activeServices' => $activeServices,
             'currentBusiness' => $currentBusiness
         ];
 
@@ -70,27 +68,26 @@ class SocialNetworkPostController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $dataSocial = $this->getSwitchServices($request);
-        $query = $request->request->all();
+        $data = $request->request->all();
         $em = $this->getDoctrine()->getManager();
-        foreach ($dataSocial as $social) {
+        foreach ($data['socials'] as $social) {
             switch ($social) {
-                case $social instanceof GoogleAccount :
+                case 'google':
                     $googlePost = new GooglePost();
-                    $googlePost->setTitle($query['title']);
-                    $googlePost->setCaption($query['caption']);
-                    $googlePost->setPostDate(new \DateTime($query['postDate']));
+                    $googlePost->setTitle($data['title']);
+                    $googlePost->setCaption($data['caption']);
+                    $googlePost->setPostDate(new \DateTime($data['postDate']));
                     $googlePost->setSocialNetwork('google');
                     $googlePost->setUploadedFiles($request->files->get('photos'));
                     $googlePost->setSchedule(intval($request->request->get('schedule')));
                     $googlePost->setBusiness($this->getCurrentBusiness($request));
                     $em->persist($googlePost);
                     break;
-                case $social instanceof InstagramAccount:
+                case 'instagram':
                     $instagramPost = new InstagramPost();
-                    $instagramPost->setTitle($query['title']);
-                    $instagramPost->setCaption($query['caption']);
-                    $instagramPost->setPostDate(new \DateTime($query['postDate']));
+                    $instagramPost->setTitle($data['title']);
+                    $instagramPost->setCaption($data['caption']);
+                    $instagramPost->setPostDate(new \DateTime($data['postDate']));
                     $instagramPost->setSocialNetwork('instagram');
                     $instagramPost->setUploadedFiles($request->files->get('media'));
                     $instagramPost->setSchedule(intval($request->request->get('schedule') === 'on'));
@@ -101,11 +98,11 @@ class SocialNetworkPostController extends BaseController
                 case $social instanceof PinterestAccount:
                     if(isset($query['board'])) {
                         $pinterestPin = new PinterestPin();
-                        $pinterestPin->setTitle($query['title']);
-                        $pinterestPin->setCaption($query['caption']);
-                        $pinterestPin->setBoard($query['board']);
-                        $pinterestPin->setLink($query['link']);
-                        $pinterestPin->setPostDate(new \DateTime($query['postDate']));
+                        $pinterestPin->setTitle($data['title']);
+                        $pinterestPin->setCaption($data['caption']);
+                        $pinterestPin->setBoard($data['board']);
+                        $pinterestPin->setLink($data['link']);
+                        $pinterestPin->setPostDate(new \DateTime($data['postDate']));
                         $pinterestPin->setSocialNetwork('instagram');
                         $pinterestPin->setUploadedFiles($request->files->get('photos'));
                         $pinterestPin->setSchedule(intval($request->request->get('schedule') === 'on'));
