@@ -144,14 +144,14 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="region_code", type="string", length=255)
+     * @ORM\Column(name="region_code", type="string", length=255, nullable=true)
      */
     private $regionCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="administrative_area", type="string", length=255)
+     * @ORM\Column(name="administrative_area", type="string", length=255, nullable=true)
      */
     private $administrativeArea;
 
@@ -165,28 +165,28 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="locality", type="string", length=255)
+     * @ORM\Column(name="locality", type="string", length=255, nullable=true)
      */
     private $locality;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="latitude", type="float")
+     * @ORM\Column(name="latitude", type="float", nullable=true)
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="longitude", type="float")
+     * @ORM\Column(name="longitude", type="float", nullable=true)
      */
     private $longitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="postal_code", type="string")
+     * @ORM\Column(name="postal_code", type="string", nullable=true)
      */
     private $postalCode;
 

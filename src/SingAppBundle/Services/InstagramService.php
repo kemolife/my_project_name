@@ -133,7 +133,7 @@ class InstagramService implements BaseInterface
         if (count($instagramPost->getMedia()) > 1) {
             $this->uploadMultiplePhotos($instagramPost);
         } else {
-            $this->uploadSinglePhoto($instagramPost);
+            $this->uploadSingleMedia($instagramPost);
         }
     }
 
