@@ -214,8 +214,8 @@
                  (document.getElementById('singappbundle_businessinfo_address')));
              google.maps.event.addListener(autocomplete, 'place_changed', function () {
                  var palce = autocomplete.getPlace();
-                 console.log(palce)
                  palce.address_components.forEach(function (value) {
+                     console.log(value);
                      if(value.types[0] == 'country'){
                          $('#singappbundle_businessinfo_regionCode').val(value.short_name);
                      }
@@ -281,7 +281,7 @@
             });
         });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRHvLJquH2iffBOH8ZJxru_35JGX_15mA&libraries=places&callback=initAutocomplete"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7IoNkbHVEeCjCbX4diC5S2t_zbr9I6GI&libraries=places&callback=initAutocomplete"
             async defer></script>
 {% endblock %}
 

@@ -158,7 +158,7 @@ class BusinessInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="administrative_area_short", type="string", length=255)
+     * @ORM\Column(name="administrative_area_short", type="string", length=255, nullable=true)
      */
     private $administrativeAreaShort;
 
