@@ -16,6 +16,7 @@ use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Repository\BusinessInfoRepository;
+use SingAppBundle\Services\interfaces\BaseInterface;
 use SingAppBundle\Services\PinterestService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -195,9 +196,8 @@ class BaseController extends Controller
         $servicesAccount = $this->getSwitchServices($request);
         $em = $this->getDoctrine()->getManager();
         foreach ($servicesAccount as $serviceAccount) {
-            if ($serviceAccount instanceof HotfrogAccount) {
+            if ($serviceAccount instanceof BaseInterface) {
                 $job = new Job('app:update:service', [$serviceAccount->getId()]);
-                //        $job->setExecuteAfter((new \DateTime())->setTimestamp(time()+600));
                 $em->persist($job);
                 $em->flush();
             }

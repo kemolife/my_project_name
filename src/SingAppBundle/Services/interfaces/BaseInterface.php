@@ -9,11 +9,7 @@ use SingAppBundle\Entity\User;
 
 interface BaseInterface
 {
-    public function auth(SocialNetworkAccount $account);
-
-    public function createAccount(SocialNetworkAccount $account, $data);
-
-    public function getAccount(User $user, BusinessInfo $business);
+//    public function auth(SocialNetworkAccount $account);
 
     public function editAccount(SocialNetworkAccount $account, BusinessInfo $business);
 }

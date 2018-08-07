@@ -3,6 +3,7 @@
 namespace SingAppBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateServicesCommand extends ContainerAwareCommand
 {
+
     public function configure()
     {
         $this
@@ -24,15 +26,15 @@ class UpdateServicesCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $serviceAccount = $this->getAccountById($input->getArgument('account'));
         try {
-            $service = $this->getContainer()->get('app.' . strtolower(stristr((new ReflectionClass($serviceAccount))->getShortName(), 'Account', true)) . '.service');
+            $serviceAccount = $this->getAccountById($input->getArgument('account'));
 
+            $service = $this->getContainer()->get('apps.' . strtolower(stristr((new ReflectionClass($serviceAccount))->getShortName(), 'Account', true)) . '.service');
             $service->editAccount($serviceAccount, $serviceAccount->getBusiness());
         } catch (OAuthCompanyException $e) {
-            throw $e;
+            $this->getContainer()->get('logger')->error($e->getMessage(), array('exception' => $e->getMessage()));
         } catch (\Exception $e) {
-
+            $this->getContainer()->get('logger')->error($e->getMessage(), array('exception' => $e->getMessage()));
         }
     }
 

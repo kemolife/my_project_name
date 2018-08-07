@@ -4,6 +4,8 @@
 namespace SingAppBundle\Services;
 
 
+use InstagramAPI\Exception\BadRequestException;
+use InstagramAPI\Exception\InstagramException;
 use InstagramScraper\Instagram;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\Images;
@@ -12,10 +14,12 @@ use SingAppBundle\Entity\InstagramPost;
 use Doctrine\ORM\EntityManagerInterface;
 use InstagramAPI\Response\ConfigureResponse;
 use SingAppBundle\Entity\Media;
+use SingAppBundle\Entity\SocialNetworkAccount;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use SingAppBundle\Services\interfaces\BaseInterface;
 
-class InstagramService
+class InstagramService implements BaseInterface
 {
     private $em;
 
@@ -376,6 +380,33 @@ class InstagramService
                 throw new OAuthCompanyException('Media not found');
             }
         } catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param SocialNetworkAccount $instagramAccount
+     * @param BusinessInfo $business
+     * @throws OAuthCompanyException
+     */
+    public function editAccount(SocialNetworkAccount $instagramAccount, BusinessInfo $business)
+    {
+        $debug = false;
+        $truncatedDebug = false;
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+
+        $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+        try {
+            $ig->login($instagramAccount->getName(), $instagramAccount->getPassword());
+            $ig->account->editProfile(
+                $business->getWebsite(),
+                $business->getPhoneNumber(),
+                $business->getName(),
+                $business->getDescription(),
+                $business->getEmail(),
+                3
+            );
+        } catch (InstagramException $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }

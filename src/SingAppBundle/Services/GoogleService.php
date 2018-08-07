@@ -17,14 +17,16 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\Media;
+use SingAppBundle\Entity\SocialNetworkAccount;
 use SingAppBundle\Helper\PHPFunctionsHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Google_Client;
 use Google_Service_MyBusiness;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use SingAppBundle\Services\interfaces\BaseInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class GoogleService
+class GoogleService implements BaseInterface
 {
     private $em;
     private $domain;
@@ -429,5 +431,15 @@ class GoogleService
             }
         }
 
+    }
+
+    public function editAccount(SocialNetworkAccount $googleAccount, BusinessInfo $business)
+    {
+        $scope = 'primaryPhone,primaryCategory,additionalCategories,locationName,websiteUrl,profile,regularHours';
+        $url = 'https://mybusiness.googleapis.com/v4/' . $googleAccount->getLocation() . '?updateMask=' . $scope;
+        $postBody = $this->getPostBody($business);
+        $postBody->setName($business->getName());
+        $response = $this->curlSender($url, json_encode($postBody), $googleAccount, 'patch');
+        return $response;
     }
 }
