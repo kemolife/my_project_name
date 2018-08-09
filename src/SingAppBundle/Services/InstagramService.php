@@ -7,6 +7,7 @@ namespace SingAppBundle\Services;
 use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\InstagramException;
 use InstagramScraper\Instagram;
+use JMS\JobQueueBundle\Entity\Job;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\Images;
 use SingAppBundle\Entity\InstagramAccount;
@@ -135,6 +136,15 @@ class InstagramService implements BaseInterface
         } else {
             $this->uploadSingleMedia($instagramPost);
         }
+        $this->createInstagramJobs('insert:instagram:cache', $instagramPost->getAccount()->getId());
+    }
+
+    private function createInstagramJobs($name, $accountId)
+    {
+        $job = new Job($name, [$accountId]);
+        $job->setExecuteAfter(new \DateTime(time()+300));
+        $this->em->persist($job);
+        $this->em->flush();
     }
 
     private function uploadMultiplePhotos(InstagramPost $instagramPost)
