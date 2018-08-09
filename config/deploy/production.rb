@@ -81,6 +81,14 @@ namespace :deploy do
     end
   end
 
+  after :publishing, :supervisor do
+    on roles(:app, :web) do
+      within release_path do
+        execute :sudo , 'service supervisor restart'
+      end
+    end
+  end
+
   after :permissions, :fpm do
     on roles(:app, :web) do
       within release_path do

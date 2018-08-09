@@ -190,9 +190,7 @@ class InstagramBusiness
     {
         $cache = new FilesystemCache();
         $hashMedia = hash('ripemd160', 'instagram_media.' .  $this->business->getId() . 'user' . $this->user->getId());
-        var_dump($cache->has($hashMedia));
         if($cache->has($hashMedia)){
-            var_dump($cache->get($hashMedia));
             $medias = $cache->get($hashMedia);
         }else {
             $medias = $this->getMedias($this->account->username);
