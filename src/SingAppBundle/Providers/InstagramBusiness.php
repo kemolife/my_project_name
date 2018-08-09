@@ -14,6 +14,7 @@ use InstagramScraper\Instagram as InstagramScraper;
 use InstagramScraper\Model\Comment;
 use InstagramScraper\Model\Like;
 use InstagramScraper\Model\Media;
+use JMS\JobQueueBundle\Entity\Job;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\User;
@@ -82,6 +83,8 @@ class InstagramBusiness
 
         $this->em->persist($instagram);
         $this->em->flush();
+
+        $this->createInstagramJobs('insert:instagram:cache', $instagram->getId());
     }
 
     /**
@@ -174,6 +177,11 @@ class InstagramBusiness
         }
     }
 
+    public function getMedias($username)
+    {
+        return $this->ig->getMedias($username);
+    }
+
     /**
      * @return Media[]|mixed|null
      * @throws \InstagramScraper\Exception\InstagramNotFoundException
@@ -181,12 +189,11 @@ class InstagramBusiness
     public function getInfoNewScraper()
     {
         $cache = new FilesystemCache();
-        $hash = hash('ripemd160', 'facebook_medias.' . $this->business->getId() . 'user' . $this->user->getId());
-        try {
-            $medias = $this->ig->getMedias($this->account->username);
-            $cache->set($hash, $medias);
-        } catch (InstagramException $e) {
-            $medias = $cache->get($hash);
+        $hashMedia = hash('ripemd160', 'facebook_media_likes.' .  $this->business->getId() . 'user' . $this->user->getId());
+        if($cache->has($hashMedia)){
+            $medias = $cache->get($hashMedia);
+        }else {
+            $medias = $this->getMedias($this->account->username);
         }
         return $medias;
     }
@@ -197,15 +204,14 @@ class InstagramBusiness
      */
     public function getLikesByMedia(Media $media)
     {
-        $cache = new FilesystemCache();
-        $hash = hash('ripemd160', 'facebook_media_likes.' . $this->business->getId() . 'user' . $this->user->getId());
-        try {
-            $likes = $this->igNew->media->getLikers($media->getId())->getUserCount();
-            $cache->set($hash, $likes);
-        } catch (InstagramApiException $e) {
-            $likes = $cache->get($hash);
-        }
-        return $likes;
+        return $likes = $this->igNew->media->getLikers($media->getId())->getUserCount();
+    }
+
+    private function createInstagramJobs($name, $accountId)
+    {
+        $job = new Job($name, [$accountId]);
+        $this->em->persist($job);
+        $this->em->flush();
     }
 
     /**
