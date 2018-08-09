@@ -191,6 +191,7 @@ class InstagramBusiness
         $cache = new FilesystemCache();
         $hashMedia = hash('ripemd160', 'facebook_media_likes.' .  $this->business->getId() . 'user' . $this->user->getId());
         if($cache->has($hashMedia)){
+            var_dump($cache->get($hashMedia));
             $medias = $cache->get($hashMedia);
         }else {
             $medias = $this->getMedias($this->account->username);
