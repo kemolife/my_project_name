@@ -37,7 +37,7 @@ class InsertInstagramCacheCommand extends ContainerAwareCommand
         $business = $this->getAccountById($input->getArgument('account'))->getBusiness();
         $medias = $instagram->newAuth($user, $business)->authInst()->getMedias($user->getUsername());
         $cache = new FilesystemCache();
-        $hashMedias = hash('ripemd160', 'facebook_medias.' . $business->getId() . 'user' . $user->getId());
+        $hashMedias = hash('ripemd160', 'instagram_media.' . $business->getId() . 'user' . $user->getId());
         $cache->set($hashMedias, $medias);
     }
 

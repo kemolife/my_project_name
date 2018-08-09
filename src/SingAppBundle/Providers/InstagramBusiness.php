@@ -189,7 +189,7 @@ class InstagramBusiness
     public function getInfoNewScraper()
     {
         $cache = new FilesystemCache();
-        $hashMedia = hash('ripemd160', 'facebook_media_likes.' .  $this->business->getId() . 'user' . $this->user->getId());
+        $hashMedia = hash('ripemd160', 'instagram_media.' .  $this->business->getId() . 'user' . $this->user->getId());
         var_dump($cache->has($hashMedia));
         if($cache->has($hashMedia)){
             var_dump($cache->get($hashMedia));
