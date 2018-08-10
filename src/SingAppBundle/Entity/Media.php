@@ -175,11 +175,11 @@ class Media implements HasOwnerInterface
     /**
      * Set post
      *
-     * @param InstagramPost $post
+     * @param Post $post
      *
      * @return Media
      */
-    public function setPost(InstagramPost $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
 
@@ -189,7 +189,7 @@ class Media implements HasOwnerInterface
     /**
      * Get post
      *
-     * @return InstagramPost
+     * @return Post
      */
     public function getPost()
     {

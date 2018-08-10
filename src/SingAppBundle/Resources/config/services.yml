@@ -31,6 +31,10 @@ services:
         class: SingAppBundle\Services\GoogleService
         arguments: ['@doctrine.orm.entity_manager', '%domain%']
 
+    app.youtube.service:
+        class: SingAppBundle\Services\YoutubeService
+        arguments: ['@doctrine.orm.entity_manager', '%domain%', '%web_dir%']
+
     app.facebook.service:
         class: SingAppBundle\Services\FacebookService
         arguments: ['%domain%', '@doctrine.orm.entity_manager']

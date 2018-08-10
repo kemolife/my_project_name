@@ -7,6 +7,7 @@ use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\InstagramBusiness;
+use SingAppBundle\Services\GoogleService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,21 +131,16 @@ class OAuthController extends BaseController
     /**
      * @Route("/test/connect", name="test-connect")
      */
-    public function testConnectService()
+    public function testConnectService(Request $request)
     {
-        var_dump('0'.trim('+61394164003', '+61')); die;
-        $url = 'https://api.truelocal.com.au/rest/auth/login?passToken=V0MxbDBlV2VNUw==';
-        $curl = new Curl();
-        $curl->setHeaders(
-            [
-               'content-type' =>  'application/json'
-            ]
-        );
-        $params['email'] = 'kemolife1990@gmail.com';
-        $params['password'] = 'kemo2701';
-        $curl->post($url, '{"email":"kemolife1990@gmail.com","password":"kemo2701"}');
-        var_dump($curl->response); die;
-        $this->session->set('cookie', $curl->getResponseCookies());
+        /**
+         * @var GoogleService $googleService
+         */
+        $googleService = $this->get('app.google.service');
+
+        $this->session->set('url', $request->get('url'));
+        $this->session->set('business', $request->get('business'));
+        return $this->redirect($googleService->authYoutube());
     }
 
     /**

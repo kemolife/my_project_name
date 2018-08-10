@@ -442,4 +442,31 @@ class GoogleService implements BaseInterface
         $response = $this->curlSender($url, json_encode($postBody), $googleAccount, 'patch');
         return $response;
     }
+
+    public function removePost(GooglePost $post)
+    {
+        $googleAccount = $post->getAccount();
+
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secret.json');
+        $client->setAccessToken($googleAccount->getAccessToken());
+        $client->setAccessType('offline');
+        $client->setIncludeGrantedScopes(true);   // incremental auth
+        $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
+
+        $googleMyBusiness = new Google_Service_MyBusiness($client);
+
+        try {
+            $googleMyBusiness->accounts_locations_localPosts->delete($post->getGooglePostName());
+        } catch (\Exception $exception) {
+            $error = json_decode($exception->getMessage(), true);
+
+            if ($error['error']['status'] == 'UNAUTHENTICATED') {
+                $this->refreshAccessToken($googleAccount);
+                $this->removePost($post);
+            } else {
+                throw new \Google_Exception($exception->getMessage());
+            }
+        }
+    }
 }

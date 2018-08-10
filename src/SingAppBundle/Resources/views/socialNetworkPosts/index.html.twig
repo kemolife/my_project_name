@@ -1,6 +1,7 @@
 {% extends '@SingApp/layouts/base.html.twig' %}
 {% block body %}
     {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.css') }}">
         <style>
             #appbundle_instagram_account_loginForm {
                 display: none;
@@ -57,6 +58,14 @@
                                    data-tab-history-update-url="true">
                                     <img src="{{ asset('images/icons/pinterest.png') }}" alt="" width="24" height="24">
                                     Pinterest
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#youtube" data-toggle="tab" data-tab-history="true"
+                                   data-tab-history-changer="push"
+                                   data-tab-history-update-url="true">
+                                    <img src="{{ asset('images/icons/youtube.png') }}" alt="" width="24" height="24">
+                                    Youtube
                                 </a>
                             </li>
                         </ul>
@@ -294,6 +303,45 @@
                                     </div>
                                 {% endif %}
                             </div>
+                            <div class="tab-pane" id="youtube">
+                                {% if youtubeAccount %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Caption</th>
+                                            <th>Post date</th>
+                                            <th>Post status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for video in youtubeVideo %}
+                                                <tr>
+                                                    <td>{{ video.snippet.title }}</td>
+                                                    <td>{{ video.snippet.description }}</td>
+                                                    <td>{{ video.snippet.publishedAt|date('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ video.status.privacyStatus }}</td>
+                                                    <td>
+                                                        <a href="{{ url('youtube-video-delete', {'videoId': video.contentDetails.videoId }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="youtube-connect-cont">
+                                        <div class="youtube-main-page">
+                                            <div class="youtube-login-page">
+                                                {{  getPostButton('youtube', currentBusiness, app.user)|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
 
                         </div>
                     </div>
@@ -424,6 +472,7 @@
                                 <option value="pinterest">Pinteres</option>
                                 <option value="facebook">Facebook</option>
                                 <option value="google">Google</option>
+                                <option value="youtube">Youtube</option>
                             </select>
                         </div>
                         <div class="custom-checkbox" style="display: inline-block;">
@@ -450,11 +499,13 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-
+    <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/bootstrap-tab-history.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <script>
         var showNot = true;
         $(document).ready(function () {
+            $('.js-datepicker').datetimepicker();
             document.getElementById('media').addEventListener('change', previewMedia, false);
 
             /*$(".preview-images-zone").sortable();*/

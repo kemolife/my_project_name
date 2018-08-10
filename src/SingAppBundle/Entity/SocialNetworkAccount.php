@@ -25,7 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "wordofmouth"  ="WordofmouthAccount",
  *     "zomato"  = "ZomatoAccount",
  *     "hotfrog" = "HotfrogAccount",
- *     "truelocal" = "TruelocalAccount"
+ *     "truelocal" = "TruelocalAccount",
+ *     "youtube" = "YoutubeAccount"
  * })
  * @ORM\Entity()
  */

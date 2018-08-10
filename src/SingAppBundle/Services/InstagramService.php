@@ -420,4 +420,23 @@ class InstagramService implements BaseInterface
             throw new OAuthCompanyException($e->getMessage());
         }
     }
+
+    public function removePost(InstagramPost $instagramPost)
+    {
+        $instagramAccount = $instagramPost->getAccount();
+        $debug = false;
+        $truncatedDebug = false;
+
+        \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+        $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+
+        try {
+            $ig->login($instagramAccount->getLogin(), $instagramAccount->getPassword());
+
+            $ig->media->delete($instagramPost->getMediaId());
+        } catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+
+    }
 }

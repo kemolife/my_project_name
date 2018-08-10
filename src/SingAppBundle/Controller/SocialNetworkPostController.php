@@ -11,12 +11,14 @@ use SingAppBundle\Entity\InstagramPost;
 use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\PinterestPin;
 use SingAppBundle\Entity\User;
+use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
 use SingAppBundle\Providers\InstagramBusiness;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SingAppBundle\Services\YoutubeService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,7 @@ class SocialNetworkPostController extends BaseController
      */
     public function indexAction(Request $request)
     {
-
+        $youtubeVideo = [];
         /**
          * @var BusinessInfo $currentBusiness
          */
@@ -45,6 +47,15 @@ class SocialNetworkPostController extends BaseController
         $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $youtubeAccount = $this->findOneBy('SingAppBundle:YoutubeAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+
+        if ($youtubeAccount !== null) {
+            /**
+             * @var YoutubeService $youtubeService
+             */
+            $youtubeService = $this->get('app.youtube.service');
+            $youtubeVideo = $youtubeService->getUploadVideos($youtubeAccount);
+        }
 
         $params = [
             'businesses' => $this->getBusinesses(),
@@ -55,7 +66,9 @@ class SocialNetworkPostController extends BaseController
             'googleAccount' => $googleAccount,
             'facebookAccount' => $facebookAccount,
             'pinterestAccount' => $pinterestAccount,
-            'currentBusiness' => $currentBusiness
+            'currentBusiness' => $currentBusiness,
+            'youtubeAccount' => $youtubeAccount,
+            'youtubeVideo' => $youtubeVideo
         ];
 
 
@@ -78,7 +91,7 @@ class SocialNetworkPostController extends BaseController
                     $googlePost->setCaption($data['caption']);
                     $googlePost->setPostDate(new \DateTime($data['postDate']));
                     $googlePost->setSocialNetwork('google');
-                    $googlePost->setUploadedFiles($request->files->get('photos'));
+                    $googlePost->setUploadedFiles($request->files->get('media'));
                     $googlePost->setSchedule(intval($request->request->get('schedule')));
                     $googlePost->setBusiness($this->getCurrentBusiness($request));
                     $em->persist($googlePost);
@@ -95,8 +108,8 @@ class SocialNetworkPostController extends BaseController
 
                     $em->persist($instagramPost);
                     break;
-                case $social instanceof PinterestAccount:
-                    if(isset($query['board'])) {
+                case 'pinterest':
+                    if (isset($query['board'])) {
                         $pinterestPin = new PinterestPin();
                         $pinterestPin->setTitle($data['title']);
                         $pinterestPin->setCaption($data['caption']);
@@ -104,12 +117,25 @@ class SocialNetworkPostController extends BaseController
                         $pinterestPin->setLink($data['link']);
                         $pinterestPin->setPostDate(new \DateTime($data['postDate']));
                         $pinterestPin->setSocialNetwork('instagram');
-                        $pinterestPin->setUploadedFiles($request->files->get('photos'));
+                        $pinterestPin->setUploadedFiles($request->files->get('media'));
                         $pinterestPin->setSchedule(intval($request->request->get('schedule') === 'on'));
                         $pinterestPin->setBusiness($this->getCurrentBusiness($request));
 
                         $em->persist($pinterestPin);
                     }
+                    break;
+
+                case 'youtube':
+                    $youtubeVideo = new YoutubePost();
+                    $youtubeVideo->setTitle($data['title']);
+                    $youtubeVideo->setCaption($data['caption']);
+                    $youtubeVideo->setPostDate(new \DateTime($data['postDate']));
+                    $youtubeVideo->setSocialNetwork('youtube');
+                    $youtubeVideo->setUploadedFiles($request->files->get('media'));
+                    $youtubeVideo->setSchedule(intval($request->request->get('schedule') === 'on'));
+                    $youtubeVideo->setBusiness($this->getCurrentBusiness($request));
+
+                    $em->persist($youtubeVideo);
                     break;
             }
 

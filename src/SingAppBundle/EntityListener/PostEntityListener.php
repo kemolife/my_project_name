@@ -15,19 +15,26 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use SingAppBundle\Entity\Media;
 use SingAppBundle\Entity\Post;
+use SingAppBundle\Entity\YoutubeAccount;
+use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
+use SingAppBundle\Services\YoutubeService;
+
 
 class PostEntityListener
 {
 
     private $instagramService;
+    private $youtubeService;
+    private $googleService;
 
-    public function __construct(InstagramService $instagramService, GoogleService $googleService)
+    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService)
     {
         $this->instagramService = $instagramService;
         $this->googleService = $googleService;
+        $this->youtubeService = $youtubeService;
     }
 
     /**
@@ -58,6 +65,15 @@ class PostEntityListener
 
             if ($googleAccount instanceof GoogleAccount) {
                 $entity->setAccount($googleAccount);
+            }
+        }
+        elseif ($entity instanceof YoutubePost) {
+            $repository = $em->getRepository('SingAppBundle:YoutubeAccount');
+
+            $youtubeAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
+
+            if ($youtubeAccount instanceof YoutubeAccount) {
+                $entity->setAccount($youtubeAccount);
             }
         }
     }
@@ -114,7 +130,6 @@ class PostEntityListener
             $job->setExecuteAfter($postDate);
             $em->persist($job);
 
-
             $entity->setStatus('pending');
             $em->persist($entity);
 
@@ -124,6 +139,9 @@ class PostEntityListener
         }
         elseif ($entity instanceof GooglePost) {
             $this->googleService->createPost($entity);
+        }
+        elseif ($entity instanceof YoutubePost) {
+            $this->youtubeService->createVideo($entity);
         }
 
     }
@@ -143,6 +161,10 @@ class PostEntityListener
         elseif ($entity instanceof GooglePost && $entity->getStatus() == 'posted')
         {
             $this->googleService->removePost($entity);
+        }
+        elseif ($entity instanceof YoutubePost && $entity->getStatus() == 'posted')
+        {
+            $this->youtubeService->removePost($entity);
         }
     }
 }
