@@ -41,11 +41,6 @@ class YoutubeAccount extends SocialNetworkAccount
     protected $googleId;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $videoId;
-
-    /**
      * @return User[]
      */
     public function getOwners()
@@ -148,29 +143,5 @@ class YoutubeAccount extends SocialNetworkAccount
     public function getGoogleId()
     {
         return $this->googleId;
-    }
-
-    /**
-     * Set videoId.
-     *
-     * @param string|null $videoId
-     *
-     * @return YoutubeAccount
-     */
-    public function setVideoId($videoId = null)
-    {
-        $this->videoId = $videoId;
-
-        return $this;
-    }
-
-    /**
-     * Get videoId.
-     *
-     * @return string|null
-     */
-    public function getVideoId()
-    {
-        return $this->videoId;
     }
 }

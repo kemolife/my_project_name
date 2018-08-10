@@ -316,12 +316,28 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for post in posts %}
+                                            {% if post.socialNetwork == 'youtube' and post.videoId  is null %}
+                                                <tr>
+                                                    <td>{{ post.title }}</td>
+                                                    <td>{{ post.caption }}</td>
+                                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ post.status }}</td>
+                                                    <td>
+                                                        <a href="{{ url('youtube-video-inside-delete', {'youtubePost': post.id }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                         {% for video in youtubeVideo %}
                                                 <tr>
                                                     <td>{{ video.snippet.title }}</td>
                                                     <td>{{ video.snippet.description }}</td>
                                                     <td>{{ video.snippet.publishedAt|date('Y-m-d H:i:s') }}</td>
-                                                    <td>{{ video.status.privacyStatus }}</td>
+                                                    <td>posted</td>
                                                     <td>
                                                         <a href="{{ url('youtube-video-delete', {'videoId': video.contentDetails.videoId }) }}"
                                                            class="btn btn-default btn-sm">

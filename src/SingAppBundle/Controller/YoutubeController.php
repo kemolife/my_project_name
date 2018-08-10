@@ -8,6 +8,7 @@ use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\YoutubeAccount;
+use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\YoutubeService;
@@ -77,5 +78,24 @@ class YoutubeController extends BaseController
         }catch (OAuthCompanyException $e){
             return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business'), 'error' => $e->getMessage()]).'#youtube');
         }
+    }
+
+    /**
+     * @Route("/youtube/inside-post-delete/{youtubePost}", name="youtube-video-inside-delete")
+     */
+    public function deletePostAction(YoutubePost $youtubePost, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        try {
+//            $this->get('app.youtube.service')->removePost($youtubePost);
+            $em->remove($youtubePost);
+            $em->flush();
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
+        }catch (OAuthCompanyException $e){
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
+        }catch (\Doctrine\DBAL\DBALException $e){
+            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
+        }
+        return $response;
     }
 }

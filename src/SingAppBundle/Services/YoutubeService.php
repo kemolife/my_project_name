@@ -56,6 +56,18 @@ class YoutubeService
         return $client;
     }
 
+    private function youtubeAndGoogleSettingsScope(YoutubeAccount $youtubeAccount)
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secret_youtube.json');
+        $client->setAccessToken($youtubeAccount->getAccessToken());
+        $client->setAccessType('offline');
+        $client->setIncludeGrantedScopes(true); // incremental auth
+        $client->setScopes([GOOGLE_SERVICE_YOUTUBE::YOUTUBE_FORCE_SSL, 'https://www.googleapis.com/auth/plus.business.manage']);
+
+        return $client;
+    }
+
     public function auth()
     {
         $client = $this->clientSettings();
@@ -77,36 +89,34 @@ class YoutubeService
         return $client->authenticate($code);
     }
 
-    public function refreshAccessToken(YoutubeAccount &$youtubeAccount)
+    public function refreshAccessToken(YoutubeAccount $youtubeAccount)
     {
-
-        $client = $this->clientSettings();
+        $client = $this->youtubeAndGoogleSettingsScope($youtubeAccount);
 
         $accessTokenData = $client->fetchAccessTokenWithRefreshToken($youtubeAccount->getRefreshToken());
-
         if (array_key_exists('access_token', $accessTokenData) && array_key_exists('refresh_token', $accessTokenData)) {
-            $oauthService = new \Google_Service_Oauth2($client);
-
-            $repository = $this->em->getRepository('SingAppBundle:YoutubeAccount');
-
-            $youtubeAccount = $repository->findBy(['googleId' => $oauthService->userinfo->get()->getId()]);
-
-            /**
-             * @var YoutubeAccount $account
-             */
-            foreach ($youtubeAccount as $account) {
-                $account->setAccessToken($accessTokenData['access_token']);
-                $account->setRefreshToken($accessTokenData['refresh_token']);
-                $account->setExpiresIn(new \DateTime('+ ' . $accessTokenData['expires_in'] . ' seconds'));
-
-                $this->em->persist($account);
-            }
+//            $oauthService = new \Google_Service_Oauth2($client);
+//
+//            $repository = $this->em->getRepository('SingAppBundle:YoutubeAccount');
+//
+//            $youtubeAccount = $repository->findBy(['googleId' => $oauthService->userinfo->get()->getId()]);
+//
+//            /**
+//             * @var YoutubeAccount $account
+//             */
+//            foreach ($youtubeAccount as $account) {
+//                $account->setAccessToken($accessTokenData['access_token']);
+//                $account->setRefreshToken($accessTokenData['refresh_token']);
+//                $account->setExpiresIn(new \DateTime('+ ' . $accessTokenData['expires_in'] . ' seconds'));
+//
+//                $this->em->persist($account);
+//            }
 
             if ($youtubeAccount instanceof YoutubeAccount) {
                 $youtubeAccount->setAccessToken($accessTokenData['access_token']);
                 $youtubeAccount->setRefreshToken($accessTokenData['refresh_token']);
                 $youtubeAccount->setExpiresIn(new \DateTime('+ ' . $accessTokenData['expires_in'] . ' seconds'));
-                $youtubeAccount->setGoogleId($oauthService->userinfo->get()->getId());
+//                $youtubeAccount->setGoogleId($oauthService->userinfo->get()->getId());
 
                 $this->em->persist($youtubeAccount);
 
@@ -191,21 +201,22 @@ class YoutubeService
 
                 $resource = new Google_Service_YouTube_Video($propertyObject);
                 $client->setDefer(true);
-                $request = $youtube->videos->insert('snippet,status', $resource);
+                $request = $youtube->videos->insert('snippet,status,contentDetails, id', $resource);
                 $client->setDefer(false);
                 $response = $this->uploadMedia($client, $request, $mediaPath, 'video/*');
-                var_dump($response); die;
+                $youtubePost->setVideoId($response->getId());
                 $youtubePost->setStatus('posted');
                 $this->em->persist($youtubePost);
                 $this->em->flush();
             }
 
-        } catch (\Exception $e) {
-            $youtubePost->setStatus('failed');
-            $this->em->persist($youtubePost);
-            $this->em->flush();
-
-            throw new OAuthCompanyException($e->getMessage());
+        }catch (Google_Service_Exception $e){
+            try {
+                $this->refreshAccessToken($youtubePost->getAccount());
+                $this->createVideo($youtubePost);
+            } catch (\Exception $e) {
+                throw new OAuthCompanyException(json_encode($e->getMessage()));
+            }
         }
     }
 
@@ -324,15 +335,15 @@ class YoutubeService
         }
     }
 
-    public function removePost(YoutubePost $youtubePost)
-    {
-        $youtubeAccount = $youtubePost->getAccount();
-        $client = $this->clientAccountSettings($youtubeAccount);
-        $youtube = new Google_Service_YouTube($client);
-        try {
-            $youtube->videos->delete($youtubeAccount->getVideoId());
-        }catch (\Exception $e){
-            throw new OAuthCompanyException($e->getMessage());
-        }
-    }
+//    public function removePost(YoutubePost $youtubePost)
+//    {
+//        $youtubeAccount = $youtubePost->getAccount();
+//        $client = $this->clientAccountSettings($youtubeAccount);
+//        $youtube = new Google_Service_YouTube($client);
+//        try {
+//            $youtube->videos->delete($youtubePost->getVideoId());
+//        }catch (\Exception $e){
+//            throw new OAuthCompanyException($e->getMessage());
+//        }
+//    }
 }
