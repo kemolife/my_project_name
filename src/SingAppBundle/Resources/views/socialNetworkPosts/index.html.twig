@@ -68,6 +68,14 @@
                                     Youtube
                                 </a>
                             </li>
+                            <li>
+                                <a href="#linkedin" data-toggle="tab" data-tab-history="true"
+                                   data-tab-history-changer="push"
+                                   data-tab-history-update-url="true">
+                                    <img src="{{ asset('images/icons/linkedin.png') }}" alt="" width="24" height="24">
+                                    LinkedIn
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-10">
@@ -358,7 +366,61 @@
                                     </div>
                                 {% endif %}
                             </div>
-
+                            <div class="tab-pane" id="linkedin">
+                                {% if linkedinAccount %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Caption</th>
+                                            <th>Post date</th>
+                                            <th>Post status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for post in posts %}
+                                            {% if post.socialNetwork == 'youtube' and post.videoId  is null %}
+                                                <tr>
+                                                    <td>{{ post.title }}</td>
+                                                    <td>{{ post.caption }}</td>
+                                                    <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ post.status }}</td>
+                                                    <td>
+                                                        <a href="{{ url('youtube-video-inside-delete', {'youtubePost': post.id }) }}"
+                                                           class="btn btn-default btn-sm">
+                                                            <i class="far fa-trash-alt"></i>Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for video in youtubeVideo %}
+                                            <tr>
+                                                <td>{{ video.snippet.title }}</td>
+                                                <td>{{ video.snippet.description }}</td>
+                                                <td>{{ video.snippet.publishedAt|date('Y-m-d H:i:s') }}</td>
+                                                <td>posted</td>
+                                                <td>
+                                                    <a href="{{ url('youtube-video-delete', {'videoId': video.contentDetails.videoId }) }}"
+                                                       class="btn btn-default btn-sm">
+                                                        <i class="far fa-trash-alt"></i>Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="linkedin-connect-cont">
+                                        <div class="linkedin-main-page">
+                                            <div class="linkedin-login-page">
+                                                {{  getPostButton('linkedin', currentBusiness, app.user)|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>

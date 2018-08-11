@@ -70,6 +70,9 @@ services:
     app.pinterest.service:
         class: SingAppBundle\Services\PinterestService
         arguments: ['@doctrine.orm.entity_manager', '%web_dir%']
+    app.linkedIn.service:
+        class: SingAppBundle\Services\LinkedInService
+        arguments: ['@doctrine.orm.entity_manager', '%web_dir%', '%domain%']
     app.factual.service:
         class: SingAppBundle\Services\FactualService
         arguments: ['@doctrine.orm.entity_manager']

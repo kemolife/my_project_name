@@ -48,6 +48,7 @@ class SocialNetworkPostController extends BaseController
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $youtubeAccount = $this->findOneBy('SingAppBundle:YoutubeAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $linkedinAccount = $this->findOneBy('SingAppBundle:LinkedinAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
 
         if ($youtubeAccount !== null) {
             /**
@@ -68,7 +69,8 @@ class SocialNetworkPostController extends BaseController
             'pinterestAccount' => $pinterestAccount,
             'currentBusiness' => $currentBusiness,
             'youtubeAccount' => $youtubeAccount,
-            'youtubeVideo' => $youtubeVideo
+            'youtubeVideo' => $youtubeVideo,
+            'linkedinAccount' => $linkedinAccount
         ];
 
 

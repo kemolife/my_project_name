@@ -36,6 +36,7 @@
         "jms/job-queue-bundle": "^1.4",
         "knpuniversity/oauth2-client-bundle": "^1.19",
         "league/oauth2-google": "^2.2",
+        "linkedinapi/linkedin": "^1.1",
         "mgp25/instagram-php": "^4.1",
         "microsoft/bingads": "v0.11.12.4",
         "php-curl-class/php-curl-class": "^8.1",
