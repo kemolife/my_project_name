@@ -38,11 +38,11 @@ class PinterestPhoto extends Images
     /**
      * Set post
      *
-     * @param \SingAppBundle\Entity\InstagramPost|null $post
+     * @param \SingAppBundle\Entity\PinterestPin|null $post
      *
      * @return PinterestPhoto
      */
-    public function setPost(\SingAppBundle\Entity\InstagramPost $post = null)
+    public function setPost(\SingAppBundle\Entity\PinterestPin $post = null)
     {
         $this->post = $post;
 
@@ -52,7 +52,7 @@ class PinterestPhoto extends Images
     /**
      * Get post
      *
-     * @return \SingAppBundle\Entity\InstagramPost|null
+     * @return \SingAppBundle\Entity\PinterestPin|null
      */
     public function getPost()
     {
