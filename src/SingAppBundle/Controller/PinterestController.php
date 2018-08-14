@@ -142,6 +142,7 @@ class PinterestController extends BaseController
 
         $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
         $boards = $pinterestService->getBoards($pinterestAccount);
+        var_dump($boards);
         $pinterestForm = $this->pinterestPostForm($request, $boards)->createView();
         $pinterestPosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
 

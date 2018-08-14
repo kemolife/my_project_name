@@ -22,7 +22,7 @@ class PinterestPostForm extends AbstractType
             ->add('title', TextType::class, ['attr' => ['placeholder' => 'Title', 'class' => 'form-control'], 'label' => 'Title', 'required' => true])
             ->add('caption', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true])
             ->add('board', ChoiceType::class, [
-                'choices' => $options['board'],
+                'choices' => $options['boards'],
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Board',
             ])
@@ -37,7 +37,7 @@ class PinterestPostForm extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'SingAppBundle\Entity\PinterestPin',
             'allow_extra_fields' => true,
-            'board' => null
+            'boards' => null
         ));
     }
 
