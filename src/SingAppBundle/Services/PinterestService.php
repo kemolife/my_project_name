@@ -107,6 +107,13 @@ class PinterestService
                 $pinterest = new Pinterest($this->clientId, $this->clientSecret);
                 $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
 
+                var_dump(array(
+                    "note" => $pinterestPin->getCaption(),
+                    "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0]->getPath(),
+                    "link" => $pinterestPin->getLink(),
+                    "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
+                )); die;
+
                 var_dump($pinterest->pins->create(array(
                     "note" => $pinterestPin->getCaption(),
                     "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0]->getPath(),
