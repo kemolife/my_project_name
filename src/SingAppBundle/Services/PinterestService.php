@@ -118,12 +118,11 @@ class PinterestService
                 $this->em->flush();
             }
         }catch (\Exception $e){
-            var_dump($e->getMessage()); die;
             $job = new Job('app:post:upload', array($pinterestPin->getId()));
+            $job->setExecuteAfter(new \DateTime(time()+3600));
             $this->em->persist($job);
 
             $pinterestPin->setStatus('pending');
-            $job->setExecuteAfter(new \DateTime('+1 hour'));
             $this->em->persist($pinterestPin);
             $this->em->flush();
         }
