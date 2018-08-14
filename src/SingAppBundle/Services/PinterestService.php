@@ -118,7 +118,7 @@ class PinterestService
                 $this->em->flush();
             }
         }catch (\Exception $e){
-            var_dump(1232); die;
+            var_dump($e->getMessage()); die;
             $job = new Job('app:post:upload', array($pinterestPin->getId()));
             $this->em->persist($job);
 
@@ -169,7 +169,7 @@ class PinterestService
             }
 
         }catch (\Exception $e){
-            $boards = $this->em->createQueryBuilder()->select("pinterest_pin.board")->getQuery()->execute();
+            $boards = $this->em->createQueryBuilder()->select("entity.board")->from('SingAppBundle:PinterestPin', 'entity')->getQuery()->execute();
             foreach ($boards as $board){
                 $boardsResult[$board] = $board;
             }
