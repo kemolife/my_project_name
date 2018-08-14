@@ -162,16 +162,14 @@ class PinterestService
                 $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
                 $boards = $pinterest->users->getMeBoards()->toArray();
                 foreach ($boards as $board){
-                    var_dump($board);
-                    $boardsResult[$board->name] = $board->name;
+                    $boardsResult[$board['name']] = $board['name'];
                 }
                 return $boardsResult;
             }
 
         }catch (\Exception $e){
-            $boards = $this->em->createQueryBuilder()->select("DISTINCT pinterest_pin.board")->getQuery()->execute();
+            $boards = $this->em->createQueryBuilder()->select("pinterest_pin.board")->getQuery()->execute();
             foreach ($boards as $board){
-                var_dump($board);
                 $boardsResult[$board] = $board;
             }
             return $boardsResult;
