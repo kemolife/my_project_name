@@ -32,13 +32,13 @@ class PinterestService
     private $clientSecret = 'bd7d90db3f897fc007353d27d283f486b8d71ba98985291177a35cc4fb439b19';
     private $redirectUrl = "https://businesslistings.cubeonline.com.au/pinterest/oauth2callback";
     private $curl;
-    private $webDir;
+    private $domain;
 
-    public function __construct(EntityManagerInterface $entityManager, $webDir)
+    public function __construct(EntityManagerInterface $entityManager, $domain)
     {
         $this->em = $entityManager;
         $this->curl = new Curl(self::BASE_URL);
-        $this->webDir = $webDir;
+        $this->domain = $domain;
     }
 
     public function auth()
@@ -107,32 +107,24 @@ class PinterestService
                 $pinterest = new Pinterest($this->clientId, $this->clientSecret);
                 $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
 
-                var_dump(array(
+                $pinterest->pins->create(array(
                     "note" => $pinterestPin->getCaption(),
-                    "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0]->getPath(),
+                    "image" => $this->domain . "/" . $pinterestPin->getMedia()[0]->getPath(),
                     "link" => $pinterestPin->getLink(),
                     "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
-                )); die;
-
-                var_dump($pinterest->pins->create(array(
-                    "note" => $pinterestPin->getCaption(),
-                    "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0]->getPath(),
-                    "link" => $pinterestPin->getLink(),
-                    "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
-                ))); die;
+                ));
                 $pinterestPin->setStatus('posted');
                 $this->em->persist($pinterestPin);
                 $this->em->flush();
             }
         }catch (\Exception $e){
-//            $job = new Job('app:post:upload', array($pinterestPin->getId()));
-//            $this->em->persist($job);
-//
-//            $pinterestPin->setStatus('pending');
-//            $job->setExecuteAfter(new \DateTime('+1 hour'));
-//            $this->em->persist($pinterestPin);
-//            $this->em->flush();
-            throw new OAuthCompanyException($e->getMessage());
+            $job = new Job('app:post:upload', array($pinterestPin->getId()));
+            $this->em->persist($job);
+
+            $pinterestPin->setStatus('pending');
+            $job->setExecuteAfter(new \DateTime('+1 hour'));
+            $this->em->persist($pinterestPin);
+            $this->em->flush();
         }
     }
 
