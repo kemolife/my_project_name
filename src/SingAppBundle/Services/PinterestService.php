@@ -106,28 +106,28 @@ class PinterestService
 
             $pinterest->pins->create(array(
                 "note" => $pinterestPin->getCaption(),
-                "image" => $this->webDir . "/images/" . $pinterestPin->getPhotos()[0],
+                "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0],
                 "link" => $pinterestPin->getLink(),
                 "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
             ));
         }
     }
 
-    public function editPin(PinterestPin $pinterestPin)
-    {
-
-        if ($pinterestPin->getAccount() instanceof PinterestAccount) {
-            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-            $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
-
-            $pinterest->pins->edit($pinterestPin->getMediaId(), array(
-                "note" => $pinterestPin->getCaption(),
-                "image" => $this->webDir . "/images/" . $pinterestPin->getPhotos()[0],
-                "link" => $pinterestPin->getLink(),
-                "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
-            ));
-        }
-    }
+//    public function editPin(PinterestPin $pinterestPin)
+//    {
+//
+//        if ($pinterestPin->getAccount() instanceof PinterestAccount) {
+//            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+//            $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
+//
+//            $pinterest->pins->edit($pinterestPin->getMedia(), array(
+//                "note" => $pinterestPin->getCaption(),
+//                "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0],
+//                "link" => $pinterestPin->getLink(),
+//                "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
+//            ));
+//        }
+//    }
 
     public function deletePin($pinId,  PinterestAccount $pinterestAccount)
     {
