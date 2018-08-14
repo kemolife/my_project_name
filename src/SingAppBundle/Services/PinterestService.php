@@ -65,16 +65,12 @@ class PinterestService
     private function savePins(PinterestAccount $pinterestAccount)
     {
         foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin){
-            var_dump($pin->url);
-            var_dump($pin->image);
-            die;
             $pinterestPin = new PinterestPin();
-            $pinterestPin->setLink($pin['url']);
-            $pinterestPin->setBoard($pin['board']);
-            $pinterestPin->setCaption($pin['note']);
-            $pinterestPin->setPostDate(new \DateTime($pin['created_at']));
+            $pinterestPin->setLink($pin->url);
+            $pinterestPin->setBoard($pin->board);
+            $pinterestPin->setCaption($pin->note);
+            $pinterestPin->setPostDate(new \DateTime($pin->created_at));
             $pinterestPin->setSocialNetwork('pinterest');
-            $pinterestPin->setUploadedFiles($pin['image']);
             $pinterestPin->setBusiness($pinterestAccount->getBusiness());
             $this->em->persist($pinterestPin);
             $this->em->flush();
