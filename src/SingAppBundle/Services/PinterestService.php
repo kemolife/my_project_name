@@ -160,7 +160,7 @@ class PinterestService
             if ($pinterestAccount instanceof PinterestAccount) {
                 $pinterest = new Pinterest($this->clientId, $this->clientSecret);
                 $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
-                $boards = $pinterest->users->getMeBoards()->toArray();
+                $boards = $pinterest->users->getMeBoards();
                 foreach ($boards as $board){
                     var_dump($board);
                     $boardsResult[$board['name']] = $board['name'];
