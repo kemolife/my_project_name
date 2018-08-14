@@ -174,7 +174,6 @@ class PinterestService
             }
             return $boardsResult;
         }
-        die;
     }
 
     public function createBoard($formData, PinterestAccount $pinterestAccount)
