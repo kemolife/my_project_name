@@ -5,6 +5,7 @@ namespace SingAppBundle\Repository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\PinterestPin;
 
 /**
@@ -15,7 +16,7 @@ use SingAppBundle\Entity\PinterestPin;
  */
 class PinterestPinRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getBoard(PinterestPin $account)
+    public function getBoard(PinterestAccount $account)
     {
         $em = $this->getEntityManager();
 
