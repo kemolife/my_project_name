@@ -8,6 +8,7 @@ use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\LinkedinPost;
 use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\PinterestPin;
 use SingAppBundle\Entity\User;
@@ -70,7 +71,7 @@ class SocialNetworkPostController extends BaseController
             'currentBusiness' => $currentBusiness,
             'youtubeAccount' => $youtubeAccount,
             'youtubeVideo' => $youtubeVideo,
-            'linkedinAccount' => $linkedinAccount
+            'linkedinAccount' => $linkedinAccount,
         ];
 
 
@@ -118,7 +119,7 @@ class SocialNetworkPostController extends BaseController
                         $pinterestPin->setBoard($data['board']);
                         $pinterestPin->setLink($data['link']);
                         $pinterestPin->setPostDate(new \DateTime($data['postDate']));
-                        $pinterestPin->setSocialNetwork('instagram');
+                        $pinterestPin->setSocialNetwork('pinterest');
                         $pinterestPin->setUploadedFiles($request->files->get('media'));
                         $pinterestPin->setSchedule(intval($request->request->get('schedule') === 'on'));
                         $pinterestPin->setBusiness($this->getCurrentBusiness($request));
@@ -138,6 +139,19 @@ class SocialNetworkPostController extends BaseController
                     $youtubeVideo->setBusiness($this->getCurrentBusiness($request));
 
                     $em->persist($youtubeVideo);
+                    break;
+
+                case 'linkedin':
+                    $linkedinPost = new LinkedinPost();
+                    $linkedinPost->setTitle($data['title']);
+                    $linkedinPost->setCaption($data['caption']);
+                    $linkedinPost->setPostDate(new \DateTime($data['postDate']));
+                    $linkedinPost->setSocialNetwork('linkedin');
+                    $linkedinPost->setUploadedFiles($request->files->get('media'));
+                    $linkedinPost->setSchedule(intval($request->request->get('schedule') === 'on'));
+                    $linkedinPost->setBusiness($this->getCurrentBusiness($request));
+
+                    $em->persist($linkedinPost);
                     break;
             }
 

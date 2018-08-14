@@ -4,10 +4,12 @@ namespace SingAppBundle\Command;
 
 use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\LinkedinPost;
 use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
 use Doctrine\ORM\EntityManager;
+use SingAppBundle\Services\LinkedInService;
 use SingAppBundle\Services\YoutubeService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -62,6 +64,15 @@ class UploadPostCommand extends ContainerAwareCommand
             $youtubeService = $this->getContainer()->get('app.youtube.service');
 
             $youtubeService->createVideo($post);
+        }
+
+        elseif ($post instanceof LinkedinPost && $postDate <= new \DateTime('now')) {
+            /**
+             * @var LinkedInService $linkedinService
+             */
+            $linkedinService = $this->getContainer()->get('app.linkedin.service');
+
+            $linkedinService->uploadPost($post);
         }
     }
 

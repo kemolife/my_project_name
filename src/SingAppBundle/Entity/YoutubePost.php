@@ -31,6 +31,16 @@ class YoutubePost extends Post implements HasOwnerInterface
     protected $videoId;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $channelId;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $visibility;
+
+    /**
      * @return User[]
      */
     public function getOwners()
@@ -92,5 +102,53 @@ class YoutubePost extends Post implements HasOwnerInterface
     public function getVideoId()
     {
         return $this->videoId;
+    }
+
+    /**
+     * Set channelId.
+     *
+     * @param string|null $channelId
+     *
+     * @return YoutubePost
+     */
+    public function setChannelId($channelId = null)
+    {
+        $this->channelId = $channelId;
+
+        return $this;
+    }
+
+    /**
+     * Get channelId.
+     *
+     * @return string|null
+     */
+    public function getChannelId()
+    {
+        return $this->channelId;
+    }
+
+    /**
+     * Set visibility.
+     *
+     * @param string $visibility
+     *
+     * @return YoutubePost
+     */
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * Get visibility.
+     *
+     * @return string
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
     }
 }

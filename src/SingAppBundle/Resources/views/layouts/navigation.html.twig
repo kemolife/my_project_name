@@ -35,8 +35,8 @@
             </a>
         </li>
         <li>
-            <a class="menu-link {% if app.request.attributes.get('_route') in ['social-network-posts'] %}selected{% endif %}"
-               href="{{ url('social-network-posts', app.request.query.all) }}">
+            <a class="menu-link {% if app.request.attributes.get('_route') in ['instagram-post'] %}selected{% endif %}"
+               href="{{ url('instagram-post', app.request.query.all) }}">
                 <div class="icon-container">
                     <i class="fas fa-file-alt menu-icon"></i>
                 </div>

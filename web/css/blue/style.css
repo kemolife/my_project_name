@@ -4323,3 +4323,8 @@ body {
     width: 100%;
     position: relative
 }
+
+.nav>li>a.selected {
+    text-decoration: none;
+    background-color: #eee;
+}

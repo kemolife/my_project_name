@@ -17,6 +17,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class GoogleController extends BaseController
 {
+    const SERVICE_NAME = 'google';
+    const SERVICE_MASSAGE = '';
+
     /**
      * @Route("/google/auth", name="google-auth")
      * @Security("has_role('ROLE_USER')")
@@ -179,5 +182,34 @@ class GoogleController extends BaseController
         }catch (Google_Exception $e){
             return $this->redirectToRoute('interactions', ['business' => $request->query->all()['business'], 'error' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * @Route("/google/post", name="google-post")
+     */
+    public function postAction(Request $request)
+    {
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $user = $this->getUser();
+
+        $googleAccount = $this->findOneBy('SingAppBundle:GoogleAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $googleForm = $this->googlePostForm($request)->createView();
+        $googlePosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
+
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'form' => $googleForm,
+            'posts' => $googlePosts,
+            'account' => $googleAccount,
+            'service' => self::SERVICE_NAME,
+            'massage' => self::SERVICE_MASSAGE,
+            'currentBusiness' => $currentBusiness,
+            'canDelete' => true
+        ];
+
+        return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
     }
 }

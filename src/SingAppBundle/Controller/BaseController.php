@@ -6,14 +6,27 @@ namespace SingAppBundle\Controller;
 use JMS\JobQueueBundle\Entity\Job;
 use ReflectionClass;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\FacebookPost;
+use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\HotfrogAccount;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\LinkedinPost;
+use SingAppBundle\Entity\PinterestPin;
+use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\User;
+use SingAppBundle\Entity\YoutubeAccount;
+use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Entity\ZomatoAccount;
 use SingAppBundle\Form\BusinessInfoType;
+use SingAppBundle\Form\FacebookPostForm;
+use SingAppBundle\Form\GooglePostForm;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
+use SingAppBundle\Form\LinkedinPostForm;
+use SingAppBundle\Form\PinterestPostForm;
+use SingAppBundle\Form\PostForm;
+use SingAppBundle\Form\YoutubePostForm;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Repository\BusinessInfoRepository;
 use SingAppBundle\Services\interfaces\BaseInterface;
@@ -149,24 +162,114 @@ class BaseController extends Controller
         return $instagramAccountForm;
     }
 
-    public function instagramPostForm(Request $request)
+    public function linkedinPostForm(Request $request)
     {
-        $instagramPost = new InstagramPost();
+        $linkedinPost = new LinkedinPost();
 
-        $instagramPostForm = $this->createForm(InstagramPostForm::class, $instagramPost);
+        $linkedinPostForm = $this->createForm(LinkedinPostForm::class, $linkedinPost);
 
-        $instagramPostForm->handleRequest($request);
+        $linkedinPostForm->handleRequest($request);
 
 
-        if ($instagramPostForm->isSubmitted() && $instagramPostForm->isValid() && 'POST' == $request->getMethod()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($instagramPost);
-            $em->flush();
-
+        if ($linkedinPostForm->isSubmitted() && $linkedinPostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($linkedinPost, $request, 'linkedin');
         }
 
-        return $instagramPostForm;
+        return $linkedinPostForm;
+    }
+
+    public function youtubePostForm(Request $request, $channels)
+    {
+        $youtubePost = new YoutubePost();
+
+        $youtubePostForm = $this->createForm(YoutubePostForm::class, $youtubePost, ['channels' => $channels]);
+
+        $youtubePostForm->handleRequest($request);
+
+
+        if ($youtubePostForm->isSubmitted() && $youtubePostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($youtubePost, $request, 'youtube');
+        }
+
+        return $youtubePostForm;
+    }
+
+    public function pinterestPostForm(Request $request)
+    {
+        $youtubePost = new PinterestPin();
+
+        $youtubePostForm = $this->createForm(PinterestPostForm::class, $youtubePost);
+
+        $youtubePostForm->handleRequest($request);
+
+
+        if ($youtubePostForm->isSubmitted() && $youtubePostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($youtubePost, $request, 'pinterest');
+        }
+
+        return $youtubePostForm;
+    }
+
+
+    public function googlePostForm(Request $request)
+    {
+        $youtubePost = new GooglePost();
+
+        $youtubePostForm = $this->createForm(GooglePostForm::class, $youtubePost);
+
+        $youtubePostForm->handleRequest($request);
+
+
+        if ($youtubePostForm->isSubmitted() && $youtubePostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($youtubePost, $request, 'google');
+        }
+
+        return $youtubePostForm;
+    }
+
+    public function facebookPostForm(Request $request)
+    {
+        $youtubePost = new FacebookPost();
+
+        $youtubePostForm = $this->createForm(FacebookPostForm::class, $youtubePost);
+
+        $youtubePostForm->handleRequest($request);
+
+
+        if ($youtubePostForm->isSubmitted() && $youtubePostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($youtubePost, $request, 'facebook');
+        }
+
+        return $youtubePostForm;
+    }
+
+    public function instagramPostForm(Request $request)
+    {
+        $youtubePost = new InstagramPost();
+
+        $youtubePostForm = $this->createForm(InstagramPostForm::class, $youtubePost);
+
+        $youtubePostForm->handleRequest($request);
+
+
+        if ($youtubePostForm->isSubmitted() && $youtubePostForm->isValid() && 'POST' == $request->getMethod()) {
+            $this->setSavePostData($youtubePost, $request, 'instagram');
+        }
+
+        return $youtubePostForm;
+    }
+
+    private function setSavePostData(Post $post, Request $request, $type)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $post->setPostDate(new \DateTime($request->request->get('postDate')));
+        $post->setSocialNetwork($type);
+        $post->setUploadedFiles($request->files->get('media'));
+        $post->setSchedule(intval($request->request->get('schedule') === 'on'));
+        $post->setBusiness($this->getCurrentBusiness($request));
+        $em->persist($post);
+        $em->flush();
     }
 
     public function getSwitchServices(Request $request)

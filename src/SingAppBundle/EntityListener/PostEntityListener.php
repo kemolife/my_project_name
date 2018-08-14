@@ -13,6 +13,8 @@ use DateInterval;
 use DateTime;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use SingAppBundle\Entity\LinkedinAccount;
+use SingAppBundle\Entity\LinkedinPost;
 use SingAppBundle\Entity\Media;
 use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\YoutubeAccount;
@@ -20,6 +22,7 @@ use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
+use SingAppBundle\Services\LinkedInService;
 use SingAppBundle\Services\YoutubeService;
 
 
@@ -29,12 +32,14 @@ class PostEntityListener
     private $instagramService;
     private $youtubeService;
     private $googleService;
+    private $linkedinService;
 
-    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService)
+    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService, LinkedInService $linkedinService)
     {
         $this->instagramService = $instagramService;
         $this->googleService = $googleService;
         $this->youtubeService = $youtubeService;
+        $this->linkedinService = $linkedinService;
     }
 
     /**
@@ -74,6 +79,15 @@ class PostEntityListener
 
             if ($youtubeAccount instanceof YoutubeAccount) {
                 $entity->setAccount($youtubeAccount);
+            }
+        }
+        elseif ($entity instanceof LinkedinPost) {
+            $repository = $em->getRepository('SingAppBundle:LinkedinAccount');
+
+            $linkedinAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
+
+            if ($linkedinAccount instanceof LinkedinAccount) {
+                $entity->setAccount($linkedinAccount);
             }
         }
     }
@@ -142,6 +156,9 @@ class PostEntityListener
         }
         elseif ($entity instanceof YoutubePost) {
             $this->youtubeService->createVideo($entity);
+        }
+        elseif ($entity instanceof LinkedinPost) {
+            $this->linkedinService->uploadPost($entity);
         }
 
     }

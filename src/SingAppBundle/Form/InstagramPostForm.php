@@ -30,30 +30,8 @@ class InstagramPostForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, ['attr' => ['placeholder' => 'Name', 'class' => 'form-control border-input']])
-            ->add('caption', TextareaType::class, ['attr' => ['placeholder' => 'Caption', 'class' => 'form-control border-input']])
-            ->add('account', EntityType::class, [
-                'class' => 'SingAppBundle:InstagramAccount',
-                'query_builder' => function (EntityRepository $er) {
-                    $qb = $er->createQueryBuilder('entity');
-
-                    return $qb->where($qb->expr()->eq('entity.user', $this->user->getId()));
-                },
-                'choice_label' => 'name',
-                'attr' => ['class' => 'form-control border-input'],
-                'required' => true
-            ])
-            ->add('postDate', DateTimeType::class, array('widget' => 'single_text', 'html5' => false, 'attr' => ['class' => 'js-datepicker form-control border-input']))
-            ->add('uploadedFiles', FileType::class, [
-                'attr' => [
-                    'placeholder' => 'Photo',
-                    'class' => 'form-control border-input',
-                    'accept' => 'image/*',
-                    'multiple' => 'multiple'],
-                'multiple' => true,
-                'label' => 'Photos',
-                'data_class' => null,
-            ]);
+            ->add('title', TextType::class, ['attr' => ['placeholder' => 'Title', 'class' => 'form-control'], 'label' => 'Title', 'required' => true])
+            ->add('caption', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true]);
     }
 
     /**
@@ -72,6 +50,6 @@ class InstagramPostForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'SingAppBundle_instagram_post';
+        return 'SingAppBundle_instagrampost';
     }
 }

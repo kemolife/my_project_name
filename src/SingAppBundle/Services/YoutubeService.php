@@ -164,7 +164,7 @@ class YoutubeService
                 $playListVideo = $youtube->playlistItems->listPlaylistItems("snippet, status, id, contentDetails", ['playlistId' => $idUpload]);
             };
             return $playListVideo;
-        }catch (Google_Service_Exception $e){
+        } catch (Google_Service_Exception $e) {
             try {
                 $this->refreshAccessToken($youtubeAccount);
                 $this->getUploadVideos($youtubeAccount);
@@ -176,41 +176,52 @@ class YoutubeService
 
     public function createVideo(YoutubePost $youtubePost)
     {
+        $thumbnails = [];
+        $properties = [];
         $client = $this->clientAccountSettings($youtubePost->getAccount());
         $youtube = new Google_Service_YouTube($client);
-
-        try {
-            $mimeType = $this->_mime_content_type($this->webDir . '/' . $youtubePost->getMedia()[0]->getPath());
-
+        foreach ($youtubePost->getMedia() as $media) {
+            $mediaPath = $this->webDir . '/' . $media->getPath();
+            $mimeType = $this->_mime_content_type($mediaPath);
+            if (strpos($mimeType, 'image') !== false) {
+                $thumbnails = [
+                    'snippet.thumbnails.default.url' => $this->webDir . '/' . $media->getPath(),
+                ];
+            }
             if (strpos($mimeType, 'video') !== false) {
-                $mediaPath = $this->webDir . '/' . $youtubePost->getMedia()[0]->getPath();
-
+                $mediaPath = $this->webDir . '/' . $media->getPath();
                 $properties = [
                     'snippet.categoryId' => '22',
                     'snippet.defaultLanguage' => '',
                     'snippet.description' => $youtubePost->getCaption(),
                     'snippet.tags[]' => '',
+                    'snippet.channelId' => $youtubePost->getChannelId(),
                     'snippet.title' => $youtubePost->getTitle(),
                     'status.embeddable' => '',
                     'status.license' => '',
-                    'status.privacyStatus' => 'public',
+                    'status.privacyStatus' => $youtubePost->getStatus(),
                     'status.publicStatsViewable' => ''
                 ];
-
-                $propertyObject = $propertyObject = $this->createResource($properties);
-
-                $resource = new Google_Service_YouTube_Video($propertyObject);
-                $client->setDefer(true);
-                $request = $youtube->videos->insert('snippet,status,contentDetails, id', $resource);
-                $client->setDefer(false);
-                $response = $this->uploadMedia($client, $request, $mediaPath, 'video/*');
-                $youtubePost->setVideoId($response->getId());
-                $youtubePost->setStatus('posted');
-                $this->em->persist($youtubePost);
-                $this->em->flush();
             }
+        }
 
-        }catch (Google_Service_Exception $e){
+        if (!empty($thumbnails)) {
+            $properties = array_merge($properties, $thumbnails);
+        }
+
+        $propertyObject = $propertyObject = $this->createResource($properties);
+        try {
+            $resource = new Google_Service_YouTube_Video($propertyObject);
+            $client->setDefer(true);
+            $request = $youtube->videos->insert('snippet,status,contentDetails, id', $resource);
+            $client->setDefer(false);
+            $response = $this->uploadMedia($client, $request, $mediaPath, 'video/*');
+            $youtubePost->setVideoId($response->getId());
+            $youtubePost->setStatus('posted');
+            $this->em->persist($youtubePost);
+            $this->em->flush();
+
+        } catch (Google_Service_Exception $e) {
             try {
                 $this->refreshAccessToken($youtubePost->getAccount());
                 $this->createVideo($youtubePost);
@@ -220,7 +231,9 @@ class YoutubeService
         }
     }
 
-    private function uploadMedia($client, $request, $filePath, $mimeType) {
+    private
+    function uploadMedia($client, $request, $filePath, $mimeType)
+    {
         // Specify the size of each chunk of data, in bytes. Set a higher value for
         // reliable connection as fewer chunks lead to faster uploads. Set a lower
         // value for better recovery on less reliable connections.
@@ -252,7 +265,8 @@ class YoutubeService
         return $status;
     }
 
-    private function _mime_content_type($filename)
+    private
+    function _mime_content_type($filename)
     {
         # Returns the system MIME type (as defined in /etc/mime.types) for the filename specified.
         #
@@ -268,7 +282,8 @@ class YoutubeService
         return isset($types[$ext]) ? $types[$ext] : null;
     }
 
-    private function system_extension_mime_types()
+    private
+    function system_extension_mime_types()
     {
         # Returns the system MIME type mapping of extensions to MIME types, as defined in /etc/mime.types.
         $out = array();
@@ -288,7 +303,9 @@ class YoutubeService
         return $out;
     }
 
-    private function addPropertyToResource(&$ref, $property, $value) {
+    private
+    function addPropertyToResource(&$ref, $property, $value)
+    {
         $keys = explode(".", $property);
         $is_array = false;
         foreach ($keys as $key) {
@@ -314,7 +331,9 @@ class YoutubeService
     }
 
 // Build a resource based on a list of properties given as key-value pairs.
-    private function createResource($properties) {
+    private
+    function createResource($properties)
+    {
         $resource = array();
         foreach ($properties as $prop => $value) {
             if ($value) {
@@ -324,26 +343,48 @@ class YoutubeService
         return $resource;
     }
 
-    public function deleteVideo(YoutubeAccount $youtubeAccount, $videoId)
+    public
+    function deleteVideo(YoutubeAccount $youtubeAccount, $videoId)
     {
         $client = $this->clientAccountSettings($youtubeAccount);
         $youtube = new Google_Service_YouTube($client);
         try {
             $youtube->videos->delete($videoId);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
 
-//    public function removePost(YoutubePost $youtubePost)
-//    {
-//        $youtubeAccount = $youtubePost->getAccount();
-//        $client = $this->clientAccountSettings($youtubeAccount);
-//        $youtube = new Google_Service_YouTube($client);
-//        try {
-//            $youtube->videos->delete($youtubePost->getVideoId());
-//        }catch (\Exception $e){
-//            throw new OAuthCompanyException($e->getMessage());
-//        }
-//    }
+    public
+    function getChannel($youtubeAccount)
+    {
+        $channels = null;
+        $client = $this->clientAccountSettings($youtubeAccount);
+        $youtube = new Google_Service_YouTube($client);
+        try {
+            foreach ($youtube->channels->listChannels("snippet, contentDetails", ['mine' => true]) as $key => $channel) {
+                $channels[$channel->getSnippet()->getTitle()] = $channel->getId();
+            }
+            return $channels;
+        } catch (Google_Service_Exception $e) {
+            try {
+                $this->refreshAccessToken($youtubeAccount);
+                $this->getChannel($youtubeAccount);
+            } catch (\Exception $e) {
+                throw new OAuthCompanyException(json_encode($e->getMessage()));
+            }
+        }
+    }
+
+    public function removePost(YoutubePost $youtubePost)
+    {
+        $youtubeAccount = $youtubePost->getAccount();
+        $client = $this->clientAccountSettings($youtubeAccount);
+        $youtube = new Google_Service_YouTube($client);
+        try {
+            $youtube->videos->delete($youtubePost->getVideoId());
+        } catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
 }

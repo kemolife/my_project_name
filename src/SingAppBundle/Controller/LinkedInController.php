@@ -18,6 +18,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class LinkedInController extends BaseController
 {
+    const SERVICE_NAME = 'linkedin';
+    const SERVICE_MASSAGE = 'LinkedIn service download only one image and the image should be at least 80 x 150px for best results.';
     /**
      * @Route("/auth/linkedin", name="linkedin-auth")
      */
@@ -51,77 +53,31 @@ class LinkedInController extends BaseController
     }
 
     /**
-     * @Route("/pinterest-test", name="pinterest-test")
+     * @Route("/linkedin/post", name="linkedin-post")
      */
-    public function testAction(Request $request)
+    public function postAction(Request $request)
     {
         /**
-         * @var User $user
+         * @var BusinessInfo $currentBusiness
          */
+        $currentBusiness = $this->getCurrentBusiness($request);
+
         $user = $this->getUser();
-        /**
-         * @var BusinessInfo $business
-         */
-        $business = $this->getCurrentBusiness($request);
-        /**
-         * @var PinterestService $pinterestService
-         */
-        $pinterestService = $this->get('app.pinterest.service');
-        $account = $pinterestService->getPinterestAccount($user, $business);
-        try {
-            $pinterestService->createPin($account->getAccessToken()); die;
-        }catch (\Exception $e){
-            var_dump($e->getMessage());
-        }
-    }
+        $linkedinForm = $this->linkedinPostForm($request)->createView();
+        $linkedinPosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
+        $linkedinAccount = $this->findOneBy('SingAppBundle:LinkedinAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
 
-    /**
-     * @Route("/pinterest/pin-edit/{pinterestPin}", name="pin-edit")
-     */
-    public function editPinAction(PinterestPin $pinterestPin, Request $request)
-    {
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'form' => $linkedinForm,
+            'posts' => $linkedinPosts,
+            'account' => $linkedinAccount,
+            'service' => self::SERVICE_NAME,
+            'massage' => self::SERVICE_MASSAGE,
+            'currentBusiness' => $currentBusiness,
+            'canDelete' => false
+        ];
 
-        $pinForm = $this->createForm(PinPostForm::class, $pinterestPin);
-
-        $pinForm->handleRequest($request);
-
-
-        if ($pinForm->isSubmitted() && $pinForm->isValid() && 'POST' == $request->getMethod()) {
-            try {
-                $this->get('app.pinterest.service')->editPin($pinterestPin);
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($pinterestPin);
-                $em->flush();
-                $response =  $this->redirect($this->generateUrl('social-network-posts', $request->query->all()).'#pinterest');
-            }catch (\Exception $e){
-                $response =  $this->redirect($this->generateUrl('social-network-posts', $request->query->all()+['error' => $e->getMessage()]).'#pinterest');
-            }
-
-        } else {
-            $response = $this->render('@SingApp/socialNetworkPosts/pinterest/edit.html.twig', [
-                'form' => $pinForm->createView(),
-                'businesses' => $this->getBusinesses(),
-            ]);
-        }
-
-        return $response;
-    }
-
-    /**
-     * @Route("/pinterest/pin-delete/{pinterestPin}", name="pin-delete")
-     */
-    public function deletePinAction(PinterestPin $pinterestPin, Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        try {
-            $this->get('app.pinterest.service')->deletePin($pinterestPin->getMediaId(), $this->getPinterestAccount($request));
-            $em->remove($pinterestPin);
-            $em->flush();
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all().'#pinterest');
-        } catch (\Exception $e) {
-            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()] + $request->query->all().'#pinterest');
-        }
-        return $response;
+        return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
     }
 }

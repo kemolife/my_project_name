@@ -20,6 +20,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class YoutubeController extends BaseController
 {
+    const SERVICE_NAME = 'youtube';
+    const SERVICE_MASSAGE = 'Youtube service download only video, your images save like a map of thumbnail images associated with the video';
     /**
      * @Route("/youtube/auth", name="youtube-auth")
      * @Security("has_role('ROLE_USER')")
@@ -97,5 +99,38 @@ class YoutubeController extends BaseController
             $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
         }
         return $response;
+    }
+
+    /**
+     * @Route("/youtube/post", name="youtube-post")
+     */
+    public function postAction(Request $request)
+    {
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $user = $this->getUser();
+        /**
+         * @var YoutubeService $youtubeService
+         */
+        $youtubeService = $this->get('app.youtube.service');
+        $youtubeAccount = $this->findOneBy('SingAppBundle:YoutubeAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $channels = $youtubeService->getChannel($youtubeAccount);
+        $youtubeForm = $this->youtubePostForm($request, $channels)->createView();
+        $youtubePosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
+
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'form' => $youtubeForm,
+            'posts' => $youtubePosts,
+            'account' => $youtubeAccount,
+            'service' => self::SERVICE_NAME,
+            'massage' => self::SERVICE_MASSAGE,
+            'currentBusiness' => $currentBusiness,
+            'canDelete' => true
+        ];
+
+        return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
     }
 }

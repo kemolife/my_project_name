@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PinterestController extends BaseController
 {
+    const SERVICE_NAME = 'pinterest';
+    const SERVICE_MASSAGE = '';
     /**
      * @Route("/auth/pinterest", name="pinterest-auth")
      */
@@ -122,5 +124,38 @@ class PinterestController extends BaseController
             $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()] + $request->query->all().'#pinterest');
         }
         return $response;
+    }
+
+    /**
+     * @Route("/pinterest/post", name="pinterest-post")
+     */
+    public function postAction(Request $request)
+    {
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $user = $this->getUser();
+
+        /** @var PinterestService $pinterestService */
+        $pinterestService = $this->get('app.pinterest.service');
+
+        $pinterestAccount = $this->findOneBy('SingAppBundle:PinterestAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $pinterestService->getBoards($pinterestAccount);
+        $pinterestForm = $this->pinterestPostForm($request)->createView();
+        $pinterestPosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
+
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'form' => $pinterestForm,
+            'posts' => $pinterestPosts,
+            'account' => $pinterestAccount,
+            'service' => self::SERVICE_NAME,
+            'massage' => self::SERVICE_MASSAGE,
+            'currentBusiness' => $currentBusiness,
+            'canDelete' => true
+        ];
+
+        return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
     }
 }

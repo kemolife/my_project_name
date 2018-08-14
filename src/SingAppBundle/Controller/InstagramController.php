@@ -20,6 +20,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class InstagramController extends BaseController
 {
+    const SERVICE_NAME = 'instagram';
+    const SERVICE_MASSAGE = '';
     /**
      * @Route("/instagram", name="instagram-auth")
      * @Security("has_role('ROLE_USER')")
@@ -188,5 +190,34 @@ class InstagramController extends BaseController
             $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
         }
         return $response;
+    }
+
+    /**
+     * @Route("/instagram/post", name="instagram-post")
+     */
+    public function postAction(Request $request)
+    {
+        /**
+         * @var BusinessInfo $currentBusiness
+         */
+        $currentBusiness = $this->getCurrentBusiness($request);
+        $user = $this->getUser();
+
+        $instagramAccount = $this->findOneBy('SingAppBundle:InstagramAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+        $instagramForm = $this->instagramPostForm($request)->createView();
+        $instagramPosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
+
+        $params = [
+            'businesses' => $this->getBusinesses(),
+            'form' => $instagramForm,
+            'posts' => $instagramPosts,
+            'account' => $instagramAccount,
+            'service' => self::SERVICE_NAME,
+            'massage' => self::SERVICE_MASSAGE,
+            'currentBusiness' => $currentBusiness,
+            'canDelete' => true
+        ];
+
+        return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
     }
 }

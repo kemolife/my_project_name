@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "instagram"="InstagramPost",
  *     "facebook"="FacebookPost",
  *     "pinterest" = "PinterestPin",
- *     "youtube" = "YoutubePost"
+ *     "youtube" = "YoutubePost",
+ *     "linkedin" = "LinkedinPost"
  * })
  * @ORM\Entity()
  */

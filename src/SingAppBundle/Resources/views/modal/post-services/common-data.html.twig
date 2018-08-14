@@ -1,0 +1,191 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.css') }}">
+{% endblock %}
+<div class="form-group">
+    <p>{{ massage }}</p>
+    <a href="javascript:void(0)" onclick="$('#media').click()">Upload media</a>
+    <input type="file" id="media" name="media[]" style="display: none;"
+           class="form-control"
+           multiple>
+</div>
+<table role="presentation" class="table table-striped">
+    <tbody class="preview-media-zone">
+
+    </tbody>
+</table>
+
+<div class="custom-checkbox" style="display: inline-block;">
+    <label>
+        <input type="checkbox" name="schedule" id="schedule">
+        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+        Schedule
+    </label>
+</div>
+<div class="form-group post-date-input" style="display: none;">
+    <label for="postDate">Post date:</label>
+    <input type="text" class="js-datepicker form-control" name="postDate">
+    <input type="hidden" name="timezoneOffset" id="timezoneOffset">
+
+</div>
+{% block javascripts %}
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-tab-history.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        var showNot = true;
+        $(document).ready(function () {
+            $('.js-datepicker').datetimepicker();
+            document.getElementById('media').addEventListener('change', previewMedia, false);
+
+            /*$(".preview-images-zone").sortable();*/
+
+            $(document).on('click', '.delete-preview', function () {
+                let no = $(this).data('preview');
+                $("#preview-" + no).remove();
+            });
+
+            $('#schedule').change(function (e) {
+                if (e.currentTarget.checked) {
+                    var offset = new Date().getTimezoneOffset() / 60;
+
+                    $('.post-date-input').css('display', 'block');
+                    $('input[name=postDate]').attr('required', true);
+                    $('#timezoneOffset').val(offset);
+                } else {
+                    $('.post-date-input').css('display', 'none');
+                    $('input[name=postDate]').removeAttr('required');
+                    $('#timezoneOffset').val('');
+
+                }
+            });
+
+            $('#socials').on('change', function () {
+                var value = $(this).val();
+                if ($.inArray("pinterest", value) !== -1) {
+                    if ($(document).find('span.error-api').length === 1) {
+                        $.notify({
+                            title: "<strong>Error!</strong> ",
+                            message: 'Api not work please try create pinterest pin later'
+                        }, {
+                            type: 'danger',
+                            position: 'absolute',
+                            z_index: 99999999
+                        });
+                    } else {
+                        if (showNot === true) {
+                            $.notify({
+                                title: "<strong>Warning!</strong> ",
+                                message: 'Pinterest Pin allows you to upload one photo, so for pinterest choose the first uploaded'
+                            }, {
+                                type: 'warning',
+                                position: 'absolute',
+                                z_index: 99999999
+                            });
+                            showNot = false;
+                        }
+                        $('.pinterest').css({'display': 'block'})
+                    }
+                } else {
+                    $('.pinterest').css({'display': 'none'})
+                }
+            });
+
+        });
+
+
+        var num = 4;
+
+        function previewMedia() {
+            if (window.File && window.FileList && window.FileReader) {
+                var files = event.target.files; //FileList object
+                var output = $(".preview-media-zone");
+
+                for (let i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    if (file.type.match('image')) {
+                        var picReader = new FileReader();
+
+                        picReader.addEventListener('load', function (event) {
+                            var picFile = event.target;
+                            var html = '<tr class="template-upload fade in" id="preview-' + num + '">' +
+                                '        <td>' +
+                                '            <span class="preview"><img src="' + picFile.result + '" alt="" height="100"></span>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '            <p class="name">' + file.name + '</p>' +
+                                '            <strong class="error text-danger"></strong>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '            <p class="size">' + bytesToSize(file.size) + '</p>' +
+                                '        </td>' +
+                                '        <td>' +
+                                '                <a class="btn btn-warning cancel delete-preview" data-preview="' + num + '">' +
+                                '                    <i class="glyphicon glyphicon-ban-circle"></i>' +
+                                '                    <span>Delete</span>' +
+                                '                </a>' +
+                                '            ' +
+                                '        </td>' +
+                                '    </tr>';
+
+
+                            output.append(html);
+                            num = num + 1;
+                        });
+
+                        picReader.readAsDataURL(file);
+                    }
+                    else if (file.type.match('video')) {
+                        var html = '<tr class="template-upload fade in" id="preview-' + num + '">' +
+                            '        <td>' +
+                            '            <span class="preview">' +
+                            '<video width="150" controls>' +
+                            '  <source src="mov_bbb.mp4" id="pro-img-' + num + '">' +
+                            '    Your browser does not support HTML5 video.' +
+                            '</video>' +
+                            '</span>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '            <p class="name">' + file.name + '</p>' +
+                            '            <strong class="error text-danger"></strong>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '            <p class="size">' + bytesToSize(file.size) + '</p>' +
+                            '        </td>' +
+                            '        <td>' +
+                            '                <a class="btn btn-warning cancel delete-preview" data-preview="' + num + '">' +
+                            '                    <i class="glyphicon glyphicon-ban-circle"></i>' +
+                            '                    <span>Delete</span>' +
+                            '                </a>' +
+                            '            ' +
+                            '        </td>' +
+                            '    </tr>';
+
+
+                        output.append(html);
+
+                        var $source = $('#pro-img-' + num);
+                        $source[0].src = URL.createObjectURL(file);
+                        $source.parent()[0].load();
+
+                        num = num + 1;
+
+                    }
+
+
+                }
+
+            } else {
+                console.log('Browser not support');
+            }
+        }
+
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes == 0) return '0 Byte';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        };
+
+
+    </script>
+{% endblock %}

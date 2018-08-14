@@ -27,11 +27,6 @@ class PinterestPin  extends Post implements HasOwnerInterface
     protected $account;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $mediaId;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $board;
@@ -41,10 +36,6 @@ class PinterestPin  extends Post implements HasOwnerInterface
      */
     protected $link;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageUrl;
 
     /**
      * @return User[]
@@ -52,37 +43,6 @@ class PinterestPin  extends Post implements HasOwnerInterface
     public function getOwners()
     {
         return [$this->getUser()];
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set mediaId.
-     *
-     * @param string|null $mediaId
-     *
-     * @return PinterestPin
-     */
-    public function setMediaId($mediaId = null)
-    {
-        $this->mediaId = $mediaId;
-
-        return $this;
-    }
-
-    /**
-     * Get mediaId.
-     *
-     * @return string|null
-     */
-    public function getMediaId()
-    {
-        return $this->mediaId;
     }
 
     /**
@@ -131,30 +91,6 @@ class PinterestPin  extends Post implements HasOwnerInterface
     public function getLink()
     {
         return $this->link;
-    }
-
-    /**
-     * Set imageUrl.
-     *
-     * @param string|null $imageUrl
-     *
-     * @return PinterestPin
-     */
-    public function setImageUrl($imageUrl = null)
-    {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get imageUrl.
-     *
-     * @return string|null
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
     }
 
     /**
