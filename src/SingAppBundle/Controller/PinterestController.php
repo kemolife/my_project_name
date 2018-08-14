@@ -5,6 +5,7 @@ namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\PinterestPin;
+use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Form\PinPostForm;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
@@ -112,12 +113,12 @@ class PinterestController extends BaseController
     }
 
     /**
-     * @Route("/pinterest/pin-delete/{pinterestPin}", name="pin-delete")
+     * @Route("/pinterest/pin-delete/{post}", name="pinterest-delete")
      */
-    public function deletePinAction(PinterestPin $pinterestPin, Request $request)
+    public function deletePinAction(Post $post, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($pinterestPin);
+        $em->remove($post);
         $em->flush();
     }
 

@@ -6,6 +6,7 @@ namespace SingAppBundle\Controller;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\InstagramAccount;
 use SingAppBundle\Entity\InstagramPost;
+use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Form\InstagramAccountForm;
 use SingAppBundle\Form\InstagramPostForm;
@@ -22,6 +23,7 @@ class InstagramController extends BaseController
 {
     const SERVICE_NAME = 'instagram';
     const SERVICE_MASSAGE = '';
+
     /**
      * @Route("/instagram", name="instagram-auth")
      * @Security("has_role('ROLE_USER')")
@@ -43,7 +45,7 @@ class InstagramController extends BaseController
         $instagramService = $this->get('instagram_provider');
 
         $instagram = new InstagramAccount();
-        if(null !== $instagramService->getIstagramAccount($user, $currentBusiness)) {
+        if (null !== $instagramService->getIstagramAccount($user, $currentBusiness)) {
             $instagram = $instagramService->getIstagramAccount($user, $currentBusiness);
         }
         $form = $this->createForm(InstagramAccountForm::class, $instagram);
@@ -53,11 +55,11 @@ class InstagramController extends BaseController
             /**
              * @var InstagramBusiness $instagramService
              */
-            try{
+            try {
                 $instagramService->auth($user, $currentBusiness, $instagram)->updateIstagramAccount();
                 $instagramService->createUpdateAccount($currentBusiness, $instagram);
                 return $this->redirectToRoute('index', $request->query->all());
-            }catch (OAuthCompanyException $e){
+            } catch (OAuthCompanyException $e) {
                 return $this->render('@SingApp/services-form/instagram.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
             }
         }
@@ -174,22 +176,14 @@ class InstagramController extends BaseController
     }
 
     /**
-     * @Route("/instagram/post-delete/{instagramPost}", name="instagram-post-delete")
+     * @Route("/instagram/post-delete/{post}", name="instagram-delete")
      */
-    public function deletePostAction(InstagramPost $instagramPost, Request $request)
+    public function deletePostAction(Post $post, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        try {
-            $this->get('app.instagram.service')->deletePost($instagramPost);
-            $em->remove($instagramPost);
-            $em->flush();
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
-        }catch (OAuthCompanyException $e){
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
-        }catch (\Doctrine\DBAL\DBALException $e){
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
-        }
-        return $response;
+        $em->remove($post);
+        $em->flush();
+        return $this->redirectToRoute('instagram-post', $request->query->all());
     }
 
     /**

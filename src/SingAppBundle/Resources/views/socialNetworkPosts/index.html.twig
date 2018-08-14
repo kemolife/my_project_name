@@ -88,7 +88,7 @@
                                             <td>{{ post.status }}</td>
                                             {% if canDelete %}
                                                 <td>
-                                                    <a href="{{ url('youtube-video-inside-delete', {'youtubePost': post.id }) }}"
+                                                    <a href="{{ url(~service~'-delete', {'post': post.id }) }}"
                                                        class="btn btn-default btn-sm">
                                                         <i class="far fa-trash-alt"></i>Delete
                                                     </a>

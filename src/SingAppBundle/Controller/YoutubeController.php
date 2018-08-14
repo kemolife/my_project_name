@@ -84,18 +84,18 @@ class YoutubeController extends BaseController
     }
 
     /**
-     * @Route("/youtube/inside-post-delete/{youtubePost}", name="youtube-video-inside-delete")
+     * @Route("/youtube/inside-post-delete/{post}", name="youtube-delete")
      */
-    public function deletePostAction(YoutubePost $youtubePost, Request $request)
+    public function deletePostAction(Post $post, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($youtubePost);
+        $em->remove($post);
         $em->flush();
         return $this->redirectToRoute('youtube-post', $request->query->all());
     }
 
     /**
-     * @Route(" / youtube / post", name="youtube-post")
+     * @Route(" /youtube/post", name="youtube-post")
      */
     public function postAction(Request $request)
     {

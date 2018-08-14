@@ -145,7 +145,7 @@ class GoogleController extends BaseController
     }
 
     /**
-     * @Route("/google/post-delete/{post}", name="google-post-delete")
+     * @Route("/google/post-delete/{post}", name="google-delete")
      * @Security("is_granted('ABILITY_GOOGLE_POST_DELETE', post)")
      */
     public function googlePostDeletePostAction(Post $post, Request $request)
