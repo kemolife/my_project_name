@@ -162,7 +162,7 @@ class PinterestService
                 $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
                 $boards = $pinterest->users->getMeBoards();
                 foreach ($boards as $board){
-                    $boardsResult[$board->name] = $board[$board->name];
+                    $boardsResult[$board->name] = $board->name;
                 }
                 return $boardsResult;
             }
