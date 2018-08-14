@@ -118,13 +118,14 @@ class PinterestService
                 $this->em->flush();
             }
         }catch (\Exception $e){
-            $job = new Job('app:post:upload', array($pinterestPin->getId()));
-            $this->em->persist($job);
-
-            $pinterestPin->setStatus('pending');
-            $job->setExecuteAfter(new \DateTime('+1 hour'));
-            $this->em->persist($pinterestPin);
-            $this->em->flush();
+//            $job = new Job('app:post:upload', array($pinterestPin->getId()));
+//            $this->em->persist($job);
+//
+//            $pinterestPin->setStatus('pending');
+//            $job->setExecuteAfter(new \DateTime('+1 hour'));
+//            $this->em->persist($pinterestPin);
+//            $this->em->flush();
+            throw new OAuthCompanyException($e->getMessage());
         }
     }
 
