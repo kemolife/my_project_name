@@ -50,36 +50,36 @@ class PinterestService
 
     public function createAccount(Response $accessTokeData)
     {
-        $createdDate = new \DateTime();
-        $pinterest = new PinterestAccount();
+        try {
+            $createdDate = new \DateTime();
+            $pinterest = new PinterestAccount();
 
-        $pinterest->setCreated($createdDate);
-        $pinterest->setAccessToken($accessTokeData->access_token);
+            $pinterest->setCreated($createdDate);
+            $pinterest->setAccessToken($accessTokeData->access_token);
 
-        $this->em->persist($pinterest);
-        $this->em->flush();
+            $this->em->persist($pinterest);
 
-        $this->savePins($pinterest);
+            $this->savePins($pinterest);
+            $this->em->flush();
+        }catch (\Exception $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
     }
 
     private function savePins(PinterestAccount $pinterestAccount)
     {
-        try {
-            foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin) {
-                $pinterestPin = new PinterestPin();
-                $pinterestPin->setLink($pin->url);
-                $pinterestPin->setTitle($pin->url);
-                $pinterestPin->setBoard($pin->board);
-                $pinterestPin->setCaption($pin->note);
-                $pinterestPin->setStatus('pending');
-                $pinterestPin->setPostDate(new \DateTime($pin->created_at));
-                $pinterestPin->setSocialNetwork('pinterest');
-                $pinterestPin->setBusiness($pinterestAccount->getBusiness());
-                $this->em->persist($pinterestPin);
-            }
-            $this->em->flush();
-        }catch (\Exception $e){
-            throw new OAuthCompanyException($e->getMessage());
+
+        foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin) {
+            $pinterestPin = new PinterestPin();
+            $pinterestPin->setLink($pin->url);
+            $pinterestPin->setTitle($pin->url);
+            $pinterestPin->setBoard($pin->board);
+            $pinterestPin->setCaption($pin->note);
+            $pinterestPin->setStatus('pending');
+            $pinterestPin->setPostDate(new \DateTime($pin->created_at));
+            $pinterestPin->setSocialNetwork('pinterest');
+            $pinterestPin->setBusiness($pinterestAccount->getBusiness());
+            $this->em->persist($pinterestPin);
         }
     }
 
@@ -112,7 +112,7 @@ class PinterestService
                 "note" => $pinterestPin->getCaption(),
                 "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0],
                 "link" => $pinterestPin->getLink(),
-                "board" => $pinterest->users->me()->toArray()['username'].'/'.$pinterestPin->getBoard()
+                "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
             ));
         }
     }
@@ -133,7 +133,7 @@ class PinterestService
 //        }
 //    }
 
-    public function deletePin($pinId,  PinterestAccount $pinterestAccount)
+    public function deletePin($pinId, PinterestAccount $pinterestAccount)
     {
         if ($pinterestAccount instanceof PinterestAccount) {
             $pinterest = new Pinterest($this->clientId, $this->clientSecret);
@@ -189,7 +189,8 @@ class PinterestService
     {
         if ($pinterestAccount instanceof PinterestAccount) {
             $this->curl->get('/v1/board/' . $boardId . '/pins/', ['access_token' => $pinterestAccount->getAccessToken()]);
-            var_dump($this->curl->response); die;
+            var_dump($this->curl->response);
+            die;
         }
     }
 
@@ -197,7 +198,8 @@ class PinterestService
     {
         if ($pinterestAccount instanceof PinterestAccount) {
             $this->curl->get('/v1/board/' . $boardId . '/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
-            var_dump($this->curl->response); die;
+            var_dump($this->curl->response);
+            die;
             return $this->curl->response;
         }
     }
@@ -205,7 +207,7 @@ class PinterestService
     public function createSectionByBoard($boardId, $formData, PinterestAccount $pinterestAccount)
     {
         if ($pinterestAccount instanceof PinterestAccount) {
-            $this->curl->setUrl('/v1/board/'.$boardId.'/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
+            $this->curl->setUrl('/v1/board/' . $boardId . '/sections/', ['access_token' => $pinterestAccount->getAccessToken()]);
 
             $this->curl->post($this->curl->url, [
                 "title" => $formData['title']
@@ -215,7 +217,7 @@ class PinterestService
 
     public function deleteSection($sectionId, $token)
     {
-        $this->curl->delete('/v1/board/sections/'.$sectionId, ['access_token' => $token]);
+        $this->curl->delete('/v1/board/sections/' . $sectionId, ['access_token' => $token]);
     }
 
     /**
@@ -266,6 +268,6 @@ class PinterestService
 
     private function getHash(PinterestAccount $account, $alias)
     {
-        return hash('ripemd160', $alias . 'business'. $account->getBusiness()->getId() . 'user' .  $account->getUser()->getId());
+        return hash('ripemd160', $alias . 'business' . $account->getBusiness()->getId() . 'user' . $account->getUser()->getId());
     }
 }
