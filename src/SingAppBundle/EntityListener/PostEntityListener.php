@@ -200,5 +200,9 @@ class PostEntityListener
         {
             $this->youtubeService->removePost($entity);
         }
+        elseif ($entity instanceof PinterestPin && $entity->getStatus() == 'posted')
+        {
+            $this->pinterestService->deletePin($entity);
+        }
     }
 }

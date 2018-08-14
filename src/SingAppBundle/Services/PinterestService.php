@@ -60,7 +60,7 @@ class PinterestService
 
             $this->savePins($pinterest);
             $this->em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new OAuthCompanyException($e->getMessage());
         }
     }
@@ -117,7 +117,7 @@ class PinterestService
                 $this->em->persist($pinterestPin);
                 $this->em->flush();
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $job = new Job('app:post:upload', array($pinterestPin->getId()));
             $date = new \DateTime();
             $date->modify('+1 hour');
@@ -146,12 +146,16 @@ class PinterestService
 //        }
 //    }
 
-    public function deletePin($pinId, PinterestAccount $pinterestAccount)
+    public function deletePin(PinterestPin $pinterestPin)
     {
-        if ($pinterestAccount instanceof PinterestAccount) {
-            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
-            return $pinterest->pins->delete($pinId);
+        try {
+            if ($pinterestPin->getAccount() instanceof PinterestAccount) {
+                $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+                $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
+                return $pinterest->pins->delete($pinterestPin->getPinId());
+            }
+        } catch (\Exception $e) {
+            throw new OAuthCompanyException('Please try again later');
         }
     }
 
@@ -163,13 +167,13 @@ class PinterestService
                 $pinterest = new Pinterest($this->clientId, $this->clientSecret);
                 $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
                 $boards = $pinterest->users->getMeBoards();
-                foreach ($boards as $board){
+                foreach ($boards as $board) {
                     $boardsResult[$board->name] = $board->name;
                 }
                 return $boardsResult;
             }
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $repository = $this->em->getRepository('SingAppBundle:PinterestPin');
             return $repository->getBoard($pinterestAccount);
         }

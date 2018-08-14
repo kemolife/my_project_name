@@ -170,7 +170,7 @@ class InstagramController extends BaseController
         $em->remove($instagramAccount);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('social-network-posts', $request->query->all()).'#instagram');
+        return $this->redirectToRoute('instagram-post', $request->query->all());
     }
 
     /**

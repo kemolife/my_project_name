@@ -19,6 +19,7 @@ class PinterestController extends BaseController
 {
     const SERVICE_NAME = 'pinterest';
     const SERVICE_MASSAGE = '';
+
     /**
      * @Route("/auth/pinterest", name="pinterest-auth")
      */
@@ -46,7 +47,7 @@ class PinterestController extends BaseController
             $accessTokeData = $pinterestService->getToken($request->get('code'));
             $pinterestService->createAccount($accessTokeData);
             return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
-        }catch (OAuthCompanyException $e){
+        } catch (OAuthCompanyException $e) {
             return $this->redirectToRoute($this->session->get('url'), ['error' => $e->getMessage(), 'business' => $this->session->get('business')]);
         }
     }
@@ -70,8 +71,9 @@ class PinterestController extends BaseController
         $pinterestService = $this->get('app.pinterest.service');
         $account = $pinterestService->getPinterestAccount($user, $business);
         try {
-            $pinterestService->createPin($account->getAccessToken()); die;
-        }catch (\Exception $e){
+            $pinterestService->createPin($account->getAccessToken());
+            die;
+        } catch (\Exception $e) {
             var_dump($e->getMessage());
         }
     }
@@ -94,9 +96,9 @@ class PinterestController extends BaseController
 
                 $em->persist($pinterestPin);
                 $em->flush();
-                $response =  $this->redirect($this->generateUrl('social-network-posts', $request->query->all()).'#pinterest');
-            }catch (\Exception $e){
-                $response =  $this->redirect($this->generateUrl('social-network-posts', $request->query->all()+['error' => $e->getMessage()]).'#pinterest');
+                $response = $this->redirect($this->generateUrl('social-network-posts', $request->query->all()) . '#pinterest');
+            } catch (\Exception $e) {
+                $response = $this->redirect($this->generateUrl('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]) . '#pinterest');
             }
 
         } else {
@@ -115,15 +117,8 @@ class PinterestController extends BaseController
     public function deletePinAction(PinterestPin $pinterestPin, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        try {
-            $this->get('app.pinterest.service')->deletePin($pinterestPin->getMediaId(), $this->getPinterestAccount($request));
-            $em->remove($pinterestPin);
-            $em->flush();
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all().'#pinterest');
-        } catch (\Exception $e) {
-            $response = $this->redirectToRoute('social-network-posts', ['error' => $e->getMessage()] + $request->query->all().'#pinterest');
-        }
-        return $response;
+        $em->remove($pinterestPin);
+        $em->flush();
     }
 
     /**

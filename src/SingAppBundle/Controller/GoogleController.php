@@ -155,7 +155,7 @@ class GoogleController extends BaseController
         $em->remove($post);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('social-network-posts'));
+        return $this->redirectToRoute('google-post', $request->query->all());
     }
 
     /**

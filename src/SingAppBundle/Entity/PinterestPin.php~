@@ -37,6 +37,11 @@ class PinterestPin  extends Post implements HasOwnerInterface
      */
     protected $link;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $pinId;
+
 
     /**
      * @return User[]

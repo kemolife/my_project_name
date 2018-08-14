@@ -22,6 +22,7 @@ class YoutubeController extends BaseController
 {
     const SERVICE_NAME = 'youtube';
     const SERVICE_MASSAGE = 'Youtube service download only video, your images save like a map of thumbnail images associated with the video';
+
     /**
      * @Route("/youtube/auth", name="youtube-auth")
      * @Security("has_role('ROLE_USER')")
@@ -53,7 +54,7 @@ class YoutubeController extends BaseController
 
         $youtubeService->createUpdateYoutubeAccount($accessTokeData);
 
-        return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business')]).'#youtube');
+        return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business')]) . '#youtube');
     }
 
     /**
@@ -74,11 +75,11 @@ class YoutubeController extends BaseController
 
         $youtubeAccount = $this->findOneBy('SingAppBundle:YoutubeAccount', ['user' => $this->getUser()->getId(), 'business' => $currentBusiness->getId()]);
 
-        try{
+        try {
             $youtubeService->deleteVideo($youtubeAccount, $request->get('videoId'));
-            return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business')]).'#youtube');
-        }catch (OAuthCompanyException $e){
-            return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business'), 'error' => $e->getMessage()]).'#youtube');
+            return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business')]) . '#youtube');
+        } catch (OAuthCompanyException $e) {
+            return $this->redirect($this->generateUrl('social-network-posts', ['business' => $this->session->get('business'), 'error' => $e->getMessage()]) . '#youtube');
         }
     }
 
@@ -88,21 +89,13 @@ class YoutubeController extends BaseController
     public function deletePostAction(YoutubePost $youtubePost, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        try {
-//            $this->get('app.youtube.service')->removePost($youtubePost);
-            $em->remove($youtubePost);
-            $em->flush();
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all());
-        }catch (OAuthCompanyException $e){
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
-        }catch (\Doctrine\DBAL\DBALException $e){
-            $response = $this->redirectToRoute('social-network-posts', $request->query->all() + ['error' => $e->getMessage()]);
-        }
-        return $response;
+        $em->remove($youtubePost);
+        $em->flush();
+        return $this->redirectToRoute('youtube-post', $request->query->all());
     }
 
     /**
-     * @Route("/youtube/post", name="youtube-post")
+     * @Route(" / youtube / post", name="youtube-post")
      */
     public function postAction(Request $request)
     {

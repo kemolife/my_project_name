@@ -37,6 +37,11 @@ class PinterestPin  extends Post implements HasOwnerInterface
      */
     protected $link;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $pinId;
+
 
     /**
      * @return User[]
@@ -116,5 +121,29 @@ class PinterestPin  extends Post implements HasOwnerInterface
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set pinId.
+     *
+     * @param string|null $pinId
+     *
+     * @return PinterestPin
+     */
+    public function setPinId($pinId = null)
+    {
+        $this->pinId = $pinId;
+
+        return $this;
+    }
+
+    /**
+     * Get pinId.
+     *
+     * @return string|null
+     */
+    public function getPinId()
+    {
+        return $this->pinId;
     }
 }
