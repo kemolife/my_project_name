@@ -70,7 +70,8 @@ class PinterestService
             $pinterestPin->setTitle($pin->url);
             $pinterestPin->setBoard($pin->board);
             $pinterestPin->setCaption($pin->note);
-            $pinterestPin->setPostDate($pin->created_at);
+            $pinterestPin->setStatus('pending');
+            $pinterestPin->setPostDate(new \DateTime($pin->created_at));
             $pinterestPin->setSocialNetwork('pinterest');
             $pinterestPin->setBusiness($pinterestAccount->getBusiness());
             $this->em->persist($pinterestPin);
