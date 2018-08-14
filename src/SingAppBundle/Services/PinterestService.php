@@ -75,8 +75,9 @@ class PinterestService
             $pinterestPin->setSocialNetwork('pinterest');
             $pinterestPin->setBusiness($pinterestAccount->getBusiness());
             $this->em->persist($pinterestPin);
-            $this->em->flush();
         }
+        $this->em->flush();
+        die;
     }
 
 
