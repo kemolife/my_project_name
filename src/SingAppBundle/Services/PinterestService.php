@@ -64,20 +64,23 @@ class PinterestService
 
     private function savePins(PinterestAccount $pinterestAccount)
     {
-        foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin){
-            $pinterestPin = new PinterestPin();
-            $pinterestPin->setLink($pin->url);
-            $pinterestPin->setTitle($pin->url);
-            $pinterestPin->setBoard($pin->board);
-            $pinterestPin->setCaption($pin->note);
-            $pinterestPin->setStatus('pending');
-            $pinterestPin->setPostDate(new \DateTime($pin->created_at));
-            $pinterestPin->setSocialNetwork('pinterest');
-            $pinterestPin->setBusiness($pinterestAccount->getBusiness());
-            $this->em->persist($pinterestPin);
+        try {
+            foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin) {
+                $pinterestPin = new PinterestPin();
+                $pinterestPin->setLink($pin->url);
+                $pinterestPin->setTitle($pin->url);
+                $pinterestPin->setBoard($pin->board);
+                $pinterestPin->setCaption($pin->note);
+                $pinterestPin->setStatus('pending');
+                $pinterestPin->setPostDate(new \DateTime($pin->created_at));
+                $pinterestPin->setSocialNetwork('pinterest');
+                $pinterestPin->setBusiness($pinterestAccount->getBusiness());
+                $this->em->persist($pinterestPin);
+            }
+            $this->em->flush();
+        }catch (\Exception $e){
+            throw new OAuthCompanyException($e->getMessage());
         }
-        $this->em->flush();
-        die;
     }
 
 
