@@ -56,8 +56,8 @@ class PinterestService
         $pinterest->setCreated($createdDate);
         $pinterest->setAccessToken($accessTokeData->access_token);
 
-//        $this->em->persist($pinterest);
-//        $this->em->flush();
+        $this->em->persist($pinterest);
+        $this->em->flush();
 
         $this->savePins($pinterest);
     }
