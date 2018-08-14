@@ -119,7 +119,9 @@ class PinterestService
             }
         }catch (\Exception $e){
             $job = new Job('app:post:upload', array($pinterestPin->getId()));
-            $job->setExecuteAfter(new \DateTime(time()+3600));
+            $date = new \DateTime();
+            $date->modify('+1 hour');
+            $job->setExecuteAfter($date);
             $this->em->persist($job);
 
             $pinterestPin->setStatus('pending');
