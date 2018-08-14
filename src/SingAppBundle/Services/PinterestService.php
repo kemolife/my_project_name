@@ -169,11 +169,8 @@ class PinterestService
             }
 
         }catch (\Exception $e){
-            $boards = $this->em->createQueryBuilder()->select("entity.board")->from('SingAppBundle:PinterestPin', 'entity')->getQuery()->execute();
-            foreach ($boards as $board){
-                $boardsResult[$board] = $board;
-            }
-            return $boardsResult;
+            $repository = $this->em->getRepository('SingAppBundle:PinterestPin');
+            return $repository->getBoard($pinterestAccount);
         }
     }
 

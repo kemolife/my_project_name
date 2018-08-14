@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * PinterestPin.
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="SingAppBundle\Repository\PinterestPinRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
  *     "SingAppBundle\EntityListener\SetOwnerListener",
