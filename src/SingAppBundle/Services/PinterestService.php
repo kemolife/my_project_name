@@ -65,7 +65,9 @@ class PinterestService
     private function savePins(PinterestAccount $pinterestAccount)
     {
         foreach ($this->getPins($pinterestAccount->getAccessToken()) as $pin){
-            var_dump($pin); die;
+            var_dump($pin->attributes);
+            var_dump($pin->attributes['image']);
+            die;
             $pinterestPin = new PinterestPin();
             $pinterestPin->setLink($pin['url']);
             $pinterestPin->setBoard($pin['board']);
