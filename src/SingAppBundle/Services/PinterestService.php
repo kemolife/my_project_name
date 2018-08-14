@@ -118,6 +118,7 @@ class PinterestService
                 $this->em->flush();
             }
         }catch (\Exception $e){
+            var_dump(1232); die;
             $job = new Job('app:post:upload', array($pinterestPin->getId()));
             $this->em->persist($job);
 
