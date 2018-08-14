@@ -107,13 +107,14 @@ class PinterestService
                 $pinterest = new Pinterest($this->clientId, $this->clientSecret);
                 $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
 
-                $pinterest->pins->create(array(
+                $response = $pinterest->pins->create(array(
                     "note" => $pinterestPin->getCaption(),
                     "image" => $this->domain . "/" . $pinterestPin->getMedia()[0]->getPath(),
                     "link" => $pinterestPin->getLink(),
                     "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
                 ));
                 $pinterestPin->setStatus('posted');
+                $pinterestPin->setPinId($response->id);
                 $this->em->persist($pinterestPin);
                 $this->em->flush();
             }
