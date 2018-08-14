@@ -27,7 +27,7 @@ class PinterestPin  extends Post implements HasOwnerInterface
     protected $account;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $board;
 
