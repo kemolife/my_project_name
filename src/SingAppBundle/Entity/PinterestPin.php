@@ -14,7 +14,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
  *     "SingAppBundle\EntityListener\SetOwnerListener",
- *     "SingAppBundle\EntityListener\PinterestPinEntityListener"})
+ *     "SingAppBundle\EntityListener\PinterestPinEntityListener",
+ *     "SingAppBundle\EntityListener\PostEntityListener"})
  */
 class PinterestPin  extends Post implements HasOwnerInterface
 {

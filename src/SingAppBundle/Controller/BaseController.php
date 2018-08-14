@@ -194,11 +194,11 @@ class BaseController extends Controller
         return $youtubePostForm;
     }
 
-    public function pinterestPostForm(Request $request)
+    public function pinterestPostForm(Request $request, $boards)
     {
         $youtubePost = new PinterestPin();
 
-        $youtubePostForm = $this->createForm(PinterestPostForm::class, $youtubePost);
+        $youtubePostForm = $this->createForm(PinterestPostForm::class, $youtubePost, ['board' => $boards]);
 
         $youtubePostForm->handleRequest($request);
 

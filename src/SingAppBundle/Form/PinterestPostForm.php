@@ -21,8 +21,12 @@ class PinterestPostForm extends AbstractType
         $builder
             ->add('title', TextType::class, ['attr' => ['placeholder' => 'Title', 'class' => 'form-control'], 'label' => 'Title', 'required' => true])
             ->add('caption', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true])
-            ->add('board', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true])
-            ->add('link', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true]);
+            ->add('board', ChoiceType::class, [
+                'choices' => $options['board'],
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Board',
+            ])
+            ->add('link', UrlType::class, ['attr' => ['placeholder' => 'Link', 'class' => 'form-control'], 'label' => 'Link', 'required' => true]);
     }
 
     /**
@@ -33,6 +37,7 @@ class PinterestPostForm extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'SingAppBundle\Entity\PinterestPin',
             'allow_extra_fields' => true,
+            'board' => null
         ));
     }
 

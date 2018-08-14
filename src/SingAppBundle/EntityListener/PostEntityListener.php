@@ -16,6 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 use SingAppBundle\Entity\LinkedinAccount;
 use SingAppBundle\Entity\LinkedinPost;
 use SingAppBundle\Entity\Media;
+use SingAppBundle\Entity\PinterestAccount;
+use SingAppBundle\Entity\PinterestPin;
 use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\YoutubeAccount;
 use SingAppBundle\Entity\YoutubePost;
@@ -23,6 +25,7 @@ use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
 use SingAppBundle\Services\LinkedInService;
+use SingAppBundle\Services\PinterestService;
 use SingAppBundle\Services\YoutubeService;
 
 
@@ -33,13 +36,15 @@ class PostEntityListener
     private $youtubeService;
     private $googleService;
     private $linkedinService;
+    private $pinterestService;
 
-    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService, LinkedInService $linkedinService)
+    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService, LinkedInService $linkedinService, PinterestService $pinterestService)
     {
         $this->instagramService = $instagramService;
         $this->googleService = $googleService;
         $this->youtubeService = $youtubeService;
         $this->linkedinService = $linkedinService;
+        $this->pinterestService = $pinterestService;
     }
 
     /**
@@ -88,6 +93,15 @@ class PostEntityListener
 
             if ($linkedinAccount instanceof LinkedinAccount) {
                 $entity->setAccount($linkedinAccount);
+            }
+        }
+        elseif ($entity instanceof PinterestPin) {
+            $repository = $em->getRepository('SingAppBundle:PinterestAccount');
+
+            $pinterestAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
+
+            if ($pinterestAccount instanceof PinterestAccount) {
+                $entity->setAccount($pinterestAccount);
             }
         }
     }
@@ -159,6 +173,9 @@ class PostEntityListener
         }
         elseif ($entity instanceof LinkedinPost) {
             $this->linkedinService->uploadPost($entity);
+        }
+        elseif ($entity instanceof PinterestPin) {
+            $this->pinterestService->createPin($entity);
         }
 
     }

@@ -9,6 +9,7 @@ use DirkGroenen\Pinterest\Exceptions\PinterestException;
 use DirkGroenen\Pinterest\Pinterest;
 use DirkGroenen\Pinterest\Transport\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\JobQueueBundle\Entity\Job;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\PinterestAccount;
 use SingAppBundle\Entity\PinterestBoard;
@@ -32,11 +33,9 @@ class PinterestService
     private $redirectUrl = "https://businesslistings.cubeonline.com.au/pinterest/oauth2callback";
     private $curl;
     private $webDir;
-    private $cache;
 
     public function __construct(EntityManagerInterface $entityManager, $webDir)
     {
-        $this->cache = new FilesystemCache();
         $this->em = $entityManager;
         $this->curl = new Curl(self::BASE_URL);
         $this->webDir = $webDir;
@@ -73,9 +72,9 @@ class PinterestService
             $pinterestPin = new PinterestPin();
             $pinterestPin->setLink($pin->url);
             $pinterestPin->setTitle($pin->url);
-            $pinterestPin->setBoard($pin->board);
+            $pinterestPin->setBoard($pin->board->name);
             $pinterestPin->setCaption($pin->note);
-            $pinterestPin->setStatus('pending');
+            $pinterestPin->setStatus('posted');
             $pinterestPin->setPostDate(new \DateTime($pin->created_at));
             $pinterestPin->setSocialNetwork('pinterest');
             $pinterestPin->setBusiness($pinterestAccount->getBusiness());
@@ -103,17 +102,29 @@ class PinterestService
 
     public function createPin(PinterestPin $pinterestPin)
     {
+        try {
+            if ($pinterestPin->getAccount() instanceof PinterestAccount) {
+                $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+                $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
 
-        if ($pinterestPin->getAccount() instanceof PinterestAccount) {
-            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-            $pinterest->auth->setOAuthToken($pinterestPin->getAccount()->getAccessToken());
+                $pinterest->pins->create(array(
+                    "note" => $pinterestPin->getCaption(),
+                    "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0]->getPath(),
+                    "link" => $pinterestPin->getLink(),
+                    "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
+                ));
+                $pinterestPin->setStatus('posted');
+                $this->em->persist($pinterestPin);
+                $this->em->flush();
+            }
+        }catch (\Exception $e){
+            $job = new Job('app:post:upload', array($pinterestPin->getId()));
+            $this->em->persist($job);
 
-            $pinterest->pins->create(array(
-                "note" => $pinterestPin->getCaption(),
-                "image" => $this->webDir . "/images/" . $pinterestPin->getMedia()[0],
-                "link" => $pinterestPin->getLink(),
-                "board" => $pinterest->users->me()->toArray()['username'] . '/' . $pinterestPin->getBoard()
-            ));
+            $pinterestPin->setStatus('pending');
+            $job->setExecuteAfter(new \DateTime('+1 hour'));
+            $this->em->persist($pinterestPin);
+            $this->em->flush();
         }
     }
 
@@ -144,11 +155,23 @@ class PinterestService
 
     public function getBoards(PinterestAccount $pinterestAccount)
     {
-        $this->getHash($pinterestAccount, 'pin_boards');
-        if ($pinterestAccount instanceof PinterestAccount) {
-            $pinterest = new Pinterest($this->clientId, $this->clientSecret);
-            $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
-            return $pinterest->users->getMeBoards()->toArray();
+        $boardsResult = [];
+        try {
+            if ($pinterestAccount instanceof PinterestAccount) {
+                $pinterest = new Pinterest($this->clientId, $this->clientSecret);
+                $pinterest->auth->setOAuthToken($pinterestAccount->getAccessToken());
+                $boards = $pinterest->users->getMeBoards()->toArray();
+                foreach ($boards as $board){
+                    $boardsResult[$board->name] = $board->name;
+                }
+                return $boardsResult;
+            }
+        }catch (\Exception $e){
+            $boards = $this->em->createQueryBuilder()->select("DISTINCT pinterest_pin.board")->getQuery()->execute();
+            foreach ($boards as $board){
+                $boardsResult[$board] = $board;
+            }
+            return $boardsResult;
         }
     }
 
@@ -264,10 +287,5 @@ class PinterestService
             throw new OAuthCompanyException('Try later!');
         }
 
-    }
-
-    private function getHash(PinterestAccount $account, $alias)
-    {
-        return hash('ripemd160', $alias . 'business' . $account->getBusiness()->getId() . 'user' . $account->getUser()->getId());
     }
 }
