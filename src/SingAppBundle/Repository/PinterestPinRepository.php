@@ -29,7 +29,7 @@ class PinterestPinRepository extends \Doctrine\ORM\EntityRepository
         $response = [];
 
         foreach ($result as $board){
-            $response[$board] = $board;
+            $response[$board['board']] = $board['board'];
         }
 
         return $response;
