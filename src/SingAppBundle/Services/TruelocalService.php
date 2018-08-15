@@ -150,9 +150,9 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
 //            $address->suburb = strtoupper($business->getLocality());
 //            $address->postCode = $business->getPostalCode();
 //            $address->state = strtoupper(self::$stateAbr[$business->getAdministrativeArea()]);
-            $address->suburb = strtoupper('Melbourne');
+            $address->suburb = 'Melbourne';
             $address->postCode = 3000;
-            $address->state = strtoupper('VIC');
+            $address->state = 'VIC';
             $params['firstName'] = $business->getName();
             $params['displayName'] = $business->getName();
             $params['address'] = $address;
