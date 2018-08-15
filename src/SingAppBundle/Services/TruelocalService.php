@@ -147,9 +147,12 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
             $cookies = json_decode(file_get_contents($fileName), true);
             $this->curl->setHeaders(['content-type' =>  'application/json']);
             $address = new \stdClass();
-            $address->suburb = strtoupper($business->getLocality());
-            $address->postCode = $business->getPostalCode();
-            $address->state = strtoupper(self::$stateAbr[$business->getAdministrativeArea()]);
+//            $address->suburb = strtoupper($business->getLocality());
+//            $address->postCode = $business->getPostalCode();
+//            $address->state = strtoupper(self::$stateAbr[$business->getAdministrativeArea()]);
+            $address->suburb = strtoupper('Melbourne');
+            $address->postCode = 3000;
+            $address->state = strtoupper('VIC');
             $params['firstName'] = $business->getName();
             $params['displayName'] = $business->getName();
             $params['address'] = $address;

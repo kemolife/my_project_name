@@ -54,7 +54,7 @@ class GetConnectButtonAndStatus extends \Twig_Extension
 
         $siteSettings = $repository->findOneBy(['user' => $user->getId(), 'business' => $businessInfo->getId()]);
         if(null === $siteSettings){
-            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => 'social-network-posts']).'"> <img src="/images/'.$type.'-button-connect.png"
+            $button = '<a href="'.$this->router->generate($type.'-auth', ['business' => $businessInfo->getId(), 'url' => $type.'-post']).'"> <img src="/images/'.$type.'-button-connect.png"
                                                          alt="'.$type.' connect" height="50"></a>';
         }
 

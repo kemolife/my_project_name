@@ -4,6 +4,7 @@
 namespace SingAppBundle\Services;
 
 
+use Facebook\FacebookResponse;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\FacebookAccount;
 use Doctrine\ORM\EntityManagerInterface;
@@ -84,6 +85,7 @@ class FacebookService
 
     public function createPost(FacebookPost $facebookPost)
     {
+        $result = null;
         $fb = $this->clientSettings('v3.1');
         try {
             foreach ($facebookPost->getMedia() as $media) {
@@ -95,7 +97,7 @@ class FacebookService
                         '/' . $facebookPost->getAccount()->getPage() . '/photos',
                         array(
                             'caption' => $facebookPost->getCaption(),
-                            'url' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                            'url' => $this->domain . "/" . $media->getPath(),
                         ),
                         $facebookPost->getAccount()->getPageAccessToken()
                     );
@@ -104,13 +106,17 @@ class FacebookService
                         '/' . $facebookPost->getAccount()->getPage() . '/videos',
                         array(
                             'description' => $facebookPost->getCaption(),
-                            'source' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                            'source' => $this->domain . "/" . $media->getPath(),
                         ),
                         $facebookPost->getAccount()->getPageAccessToken()
                     );
                 }
             }
-            var_dump($result); die;
+            if($result instanceof FacebookResponse && $result->getHttpStatusCode() === 200) {
+                $facebookPost->setPostId(@$result->getDecodedBody()['data']['post_id']);
+                $this->em->persist($facebookPost);
+                $this->em->flush();
+            }
         } catch (FacebookResponseException $e) {
             throw new OAuthCompanyException($e->getMessage());
         } catch (FacebookSDKException $e) {
@@ -136,17 +142,21 @@ class FacebookService
 
     public function setPosts(FacebookAccount $facebookAccount)
     {
+        $repository = $this->em->getRepository('SingAppBundle:FacebookPost');
+
         $posts = $this->getAllPost($facebookAccount);
         foreach ($posts as $post) {
-            $facebookPost = new FacebookPost();
-            $facebookPost->setTitle(substr($post['message'], 0, 100));
-            $facebookPost->setCaption($post['message']);
-            $facebookPost->setPostDate(new \DateTime($post['created_time']));
-            $facebookPost->setSocialNetwork('facebook');
-            $facebookPost->setBusiness($facebookAccount->getBusiness());
-            $facebookPost->setPostId($post['id']);
-            $facebookPost->setStatus('posted');
-            $this->em->persist($facebookPost);
+            if($repository->findOneBy(['postId' => $post['id']]) === null) {
+                $facebookPost = new FacebookPost();
+                $facebookPost->setTitle(substr($post['message'], 0, 100));
+                $facebookPost->setCaption($post['message']);
+                $facebookPost->setPostDate(new \DateTime($post['created_time']));
+                $facebookPost->setSocialNetwork('facebook');
+                $facebookPost->setBusiness($facebookAccount->getBusiness());
+                $facebookPost->setPostId($post['id']);
+                $facebookPost->setStatus('posted');
+                $this->em->persist($facebookPost);
+            }
         }
     }
 

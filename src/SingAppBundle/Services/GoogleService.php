@@ -119,7 +119,7 @@ class GoogleService implements BaseInterface
         $googleMyBusiness = new Google_Service_MyBusiness($client);
         try {
             $accounts = $googleMyBusiness->accounts->listAccounts()->getAccounts();
-        }catch (Google_Service_Exception $e){
+        } catch (Google_Service_Exception $e) {
             try {
                 $accessTokeData = $this->refreshAccessToken($googleAccount);
                 $this->createUpdateGoogleAccount($accessTokeData, $googleAccount);
@@ -152,17 +152,24 @@ class GoogleService implements BaseInterface
         $postBody->setWebsiteUrl($businessInfo->getWebsite());
 
         $address = new Google_Service_MyBusiness_PostalAddress();
-        $address->setRegionCode($businessInfo->getRegionCode());
-        $address->setAddressLines($businessInfo->getAddress());
-        $address->setAdministrativeArea($businessInfo->getAdministrativeArea());
-        $address->setLocality($businessInfo->getLocality());
-        $address->setPostalCode($businessInfo->getPostalCode());
+//        $address->setRegionCode($businessInfo->getRegionCode());
+//        $address->setAddressLines($businessInfo->getAddress());
+//        $address->setAdministrativeArea($businessInfo->getAdministrativeArea());
+//        $address->setLocality($businessInfo->getLocality());
+//        $address->setPostalCode($businessInfo->getPostalCode());
+        $address->setRegionCode('AU');
+        $address->setAddressLines('San Telmo, 14 Meyers Pl, Melbourne Victoria, Australia');
+        $address->setAdministrativeArea('VIC');
+        $address->setLocality('Melbourne');
+        $address->setPostalCode(3000);
         $address->setLanguageCode('en');
         $postBody->setAddress($address);
 
         $latLng = new Google_Service_MyBusiness_LatLng();
-        $latLng->setLatitude($businessInfo->getLatitude());
-        $latLng->setLongitude($businessInfo->getLongitude());
+//        $latLng->setLatitude($businessInfo->getLatitude());
+//        $latLng->setLongitude($businessInfo->getLongitude());
+        $latLng->setLatitude(-37.8121636);
+        $latLng->setLongitude(144.9724132);
         $postBody->setLatlng($latLng);
 
         $primaryCategory = new Google_Service_MyBusiness_Category();
@@ -170,7 +177,7 @@ class GoogleService implements BaseInterface
         $primaryCategory->setCategoryId($businessInfo->getCategory()->getCategoryId());
         $postBody->setPrimaryCategory($primaryCategory);
         $additionalCategory = [];
-        foreach ($businessInfo->getAdditionalCategories() as  $item){
+        foreach ($businessInfo->getAdditionalCategories() as $item) {
             $category = new Google_Service_MyBusiness_Category();
             $category->setDisplayName($item->getName());
             $category->setCategoryId($item->getCategoryId());
