@@ -34,8 +34,9 @@ class HotfrogController extends BaseController
              */
             try {
                 $companyId = $hotfrogServices->auth($hotfrogAccount);
+                $hotfrogAccount->setBusinessId($companyId);
                 $hotfrogServices->editAccount($hotfrogAccount, $this->getCurrentBusiness($request));
-                $hotfrogAccount = $hotfrogServices->createAccount($hotfrogAccount, $companyId);
+                $hotfrogAccount = $hotfrogServices->createAccount($hotfrogAccount);
                 return $this->redirectToRoute('index', $request->query->all());
             } catch (OAuthCompanyException $e) {
                 return $this->render('@SingApp/services-form/hotfrog.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);

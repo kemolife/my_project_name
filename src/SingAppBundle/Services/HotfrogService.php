@@ -84,7 +84,6 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $createdDate = new \DateTime();
 
         $hotfrogAccount->setCreated($createdDate);
-        $hotfrogAccount->setBusinessId($companyId);
 
         $this->em->persist($hotfrogAccount);
         $this->em->flush();
@@ -111,7 +110,7 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
      * @param BusinessInfo $business
      * @throws OAuthCompanyException
      */
-    public function editAccount(SocialNetworkAccount $hotfrogAccount, BusinessInfo $business)
+    public function editAccount(SocialNetworkAccount $hotfrogAccount, BusinessInfo $business, $notLoop = false)
     {
         $this->business = $business;
         $fileName = $this->webDir . '/cookies/cookies_hotfrog_' . $hotfrogAccount->getUserEmail() . '.txt';
@@ -162,9 +161,11 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
             if ($this->curl->httpStatusCode !== 302) {
                 throw new OAuthCompanyException($this->message);
             }
-            if(strpos($this->curl->response, 'Login.aspx')){
+            if(strpos($this->curl->response, 'Login.aspx') && $notLoop === false){
                 $this->auth($hotfrogAccount);
-                $this->editAccount($hotfrogAccount, $business);
+                $this->editAccount($hotfrogAccount, $business, true);
+            }else{
+                throw new OAuthCompanyException($this->message);
             }
         } else {
             throw new OAuthCompanyException($this->message);
