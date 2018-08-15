@@ -95,12 +95,11 @@ class FacebookService
         ]);
 
         $result = $fb->post(
-            '/'.$facebookPost->getAccount()->getPage().'/feed',
+            '/'.$facebookPost->getAccount()->getPage().'/photos',
             array (
                 'message' => $facebookPost->getCaption(),
-                'link' => $facebookPost->getLink(),
-                'picture' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
-                'published' => true
+                'source' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                'published' => 0
             ),
             $facebookPost->getAccount()->getPageAccessToken()
         );
