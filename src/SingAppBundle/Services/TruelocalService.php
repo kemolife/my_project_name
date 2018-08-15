@@ -104,12 +104,11 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
      * @param $companyId
      * @return SocialNetworkAccount
      */
-    public function createAccount(SocialNetworkAccount $truelocalAccount, $profile)
+    public function createAccount(SocialNetworkAccount $truelocalAccount)
     {
         $createdDate = new \DateTime();
 
         $truelocalAccount->setCreated($createdDate);
-        $truelocalAccount->setProfile($profile);
 
         $this->em->persist($truelocalAccount);
         $this->em->flush();
