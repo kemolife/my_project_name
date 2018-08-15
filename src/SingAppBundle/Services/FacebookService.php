@@ -97,9 +97,8 @@ class FacebookService
         $result = $fb->post(
             '/'.$facebookPost->getAccount()->getPage().'/photos',
             array (
-                'message' => $facebookPost->getCaption(),
-                'source' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
-                'published' => 0
+                'caption' => $facebookPost->getCaption(),
+                'url' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
             ),
             $facebookPost->getAccount()->getPageAccessToken()
         );
