@@ -26,6 +26,11 @@ class GooglePost extends Post implements HasOwnerInterface
     protected $account;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $googlePostName;
+
+    /**
      * @return User[]
      */
     public function getOwners()

@@ -5,6 +5,7 @@ namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\FacebookAccount;
+use SingAppBundle\Entity\Post;
 use SingAppBundle\Services\FacebookService;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -103,6 +104,12 @@ class FacebookController extends BaseController
 
         $em->persist($facebookAccount);
 
+        /**
+         * @var FacebookService $facebookService
+         */
+        $facebookService = $this->get('app.facebook.service');
+        $facebookService->setPosts($facebookAccount);
+
         $em->flush();
 
         return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
@@ -120,6 +127,7 @@ class FacebookController extends BaseController
         $user = $this->getUser();
 
         $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+
         $facebookForm = $this->facebookPostForm($request)->createView();
         $facebookPosts = $posts = $this->findBy('SingAppBundle:Post', ['user' => $user->getId(), 'business' => $currentBusiness->getId(), 'socialNetwork' => self::SERVICE_NAME], ['postDate' => 'DESC']);
 
@@ -135,6 +143,20 @@ class FacebookController extends BaseController
         ];
 
         return $this->render('@SingApp/socialNetworkPosts/index.html.twig', $params);
+    }
+
+    /**
+     * @Route("/facebook/facebook-delete/{post}", name="facebook-delete")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function facebookPostDeletePostAction(Post $post, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('facebook-post', $request->query->all());
     }
 
 }

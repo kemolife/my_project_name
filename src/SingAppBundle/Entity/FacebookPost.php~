@@ -30,6 +30,12 @@ class FacebookPost  extends Post implements HasOwnerInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $link;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $postId;
+
     /**
      * @return User[]
      */
@@ -68,5 +74,29 @@ class FacebookPost  extends Post implements HasOwnerInterface
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set link.
+     *
+     * @param string|null $link
+     *
+     * @return FacebookPost
+     */
+    public function setLink($link = null)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link.
+     *
+     * @return string|null
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 }

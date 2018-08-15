@@ -14,6 +14,7 @@ use Facebook\Facebook;
 use FacebookAds\Api;
 use FacebookAds\Object\AdAccount;
 use SingAppBundle\Entity\FacebookPost;
+use SingAppBundle\Providers\Exception\OAuthCompanyException;
 use Symfony\Component\HttpFoundation\Request;
 
 class FacebookService
@@ -29,13 +30,18 @@ class FacebookService
         $this->em = $entityManager;
     }
 
-    public function auth()
+    private function clientSettings($version)
     {
-        $fb = new Facebook([
+        return new Facebook([
             'app_id' => '214454595877928',
             'app_secret' => '1c94e55cee9db82948c697720823fe9d',
-            'default_graph_version' => 'v2.10',
+            'default_graph_version' => $version,
         ]);
+    }
+
+    public function auth()
+    {
+        $fb = $this->clientSettings('v2.10');
 
         $helper = $fb->getRedirectLoginHelper();
         $permissions = [
@@ -52,22 +58,16 @@ class FacebookService
 
     public function getAccessToken()
     {
-        $fb = new Facebook([
-            'app_id' => '214454595877928',
-            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
-            'default_graph_version' => 'v2.10',
-        ]);
+        $fb = $this->clientSettings('v2.10');
 
         $helper = $fb->getRedirectLoginHelper();
 
         try {
             $accessToken = $helper->getAccessToken();
         } catch (FacebookResponseException $e) {
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
+            throw new OAuthCompanyException($e->getMessage());
         } catch (FacebookSDKException $e) {
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+            throw new OAuthCompanyException($e->getMessage());
         }
 
         return $accessToken;
@@ -75,11 +75,7 @@ class FacebookService
 
     public function getPages(FacebookAccount $facebookAccount)
     {
-        $fb = new Facebook([
-            'app_id' => '214454595877928',
-            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
-            'default_graph_version' => 'v3.1',
-        ]);
+        $fb = $this->clientSettings('v3.1');
 
         $result = $fb->get('me/accounts', $facebookAccount->getAccessToken());
 
@@ -88,32 +84,76 @@ class FacebookService
 
     public function createPost(FacebookPost $facebookPost)
     {
-        $fb = new Facebook([
-            'app_id' => '214454595877928',
-            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
-            'default_graph_version' => 'v3.1',
-        ]);
+        $fb = $this->clientSettings('v3.1');
+        try {
+            foreach ($facebookPost->getMedia() as $media) {
+                $mimeType = mime_content_type($media->getPath());
 
-        $result = $fb->post(
-            '/'.$facebookPost->getAccount()->getPage().'/photos',
-            array (
-                'caption' => $facebookPost->getCaption(),
-                'url' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
-            ),
-            $facebookPost->getAccount()->getPageAccessToken()
-        );
 
-        var_dump($result); die;
+                if (strpos($mimeType, 'image') !== false) {
+                    $result = $fb->post(
+                        '/' . $facebookPost->getAccount()->getPage() . '/photos',
+                        array(
+                            'caption' => $facebookPost->getCaption(),
+                            'url' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                        ),
+                        $facebookPost->getAccount()->getPageAccessToken()
+                    );
+                } else {
+                    $result = $fb->post(
+                        '/' . $facebookPost->getAccount()->getPage() . '/videos',
+                        array(
+                            'description' => $facebookPost->getCaption(),
+                            'source' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                        ),
+                        $facebookPost->getAccount()->getPageAccessToken()
+                    );
+                }
+            }
+            var_dump($result); die;
+        } catch (FacebookResponseException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        } catch (FacebookSDKException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
+    public function getAllPost(FacebookAccount $facebookAccount)
+    {
+        try {
+            $fb = $this->clientSettings('v3.1');
+            $response = $fb->get(
+                '/' . $facebookAccount->getPage() . '/posts',
+                $facebookAccount->getPageAccessToken()
+            );
+            return @$response->getDecodedBody()['data'];
+        } catch (FacebookResponseException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        } catch (FacebookSDKException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
+    public function setPosts(FacebookAccount $facebookAccount)
+    {
+        $posts = $this->getAllPost($facebookAccount);
+        foreach ($posts as $post) {
+            $facebookPost = new FacebookPost();
+            $facebookPost->setTitle(substr($post['message'], 0, 100));
+            $facebookPost->setCaption($post['message']);
+            $facebookPost->setPostDate(new \DateTime($post['created_time']));
+            $facebookPost->setSocialNetwork('facebook');
+            $facebookPost->setBusiness($facebookAccount->getBusiness());
+            $facebookPost->setPostId($post['id']);
+            $facebookPost->setStatus('posted');
+            $this->em->persist($facebookPost);
+        }
     }
 
     public function getAccounts()
     {
 
-        $fb = new Facebook([
-            'app_id' => '214454595877928',
-            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
-            'default_graph_version' => 'v2.10',
-        ]);
+        $fb = $this->clientSettings('v2.10');
 
         $result = $fb->get('me/accounts');
         return $result;
@@ -143,5 +183,23 @@ class FacebookService
         $business = $repository->findOneBy(['id' => $id]);
 
         return $business;
+    }
+
+    public function removePost(FacebookPost $facebookPost)
+    {
+        $facebookAccount = $facebookPost->getAccount();
+
+        try {
+            $fb = $this->clientSettings('v3.1');
+            $fb->delete(
+                '/' . $facebookPost->getPostId(),
+                array(),
+                $facebookAccount->getPageAccessToken()
+            );
+        } catch (FacebookResponseException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        } catch (FacebookSDKException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
     }
 }

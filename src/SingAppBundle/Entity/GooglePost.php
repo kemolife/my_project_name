@@ -26,6 +26,11 @@ class GooglePost extends Post implements HasOwnerInterface
     protected $account;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $googlePostName;
+
+    /**
      * @return User[]
      */
     public function getOwners()
@@ -63,5 +68,29 @@ class GooglePost extends Post implements HasOwnerInterface
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set googlePostName.
+     *
+     * @param string|null $googlePostName
+     *
+     * @return GooglePost
+     */
+    public function setGooglePostName($googlePostName = null)
+    {
+        $this->googlePostName = $googlePostName;
+
+        return $this;
+    }
+
+    /**
+     * Get googlePostName.
+     *
+     * @return string|null
+     */
+    public function getGooglePostName()
+    {
+        return $this->googlePostName;
     }
 }

@@ -69,7 +69,7 @@ class PostEntityListener
     {
         $em = $args->getEntityManager();
 
-        if ($entity instanceof InstagramPost) {
+        if ($entity instanceof InstagramPost && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:InstagramAccount');
             $instagramAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'isDefault' => 1]);
 
@@ -79,7 +79,7 @@ class PostEntityListener
                 throw new OAuthCompanyException('Cannot create post without default account.');
             }
         }
-        elseif ($entity instanceof GooglePost) {
+        elseif ($entity instanceof GooglePost && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:GoogleAccount');
 
             $googleAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
@@ -88,7 +88,7 @@ class PostEntityListener
                 $entity->setAccount($googleAccount);
             }
         }
-        elseif ($entity instanceof YoutubePost) {
+        elseif ($entity instanceof YoutubePost && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:YoutubeAccount');
 
             $youtubeAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
@@ -97,7 +97,7 @@ class PostEntityListener
                 $entity->setAccount($youtubeAccount);
             }
         }
-        elseif ($entity instanceof LinkedinPost) {
+        elseif ($entity instanceof LinkedinPost && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:LinkedinAccount');
 
             $linkedinAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
@@ -106,7 +106,7 @@ class PostEntityListener
                 $entity->setAccount($linkedinAccount);
             }
         }
-        elseif ($entity instanceof PinterestPin) {
+        elseif ($entity instanceof PinterestPin && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:PinterestAccount');
 
             $pinterestAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
@@ -115,7 +115,7 @@ class PostEntityListener
                 $entity->setAccount($pinterestAccount);
             }
         }
-        elseif ($entity instanceof FacebookPost) {
+        elseif ($entity instanceof FacebookPost && !$entity->getAccount()) {
             $repository = $em->getRepository('SingAppBundle:FacebookAccount');
 
             $facebookAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
@@ -182,22 +182,22 @@ class PostEntityListener
             $em->persist($entity);
 
             $em->flush();
-        } elseif ($entity instanceof InstagramPost) {
+        } elseif ($entity instanceof InstagramPost && empty($entity->getMediaId()) && $entity->getStatus() !== 'posted') {
             $this->instagramService->uploadPost($entity);
         }
-        elseif ($entity instanceof GooglePost) {
+        elseif ($entity instanceof GooglePost  && empty($entity->getGooglePostName()) && $entity->getStatus() !== 'posted') {
             $this->googleService->createPost($entity);
         }
-        elseif ($entity instanceof YoutubePost) {
+        elseif ($entity instanceof YoutubePost  && $entity->getStatus() !== 'posted') {
             $this->youtubeService->createVideo($entity);
         }
-        elseif ($entity instanceof LinkedinPost) {
+        elseif ($entity instanceof LinkedinPost && $entity->getStatus() !== 'posted') {
             $this->linkedinService->uploadPost($entity);
         }
-        elseif ($entity instanceof PinterestPin) {
+        elseif ($entity instanceof PinterestPin  && $entity->getStatus() !== 'posted') {
             $this->pinterestService->createPin($entity);
         }
-        elseif ($entity instanceof FacebookPost) {
+        elseif ($entity instanceof FacebookPost && $entity->getStatus() !== 'posted') {
             $this->facebookService->createPost($entity);
         }
 
@@ -226,6 +226,10 @@ class PostEntityListener
         elseif ($entity instanceof PinterestPin && $entity->getStatus() == 'posted')
         {
             $this->pinterestService->deletePin($entity);
+        }
+        elseif ($entity instanceof FacebookPost && $entity->getStatus() == 'posted')
+        {
+            $this->facebookService->removePost($entity);
         }
     }
 }
