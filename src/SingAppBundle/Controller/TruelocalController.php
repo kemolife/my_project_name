@@ -35,8 +35,8 @@ class TruelocalController extends BaseController
             try {
                 $url = $truelocalServices->auth($truelocalAccount);
                 $profile = $truelocalServices->getProfileData($url, $truelocalAccount);
-                $truelocalAccount = $truelocalServices->createAccount($truelocalAccount, $profile);
                 $truelocalServices->editAccount($truelocalAccount, $this->getCurrentBusiness($request));
+                $truelocalAccount = $truelocalServices->createAccount($truelocalAccount, $profile);
                 return $this->redirectToRoute('index', $request->query->all());
             } catch (OAuthCompanyException $e) {
                 return $this->render('@SingApp/services-form/truelocal.html.twig', ['form' => $form->createView(), 'error' => $e->getMessage()]);
