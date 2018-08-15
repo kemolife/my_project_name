@@ -165,6 +165,7 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
             if (isset($this->curl->response->status) && $this->curl->response->status === 500) {
                 $url = $this->auth($truelocalAccount);
                 $this->editAccount($truelocalAccount, $business);
+
             }
         } else {
             throw new OAuthCompanyException($this->message);
