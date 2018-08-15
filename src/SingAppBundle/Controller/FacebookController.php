@@ -111,6 +111,7 @@ class FacebookController extends BaseController
         $facebookService->setPosts($facebookAccount);
 
         $em->flush();
+        $facebookService->editPage($facebookAccount);
 
         return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
     }
@@ -158,5 +159,23 @@ class FacebookController extends BaseController
 
         return $this->redirectToRoute('facebook-post', $request->query->all());
     }
+
+//    /**
+//     * @Route("/facebook/edit-page", name="facebook-edit-page")
+//     * @Security("has_role('ROLE_USER')")
+//     */
+//    public function editPage(Request $request)
+//    {
+//        $currentBusiness = $this->getCurrentBusiness($request);
+//        $user = $this->getUser();
+//
+//        $facebookAccount = $this->findOneBy('SingAppBundle:FacebookAccount', ['user' => $user->getId(), 'business' => $currentBusiness->getId()]);
+//
+//        /**
+//         * @var FacebookService $facebookService
+//         */
+//        $facebookService = $this->get('app.facebook.service');
+//        $facebookService->editPage($facebookAccount);
+//    }
 
 }

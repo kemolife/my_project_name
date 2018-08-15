@@ -79,7 +79,7 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
      * @param $companyId
      * @return SocialNetworkAccount
      */
-    public function createAccount(SocialNetworkAccount $hotfrogAccount, $companyId)
+    public function createAccount(SocialNetworkAccount $hotfrogAccount)
     {
         $createdDate = new \DateTime();
 
@@ -158,9 +158,6 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
             $params['hiddenInputToUpdateATBuffer_CommonToolkitScripts'] = 1;
             $this->curl->setCookies($cookies);
             $this->curl->post($this->urlEditBusiness . $hotfrogAccount->getBusinessId(), $params);
-            if ($this->curl->httpStatusCode !== 302) {
-                throw new OAuthCompanyException($this->message);
-            }
             if(strpos($this->curl->response, 'Login.aspx') && $notLoop === false){
                 $this->auth($hotfrogAccount);
                 $this->editAccount($hotfrogAccount, $business, true);

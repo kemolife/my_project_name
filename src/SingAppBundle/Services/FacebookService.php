@@ -83,6 +83,34 @@ class FacebookService
         return @$result->getDecodedBody()['data'];
     }
 
+    public function editPage(FacebookAccount $facebookAccount)
+    {
+        $fb = $this->clientSettings('v3.1');
+        $obj = new \StdClass();
+        $obj->city = 'Hackett';
+        $obj->state = 'AL';
+        $obj->zip = 36310;
+        $obj->country = 'USA';
+        try {
+            $fb->post(
+                '/' . $facebookAccount->getPage(),
+                array(
+                    'about' => $facebookAccount->getBusiness()->getDescription(),
+                    'phone' => $facebookAccount->getBusiness()->getPhoneNumber(),
+                    'website' => $facebookAccount->getBusiness()->getWebsite(),
+                    'hours' => '{"mon_1_open":"20:40","mon_1_close":"21:40","tue_1_open":"08:40","tue_1_close":"20:40"}',
+                    'location' => $obj,
+                    'emails' => [$facebookAccount->getBusiness()->getEmail()]
+                ),
+                $facebookAccount->getPageAccessToken()
+            );
+        } catch (FacebookResponseException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        } catch (FacebookSDKException $e) {
+            throw new OAuthCompanyException($e->getMessage());
+        }
+    }
+
     public function createPost(FacebookPost $facebookPost)
     {
         $result = null;
