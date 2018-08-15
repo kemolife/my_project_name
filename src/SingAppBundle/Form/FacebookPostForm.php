@@ -20,8 +20,7 @@ class FacebookPostForm extends AbstractType
     {
         $builder
             ->add('title', TextType::class, ['attr' => ['placeholder' => 'Title', 'class' => 'form-control'], 'label' => 'Title', 'required' => true])
-            ->add('caption', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true])
-            ->add('link', TextType::class, ['attr' => ['placeholder' => 'Link', 'class' => 'form-control'], 'label' => 'Link', 'required' => false]);
+            ->add('caption', TextType::class, ['attr' => ['placeholder' => 'Description', 'class' => 'form-control'], 'label' => 'Description', 'required' => true]);
     }
 
     /**
