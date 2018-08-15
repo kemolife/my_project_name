@@ -1,0 +1,102 @@
+{% extends '@SingApp/layouts/base.html.twig' %}
+{% block body %}
+    <div class="products">
+        {% include '@SingApp/layouts/navigation.html.twig' %}
+        <div class="message col-md-12">
+            <div class="card">
+                <div class="product-card-header">
+                    <div class="card-header-title">
+                        <span class="card-title"> Choose a page to connect</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="locations-body">
+                    {% for page in  pages %}
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="#" class="click-location list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"
+                                            style="color: green; display: inline;">{{ page.name }}</h5>
+                                        <p style="display: inline;">{{ page.category }}</p>
+                                        <div style="float: right;">
+                                            <p>Page ID: {{ page.id }}</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                            data-page-id="{{ page.id }}"
+                                            data-page-access-token="{{ page.access_token }}"
+                                            class="btn btn-primary location-choose"
+                                            style="display: none; width: 12%;margin-top: 15px;">Choose this page
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.click-location').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('active-block')) {
+                $this.removeClass('active-block');
+                $this.parent().css('border-color', 'none');
+                $this.find('.location-choose').css('display', 'transparent');
+            } else {
+                $('.click-location').each(function (index, item) {
+                    if ($(item).hasClass('active-block')) {
+                        $(item).removeClass('active-block');
+                        $(item).find('.location-choose').css('display', 'none');
+                        $(item).parent().css('border-color', 'transparent');
+                    }
+                });
+                $this.addClass('active-block');
+                $this.parent().css('border-color', 'green');
+                $this.find('.location-choose').css('display', 'block');
+            }
+        });
+        $('#create_new_biz').on('click', function (e) {
+            e.preventDefault();
+            $('#choose_account').css('display', 'block');
+            $('#create_new_biz_cont').css('display', 'none')
+        })
+        $('.choose-account').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('active-block')) {
+                $this.removeClass('active-block');
+                $this.parent().css('border-color', 'none');
+            } else {
+                $('.choose-account').each(function (index, item) {
+                    if ($(item).hasClass('active-block')) {
+                        $(item).removeClass('active-block');
+                        $(item).parent().css('border-color', 'transparent');
+                    }
+                });
+                $this.addClass('active-block');
+                $this.parent().css('border-color', 'green');
+                $('.create-location-button').removeAttr('disabled').removeAttr('style').attr('data-account', $this.data('account'));
+            }
+        })
+        $('.create-location-button').on('click', function (e) {
+            e.preventDefault();
+            window.location.href = $(this).attr('href') + '?account=' + $(this).attr('data-account')
+        })
+        $('.location-choose').click(function (event) {
+            event.preventDefault();
+
+            $('.click-location').off('click');
+
+            var pageId = $(this).data('pageId');
+            var pageAccessToken = $(this).data('pageAccessToken');
+
+            window.location.href = '{{ url('facebook-choose-page') }}' + '?page=' + pageId + '&pageAccessToken=' + pageAccessToken
+
+        });
+    </script>
+{% endblock %}

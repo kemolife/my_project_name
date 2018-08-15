@@ -27,9 +27,19 @@ class FacebookAccount extends SocialNetworkAccount
 
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $expiresIn;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $page;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $pageAccessToken;
 
 
     /**
@@ -168,5 +178,53 @@ class FacebookAccount extends SocialNetworkAccount
     public function getOwners()
     {
         return [$this->getUser()];
+    }
+
+    /**
+     * Set page.
+     *
+     * @param string|null $page
+     *
+     * @return FacebookAccount
+     */
+    public function setPage($page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page.
+     *
+     * @return string|null
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set pageAccessToken.
+     *
+     * @param string|null $pageAccessToken
+     *
+     * @return FacebookAccount
+     */
+    public function setPageAccessToken($pageAccessToken = null)
+    {
+        $this->pageAccessToken = $pageAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get pageAccessToken.
+     *
+     * @return string|null
+     */
+    public function getPageAccessToken()
+    {
+        return $this->pageAccessToken;
     }
 }

@@ -13,6 +13,7 @@ use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
 use FacebookAds\Api;
 use FacebookAds\Object\AdAccount;
+use SingAppBundle\Entity\FacebookPost;
 use Symfony\Component\HttpFoundation\Request;
 
 class FacebookService
@@ -42,7 +43,7 @@ class FacebookService
             'user_posts', 'publish_to_groups',
             'groups_access_member_info', 'business_management',
             'manage_pages', 'publish_pages', 'pages_manage_cta', 'pages_manage_instant_articles',
-            'pages_show_list'];
+            'pages_show_list', 'manage_pages'];
 
         $loginUrl = $helper->getLoginUrl($this->domain . '/facebook/oauth2callback', $permissions);
 
@@ -70,6 +71,41 @@ class FacebookService
         }
 
         return $accessToken;
+    }
+
+    public function getPages(FacebookAccount $facebookAccount)
+    {
+        $fb = new Facebook([
+            'app_id' => '214454595877928',
+            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
+            'default_graph_version' => 'v3.1',
+        ]);
+
+        $result = $fb->get('me/accounts', $facebookAccount->getAccessToken());
+
+        return @$result->getDecodedBody()['data'];
+    }
+
+    public function createPost(FacebookPost $facebookPost)
+    {
+        $fb = new Facebook([
+            'app_id' => '214454595877928',
+            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
+            'default_graph_version' => 'v3.1',
+        ]);
+
+        $result = $fb->post(
+            '/'.$facebookPost->getAccount()->getPage().'/feed',
+            array (
+                'message' => $facebookPost->getCaption(),
+                'link' => $facebookPost->getLink(),
+                'picture' => $this->domain . "/" . $facebookPost->getMedia()[0]->getPath(),
+                'published' => true
+            ),
+            $facebookPost->getAccount()->getPageAccessToken()
+        );
+
+        var_dump($result); die;
     }
 
     public function getAccounts()

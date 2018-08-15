@@ -14,7 +14,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({
- *     "SingAppBundle\EntityListener\SetOwnerListener"})
+ *     "SingAppBundle\EntityListener\SetOwnerListener",
+ *     "SingAppBundle\EntityListener\SetBusinessListener"
+ *     })
  */
 class FacebookAccount extends SocialNetworkAccount
 {
@@ -28,6 +30,17 @@ class FacebookAccount extends SocialNetworkAccount
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $expiresIn;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $page;
+
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $pageAccessToken;
 
 
     /**

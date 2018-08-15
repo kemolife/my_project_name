@@ -3,6 +3,8 @@
 namespace SingAppBundle\EntityListener;
 
 use JMS\JobQueueBundle\Entity\Job;
+use SingAppBundle\Entity\FacebookAccount;
+use SingAppBundle\Entity\FacebookPost;
 use SingAppBundle\Entity\GoogleAccount;
 use SingAppBundle\Entity\GooglePost;
 use SingAppBundle\Entity\InstagramAccount;
@@ -22,6 +24,7 @@ use SingAppBundle\Entity\Post;
 use SingAppBundle\Entity\YoutubeAccount;
 use SingAppBundle\Entity\YoutubePost;
 use SingAppBundle\Providers\Exception\OAuthCompanyException;
+use SingAppBundle\Services\FacebookService;
 use SingAppBundle\Services\GoogleService;
 use SingAppBundle\Services\InstagramService;
 use SingAppBundle\Services\LinkedInService;
@@ -37,14 +40,22 @@ class PostEntityListener
     private $googleService;
     private $linkedinService;
     private $pinterestService;
+    private $facebookService;
 
-    public function __construct(InstagramService $instagramService, GoogleService $googleService, YoutubeService $youtubeService, LinkedInService $linkedinService, PinterestService $pinterestService)
+    public function __construct(
+        InstagramService $instagramService,
+        GoogleService $googleService,
+        YoutubeService $youtubeService,
+        LinkedInService $linkedinService,
+        PinterestService $pinterestService,
+        FacebookService $facebookService)
     {
         $this->instagramService = $instagramService;
         $this->googleService = $googleService;
         $this->youtubeService = $youtubeService;
         $this->linkedinService = $linkedinService;
         $this->pinterestService = $pinterestService;
+        $this->facebookService = $facebookService;
     }
 
     /**
@@ -102,6 +113,15 @@ class PostEntityListener
 
             if ($pinterestAccount instanceof PinterestAccount) {
                 $entity->setAccount($pinterestAccount);
+            }
+        }
+        elseif ($entity instanceof FacebookPost) {
+            $repository = $em->getRepository('SingAppBundle:FacebookAccount');
+
+            $facebookAccount = $repository->findOneBy(['user' => $entity->getUser()->getId(), 'business' => $entity->getBusiness()->getId()]);
+
+            if ($facebookAccount instanceof FacebookAccount) {
+                $entity->setAccount($facebookAccount);
             }
         }
     }
@@ -176,6 +196,9 @@ class PostEntityListener
         }
         elseif ($entity instanceof PinterestPin) {
             $this->pinterestService->createPin($entity);
+        }
+        elseif ($entity instanceof FacebookPost) {
+            $this->facebookService->createPost($entity);
         }
 
     }

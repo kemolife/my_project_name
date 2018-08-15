@@ -87,8 +87,9 @@
                                             <td>{{ post.postDate|date('Y-m-d H:i:s') }}</td>
                                             <td>{{ post.status }}</td>
                                             {% if canDelete %}
+                                                {% set deleteUrl = service~'-delete' %}
                                                 <td>
-                                                    <a href="{{ url(~service~'-delete', {'post': post.id }) }}"
+                                                    <a href="{{ url(deleteUrl, {'post': post.id }) }}"
                                                        class="btn btn-default btn-sm">
                                                         <i class="far fa-trash-alt"></i>Delete
                                                     </a>

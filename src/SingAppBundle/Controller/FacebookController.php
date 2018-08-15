@@ -4,10 +4,12 @@
 namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\FacebookAccount;
 use SingAppBundle\Services\FacebookService;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 class FacebookController extends BaseController
@@ -35,16 +37,75 @@ class FacebookController extends BaseController
      */
     public function oauth2callbackAction(Request $request)
     {
+        if (!$request->get('error_message')) {
+            /**
+             * @var FacebookService $facebookService
+             */
+            $facebookService = $this->get('app.facebook.service');
+
+            $accessTokeData = $facebookService->getAccessToken();
+
+            $facebookService->createFacebookAccount($request, $accessTokeData);
+
+            $response = $this->redirectToRoute('facebook-pages', ['business' => $this->session->get('business')]);
+        }else {
+
+            $response = $this->redirectToRoute(($this->session->get('url')), ['business' => $this->session->get('business')]);
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/facebook/pages", name="facebook-pages")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function choosePageAction(Request $request)
+    {
+        $currentBusiness = $this->getCurrentBusiness($request);
+
+        $repository = $this->getRepository('SingAppBundle:FacebookAccount');
+
+        /**
+         * @var FacebookAccount $facebookAccount
+         */
+        $facebookAccount = $repository->findOneBy(['user' => $this->getUser()->getId(), 'business' => $currentBusiness->getId()]);
+
         /**
          * @var FacebookService $facebookService
          */
         $facebookService = $this->get('app.facebook.service');
 
-        $accessTokeData = $facebookService->getAccessToken();
+        $pages = $facebookService->getPages($facebookAccount);
 
-        $facebookService->createFacebookAccount($request, $accessTokeData);
 
-        return $this->redirectToRoute(($this->session->get('url')), ['business' => $this->session->get('business')]);
+        $params = [
+            'pages' => $pages,
+            'facebookAccount' => $facebookAccount,
+            'businesses' => $this->getBusinesses()
+        ];
+
+        return $this->render('@SingApp/services-form/facebook-location.html.twig', $params);
+    }
+
+    /**
+     * @Route("/facebook/page", name="facebook-choose-page")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function choosePage(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('SingAppBundle:FacebookAccount');
+
+        $facebookAccount = $repository->findOneBy(['business' => $this->getCurrentBusiness($request)]);
+        $em = $this->getDoctrine()->getManager();
+
+        $facebookAccount->setPage($request->get('page'));
+        $facebookAccount->setPageAccessToken($request->get('pageAccessToken'));
+
+        $em->persist($facebookAccount);
+
+        $em->flush();
+
+        return $this->redirectToRoute($this->session->get('url'), ['business' => $this->session->get('business')]);
     }
 
     /**
