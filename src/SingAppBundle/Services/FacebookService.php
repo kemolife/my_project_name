@@ -34,8 +34,8 @@ class FacebookService
     private function clientSettings($version)
     {
         return new Facebook([
-            'app_id' => '214454595877928',
-            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
+            'app_id' => '2105766466163773',
+            'app_secret' => 'f1ce814c4dfd2649456164678ff6b161',
             'default_graph_version' => $version,
         ]);
     }
