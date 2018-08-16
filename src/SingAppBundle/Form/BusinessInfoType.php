@@ -50,13 +50,13 @@ class BusinessInfoType extends AbstractType
             'choice_label' => 'name'
         ])->
         add('address', TextType::class, ['attr' => ['class' => 'form-control']])->
-        add('regionCode', HiddenType::class, ['attr' => ['class' => 'form-control']])->
-        add('administrativeArea', HiddenType::class, ['attr' => ['class' => 'form-control']])->
+        add('regionCode', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('administrativeArea', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('administrativeAreaShort', HiddenType::class, ['attr' => ['class' => 'form-control']])->
-        add('locality', HiddenType::class, ['attr' => ['class' => 'form-control']])->
-        add('latitude', HiddenType::class, ['attr' => ['class' => 'form-control']])->
-        add('longitude', HiddenType::class, ['attr' => ['class' => 'form-control']])->
-        add('postalCode', HiddenType::class, ['attr' => ['class' => 'form-control']])->
+        add('locality', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('latitude', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('longitude', TextType::class, ['attr' => ['class' => 'form-control']])->
+        add('postalCode', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('email', EmailType::class, ['attr' => ['class' => 'form-control']])->
         add('phoneNumber', TextType::class, ['attr' => ['class' => 'form-control']])->
         add('website', TextType::class, ['required' => false, 'attr' => ['class' => 'form-control']])->

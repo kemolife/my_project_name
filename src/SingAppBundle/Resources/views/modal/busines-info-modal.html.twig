@@ -52,16 +52,27 @@
         </div>
         <div class="control-group col-md-6 col-sm-12">
             {{ form_row(form.address) }}
-            {{ form_row(form.regionCode) }}
-            {{ form_row(form.administrativeArea) }}
-            {{ form_row(form.administrativeAreaShort) }}
-            {{ form_row(form.locality) }}
-            {{ form_row(form.latitude) }}
-            {{ form_row(form.longitude) }}
-            {{ form_row(form.postalCode) }}
             <button type="button" class="close" style="top: 27px;position: absolute; right: 20px;"
                     onclick="document.getElementById('singappbundle_businessinfo_address').value = ''"><span
                         aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.regionCode) }}
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.administrativeArea) }}
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.locality) }}
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.latitude) }}
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.longitude) }}
+        </div>
+        <div class="control-group col-md-2 col-sm-2">
+            {{ form_row(form.postalCode) }}
         </div>
         <div class="control-group col-md-6 col-sm-12">
             {{ form_row(form.phoneNumber) }}
