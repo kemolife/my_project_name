@@ -7,6 +7,7 @@ use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Providers\InstagramBusiness;
+use SingAppBundle\Services\FacebookService;
 use SingAppBundle\Services\GoogleService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,28 +77,11 @@ class OAuthController extends BaseController
         /**
          * @var User $user
          */
-        var_dump($currentBusiness->getLongitude());
         var_dump($currentBusiness->getCategory()->getName());
-        var_dump($currentBusiness->getCategory()->getCategoryId());
-        var_dump($currentBusiness->getAdditionalCategories());
-        $user = $this->getUser();
-        $period = [];
-        foreach (\GuzzleHttp\json_decode($currentBusiness->getOpeningHours())->days as $key => $item) {
-            if ($item->type === 'open') {
-                $day = new \stdClass();
-                $day->openDay = strtoupper($key);
-                $day->openTime = $item->slots[0]->start;
-                $day->closeDay = strtoupper($key);
-                $day->closeTime = $item->slots[1]->end;
-                array_push($period, $day);
-            }
-        }
-        var_dump(\GuzzleHttp\json_encode($period));
-//        /**
-//         * @var InstagramBusiness $instagram
-//         */
-//        $instagram = $this->get('instagram_provider');
-//        var_dump($instagram->newAuth($user, $currentBusiness)->getAllComments());
+        var_dump($currentBusiness->getAdditionalCategories()[0]->getName());
+        var_dump($currentBusiness->getAdditionalCategories()[1]->getName());
+
+        die;
     }
 
     /**

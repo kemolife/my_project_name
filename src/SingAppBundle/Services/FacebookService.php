@@ -24,6 +24,16 @@ class FacebookService
 
     private $em;
 
+    private static $workHours = [
+        'Monday' => ['mon_1_open', 'mon_1_close'],
+        'Tuesday' => ['tue_1_open', 'tue_1_close'],
+        'Wednesday'=> ['wed_1_open', 'wed_1_close'],
+        'Thursday'=> ['thu_1_open', 'thu_1_close'],
+        'Friday'=> ['fri_1_open', 'fri_1_close'],
+        'Saturday'=> ['sat_1_open', 'sat_1_close'],
+        'Sunday'=> ['sun_1_open', 'sun_1_close']
+    ];
+
     public function __construct($domain, EntityManagerInterface $entityManager)
     {
         $this->domain = $domain;
@@ -34,8 +44,8 @@ class FacebookService
     private function clientSettings($version)
     {
         return new Facebook([
-            'app_id' => '2105766466163773',
-            'app_secret' => 'f1ce814c4dfd2649456164678ff6b161',
+            'app_id' => '214454595877928',
+            'app_secret' => '1c94e55cee9db82948c697720823fe9d',
             'default_graph_version' => $version,
         ]);
     }
@@ -91,14 +101,27 @@ class FacebookService
         $obj->state = 'AL';
         $obj->zip = 36310;
         $obj->country = 'USA';
+        $day =  $categoryList = [];
+        foreach (\GuzzleHttp\json_decode($facebookAccount->getBusiness()->getOpeningHours())->days as $key => $item) {
+            if ($item->type === 'open') {
+                $day[self::$workHours[$key][0]] = $item->slots[0]->start;
+                $day[self::$workHours[$key][1]] = $item->slots[1]->end;
+            }
+        }
+        foreach ($facebookAccount->getBusiness()->getAdditionalCategories() as $category){
+            array_push($categoryList, $category->getName());
+        }
         try {
             $fb->post(
                 '/' . $facebookAccount->getPage(),
                 array(
+                    'name' => $facebookAccount->getBusiness()->getName(),
+//                    'category' => $facebookAccount->getBusiness()->getCategory()->getName(),
+//                    'category_list' => $categoryList,
                     'about' => $facebookAccount->getBusiness()->getDescription(),
                     'phone' => $facebookAccount->getBusiness()->getPhoneNumber(),
                     'website' => $facebookAccount->getBusiness()->getWebsite(),
-                    'hours' => '{"mon_1_open":"20:40","mon_1_close":"21:40","tue_1_open":"08:40","tue_1_close":"20:40"}',
+                    'hours' => json_encode($day),
                     'location' => $obj,
                     'emails' => [$facebookAccount->getBusiness()->getEmail()]
                 ),
