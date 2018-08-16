@@ -28,7 +28,7 @@ class ExceptionListener
 
         $exception = $event->getException();
 
-        if ($exception instanceof OAuthCompanyException || $exception instanceof Exception) {
+        if ($exception instanceof OAuthCompanyException || $exception instanceof Exception || $exception instanceof Google_Service_Exception) {
             if (!$referer) {
                 $referer = $this->router->generate('index', ['error' => $exception->getMessage()]);
             }else {
