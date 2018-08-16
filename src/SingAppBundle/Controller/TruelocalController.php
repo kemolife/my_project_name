@@ -23,7 +23,7 @@ class TruelocalController extends BaseController
     public function indexAction(Request $request)
     {
         $this->session->set('business', $request->get('business'));
-        $truelocalAccount = new truelocalAccount();
+        $truelocalAccount = new TruelocalAccount();
         $truelocalServices = $this->get('app.truelocal.service');
         $form = $this->createForm(TruelocalType::class, $truelocalAccount);
 
