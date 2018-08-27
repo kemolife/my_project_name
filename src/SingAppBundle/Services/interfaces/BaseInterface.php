@@ -16,5 +16,5 @@ interface BaseInterface
 
     public function editAccount(SocialNetworkAccount $account, BusinessInfo $business);
 
-    public function searchBusiness($account, BusinessInfo $business);
+    public function searchBusiness(BusinessInfo $business, $account);
 }
