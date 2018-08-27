@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="product-card-header">
                         <div class="card-header-title">
-                            <span class="card-title">Your business listing report</span>
+                            <span class="card-title">Services scanner for business</span>
                         </div>
                         <div>
                             <a href="{{ url('edit-business', app.request.query.all) }}" class="btn btn-primary">Edit
@@ -61,185 +61,29 @@
                     </div>
                     <hr>
                     <div class="card-body row">
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/maps.google.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Google My Business
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('google', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-                                <hr class="hr-line">
-                                {{ getStatusConnect('google', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/www.bing.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Bing Places
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('bing', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
+                        {% for service in services %}
 
-                                <hr class="hr-line">
-                                {{ getStatusConnect('bing', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/facebook.com.png" alt=""
-                                             width="25"
-                                             height="25">
+                            <div class="col-md-12 list-item-container item-scan" data-business="{{ currentBusiness.id }}" data-service="{{ service.alias }}">
+                                <div class="list-item clearfix col-md-12">
+                                    <div class="col-md-10">
+                                        <img class="service-icon" src="/images/listing-icons/{{ service.image }}" alt="" width="25" height="25" />
                                         <p class="list-item-title">
-                                            Facebook
+                                            {{ service.title }}
                                         </p>
                                     </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('facebook', currentBusiness, app.user)|raw }}
+                                    <div class="col-md-2">
+                                        <div class="buttons">
+                                            <div class="synced">
+                                                <div class="btn-xs btn-status">
+                                                    <i class="fas fa-check-circle synce-done"></i> <span>Loading</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('facebook', currentBusiness, app.user)|raw }}
                             </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/instagrame.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Instagram Business
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('instagram', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
 
-                                <hr class="hr-line">
-                                {{ getStatusConnect('instagram', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/foursquare.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Foursquare
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('foursquare', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('foursquare', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/pinterest.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Pinterest
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('pinterest', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('pinterest', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/zomato.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Zomato
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('zomato', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('zomato', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/hotfrog.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Hot Frog
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('hotfrog', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('hotfrog', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 list-item-container">
-                            <div class="list-item clearfix col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        <img class="service-icon" src="/images/listing-icons/truelocal.com.png" alt=""
-                                             width="25"
-                                             height="25">
-                                        <p class="list-item-title">
-                                            Truelocal
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        {{ getButton('truelocal', currentBusiness, app.user)|raw }}
-                                    </div>
-                                </div>
-
-                                <hr class="hr-line">
-                                {{ getStatusConnect('truelocal', currentBusiness, app.user)|raw }}
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -263,6 +107,14 @@
 
         .modal-backdrop {
             z-index: 10;
+        }
+
+        .list-item {
+            height: auto;
+        }
+
+        .list-item-title {
+            margin-bottom: 0;
         }
 
         ​

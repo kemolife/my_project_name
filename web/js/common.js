@@ -153,6 +153,10 @@ $(document).on("change", "#biz-hour-type", function () {
     n(this, this.value)
 })
 
+// Statuses
+var scanDone = '<i class="fas fa-check-circle synce-done"></i> <span>Found</span>';
+var scanProgress = '<i class="fas fa-circle-notch fa-spin sync-in-progress"></i> <span>Search in progress...</span>';
+
 $(document).ready(function () {
     $('#singappbundle_businessinfo_additionalCategories')
         .select2({width: '100%'});
@@ -164,7 +168,36 @@ $(document).ready(function () {
             title: "<strong>Error!</strong> ",
             message: error
         }, {
-            type: 'danger',
+            type: 'danger'
         });
     }
+
+    // Start scan by services
+    $(".item-scan").each(function(index, value) {
+
+        // Set params
+        var business = $(this).attr("data-business");
+        var service = $(this).attr("data-service");
+        var status = $(this).find(".btn-status");
+
+        // Set prime status
+        status.html(scanProgress);
+        
+        // Send request
+        $.ajax({
+            type: "POST",
+            url: "/scan/go",
+            data: {
+                business:   business,
+                service:    service
+            },
+            cache: false,
+            responseType: "json",
+            success: function(html) {
+                console.log(html);
+            }
+        });
+
+    });
+
 });

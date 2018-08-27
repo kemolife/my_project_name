@@ -11,6 +11,7 @@ use SingAppBundle\Entity\User;
 use SingAppBundle\Services\interfaces\BaseInterface;
 use SingAppBundle\Services\ScanService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,12 +48,12 @@ class ScanController extends BaseController
          * @var Service $service
          */
         $services = $repository->findByStatus(1);
-        var_dump($services);
         
         $currentBusiness = $this->getCurrentBusiness($request);
         $params = [
             'businesses' => $this->getBusinesses(),
-            'currentBusiness' => $currentBusiness
+            'currentBusiness' => $currentBusiness,
+            'services' => $services,
         ];
         return $this->render('@SingApp/scan/index-scan.html.twig', $params);
     }
@@ -68,15 +69,16 @@ class ScanController extends BaseController
 
         $params = $request->request->all();
 
-        // id, service alias
-        $alias = 'google';
+        var_dump($params);die;
 
-        if ($this->get('app.' . $alias . '.service') instanceof BaseInterface) {
+        //$test = $this->get('app.google.service')->searchBusiness((new BusinessInfo()));
 
-            $test = $this->get('app.' . $alias . '.service')->searchBusiness((new BusinessInfo()));
+        //var_dump($test);
 
-            var_dump($test);
-        }
+        $ok = [
+            'vat'   => 'test'
+        ];
+        return new JsonResponse($ok);
         
     }
     
