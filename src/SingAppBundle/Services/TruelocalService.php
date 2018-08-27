@@ -217,4 +217,18 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
             throw new OAuthCompanyException(json_encode($this->curl->response->meta->errors));
         }
     }
+
+    public function searchBusiness(SocialNetworkAccount $account, BusinessInfo $business)
+    {
+        $searchObject = new \StdClass();
+        $searchObject->status = self::STATUS_FALSE;
+        $searchObject->name = null;
+        $searchObject->address = null;
+        $searchObject->phone = null;
+        if($account instanceof TruelocalAccount && null !== $account->getProfile()){
+
+        }
+
+        return $searchObject;
+    }
 }
