@@ -43,6 +43,8 @@
         "raiym/instagram-php-scraper": "^0.8.23",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
+        "serps/http-client-curl": "^0.2.3",
+        "serps/search-engine-google": "^0.4.1",
         "spotonlive/php-google-my-business": "^4.1",
         "stevenmaguire/oauth2-microsoft": "^2.2",
         "stevenmaguire/oauth2-yelp": "^0.1.0",
@@ -55,7 +57,8 @@
         "symfony/symfony": "3.4.*",
         "thetwelvelabs/foursquare": "^0.2.2",
         "twig/twig": "^1.0||^2.0",
-        "vich/uploader-bundle": "^1.8"
+        "vich/uploader-bundle": "^1.8",
+        "zendframework/zend-diactoros": "^1.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

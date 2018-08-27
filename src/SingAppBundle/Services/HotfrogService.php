@@ -7,6 +7,11 @@ namespace SingAppBundle\Services;
 use Curl\Curl;
 use Doctrine\ORM\EntityManagerInterface;
 use DOMDocument;
+use Google_Client;
+use Serps\Core\Browser\Browser;
+use Serps\Core\Http\StackingHttpClient;
+use Serps\SearchEngine\Google\GoogleClient;
+use Serps\SearchEngine\Google\GoogleUrl;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\HotfrogAccount;
 use SingAppBundle\Entity\SocialNetworkAccount;
@@ -16,9 +21,14 @@ use SingAppBundle\Services\interfaces\BaseInterface;
 use SingAppBundle\Services\interfaces\CreateServiceAccountInterface;
 use SingAppBundle\Services\interfaces\ScraperInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Serps\HttpClient\CurlClient;
 
 class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAccountInterface
 {
+    use GoogleSearchTrait;
+
+    const NAME_FOR_SEARCH = 'fotfrog';
+
     private $em;
     private $curl;
     private $webDir;
@@ -289,15 +299,36 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         return [$captchaImage, $captchaText];
     }
 
-    public function searchBusiness($account, BusinessInfo $business)
+    public function getDataParses($url)
+    {
+        $this->curl->get($url);
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($this->curl->response);
+//        print_r($this->curl->response); die;
+
+        $name = $this->getElementsByClass($dom, 'company-heading')->item(0)->nodeValue;
+        $streetAddress = $this->getElementsByClass($dom, 'data-address1')->item(0)->nodeValue;
+        $city = $this->getElementsByClass($dom, 'data-city')->item(0)->nodeValue;
+        $state= $this->getElementsByClass($dom, 'data-state')->item(0)->nodeValue;
+        $postcode= $this->getElementsByClass($dom, 'data-postcode')->item(0)->nodeValue;
+        $phone = $this->getElementsByClass($dom, 'phone-type-main')->item(0)->nodeValue;
+        return [$streetAddress.', '.$city.', '.$state.' '.$postcode, $phone, $name];
+    }
+
+    public function searchBusiness(BusinessInfo $business, $account = null)
     {
         $searchObject = new \StdClass();
         $searchObject->status = self::STATUS_FALSE;
         $searchObject->name = null;
         $searchObject->address = null;
         $searchObject->phone = null;
-        if($account instanceof HotfrogAccount && null !== $account->getBusinessId()){
-
+        if(null !== $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH)){
+            $data = $this->getDataParses($url);
+            $searchObject->status = self::STATUS_TRUE;
+            $searchObject->name = $data[0];
+            $searchObject->address = $data[1];
+            $searchObject->phone = $data[2];
         }
 
         return $searchObject;
