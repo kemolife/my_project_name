@@ -76,10 +76,11 @@ class ScanController extends BaseController
 
         //$test = $this->get('app.'.$params['service'].'.service')->searchBusiness($business[0]);
 
+        $rnd = rand(0,1);
         $ok = [
-            'vat'   => 'test'
+            'status'   => $rnd
         ];
-        //return new JsonResponse($ok);
+        return new JsonResponse($ok);
         
     }
     

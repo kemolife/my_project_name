@@ -155,6 +155,7 @@ $(document).on("change", "#biz-hour-type", function () {
 
 // Statuses
 var scanDone = '<i class="fas fa-check-circle synce-done"></i> <span>Found</span>';
+var scanFail = '<i class="fas fa-check-times synce-done"></i> <span>Not found</span>';
 var scanProgress = '<i class="fas fa-circle-notch fa-spin sync-in-progress"></i> <span>Search in progress...</span>';
 
 $(document).ready(function () {
@@ -194,7 +195,21 @@ $(document).ready(function () {
             cache: false,
             responseType: "json",
             success: function(html) {
-                console.log(html);
+                
+                // Parse JSON format
+                var data = $.parseJSON(html);
+                
+                // Check result
+                if(data.status == '1') {
+                    
+                    status.html(scanDone);
+                    
+                } else if(data.status == '0') {
+
+                    status.html(scanFail);
+                    
+                }
+                
             }
         });
 
