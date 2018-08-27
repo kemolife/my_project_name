@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class TruelocalService implements BaseInterface, ScraperInterface, CreateServiceAccountInterface
 {
+    use GoogleSearchTrait;
+
+    const NAME_FOR_SEARCH = 'truelocal.com.au';
+
     private $em;
     private $curl;
     private $webDir;
@@ -218,6 +222,22 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
         }
     }
 
+    public function getDataParses($url)
+    {
+        $this->curl->get($url);
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($this->curl->response);
+
+        $name = $this->getElementsByClass($dom, 'company-heading')->item(0)->nodeValue;
+        $streetAddress = $this->getElementsByClass($dom, 'data-address1')->item(0)->nodeValue;
+        $city = $this->getElementsByClass($dom, 'data-city')->item(0)->nodeValue;
+        $state= $this->getElementsByClass($dom, 'data-state')->item(0)->nodeValue;
+        $postcode= $this->getElementsByClass($dom, 'data-postcode')->item(0)->nodeValue;
+        $phone = $this->getElementsByClass($dom, 'phone-type-main')->item(0)->nodeValue;
+        return [$streetAddress.', '.$city.', '.$state.' '.$postcode, $phone, $name];
+    }
+
     public function searchBusiness(BusinessInfo $business, $account = null)
     {
         $searchObject = new \StdClass();
@@ -225,8 +245,15 @@ class TruelocalService implements BaseInterface, ScraperInterface, CreateService
         $searchObject->name = null;
         $searchObject->address = null;
         $searchObject->phone = null;
-        if($account instanceof TruelocalAccount && null !== $account->getProfile()){
-
+        $searchObject->url = null;
+        $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH);
+        if(null !== $url){
+            $data = $this->getDataParses($url);
+            $searchObject->status = self::STATUS_TRUE;
+            $searchObject->name = $data[0];
+            $searchObject->address = $data[1];
+            $searchObject->phone = $data[2];
+            $searchObject->url = $url;
         }
 
         return $searchObject;

@@ -305,7 +305,6 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML($this->curl->response);
-//        print_r($this->curl->response); die;
 
         $name = $this->getElementsByClass($dom, 'company-heading')->item(0)->nodeValue;
         $streetAddress = $this->getElementsByClass($dom, 'data-address1')->item(0)->nodeValue;
@@ -323,13 +322,15 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $searchObject->name = null;
         $searchObject->address = null;
         $searchObject->phone = null;
-        $url = $this->getSearchUrl('Dmytro', self::NAME_FOR_SEARCH);
+        $searchObject->url = null;
+        $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH);
         if(null !== $url){
             $data = $this->getDataParses($url);
             $searchObject->status = self::STATUS_TRUE;
             $searchObject->name = $data[0];
             $searchObject->address = $data[1];
             $searchObject->phone = $data[2];
+            $searchObject->url = $url;
         }
 
         return $searchObject;
