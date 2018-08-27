@@ -74,9 +74,7 @@ class ScanController extends BaseController
         $business = $repository->findById($params['business']);
         //var_dump($business); die;
 
-        $test = $this->get('app.'.$params['service'].'.service')->searchBusiness($business[0]);
-
-        var_dump($test);
+        //$test = $this->get('app.'.$params['service'].'.service')->searchBusiness($business[0]);
 
         $ok = [
             'vat'   => 'test'
