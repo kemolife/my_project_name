@@ -27,7 +27,7 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
 {
     use GoogleSearchTrait;
 
-    const NAME_FOR_SEARCH = 'fotfrog';
+    const NAME_FOR_SEARCH = 'hotfrog.com';
 
     private $em;
     private $curl;
@@ -323,7 +323,9 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $searchObject->name = null;
         $searchObject->address = null;
         $searchObject->phone = null;
-        if(null !== $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH)){
+        $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH);
+        var_dump($url); die;
+        if(null !== $url){
             $data = $this->getDataParses($url);
             $searchObject->status = self::STATUS_TRUE;
             $searchObject->name = $data[0];

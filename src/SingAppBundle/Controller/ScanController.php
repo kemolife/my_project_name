@@ -69,11 +69,14 @@ class ScanController extends BaseController
 
         $params = $request->request->all();
 
-        var_dump($params);//die;
+        $repository = $this->getRepository('SingAppBundle:BusinessInfo');
 
-        //$test = $this->get('app.google.service')->searchBusiness((new BusinessInfo()));
+        $business = $repository->findById($params['business']);
+        //var_dump($business); die;
 
-        //var_dump($test);
+        $test = $this->get('app.'.$params['service'].'.service')->searchBusiness($business[0]);
+
+        var_dump($test);
 
         $ok = [
             'vat'   => 'test'

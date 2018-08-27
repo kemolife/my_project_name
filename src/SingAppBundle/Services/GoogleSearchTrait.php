@@ -37,7 +37,8 @@ trait GoogleSearchTrait
          */
         foreach($results as $result){
             $url = $result->getDataValue('url');
-            if(strpos($url, $name)){
+            $nameTitle = $result->getDataValue('title');
+            if(strpos($url, $service) && strpos($nameTitle, $name)){
                 return $url;
             }
         }
