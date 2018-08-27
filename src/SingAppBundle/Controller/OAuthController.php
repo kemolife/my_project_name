@@ -3,6 +3,12 @@
 namespace SingAppBundle\Controller;
 
 use Curl\Curl;
+use Serps\Core\Browser\Browser;
+use Serps\Core\Http\StackingHttpClient;
+use Serps\Core\Serp\ItemPosition;
+use Serps\HttpClient\CurlClient;
+use Serps\SearchEngine\Google\GoogleClient;
+use Serps\SearchEngine\Google\GoogleUrl;
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
 use SingAppBundle\Entity\User;
@@ -70,17 +76,8 @@ class OAuthController extends BaseController
      */
     public function testApi(Request $request)
     {
-        /**
-         * @var BusinessInfo $currentBusiness
-         */
-        $currentBusiness = $this->getCurrentBusiness($request);
-        /**
-         * @var User $user
-         */
-        var_dump($currentBusiness->getCategory()->getName());
-        var_dump($currentBusiness->getAdditionalCategories()[0]->getName());
-        var_dump($currentBusiness->getAdditionalCategories()[1]->getName());
-
+        $googleService = $this->get('app.hotfrog.service');
+        var_dump($googleService->searchBusiness(new BusinessInfo()));
         die;
     }
 
