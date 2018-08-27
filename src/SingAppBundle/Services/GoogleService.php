@@ -476,8 +476,8 @@ class GoogleService implements BaseInterface
             }
         }
     }
-
-    public function searchBusiness($account = null, BusinessInfo $business)
+    
+    public function searchBusiness($account, BusinessInfo $business)
     {
         $searchObject = new \StdClass();
         $searchObject->status = self::STATUS_FALSE;
