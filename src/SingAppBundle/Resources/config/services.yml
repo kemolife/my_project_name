@@ -82,3 +82,6 @@ services:
     app.photo.service:
         class: SingAppBundle\Services\PhotoService
         arguments: ['%web_dir%', '%base_dir%']
+    app.scan.service:
+        class: SingAppBundle\Services\ScanService
+        arguments: ['@doctrine.orm.entity_manager']

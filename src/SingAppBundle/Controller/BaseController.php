@@ -90,10 +90,10 @@ class BaseController extends Controller
             try {
                 $this->updateConnectServices($request);
             } catch (OAuthCompanyException $e) {
-                return $this->redirectToRoute('index', ['business' => $entity->getId(), 'error' => $e->getMessage()]);
+                return $this->redirectToRoute('scan', ['business' => $entity->getId(), 'error' => $e->getMessage()]);
             }
 
-            return $this->redirectToRoute('index', array('business' => $entity->getId()));
+            return $this->redirectToRoute('scan', array('business' => $entity->getId()));
 
         }
 

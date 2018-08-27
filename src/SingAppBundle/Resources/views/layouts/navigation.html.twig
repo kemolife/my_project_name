@@ -26,6 +26,15 @@
             </a>
         </li>
         <li>
+            <a class="menu-link {% if app.request.attributes.get('_route') in ['scan'] %}selected{% endif %}"
+               href="{{ url('scan', app.request.query.all) }}">
+                <div class="icon-container">
+                    <i class="fas fa-comment menu-icon"></i>
+                </div>
+                <span class="link">Scan</span>
+            </a>
+        </li>
+        <li>
             <a class="menu-link {% if app.request.attributes.get('_route') in ['interactions'] %}selected{% endif %}"
                href="{{ url('interactions', app.request.query.all) }}">
                 <div class="icon-container">
