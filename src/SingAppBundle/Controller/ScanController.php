@@ -21,7 +21,7 @@ class ScanController extends BaseController
     /**
      * Creates a new businessInfo entity.
      *
-     * @Route("/scan/{id}", name="scan")
+     * @Route("/scan", name="scan")
      * @Security("has_role('ROLE_USER')")
      */
     public function showServicesList(Request $request)
@@ -36,8 +36,7 @@ class ScanController extends BaseController
         /**
          * @var ScanService $serviceScan
          */
-        $serviceScan = $this->get('app.scan.service');
-
+        //$serviceScan = $this->get('app.scan.service');
         //var_dump($serviceScan->getName()); die;
         
         $currentBusiness = $this->getCurrentBusiness($request);
