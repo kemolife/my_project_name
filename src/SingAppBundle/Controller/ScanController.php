@@ -69,7 +69,7 @@ class ScanController extends BaseController
 
         $params = $request->request->all();
 
-        var_dump($params);die;
+        var_dump($params);//die;
 
         //$test = $this->get('app.google.service')->searchBusiness((new BusinessInfo()));
 
@@ -78,7 +78,7 @@ class ScanController extends BaseController
         $ok = [
             'vat'   => 'test'
         ];
-        return new JsonResponse($ok);
+        //return new JsonResponse($ok);
         
     }
     
