@@ -36,10 +36,8 @@ trait GoogleSearchTrait
          * @var ItemPosition $result
          */
         foreach($results as $result){
-            $url = $result->getDataValue('url');
-            $nameTitle = $result->getDataValue('title');
-            if(strpos($url, $service) && strpos($nameTitle, $name)){
-                return $url;
+            if(strpos($result->getDataValue('url'), $service) && strpos($result->getDataValue('title'), $name)){
+                $url = $result->getDataValue('url');
             }
         }
         return $url;

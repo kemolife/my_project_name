@@ -323,8 +323,7 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $searchObject->name = null;
         $searchObject->address = null;
         $searchObject->phone = null;
-        $url = $this->getSearchUrl($business->getName(), self::NAME_FOR_SEARCH);
-        var_dump($url); die;
+        $url = $this->getSearchUrl('Dmytro', self::NAME_FOR_SEARCH);
         if(null !== $url){
             $data = $this->getDataParses($url);
             $searchObject->status = self::STATUS_TRUE;
