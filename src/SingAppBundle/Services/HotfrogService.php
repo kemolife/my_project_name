@@ -289,7 +289,7 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         return [$captchaImage, $captchaText];
     }
 
-    public function searchBusiness(SocialNetworkAccount $account, BusinessInfo $business)
+    public function searchBusiness($account, BusinessInfo $business)
     {
         $searchObject = new \StdClass();
         $searchObject->status = self::STATUS_FALSE;
