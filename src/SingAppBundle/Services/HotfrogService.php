@@ -288,4 +288,18 @@ class HotfrogService implements BaseInterface, ScraperInterface, CreateServiceAc
         $captchaText = $dom->getElementById('LBD_VCT_addyourbusinesssingle_ctl00_contentsection_captchamanager_ctl00_captcha')->getAttribute('value');
         return [$captchaImage, $captchaText];
     }
+
+    public function searchBusiness(SocialNetworkAccount $account, BusinessInfo $business)
+    {
+        $searchObject = new \StdClass();
+        $searchObject->status = self::STATUS_FALSE;
+        $searchObject->name = null;
+        $searchObject->address = null;
+        $searchObject->phone = null;
+        if($account instanceof HotfrogAccount && null !== $account->getBusinessId()){
+
+        }
+
+        return $searchObject;
+    }
 }

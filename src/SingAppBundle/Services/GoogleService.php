@@ -476,4 +476,40 @@ class GoogleService implements BaseInterface
             }
         }
     }
+
+    public function searchBusiness(SocialNetworkAccount $account, BusinessInfo $business)
+    {
+        $searchObject = new \StdClass();
+        $searchObject->status = self::STATUS_FALSE;
+        $searchObject->name = null;
+        $searchObject->address = null;
+        $searchObject->phone = null;
+        if($account instanceof GoogleAccount && null !== $account->getGoogleId()){
+            $client = new Google_Client();
+            $client->setAuthConfig('client_secret.json');
+            $client->setAccessToken($account->getAccessToken());
+            $client->setAccessType('offline');
+            $client->setIncludeGrantedScopes(true);   // incremental auth
+            $client->setScopes(['https://www.googleapis.com/auth/plus.business.manage']);
+
+            $googleMyBusiness = new Google_Service_MyBusiness($client);
+
+            try {
+                $location = $googleMyBusiness->accounts_locations->get($account->getGoogleId());
+                $searchObject->status = self::STATUS_TRUE;
+                $searchObject->name = $location->getName();
+                $searchObject->address = $location->getLocationName();
+                $searchObject->phone = $location->getPrimaryPhone();
+            } catch (\Exception $exception) {
+                $error = json_decode($exception->getMessage(), true);
+
+                if ($error['error']['status'] == 'UNAUTHENTICATED') {
+                    $this->refreshAccessToken($googleAccount);
+                    $this->searchBusiness($account, $business);
+                }
+            }
+        }
+
+        return $searchObject;
+    }
 }
