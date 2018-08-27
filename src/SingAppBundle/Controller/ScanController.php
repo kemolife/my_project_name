@@ -4,6 +4,7 @@ namespace SingAppBundle\Controller;
 
 use SingAppBundle\Entity\AdditionalCategoriesBusinessInfo;
 use SingAppBundle\Entity\BusinessInfo;
+use SingAppBundle\Entity\Service;
 use SingAppBundle\Entity\User;
 use SingAppBundle\Services\ScanService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,11 +34,16 @@ class ScanController extends BaseController
         if(empty($this->getBusinesses())){
             return $this->addBusiness($request, $user);
         }
+
         /**
-         * @var ScanService $serviceScan
+         * Get service list from DB
          */
-        //$serviceScan = $this->get('app.scan.service');
-        //var_dump($serviceScan->getName()); die;
+        $repository = $this->getRepository('SingAppBundle:Service');
+
+        /**
+         * @var Service $service
+         */
+        $service = $repository->findAll();
         
         $currentBusiness = $this->getCurrentBusiness($request);
         $params = [
