@@ -28,12 +28,13 @@
                 delay: 5000
             });
         {% endif %}
-        {% if success is defined %}
+        {% if app.request.query.all.success is defined %}
+        {% set success = app.request.query.all.success %}
             $.notify({
                 title: "<strong>Success ! </strong> ",
                 message: '{{ success }}<a href="{{ url('index', app.request.query.all) }}" style="float:right">Back to list</a>'
             }, {
-                type: 'danger',
+                type: 'success',
                 delay: 5000
             });
         {% endif %}

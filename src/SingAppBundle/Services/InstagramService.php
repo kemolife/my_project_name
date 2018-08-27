@@ -439,4 +439,31 @@ class InstagramService implements BaseInterface
         }
 
     }
+
+    public function searchBusiness(SocialNetworkAccount $account, BusinessInfo $business)
+    {
+        $searchObject = new \StdClass();
+        $searchObject->status = self::STATUS_FALSE;
+        $searchObject->name = null;
+        $searchObject->address = null;
+        $searchObject->phone = null;
+        if($account instanceof InstagramAccount && null !== $account->getLogin() && null !== $account->getPassword()){
+            $debug = false;
+            $truncatedDebug = false;
+            \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+
+            $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+            try {
+                $ig->login($account->getLogin(), $account->getPassword());
+                $user = $ig->account->getCurrentUser()->getUser();
+                $searchObject->status = self::STATUS_TRUE;
+                $searchObject->name = $user->getFullName();
+                $searchObject->address = $user->getAddressStreet();
+                $searchObject->phone = $user->getPhoneNumber();
+            } catch (\Exception $e) {
+            }
+        }
+
+        return $searchObject;
+    }
 }
